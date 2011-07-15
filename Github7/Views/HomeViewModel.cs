@@ -32,6 +32,9 @@ namespace Github7.Views
                     _loadDisconnected();
                 }
             };
+
+            // listening to logout
+            Messenger.Default.Register<bool>(this, "logout", b => githubService.Logout());
         }
 
         private void _loadConnected()
@@ -39,14 +42,16 @@ namespace Github7.Views
             Messenger.Default.Send<bool>(true, "clearHome");
             Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(FeedsPanel), "News feed"), "homeAdd");
             Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(RepositoryPanel), "Repos"), "homeAdd");
-            Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(UsersPanel), "Users"), "homeAdd"); 
+            Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(UsersPanel), "Users"), "homeAdd");
             Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(UserPanel), "Profile"), "homeAdd");
+            Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(AboutPanel), "About"), "homeAdd");
         }
 
         private void _loadDisconnected()
         {
             Messenger.Default.Send<bool>(true, "clearHome");
             Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(LoginPanel), "Login"), "homeAdd");
+            Messenger.Default.Send<PanelMessage>(new PanelMessage(typeof(AboutPanel), "About"), "homeAdd");
         }
     }
 }

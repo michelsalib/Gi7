@@ -8,12 +8,14 @@
     xmlns:localControls="clr-namespace:Github7.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:utils="clr-namespace:Github7.Utils"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
+    utils:TiltEffect.IsTiltEnabled="True"
     DataContext="{Binding Path=UserViewModel, Source={StaticResource ViewModelLocator}}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->

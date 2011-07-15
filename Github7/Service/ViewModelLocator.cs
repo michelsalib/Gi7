@@ -42,7 +42,7 @@ namespace Github7.Service
         {
             get
             {
-                return new UserPanelViewModel(GithubService, NavigationService.GetParameter("user", GithubService.User.Login));
+                return new UserPanelViewModel(GithubService, NavigationService.GetParameter("user", GithubService.Username));
             }
         }
 
@@ -50,7 +50,7 @@ namespace Github7.Service
         {
             get
             {
-                return new RepositoryPanelViewModel(GithubService, NavigationService, NavigationService.GetParameter("user", GithubService.User.Login));
+                return new RepositoryPanelViewModel(GithubService, NavigationService, NavigationService.GetParameter("user", GithubService.Username));
             }
         }
 
@@ -58,7 +58,15 @@ namespace Github7.Service
         {
             get
             {
-                return new UsersPanelViewModel(GithubService, NavigationService, NavigationService.GetParameter("user", GithubService.User.Login));
+                return new UsersPanelViewModel(GithubService, NavigationService, NavigationService.GetParameter("user", GithubService.Username));
+            }
+        }
+
+        public AboutPanelViewModel AboutPanelViewModel
+        {
+            get
+            {
+                return new AboutPanelViewModel(GithubService, NavigationService);
             }
         }
 

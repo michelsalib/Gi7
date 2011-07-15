@@ -84,6 +84,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AboutPanel.xaml.cs">
+      <DependentUpon>AboutPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AboutPanelViewModel.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
     <Compile Include="Model\Feed\DeleteFeed.cs" />
     <Compile Include="Model\Feed\CreateFeed.cs" />
@@ -148,6 +152,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\AboutPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

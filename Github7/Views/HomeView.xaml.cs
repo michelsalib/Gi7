@@ -39,5 +39,10 @@ namespace Github7.Views
 
             DataContext = new ViewModelLocator().HomeViewModel;
         }
+
+        private void Logout(object sender, EventArgs e)
+        {
+            Messenger.Default.Send<bool>(true, "logout");
+        }
     }
 }

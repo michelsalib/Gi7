@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Github7.Controls.AboutPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    DataContext="{Binding Path=AboutPanelViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <StackPanel>
+        <TextBlock Text="This app is brought to you by Michel Salib. Its source code is free and hosted on Github. Feel free to follow and contribute to the repo." TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal" Margin="0,2">
+            <Interactivity:Interaction.Triggers>
+                <Interactivity:EventTrigger EventName="Tap">
+                    <Command:EventToCommand Command="{Binding UserSelectedCommand}" />
+                </Interactivity:EventTrigger>
+            </Interactivity:Interaction.Triggers>
+            <Image Source="{Binding User.Avatar}" Width="50" Height="50" />
+            <TextBlock Text="{Binding User.Login}" FontSize="26" VerticalAlignment="Center" Margin="10,0,0,0" />
+        </StackPanel>
+        <TextBlock FontSize="26" Text="{Binding Repository.Fullname}">
+            <Interactivity:Interaction.Triggers>
+                <Interactivity:EventTrigger EventName="Tap">
+                    <Command:EventToCommand Command="{Binding RepoSelectedCommand}" />
+                </Interactivity:EventTrigger>
+            </Interactivity:Interaction.Triggers>
+        </TextBlock>
+    </StackPanel>
+</UserControl>

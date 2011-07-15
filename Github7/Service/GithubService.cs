@@ -14,7 +14,7 @@ namespace Github7.Service
 {
     public class GithubService
     {
-        public User User { get; private set; }
+        public String Username { get; private set; }
 
         private bool _isAuthenticated;
         public bool IsAuthenticated
@@ -40,8 +40,6 @@ namespace Github7.Service
 
         private CachedClient _client;
 
-        private String _username;
-
         private String _password;
 
         /// <summary>
@@ -49,13 +47,15 @@ namespace Github7.Service
         /// </summary>
         public GithubService()
         {
+            Username = "default";
+            _client = new CachedClient("https://api.github.com", Username);
+
             String username = null;
             String password = null;
             if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
                 IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
             {
                 AuthenticateUser(username, password);
-                User = new CacheProvider("github7/users").Get<User>(username);
                 IsAuthenticated = true;
             }
         }
@@ -67,7 +67,7 @@ namespace Github7.Service
         /// <param name="password"></param>
         public void AuthenticateUser(String username, String password)
         {
-            _username = username;
+            Username = username;
             _password = password;
 
             _client = new CachedClient("https://api.github.com", username, password);
@@ -78,12 +78,8 @@ namespace Github7.Service
                     r.StatusCode != HttpStatusCode.Unauthorized)
                 {
                     // set storage
-                    IsolatedStorageSettings.ApplicationSettings["username"] = _username;
+                    IsolatedStorageSettings.ApplicationSettings["username"] = Username;
                     IsolatedStorageSettings.ApplicationSettings["password"] = _password;
-
-                    // set user
-                    User = r.Data;
-                    new CacheProvider("github7/users").Save(User.Login, User);
 
                     IsAuthenticated = true;
                 }
@@ -99,7 +95,7 @@ namespace Github7.Service
         /// </summary>
         public void Logout()
         {
-            _username = "";
+            Username = "";
             _password = "";
 
             IsolatedStorageSettings.ApplicationSettings.Remove("username");
@@ -117,10 +113,10 @@ namespace Github7.Service
         /// <returns></returns>
         public ObservableCollection<Feed> GetNewsFeed()
         {
-            var feedClient = new CachedClient("https://github.com/", _username, _password);
+            var feedClient = new CachedClient("https://github.com/", Username, _password);
             feedClient.AddHandler("application/json", new FeedDeserializer());
 
-            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json", _username));
+            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json", Username));
 
             return result;
         }

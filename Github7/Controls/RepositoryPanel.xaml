@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Github7.Controls.RepositoryPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    DataContext="{Binding Path=RepositoryPanelViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Resources>
+                <DataTemplate x:Key="RepoTemplate">
+                    <TextBlock FontSize="26" Text="{Binding Fullname}" />
+                </DataTemplate>
+            </StackPanel.Resources>
+            <TextBlock Text="Watched Repos" FontSize="30"/>
+            <ListBox x:Name="WatchedRepos" ItemsSource="{Binding WatchedRepos}" ItemTemplate="{StaticResource RepoTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding ElementName=WatchedRepos, Path=SelectedItem}" />
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </ListBox>
+            <TextBlock Text="Owned Repos" FontSize="30"/>
+            <ListBox x:Name="OwnedRepos" ItemsSource="{Binding OwnedRepos}" ItemTemplate="{StaticResource RepoTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding ElementName=OwnedRepos, Path=SelectedItem}" />
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </ListBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

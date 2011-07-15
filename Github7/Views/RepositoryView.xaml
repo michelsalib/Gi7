@@ -1,0 +1,53 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Github7.Views.RepositoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    DataContext="{Binding Path=RepositoryViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Title="{Binding Repository.Fullname}">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="Details">
+                <StackPanel>
+                    <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap"/>
+                    <HyperlinkButton Content="Website" HorizontalAlignment="Right" NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding Repository.Watchers}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="0" />
+                        <TextBlock Text="Watchers" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" />
+
+                        <TextBlock Text="{Binding Repository.Forks}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="1" Grid.Row="0" />
+                        <TextBlock Text="Forks" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="0" />
+                    </Grid>
+                    <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}" TargetName="_blank" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="item2">
+                <Grid/>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+    
+</phone:PhoneApplicationPage>

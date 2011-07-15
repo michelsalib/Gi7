@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Github7.Controls.LoginPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    DataContext="{Binding Path=LoginPanelViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Username"/>
+        <TextBox Text="{Binding Username, Mode=TwoWay}"/>
+        <TextBlock Text="Password"/>
+        <PasswordBox Password="{Binding Password, Mode=TwoWay}"/>
+        <Button Content="Login" Command="{Binding LoginCommand}"/>
+    </StackPanel>
+</UserControl>

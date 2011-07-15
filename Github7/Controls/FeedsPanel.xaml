@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Github7.Controls.FeedsPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    DataContext="{Binding Path=FeedsPanelViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <ListBox ItemsSource="{Binding Feeds}" x:Name="FeedsList">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Image Source="{Binding Path=User.Avatar}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Source="{Binding Path=Image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />
+                    <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
+                        <Paragraph>
+                            <Run Text="{Binding Actor}" FontWeight="Bold" />
+                            <Run Text="{Binding Template}" />
+                            <Run Text="{Binding Repository.Fullname}" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="{Binding Path=CreatedAt}" Foreground="#CCC" FontStyle="Italic" />
+                        </Paragraph>
+                    </RichTextBox>
+                    <Image Source="{Binding Path=Image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        <Interactivity:Interaction.Triggers>
+            <Interactivity:EventTrigger EventName="SelectionChanged">
+                <Command:EventToCommand Command="{Binding FeedSelectedCommand}" CommandParameter="{Binding ElementName=FeedsList, Path=SelectedItem}" />
+            </Interactivity:EventTrigger>
+        </Interactivity:Interaction.Triggers>
+    </ListBox>
+</UserControl>

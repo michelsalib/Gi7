@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Github7.Controls.UsersPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480"
+    DataContext="{Binding Path=UsersPanelViewModel, Source={StaticResource ViewModelLocator}}">
+
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Resources>
+                <DataTemplate x:Key="UserTemplate">
+                    <StackPanel Orientation="Horizontal" Margin="0,2">
+                        <Image Source="{Binding Path=Avatar}" Width="50" Height="50" />
+                        <TextBlock Text="{Binding Login}" FontSize="26" VerticalAlignment="Center" Margin="10,0,0,0" />
+                    </StackPanel>
+                </DataTemplate>
+            </StackPanel.Resources>
+            <TextBlock Text="Following" FontSize="30"/>
+            <ListBox x:Name="Following" ItemsSource="{Binding Following}" ItemTemplate="{StaticResource UserTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                        <Command:EventToCommand Command="{Binding UserSelectedCommand}" CommandParameter="{Binding ElementName=Following, Path=SelectedItem}" />
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </ListBox>
+            <TextBlock Text="Followers" FontSize="30"/>
+            <ListBox x:Name="Followers" ItemsSource="{Binding Followers}" ItemTemplate="{StaticResource UserTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                        <Command:EventToCommand Command="{Binding UserSelectedCommand}" CommandParameter="{Binding ElementName=Followers, Path=SelectedItem}" />
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </ListBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

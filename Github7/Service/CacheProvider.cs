@@ -19,7 +19,7 @@ namespace Github7.Service
 
         public void Save(String key, object item)
         {
-            var file = key.Replace('/', '_');
+            var file = key.Replace('/', '_').Replace('?', '_').Replace('=', '_').Replace('&', '_');
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             using (var stream = store.OpenFile(_path + file, FileMode.Create))
             {

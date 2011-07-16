@@ -111,12 +111,12 @@ namespace Github7.Service
         /// Gets the current user private news feed
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<Feed> GetNewsFeed()
+        public ObservableCollection<Feed> GetNewsFeed(int page = 1)
         {
             var feedClient = new CachedClient("https://github.com/", Username, _password);
             feedClient.AddHandler("application/json", new FeedDeserializer());
 
-            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json", Username));
+            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json?page=", Username, page));
 
             return result;
         }
@@ -159,6 +159,16 @@ namespace Github7.Service
         public User GetUser(string username, Action<User> callback)
         {
             return _client.Get<User>(String.Format("/users/{0}", username), callback);
+        }
+
+        public ObservableCollection<Push> GetCommits(string username, string repo)
+        {
+            return _client.GetList<Push>(String.Format("/repos/{0}/{1}/commits", username, repo));
+        }
+
+        public ObservableCollection<PullRequest> GetPullRequests(string username, string repo)
+        {
+            return _client.GetList<PullRequest>(String.Format("/repos/{0}/{1}/pulls", username, repo));
         }
     }
 }

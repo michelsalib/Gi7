@@ -46,8 +46,37 @@
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem Header="item2">
-                <Grid/>
+            <controls:PivotItem Header="Commits">
+                <ListBox ItemsSource="{Binding Commits}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="450">
+                                <Image Source="{Binding Author.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <TextBlock Text="{Binding Path=Author.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                                <TextBlock Text="{Binding Path=Commit.Author.Date}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                                <TextBlock Text="{Binding Path=Commit.Message}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="Pull requests">
+                <ListBox ItemsSource="{Binding PullRequests}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="450">
+                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25"/>
+                                    <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

@@ -88,6 +88,8 @@
       <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AboutPanelViewModel.cs" />
+    <Compile Include="Model\Commit.cs" />
+    <Compile Include="Model\Committer.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
     <Compile Include="Model\Feed\DeleteFeed.cs" />
     <Compile Include="Model\Feed\CreateFeed.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Model\Feed\PushFeed.cs" />
     <Compile Include="Model\Feed\WatchFeed.cs" />
     <Compile Include="Model\PullRequest.cs" />
+    <Compile Include="Model\Push.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
     <Compile Include="Service\AuthenticatedEventArgs.cs" />

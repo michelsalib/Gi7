@@ -98,6 +98,7 @@
     <Compile Include="Model\Feed\PullRequestFeed.cs" />
     <Compile Include="Model\Feed\PushFeed.cs" />
     <Compile Include="Model\Feed\WatchFeed.cs" />
+    <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\PullRequest.cs" />
     <Compile Include="Model\Push.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
     <Compile Include="Utils\TiltEffect.cs" />
     <Compile Include="Views\UserView.xaml.cs">

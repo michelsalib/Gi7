@@ -7,12 +7,14 @@
     xmlns:templates="clr-namespace:Github7.Controls"
     xmlns:service="clr-namespace:Github7.Service"
     xmlns:utils="clr-namespace:Github7.Utils"
+    xmlns:converters="clr-namespace:Github7.Utils.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d">
 
     <!--Application Resources-->
     <Application.Resources>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <service:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
     </Application.Resources>
 

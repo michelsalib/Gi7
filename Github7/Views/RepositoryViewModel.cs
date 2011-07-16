@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GalaSoft.MvvmLight;
-using Github7.Service;
-using Github7.Model;
 using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Github7.Model;
+using Github7.Service;
+using Github7.Service.Navigation;
 
 namespace Github7.Views
 {
@@ -59,13 +52,33 @@ namespace Github7.Views
             }
         }
 
-        public RepositoryViewModel(GithubService githubService, String user, String repo)
+        private ObservableCollection<Issue> _issues;
+        public ObservableCollection<Issue> Issues
+        {
+            get { return _issues; }
+            set
+            {
+                if (_issues != value)
+                {
+                    _issues = value;
+                    RaisePropertyChanged("Issues");
+                }
+            }
+        }
+
+        public RelayCommand OwnerCommand { get; private set; }
+
+        public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
             Repository = githubService.GetRepository(user, repo, r => Repository = r);
 
             Commits = githubService.GetCommits(user, repo);
 
             PullRequests = githubService.GetPullRequests(user, repo);
+
+            Issues = githubService.GetIssues(user, repo);
+
+            OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
         }
     }
 }

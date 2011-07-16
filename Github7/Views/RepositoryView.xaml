@@ -33,6 +33,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="{Binding Repository.Watchers}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="0" />
@@ -40,6 +41,26 @@
 
                         <TextBlock Text="{Binding Repository.Forks}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="1" Grid.Row="0" />
                         <TextBlock Text="Forks" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="0" />
+
+                        <TextBlock Text="{Binding PullRequests.Count}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="1" />
+                        <TextBlock Text="Pull requests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1" />
+
+                        <TextBlock Text="{Binding Issues.Count}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="1" Grid.Row="1" />
+                        <TextBlock Text="Issues" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" />
+                    </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Owner" Grid.Row="0" VerticalAlignment="Center" />
+                        <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0" Command="{Binding OwnerCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Repository.Owner.AvatarUrl}" Width="34" Height="34" />
+                                <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center" Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" />
                     </Grid>
                     <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}" TargetName="_blank" HorizontalAlignment="Right"/>
                 </StackPanel>
@@ -54,7 +75,7 @@
                                 <Image Source="{Binding Author.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <TextBlock Text="{Binding Path=Author.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                                 <TextBlock Text="{Binding Path=Commit.Author.Date}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                                <TextBlock Text="{Binding Path=Commit.Message}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Commit.Message}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -67,7 +88,25 @@
                         <DataTemplate>
                             <StackPanel Width="450">
                                 <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25"/>
+                                    <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="Issues">
+                <ListBox ItemsSource="{Binding Issues}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="450">
+                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85" />
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25"/>
                                     <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />

@@ -89,7 +89,7 @@ namespace Github7.Service
                     return new RepositoryDataModel();
                 }
                 else
-                    return new RepositoryViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"));
+                    return new RepositoryViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"));
             }
         }
 
@@ -103,7 +103,7 @@ namespace Github7.Service
                     return new UserDataModel();
                 }
                 else
-                    return new UserViewModel(GithubService);
+                    return new UserViewModel(GithubService, NavigationService.GetParameter("user"));
             }
         }
     }

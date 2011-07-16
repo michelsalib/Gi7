@@ -21,13 +21,16 @@ namespace Github7.Resources.DesignData
 
         public ObservableCollection<PullRequest> PullRequests { get; set; }
 
+        public ObservableCollection<Issue> Issues { get; set; }
+
         public RepositoryDataModel()
         {
             Repository = new Repository()
             {
                 Owner = new User()
                 {
-                    Login = "michelsalib"
+                    Login = "michelsalib",
+                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
                 },
                 Name = "symfony",
                 HtmlUrl = "http://github.com/michelsalib/symfony",
@@ -39,7 +42,8 @@ namespace Github7.Resources.DesignData
                 {
                     Owner = new User()
                     {
-                        Login = "symfony"
+                        Login = "symfony",
+                        AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317"
                     },
                     Name = "symfnoy"
                 }
@@ -68,6 +72,20 @@ namespace Github7.Resources.DesignData
             {
                 Title = "my pull requets",
                 Body = "the description",
+                UpdatedAt = DateTime.Now,
+                State = "Open",
+                User = new User()
+                {
+                    Login = "michelsalib",
+                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                },
+            });
+
+            Issues = new ObservableCollection<Issue>();
+            Issues.Add(new Issue()
+            {
+                Title = "my issue",
+                Body = "the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long",
                 UpdatedAt = DateTime.Now,
                 State = "Open",
                 User = new User()

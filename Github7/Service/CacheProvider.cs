@@ -19,7 +19,7 @@ namespace Github7.Service
 
         public void Save(String key, object item)
         {
-            var file = key.Replace('/', '_').Replace('?', '_').Replace('=', '_').Replace('&', '_');
+            var file = CleanFilePath(key);
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             using (var stream = store.OpenFile(_path + file, FileMode.Create))
             {
@@ -30,7 +30,7 @@ namespace Github7.Service
 
         public T Get<T>(String key)
         {
-            var file = key.Replace('/', '_');
+            var file = CleanFilePath(key);
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -55,13 +55,18 @@ namespace Github7.Service
             }
         }
 
-        internal void Clear()
+        public void Clear()
         {
             foreach (var file in IsolatedStorageFile.GetUserStoreForApplication().GetFileNames(_path + "*"))
             {
                 IsolatedStorageFile.GetUserStoreForApplication().DeleteFile(_path + file);
             }
             IsolatedStorageFile.GetUserStoreForApplication().DeleteDirectory(_path.TrimEnd('/'));
+        }
+
+        private String CleanFilePath(String key)
+        {
+            return key.Replace('/', '_').Replace('?', '_').Replace('=', '_').Replace('&', '_');
         }
     }
 }

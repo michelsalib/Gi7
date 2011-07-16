@@ -14,14 +14,11 @@ namespace Github7.Resources.DesignData
 {
     public class UserDataModel
     {
-        public User User { get; set; }
+        public String User { get; set; }
 
         public UserDataModel()
         {
-            User = new User()
-            {
-                Login = "michelsalib",
-            };
+            User = "michelsalib";
         }
     }
 }

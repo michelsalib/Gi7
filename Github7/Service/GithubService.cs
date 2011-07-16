@@ -116,7 +116,7 @@ namespace Github7.Service
             var feedClient = new CachedClient("https://github.com/", Username, _password);
             feedClient.AddHandler("application/json", new FeedDeserializer());
 
-            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json?page=", Username, page));
+            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json?page={1}", Username, page));
 
             return result;
         }
@@ -169,6 +169,11 @@ namespace Github7.Service
         public ObservableCollection<PullRequest> GetPullRequests(string username, string repo)
         {
             return _client.GetList<PullRequest>(String.Format("/repos/{0}/{1}/pulls", username, repo));
+        }
+
+        public ObservableCollection<Issue> GetIssues(string username, string repo)
+        {
+            return _client.GetList<Issue>(String.Format("/repos/{0}/{1}/issues", username, repo));
         }
     }
 }

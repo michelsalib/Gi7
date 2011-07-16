@@ -15,6 +15,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <service:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
     </Application.Resources>
 

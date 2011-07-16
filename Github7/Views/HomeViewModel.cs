@@ -8,6 +8,20 @@ namespace Github7.Views
 {
     public class HomeViewModel : ViewModelBase
     {
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    RaisePropertyChanged("IsLoading");
+                }
+            }
+        }
+
         public HomeViewModel(GithubService githubService)
         {
             // default loading
@@ -35,6 +49,10 @@ namespace Github7.Views
 
             // listening to logout
             Messenger.Default.Register<bool>(this, "logout", b => githubService.Logout());
+
+            // listening to loading
+            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
+            IsLoading = githubService.IsLoading;
         }
 
         private void _loadConnected()

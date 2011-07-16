@@ -16,6 +16,16 @@ namespace Github7.Service
     {
         public String Username { get; private set; }
 
+        public bool IsLoading
+        {
+            get
+            {
+                if (_client != null)
+                    return _client.IsLoading;
+                return false;
+            }
+        } 
+
         private bool _isAuthenticated;
         public bool IsAuthenticated
         {
@@ -37,9 +47,9 @@ namespace Github7.Service
         }
 
         public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
+        public event EventHandler<LoadingEventArgs> Loading;
 
         private CachedClient _client;
-
         private String _password;
 
         /// <summary>
@@ -47,16 +57,19 @@ namespace Github7.Service
         /// </summary>
         public GithubService()
         {
-            Username = "default";
-            _client = new CachedClient("https://api.github.com", Username);
-
-            String username = null;
-            String password = null;
+            String username;
+            String password;
             if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
                 IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
             {
                 AuthenticateUser(username, password);
                 IsAuthenticated = true;
+            }
+            else
+            {
+                Username = "default";
+                _client = new CachedClient("https://api.github.com", Username);
+                _client.Loading += (s, e) => { if (Loading != null) Loading(this, e); };
             }
         }
 
@@ -71,6 +84,7 @@ namespace Github7.Service
             _password = password;
 
             _client = new CachedClient("https://api.github.com", username, password);
+            _client.Loading += (s, e) => { if (Loading != null) Loading(this, e); };
 
             _client.ExecuteAsync<User>(new RestRequest("/user"), r =>
             {
@@ -103,6 +117,7 @@ namespace Github7.Service
 
             _client.ClearCache();
             _client = new CachedClient("https://api.github.com", "");
+            _client.Loading += (s, e) => { if (Loading != null) Loading(this, e); };
 
             IsAuthenticated = false;
         }

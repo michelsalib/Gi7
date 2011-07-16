@@ -10,6 +10,20 @@ namespace Github7.Views
 {
     public class RepositoryViewModel : ViewModelBase
     {
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    RaisePropertyChanged("IsLoading");
+                }
+            }
+        }
+
         private Repository _repository;
         public Repository Repository
         {
@@ -79,6 +93,10 @@ namespace Github7.Views
             Issues = githubService.GetIssues(user, repo);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
+
+            // listening to loading
+            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
+            IsLoading = githubService.IsLoading;
         }
     }
 }

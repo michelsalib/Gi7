@@ -106,6 +106,7 @@
     <Compile Include="Service\AuthenticatedEventArgs.cs" />
     <Compile Include="Service\CachedClient.cs" />
     <Compile Include="Service\CacheProvider.cs" />
+    <Compile Include="Service\LoadingEventArgs.cs" />
     <Compile Include="Service\Navigation\INavigationService.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />

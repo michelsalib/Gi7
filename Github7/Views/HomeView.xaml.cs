@@ -21,23 +21,7 @@ namespace Github7.Views
     {
         public HomeView()
         {
-            Messenger.Default.Register<PanelMessage>(this, "homeAdd", p =>
-            {
-                Panorama.Items.Add(
-                    new PanoramaItem(){
-                        Content = Activator.CreateInstance(p.ViewType),
-                        Header = p.Header
-                    });
-            });
-
-            Messenger.Default.Register<bool>(this, "clearHome", p =>
-            {
-                Panorama.Items.Clear();
-            });
-
             InitializeComponent();
-
-            DataContext = new ViewModelLocator().HomeViewModel;
         }
 
         private void Logout(object sender, EventArgs e)

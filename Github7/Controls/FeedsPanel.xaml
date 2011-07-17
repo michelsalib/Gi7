@@ -10,8 +10,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480"
-    DataContext="{Binding Path=FeedsPanelViewModel, Source={StaticResource ViewModelLocator}}">
+    d:DesignHeight="480" d:DesignWidth="480">
 
     <ListBox ItemsSource="{Binding Feeds}" x:Name="FeedsList">
         <ListBox.ItemTemplate>

@@ -10,9 +10,8 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480"
-    DataContext="{Binding Path=RepositoryPanelViewModel, Source={StaticResource ViewModelLocator}}">
-
+    d:DesignHeight="480" d:DesignWidth="480">
+    
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
             <StackPanel.Resources>

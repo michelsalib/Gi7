@@ -87,7 +87,6 @@
     <Compile Include="Controls\AboutPanel.xaml.cs">
       <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AboutPanelViewModel.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
@@ -131,23 +130,19 @@
     <Compile Include="Controls\UsersPanel.xaml.cs">
       <DependentUpon>UsersPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\UsersPanelViewModel.cs" />
     <Compile Include="Controls\RepositoryPanel.xaml.cs">
       <DependentUpon>RepositoryPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RepositoryPanelViewModel.cs" />
     <Compile Include="Controls\LoginPanel.xaml.cs">
       <DependentUpon>LoginPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FeedsPanel.xaml.cs">
       <DependentUpon>FeedsPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FeedsPanelViewModel.cs" />
     <Compile Include="Controls\LoginPanelViewModel.cs" />
     <Compile Include="Controls\UserPanel.xaml.cs">
       <DependentUpon>UserPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\UserPanelViewModel.cs" />
     <Compile Include="Views\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>

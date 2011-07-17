@@ -10,7 +10,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480"
     DataContext="{Binding Path=LoginPanelViewModel, Source={StaticResource ViewModelLocator}}">
-
+    
     <StackPanel Orientation="Vertical">
         <TextBlock Text="Username"/>
         <TextBox Text="{Binding Username, Mode=TwoWay}"/>

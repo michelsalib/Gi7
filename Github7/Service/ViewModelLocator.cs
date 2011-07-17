@@ -30,52 +30,16 @@ namespace Github7.Service
             }
         }
 
-        public FeedsPanelViewModel FeedsPanelViewModel
+        public Object HomeViewModel
         {
             get
             {
-                return new FeedsPanelViewModel(GithubService, NavigationService);
-            }
-        }
-
-        public UserPanelViewModel UserPanelViewModel
-        {
-            get
-            {
-                return new UserPanelViewModel(GithubService, NavigationService.GetParameter("user", GithubService.Username));
-            }
-        }
-
-        public RepositoryPanelViewModel RepositoryPanelViewModel
-        {
-            get
-            {
-                return new RepositoryPanelViewModel(GithubService, NavigationService, NavigationService.GetParameter("user", GithubService.Username));
-            }
-        }
-
-        public UsersPanelViewModel UsersPanelViewModel
-        {
-            get
-            {
-                return new UsersPanelViewModel(GithubService, NavigationService, NavigationService.GetParameter("user", GithubService.Username));
-            }
-        }
-
-        public AboutPanelViewModel AboutPanelViewModel
-        {
-            get
-            {
-                return new AboutPanelViewModel(GithubService, NavigationService);
-            }
-        }
-
-        public const string HomeUrl = "/Views/HomeView.xaml";
-        public HomeViewModel HomeViewModel
-        {
-            get
-            {
-                return new HomeViewModel(GithubService);
+                if (ViewModelBase.IsInDesignModeStatic)
+                {
+                    return null;
+                }
+                else
+                    return new HomeViewModel(GithubService, NavigationService);
             }
         }
 
@@ -103,7 +67,7 @@ namespace Github7.Service
                     return new UserDataModel();
                 }
                 else
-                    return new UserViewModel(GithubService, NavigationService.GetParameter("user"));
+                    return new UserViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"));
             }
         }
     }

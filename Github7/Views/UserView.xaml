@@ -9,6 +9,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:utils="clr-namespace:Github7.Utils"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -21,7 +23,13 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="{Binding User}">
+        <controls:Pivot Title="{Binding Username}">
+            <Interactivity:Interaction.Triggers>
+                <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+                </Interactivity:EventTrigger>
+            </Interactivity:Interaction.Triggers>
+            
             <!--Pivot item one-->
             <controls:PivotItem Header="Details">
                 <localControls:UserPanel />

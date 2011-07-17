@@ -5,6 +5,8 @@ using GalaSoft.MvvmLight.Command;
 using Github7.Model;
 using Github7.Service;
 using Github7.Service.Navigation;
+using System.Windows.Controls;
+using Microsoft.Phone.Controls;
 
 namespace Github7.Views
 {
@@ -81,18 +83,30 @@ namespace Github7.Views
         }
 
         public RelayCommand OwnerCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
             Repository = githubService.GetRepository(user, repo, r => Repository = r);
-
-            Commits = githubService.GetCommits(user, repo);
 
             PullRequests = githubService.GetPullRequests(user, repo);
 
             Issues = githubService.GetIssues(user, repo);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
+            {
+                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                switch (header)
+                {
+                    case "Commits":
+                        if(Commits == null)
+                            Commits = githubService.GetCommits(user, repo);
+                        break;
+                    default:
+                        break;
+                }
+            });
 
             // listening to loading
             githubService.Loading += (s, e) => IsLoading = e.IsLoading;

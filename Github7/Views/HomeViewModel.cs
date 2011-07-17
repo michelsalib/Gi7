@@ -201,8 +201,7 @@ namespace Github7.Views
             });
             PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                if(IsLoggedIn)
-                    _loadPanel((args.AddedItems[0] as PanoramaItem).Header as String);
+                _loadPanel((args.AddedItems[0] as PanoramaItem).Header as String);
             });
             
             // init

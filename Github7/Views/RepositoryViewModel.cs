@@ -84,6 +84,7 @@ namespace Github7.Views
 
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand<Push> CommitSelectedCommand { get; private set; }
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
@@ -105,6 +106,13 @@ namespace Github7.Views
                         break;
                     default:
                         break;
+                }
+            });
+            CommitSelectedCommand = new RelayCommand<Push>(push =>
+            {
+                if (push != null)
+                {
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
                 }
             });
 

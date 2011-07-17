@@ -70,5 +70,19 @@ namespace Github7.Service
                     return new UserViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"));
             }
         }
+
+        public const string CommitUrl = "/Views/CommitView.xaml?user={0}&repo={1}&sha={2}";
+        public Object CommitViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                {
+                    return new CommitDataModel();
+                }
+                else
+                    return new CommitViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
+            }
+        }
     }
 }

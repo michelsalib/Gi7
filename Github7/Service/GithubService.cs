@@ -181,6 +181,11 @@ namespace Github7.Service
             return _client.GetList<Push>(String.Format("/repos/{0}/{1}/commits", username, repo));
         }
 
+        public Push GetCommit(string username, string repo, string sha, Action<Push> callback)
+        {
+            return _client.Get<Push>(String.Format("/repos/{0}/{1}/commits/{2}", username, repo, sha), callback);
+        }
+
         public ObservableCollection<PullRequest> GetPullRequests(string username, string repo)
         {
             return _client.GetList<PullRequest>(String.Format("/repos/{0}/{1}/pulls", username, repo));

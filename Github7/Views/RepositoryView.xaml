@@ -76,7 +76,12 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Header="Commits">
-                <ListBox ItemsSource="{Binding Commits}">
+                <ListBox ItemsSource="{Binding Commits}" x:Name="CommitsList">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="SelectionChanged">
+                            <Command:EventToCommand Command="{Binding CommitSelectedCommand}" CommandParameter="{Binding ElementName=CommitsList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="450">

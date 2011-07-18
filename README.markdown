@@ -8,6 +8,9 @@ This is a github app for windows phone 7 in a very early stage of development.
 - Display a User profile
 - Display a Repo details
 
+## Images
+You can find image on my corresponding blog post : http://www.michelsalib.com/2011/07/meet-github7-a-new-github-app-for-windows-phone-7/
+
 ## Dependencies
 The small dependencies are already packaged into the solution.
 - You must have the mango beta release installed on your phone and the correponding development tools

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Gi7")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SOGETI")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Gi7")]
-[assembly: AssemblyCopyright("Copyright © SOGETI 2011")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

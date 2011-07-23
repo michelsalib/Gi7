@@ -1,20 +1,29 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Gi7.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using Gi7.Model;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
     public class CommitViewModel : ViewModelBase
     {
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    RaisePropertyChanged("IsLoading");
+                }
+            }
+        }
+
         private String _repoName;
         public String RepoName
         {
@@ -55,11 +64,45 @@ namespace Gi7.Views
             }
         }
 
-        public CommitViewModel(Service.GithubService GithubService, string username, string repo, string sha)
+        private ObservableCollection<Comment> _comments;
+        public ObservableCollection<Comment> Comments
+        {
+            get { return _comments; }
+            set
+            {
+                if (_comments != value)
+                {
+                    _comments = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+
+        public CommitViewModel(Service.GithubService githubService, string username, string repo, string sha)
         {
             RepoName = String.Format("{0}/{1}", username, repo);
 
-            Commit = GithubService.GetCommit(username, repo, sha, p => Commit = p);
+            Commit = githubService.GetCommit(username, repo, sha, p => Commit = p);
+
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
+            {
+                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                switch (header)
+                {
+                    case "Comments":
+                        if (Comments == null)
+                            Comments = githubService.GetCommitComments(username, repo, sha);
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            // listening to loading
+            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
+            IsLoading = githubService.IsLoading;
         }
     }
 }

@@ -186,6 +186,11 @@ namespace Gi7.Service
             return _client.Get<Push>(String.Format("/repos/{0}/{1}/commits/{2}", username, repo, sha), callback);
         }
 
+        public ObservableCollection<Comment> GetCommitComments(string username, string repo, string sha)
+        {
+            return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/commits/{2}/comments", username, repo, sha));
+        }
+
         public ObservableCollection<PullRequest> GetPullRequests(string username, string repo)
         {
             return _client.GetList<PullRequest>(String.Format("/repos/{0}/{1}/pulls", username, repo));

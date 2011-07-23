@@ -16,7 +16,6 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    utils:TiltEffect.IsTiltEnabled="True"
     DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}">
 
     <Grid x:Name="LayoutRoot">
@@ -28,10 +27,7 @@
             </Interactivity:Interaction.Triggers>
             
             <controls:Panorama.Title>
-                <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
-                    <Image Source="/Gi7;component/Images/github-logo.png" Width="100" Height="100" />
-                    <TextBlock Text="Gi7" FontSize="100" />
-                </StackPanel>
+                    <TextBlock Text="Gi7" FontSize="100" Margin="0,50,0,0" />
             </controls:Panorama.Title>
 
             <controls:PanoramaItem Header="Login" Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}">

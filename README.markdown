@@ -9,7 +9,7 @@ This is a github app for windows phone 7 in a very early stage of development.
 - Display a Repo details
 
 ## Images
-You can find image on my corresponding blog post : http://www.michelsalib.com/2011/07/meet-github7-a-new-github-app-for-windows-phone-7/
+You can find image on my corresponding blog post : http://www.michelsalib.com/2011/07/meet-gi7-a-new-github-app-for-windows-phone-7/
 
 ## Dependencies
 The small dependencies are already packaged into the solution.

@@ -193,7 +193,7 @@ namespace Gi7.Views
             FeedSelectedCommand = new RelayCommand<Feed>(feed =>
             {
                 if (feed != null)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, feed.Repository.Owner.Login, feed.Repository.Name));
+                    navigationService.NavigateTo(feed.Destination);
             });
             UserSelectedCommand = new RelayCommand<User>(user => {
                 if (user != null)

@@ -34,5 +34,7 @@ namespace Gi7.Model
         public String Title { get; set; }
 
         public int Number { get; set; }
+
+        public int Comments { get; set; }
     }
 }

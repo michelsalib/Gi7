@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
-using System.Collections.Generic;
-using RestSharp.Deserializers;
+using Gi7.Service;
 
 namespace Gi7.Model.Feed
 {
@@ -40,6 +39,14 @@ namespace Gi7.Model.Feed
             get
             {
                 return null;
+            }
+        }
+
+        public virtual String Destination
+        {
+            get
+            {
+                return String.Format(ViewModelLocator.RepositoryUrl, Repository.Owner.Login, Repository.Name);
             }
         }
     }

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Gi7.Service;
 
 namespace Gi7.Model.Feed
 {
@@ -21,7 +22,7 @@ namespace Gi7.Model.Feed
         {
             get
             {
-                return "commented on";
+                return "commented commit on";
             }
         }
 
@@ -30,6 +31,14 @@ namespace Gi7.Model.Feed
             get
             {
                 return "/Gi7;component/Images/comment.png";
+            }
+        }
+
+        public override String Destination
+        {
+            get
+            {
+                return String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, Commit);
             }
         }
     }

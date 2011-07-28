@@ -200,5 +200,15 @@ namespace Gi7.Service
         {
             return _client.GetList<Issue>(String.Format("/repos/{0}/{1}/issues", username, repo));
         }
+
+        public Issue GetIssue(string username, string repo, string number, Action<Issue> callback)
+        {
+            return _client.Get<Issue>(String.Format("/repos/{0}/{1}/issues/{2}", username, repo, number), callback);
+        }
+
+        public ObservableCollection<Comment> GetIssueComments(string username, string repo, string number)
+        {
+            return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/issues/{2}/comments", username, repo, number));
+        }
     }
 }

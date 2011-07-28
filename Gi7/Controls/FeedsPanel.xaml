@@ -33,7 +33,7 @@
             </DataTemplate>
         </ListBox.ItemTemplate>
         <Interactivity:Interaction.Triggers>
-            <Interactivity:EventTrigger EventName="SelectionChanged">
+            <Interactivity:EventTrigger EventName="Tap">
                 <Command:EventToCommand Command="{Binding FeedSelectedCommand}" CommandParameter="{Binding ElementName=FeedsList, Path=SelectedItem}" />
             </Interactivity:EventTrigger>
         </Interactivity:Interaction.Triggers>

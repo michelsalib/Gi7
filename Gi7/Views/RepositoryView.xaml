@@ -77,7 +77,7 @@
             <controls:PivotItem Header="Commits">
                 <ListBox ItemsSource="{Binding Commits}" x:Name="CommitsList">
                     <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="SelectionChanged">
+                        <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding CommitSelectedCommand}" CommandParameter="{Binding ElementName=CommitsList, Path=SelectedItem}" />
                         </Interactivity:EventTrigger>
                     </Interactivity:Interaction.Triggers>
@@ -113,18 +113,33 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Issues">
-                <ListBox ItemsSource="{Binding Issues}">
+                <ListBox ItemsSource="{Binding Issues}" x:Name="IssuesList">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding IssueSelectedCommand}" CommandParameter="{Binding ElementName=IssuesList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="450">
-                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85" />
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25"/>
-                                    <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic"/>
-                                </StackPanel>
-                            </StackPanel>
+                            <RichTextBox Width="450">
+                                <Paragraph>
+                                    <Run Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" />
+                                </Paragraph>
+                                <Paragraph>
+                                    <Run Text="{Binding Path=Body}" />
+                                </Paragraph>
+                                <Paragraph TextAlignment="Right">
+                                    <Run Text="{Binding Path=Comments}"/>
+                                    <Run Text=" comments" />
+                                </Paragraph>
+                                <Paragraph>
+                                    <InlineUIContainer>
+                                        <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25"/>
+                                    </InlineUIContainer>
+                                    <Run Text="{Binding Path=User.Login}" FontWeight="Bold"/>
+                                    <Run Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic"/>
+                                </Paragraph>
+                            </RichTextBox>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

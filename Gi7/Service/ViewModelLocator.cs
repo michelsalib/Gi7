@@ -84,5 +84,19 @@ namespace Gi7.Service
                     return new CommitViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
             }
         }
+
+        public const string IssueUrl = "/Views/IssueView.xaml?user={0}&repo={1}&number={2}";
+        public Object IssueViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                {
+                    return new IssueDataModel();
+                }
+                else
+                    return new IssueViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
+            }
+        }
     }
 }

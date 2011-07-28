@@ -85,6 +85,7 @@ namespace Gi7.Views
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
+        public RelayCommand<Issue> IssueSelectedCommand { get; private set; }
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
@@ -113,6 +114,13 @@ namespace Gi7.Views
                 if (push != null)
                 {
                     navigationService.NavigateTo(String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
+                }
+            });
+            IssueSelectedCommand = new RelayCommand<Issue>(issue =>
+            {
+                if (issue != null)
+                {
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
 

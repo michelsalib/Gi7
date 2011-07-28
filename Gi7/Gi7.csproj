@@ -104,6 +104,7 @@
     <Compile Include="Model\Push.cs" />
     <Compile Include="Model\PushStats.cs" />
     <Compile Include="Resources\DesignData\CommitDataModel.cs" />
+    <Compile Include="Resources\DesignData\IssueDataModel.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
     <Compile Include="Service\AuthenticatedEventArgs.cs" />
@@ -121,6 +122,10 @@
       <DependentUpon>CommitView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CommitViewModel.cs" />
+    <Compile Include="Views\IssueView.xaml.cs">
+      <DependentUpon>IssueView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IssueViewModel.cs" />
     <Compile Include="Views\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
@@ -169,6 +174,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\IssueView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\UserView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -215,7 +224,6 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\github-logo.png" />
     <Resource Include="Images\comment.png" />
     <Resource Include="Images\create.png" />
     <Resource Include="Images\delete.png" />

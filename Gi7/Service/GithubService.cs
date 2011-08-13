@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 using System.Net;
 using Gi7.Model;
 using Gi7.Model.Feed;
 using Gi7.Utils;
 using RestSharp;
-using Microsoft.Practices.ServiceLocation;
-using System.Collections.ObjectModel;
-using System.IO.IsolatedStorage;
 
 namespace Gi7.Service
 {
@@ -209,6 +206,16 @@ namespace Gi7.Service
         public ObservableCollection<Comment> GetIssueComments(string username, string repo, string number)
         {
             return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/issues/{2}/comments", username, repo, number));
+        }
+
+        public PullRequest GetPullRequest(string username, string repo, string number, Action<PullRequest> callback)
+        {
+            return _client.Get<PullRequest>(String.Format("/repos/{0}/{1}/pulls/{2}", username, repo, number), callback);
+        }
+
+        public ObservableCollection<Comment> GetPullRequestComments(string username, string repo, string number)
+        {
+            return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/pulls/{2}/comments", username, repo, number));
         }
     }
 }

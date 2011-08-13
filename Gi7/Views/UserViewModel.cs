@@ -7,8 +7,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service;
-using Microsoft.Phone.Controls;
 using Gi7.Service.Navigation;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {

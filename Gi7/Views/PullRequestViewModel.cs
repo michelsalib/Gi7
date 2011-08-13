@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
-    public class IssueViewModel : ViewModelBase
+    public class PullRequestViewModel : ViewModelBase
     {
         private bool _isLoading;
         public bool IsLoading
@@ -35,30 +38,16 @@ namespace Gi7.Views
             }
         }
 
-        private String _issueName;
-        public String IssueName
+        private PullRequest _pullRequest;
+        public PullRequest PullRequest
         {
-            get { return _issueName; }
+            get { return _pullRequest; }
             set
             {
-                if (_issueName != value)
+                if (_pullRequest != value)
                 {
-                    _issueName = value;
-                    RaisePropertyChanged("IssueName");
-                }
-            }
-        }
-
-        private Issue _issue;
-        public Issue Issue
-        {
-            get { return _issue; }
-            set
-            {
-                if (_issue != value)
-                {
-                    _issue = value;
-                    RaisePropertyChanged("Issue");
+                    _pullRequest = value;
+                    RaisePropertyChanged("PullRequest");
                 }
             }
         }
@@ -72,18 +61,32 @@ namespace Gi7.Views
                 if (_comments != value)
                 {
                     _comments = value;
-                    RaisePropertyChanged("Comments");
+                    RaisePropertyChanged();
                 }
             }
         }
 
-        public IssueViewModel(Service.GithubService githubService, string username, string repo, string number)
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+
+        public PullRequestViewModel(Service.GithubService githubService, string username, string repo, string number)
         {
             RepoName = String.Format("{0}/{1}", username, repo);
-            IssueName = "Issue #" + number;
 
-            Issue = githubService.GetIssue(username, repo, number, i => Issue = i);
-            Comments = githubService.GetIssueComments(username, repo, number);
+            PullRequest = githubService.GetPullRequest(username, repo, number, pr => PullRequest = pr);
+
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
+            {
+                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                switch (header)
+                {
+                    case "Comments":
+                        if (Comments == null)
+                            Comments = githubService.GetIssueComments(username, repo, number);
+                        break;
+                    default:
+                        break;
+                }
+            });
 
             // listening to loading
             githubService.Loading += (s, e) => IsLoading = e.IsLoading;

@@ -95,7 +95,12 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Pull requests">
-                <ListBox ItemsSource="{Binding PullRequests}">
+                <ListBox ItemsSource="{Binding PullRequests}" x:Name="PullRequestsList">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding PullRequestSelectedCommand}" CommandParameter="{Binding ElementName=PullRequestsList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Width="450">

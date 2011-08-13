@@ -1,9 +1,9 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
+using Gi7.Controls;
 using Gi7.Resources.DesignData;
 using Gi7.Service.Navigation;
 using Gi7.Views;
-using Gi7.Controls;
 
 namespace Gi7.Service
 {
@@ -82,6 +82,20 @@ namespace Gi7.Service
                 }
                 else
                     return new CommitViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
+            }
+        }
+
+        public const string PullRequestUrl = "/Views/PullRequestView.xaml?user={0}&repo={1}&number={2}";
+        public Object PullRequestViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                {
+                    return new PullRequestDataModel();
+                }
+                else
+                    return new PullRequestViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
             }
         }
 

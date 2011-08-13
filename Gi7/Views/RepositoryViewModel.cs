@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service;
 using Gi7.Service.Navigation;
-using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -85,6 +85,7 @@ namespace Gi7.Views
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
+        public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
         public RelayCommand<Issue> IssueSelectedCommand { get; private set; }
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
@@ -114,6 +115,13 @@ namespace Gi7.Views
                 if (push != null)
                 {
                     navigationService.NavigateTo(String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
+                }
+            });
+            PullRequestSelectedCommand = new RelayCommand<PullRequest>(pullRequest =>
+            {
+                if (pullRequest != null)
+                {
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.PullRequestUrl, Repository.Owner.Login, Repository.Name, pullRequest.Number));
                 }
             });
             IssueSelectedCommand = new RelayCommand<Issue>(issue =>

@@ -105,6 +105,7 @@
     <Compile Include="Model\PushStats.cs" />
     <Compile Include="Resources\DesignData\CommitDataModel.cs" />
     <Compile Include="Resources\DesignData\IssueDataModel.cs" />
+    <Compile Include="Resources\DesignData\PullRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
     <Compile Include="Service\AuthenticatedEventArgs.cs" />
@@ -122,6 +123,10 @@
       <DependentUpon>CommitView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CommitViewModel.cs" />
+    <Compile Include="Views\PullRequestView.xaml.cs">
+      <DependentUpon>PullRequestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PullRequestViewModel.cs" />
     <Compile Include="Views\IssueView.xaml.cs">
       <DependentUpon>IssueView.xaml</DependentUpon>
     </Compile>
@@ -173,6 +178,10 @@
     <Page Include="Views\CommitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PullRequestView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\IssueView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -244,4 +253,7 @@
   </Target>
   -->
   <ProjectExtensions />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /y "$(TargetDir)Gi7.xap" "$(SolutionDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -1,24 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
+﻿using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using RestSharp;
-using Gi7.Model;
-using Gi7.Utils;
-using System.IO.IsolatedStorage;
-using Gi7.Service;
-using Gi7.Service.Navigation;
-using GalaSoft.MvvmLight.Ioc;
 
 namespace Gi7
 {

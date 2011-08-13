@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Gi7.Model;
 using Gi7.Model.Feed;
 using Newtonsoft.Json.Linq;
 using RestSharp.Deserializers;
-using RestSharp.Extensions;
 
 namespace Gi7.Utils
 {

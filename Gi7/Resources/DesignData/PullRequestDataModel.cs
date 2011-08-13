@@ -1,7 +1,7 @@
 ﻿
 namespace Gi7.Resources.DesignData
 {
-    public class IssueDataModel
+    public class PullRequestDataModel
     {
 
     }

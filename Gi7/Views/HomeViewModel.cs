@@ -1,17 +1,15 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
-using Gi7.Service;
-using Gi7.Utils.Messages;
-using Gi7.Controls;
-using Gi7.Model;
-using GalaSoft.MvvmLight.Command;
-using System.Collections.ObjectModel;
-using Gi7.Model.Feed;
-using Gi7.Service.Navigation;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using Gi7.Model;
+using Gi7.Model.Feed;
+using Gi7.Service;
+using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views

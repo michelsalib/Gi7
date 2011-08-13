@@ -2,9 +2,9 @@
 
 namespace Gi7.Views
 {
-    public partial class UserView : PhoneApplicationPage
+    public partial class PullRequestView : PhoneApplicationPage
     {
-        public UserView()
+        public PullRequestView()
         {
             InitializeComponent();
         }

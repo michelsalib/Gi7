@@ -43,7 +43,7 @@
                             <Grid Width="440">
                                 <Image Source="{Binding User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                <TextBlock Text="{Binding UpdatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                                <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
                                 <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>

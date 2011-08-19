@@ -59,6 +59,7 @@
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\MVVMLightToolkit\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -118,7 +119,6 @@
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
-    <Compile Include="Utils\TiltEffect.cs" />
     <Compile Include="Views\CommitView.xaml.cs">
       <DependentUpon>CommitView.xaml</DependentUpon>
     </Compile>
@@ -242,7 +242,6 @@
     <Resource Include="Images\push.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

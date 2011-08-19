@@ -11,7 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
-
+    
     <ListBox ItemsSource="{Binding Feeds}" x:Name="FeedsList">
         <ListBox.ItemTemplate>
             <DataTemplate>
@@ -25,7 +25,7 @@
                             <Run Text="{Binding Repository.Fullname}" />
                         </Paragraph>
                         <Paragraph>
-                            <Run Text="{Binding Path=CreatedAt}" Foreground="#CCC" FontStyle="Italic" />
+                            <Run Text="{Binding Path=CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" Foreground="#CCC" FontStyle="Italic" />
                         </Paragraph>
                     </RichTextBox>
                     <Image Source="{Binding Path=Image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />

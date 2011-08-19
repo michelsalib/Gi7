@@ -36,6 +36,18 @@
                             <Image Source="{Binding PullRequest.User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
                             <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                             <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                            <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap">
+                                <Paragraph>
+                                    <Run Text="{Binding PullRequest.State}" />
+                                    <Run Text=" with "/>
+                                    <Run Text="{Binding PullRequest.Additions}" FontWeight="Bold" Foreground="Green"/>
+                                    <Run Text=" addition(s) and "/>
+                                    <Run Text="{Binding PullRequest.Deletions}" FontWeight="Bold" Foreground="Red"/>
+                                    <Run Text=" deletion(s) over "/>
+                                    <Run Text="{Binding PullRequest.Commits}" FontWeight="Bold"/>
+                                    <Run Text=" commit(s)"/>
+                                </Paragraph>
+                            </RichTextBox>
                         </Grid>
                         <TextBlock Text="{Binding PullRequest.Body}" TextWrapping="Wrap" />
                     </StackPanel>

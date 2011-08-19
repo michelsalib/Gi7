@@ -114,7 +114,8 @@ namespace Gi7.Views
             {
                 if (issue != null)
                 {
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, issue.Number));
+                    var destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
+                    navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
         }

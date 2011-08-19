@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Gi7.Utils;
 
 namespace Gi7
 {
@@ -124,6 +125,8 @@ namespace Gi7
             // Set the root visual to allow the application to render
             if (RootVisual != RootFrame)
                 RootVisual = RootFrame;
+
+            GlobalLoading.Instance.Initialize(RootFrame);
 
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;

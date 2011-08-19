@@ -10,20 +10,6 @@ namespace Gi7.Views
 {
     public class PullRequestViewModel : ViewModelBase
     {
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set
-            {
-                if (_isLoading != value)
-                {
-                    _isLoading = value;
-                    RaisePropertyChanged("IsLoading");
-                }
-            }
-        }
-
         private String _repoName;
         public String RepoName
         {
@@ -87,10 +73,6 @@ namespace Gi7.Views
                         break;
                 }
             });
-
-            // listening to loading
-            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
-            IsLoading = githubService.IsLoading;
         }
     }
 }

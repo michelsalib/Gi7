@@ -13,16 +13,6 @@ namespace Gi7.Service
     {
         public String Username { get; private set; }
 
-        public bool IsLoading
-        {
-            get
-            {
-                if (_client != null)
-                    return _client.IsLoading;
-                return false;
-            }
-        } 
-
         private bool _isAuthenticated;
         public bool IsAuthenticated
         {
@@ -44,7 +34,6 @@ namespace Gi7.Service
         }
 
         public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
-        public event EventHandler<LoadingEventArgs> Loading;
 
         private CachedClient _client;
         private String _password;
@@ -66,7 +55,6 @@ namespace Gi7.Service
             {
                 Username = "default";
                 _client = new CachedClient("https://api.github.com", Username);
-                _client.Loading += (s, e) => { if (Loading != null) Loading(this, e); };
             }
         }
 
@@ -81,7 +69,6 @@ namespace Gi7.Service
             _password = password;
 
             _client = new CachedClient("https://api.github.com", username, password);
-            _client.Loading += (s, e) => { if (Loading != null) Loading(this, e); };
 
             _client.ExecuteAsync<User>(new RestRequest("/user"), r =>
             {
@@ -114,7 +101,6 @@ namespace Gi7.Service
 
             _client.ClearCache();
             _client = new CachedClient("https://api.github.com", "");
-            _client.Loading += (s, e) => { if (Loading != null) Loading(this, e); };
 
             IsAuthenticated = false;
         }

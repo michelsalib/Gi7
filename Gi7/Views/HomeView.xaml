@@ -54,7 +54,6 @@
                 <localControls:AboutPanel/>
             </controls:PanoramaItem>
         </controls:Panorama>
-        <ProgressBar IsIndeterminate="{Binding IsLoading}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" VerticalAlignment="Top" />
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

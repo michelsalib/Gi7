@@ -12,20 +12,6 @@ namespace Gi7.Views
 {
     public class RepositoryViewModel : ViewModelBase
     {
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set
-            {
-                if (_isLoading != value)
-                {
-                    _isLoading = value;
-                    RaisePropertyChanged("IsLoading");
-                }
-            }
-        }
-
         private Repository _repository;
         public Repository Repository
         {
@@ -131,10 +117,6 @@ namespace Gi7.Views
                     navigationService.NavigateTo(String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
-
-            // listening to loading
-            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
-            IsLoading = githubService.IsLoading;
         }
     }
 }

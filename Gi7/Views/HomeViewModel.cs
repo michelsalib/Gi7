@@ -38,20 +38,6 @@ namespace Gi7.Views
             }
         }
 
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set
-            {
-                if (_isLoading != value)
-                {
-                    _isLoading = value;
-                    RaisePropertyChanged("IsLoading");
-                }
-            }
-        }
-
         private User _user;
         public User User
         {
@@ -227,10 +213,6 @@ namespace Gi7.Views
 
             // listening to logout
             Messenger.Default.Register<bool>(this, "logout", b => githubService.Logout());
-
-            // listening to loading
-            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
-            IsLoading = githubService.IsLoading;
         }
 
         private void _loadPanel(string header)

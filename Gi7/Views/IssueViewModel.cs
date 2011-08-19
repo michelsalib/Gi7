@@ -7,20 +7,6 @@ namespace Gi7.Views
 {
     public class IssueViewModel : ViewModelBase
     {
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set
-            {
-                if (_isLoading != value)
-                {
-                    _isLoading = value;
-                    RaisePropertyChanged("IsLoading");
-                }
-            }
-        }
-
         private String _repoName;
         public String RepoName
         {
@@ -84,10 +70,6 @@ namespace Gi7.Views
 
             Issue = githubService.GetIssue(username, repo, number, i => Issue = i);
             Comments = githubService.GetIssueComments(username, repo, number);
-
-            // listening to loading
-            githubService.Loading += (s, e) => IsLoading = e.IsLoading;
-            IsLoading = githubService.IsLoading;
         }
     }
 }

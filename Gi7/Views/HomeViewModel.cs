@@ -10,6 +10,8 @@ using Gi7.Model;
 using Gi7.Model.Feed;
 using Gi7.Service;
 using Gi7.Service.Navigation;
+using Gi7.Service.Request;
+using Gi7.Service.Request.Base;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -80,16 +82,16 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<Feed> _feeds;
-        public ObservableCollection<Feed> Feeds
+        private IGithubPaginatedRequest<Feed> _feedsRequest;
+        public IGithubPaginatedRequest<Feed> FeedsRequest
         {
-            get { return _feeds; }
+            get { return _feedsRequest; }
             set
             {
-                if (_feeds != value)
+                if (_feedsRequest != value)
                 {
-                    _feeds = value;
-                    RaisePropertyChanged("Feeds");
+                    _feedsRequest = value;
+                    RaisePropertyChanged("FeedsRequest");
                 }
             }
         }
@@ -99,7 +101,7 @@ namespace Gi7.Views
             get
             {
                 if (Repos != null)
-                    return Repos.Where(r => r.Owner.Login == _githubService.Username);
+                    return Repos.Where(r => r.Owner.Login == GithubService.Username);
                 else
                     return null;
             }
@@ -109,7 +111,7 @@ namespace Gi7.Views
         {
             get {
                 if(Repos != null)
-                    return Repos.Where(r => r.Owner.Login != _githubService.Username);
+                    return Repos.Where(r => r.Owner.Login != GithubService.Username);
                 else
                     return null;
             }
@@ -157,16 +159,28 @@ namespace Gi7.Views
             }
         }
 
+        private GithubService _githubService;
+        public GithubService GithubService
+        {
+            get { return _githubService; }
+            set
+            {
+                if (_githubService != value)
+                {
+                    _githubService = value;
+                    RaisePropertyChanged("GithubService");
+                }
+            }
+        }
+
         public RelayCommand<Feed> FeedSelectedCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
 
-        private readonly GithubService _githubService;
-
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
-            _githubService = githubService;
+            GithubService = githubService;
 
             // commands
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
@@ -189,7 +203,7 @@ namespace Gi7.Views
             });
             
             // init
-            if (_githubService.IsAuthenticated)
+            if (GithubService.IsAuthenticated)
             {
                 _login();
             }
@@ -220,13 +234,13 @@ namespace Gi7.Views
             switch (header)
             {
                 case "News Feed":
-                    if(Feeds == null)
-                        Feeds = _githubService.GetNewsFeed();
+                    if (FeedsRequest == null)
+                        FeedsRequest = new FeedsRequest(GithubService.Username);
                     break;
                 case "Repos":
                     if (Repos == null)
                     {
-                        Repos = _githubService.GetWatchedRepos(_githubService.Username);
+                        Repos = GithubService.Load(new WatchedRepoRequest(GithubService.Username));
                         Repos.CollectionChanged += (sender, args) =>
                         {
                             RaisePropertyChanged("WatchedRepos");
@@ -236,19 +250,19 @@ namespace Gi7.Views
                     break;
                 case "Users":
                     if(Following == null)
-                        Following = _githubService.GetFollowing(_githubService.Username);
+                        Following = GithubService.Load(new FollowingsRequest(GithubService.Username));
                     if (Followers == null)
-                        Followers = _githubService.GetFollowers(_githubService.Username);
+                        Followers = GithubService.Load(new FollowersRequest(GithubService.Username));
                     break;
                 case "Profile":
                     if(User == null)
-                        User = _githubService.GetUser(_githubService.Username, u => User = u);
+                        User = GithubService.Load(new UserRequest(GithubService.Username), u => User = u);
                     break;
                 case "About":
                     if(Michelsalib == null)
-                        Michelsalib = _githubService.GetUser("michelsalib", u => Michelsalib = u);
+                        Michelsalib = GithubService.Load(new UserRequest("michelsalib"), u => Michelsalib = u);
                     if(Gi7 == null)
-                        Gi7 = _githubService.GetRepository("michelsalib", "Gi7", r => Gi7 = r);
+                        Gi7 = GithubService.Load(new RepositoryRequest("michelsalib", "Gi7"), r => Gi7 = r);
                     break;
                 default:
                     break;
@@ -266,7 +280,7 @@ namespace Gi7.Views
         {
             IsLoggedIn = false;
             User = null;
-            Feeds = null;
+            FeedsRequest = null;
             Repos = null;
             Followers = null;
             Following = null;

@@ -16,7 +16,7 @@
         <StackPanel Orientation="Vertical">
             <StackPanel.Resources>
                 <DataTemplate x:Key="RepoTemplate">
-                    <TextBlock FontSize="26" Text="{Binding Fullname}" />
+                    <TextBlock FontSize="26" Text="{Binding Fullname}" TextWrapping="Wrap" />
                 </DataTemplate>
             </StackPanel.Resources>
             <TextBlock Text="Watched Repos" FontSize="30"/>

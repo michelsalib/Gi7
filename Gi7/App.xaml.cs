@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
+using Gi7.Utils;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Gi7.Utils;
 
 namespace Gi7
 {

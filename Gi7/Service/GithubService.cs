@@ -3,8 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Net;
 using Gi7.Model;
-using Gi7.Model.Feed;
-using Gi7.Utils;
+using Gi7.Service.Request.Base;
 using RestSharp;
 
 namespace Gi7.Service
@@ -105,103 +104,34 @@ namespace Gi7.Service
             IsAuthenticated = false;
         }
 
-        /// <summary>
-        /// Gets the current user private news feed
-        /// </summary>
-        /// <returns></returns>
-        public ObservableCollection<Feed> GetNewsFeed(int page = 1)
+        public ObservableCollection<T> Load<T>(IGithubPaginatedRequest<T> request, Action<ObservableCollection<T>> callback = null)
+            where T : new()
         {
-            var feedClient = new CachedClient("https://github.com/", Username, _password);
-            feedClient.AddHandler("application/json", new FeedDeserializer());
-
-            var result = feedClient.GetList<Feed>(String.Format("{0}.private.json?page={1}", Username, page));
-
-            return result;
+            if (request.OverrideSettings != null)
+            {
+                var overridenClient = new CachedClient(request.OverrideSettings.BaseUri, Username, _password);
+                overridenClient.AddHandler("application/json", request.OverrideSettings.Deserializer);
+                return overridenClient.GetList<T>(request.Uri, callback);
+            }
+            else
+            {
+                return _client.GetList<T>(request.Uri, callback, request.Page == 1); // use cache only for first page
+            }
         }
 
-        /// <summary>
-        /// Gets the public news feed of the current user
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public ObservableCollection<Feed> GetNewsFeed(String username)
+        public T Load<T>(IGithubSingleRequest<T> request, Action<T> callback = null)
+            where T : new()
         {
-            var feedClient = new CachedClient("https://github.com/", "");
-            feedClient.AddHandler("application/json", new FeedDeserializer());
-
-            var result = feedClient.GetList<Feed>(String.Format("{0}.json", username));
-
-            return result;
-        }
-
-        public ObservableCollection<Repository> GetWatchedRepos(string username)
-        {
-            return _client.GetList<Repository>(String.Format("/users/{0}/watched", username));
-        }
-
-        public ObservableCollection<User> GetFollowers(string username)
-        {
-            return _client.GetList<User>(String.Format("/users/{0}/followers", username));
-        }
-
-        public ObservableCollection<User> GetFollowing(string username)
-        {
-            return _client.GetList<User>(String.Format("/users/{0}/following", username));
-        }
-
-        public Repository GetRepository(string username, string reponame, Action<Repository> callback)
-        {
-            return _client.Get<Repository>(String.Format("/repos/{0}/{1}", username, reponame), callback);
-        }
-
-        public User GetUser(string username, Action<User> callback)
-        {
-            return _client.Get<User>(String.Format("/users/{0}", username), callback);
-        }
-
-        public ObservableCollection<Push> GetCommits(string username, string repo)
-        {
-            return _client.GetList<Push>(String.Format("/repos/{0}/{1}/commits", username, repo));
-        }
-
-        public Push GetCommit(string username, string repo, string sha, Action<Push> callback)
-        {
-            return _client.Get<Push>(String.Format("/repos/{0}/{1}/commits/{2}", username, repo, sha), callback);
-        }
-
-        public ObservableCollection<Comment> GetCommitComments(string username, string repo, string sha)
-        {
-            return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/commits/{2}/comments", username, repo, sha));
-        }
-
-        public ObservableCollection<PullRequest> GetPullRequests(string username, string repo)
-        {
-            return _client.GetList<PullRequest>(String.Format("/repos/{0}/{1}/pulls", username, repo));
-        }
-
-        public ObservableCollection<Issue> GetIssues(string username, string repo)
-        {
-            return _client.GetList<Issue>(String.Format("/repos/{0}/{1}/issues", username, repo));
-        }
-
-        public Issue GetIssue(string username, string repo, string number, Action<Issue> callback)
-        {
-            return _client.Get<Issue>(String.Format("/repos/{0}/{1}/issues/{2}", username, repo, number), callback);
-        }
-
-        public ObservableCollection<Comment> GetIssueComments(string username, string repo, string number)
-        {
-            return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/issues/{2}/comments", username, repo, number));
-        }
-
-        public PullRequest GetPullRequest(string username, string repo, string number, Action<PullRequest> callback)
-        {
-            return _client.Get<PullRequest>(String.Format("/repos/{0}/{1}/pulls/{2}", username, repo, number), callback);
-        }
-
-        public ObservableCollection<Comment> GetPullRequestComments(string username, string repo, string number)
-        {
-            return _client.GetList<Comment>(String.Format("/repos/{0}/{1}/pulls/{2}/comments", username, repo, number));
+            if (request.OverrideSettings != null)
+            {
+                var overridenClient = new CachedClient(request.OverrideSettings.BaseUri, Username, _password);
+                overridenClient.AddHandler("application/json", request.OverrideSettings.Deserializer);
+                return overridenClient.Get<T>(request.Uri, callback);
+            }
+            else
+            {
+                return _client.Get<T>(request.Uri, callback);
+            }
         }
     }
 }

@@ -30,7 +30,7 @@
             </Interactivity:Interaction.Triggers>
             
             <controls:Panorama.Title>
-                    <TextBlock Text="Gi7" FontSize="100" Margin="0,50,0,0" />
+                <TextBlock Text="Gi7" FontSize="100" Margin="0,50,0,0" />
             </controls:Panorama.Title>
 
             <controls:PanoramaItem Header="Login" Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}">

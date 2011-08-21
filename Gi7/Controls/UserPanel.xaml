@@ -13,7 +13,7 @@
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
             <Grid>
-                <Image HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Width="150" Height="150" Source="{Binding Path=User.Avatar}" />
+                <Image HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Width="150" Height="150" Source="{Binding Path=User.AvatarUrl}" />
                 <TextBlock HorizontalAlignment="Left" Margin="160,13,0,0" Text="Login" VerticalAlignment="Top" />
                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,0,0" FontSize="30" />
                 <TextBlock HorizontalAlignment="Left" Margin="160,43,0,0" Text="Name" VerticalAlignment="Top" />

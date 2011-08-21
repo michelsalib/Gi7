@@ -54,9 +54,6 @@
     <Reference Include="GalaSoft.MvvmLight.WP71, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\MVVMLightToolkit\GalaSoft.MvvmLight.WP71.dll</HintPath>
     </Reference>
-    <Reference Include="KawagoeToolkit, Version=1.1.4211.22247, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\Kawagoe\KawagoeToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
@@ -88,6 +85,8 @@
     <Compile Include="Controls\AboutPanel.xaml.cs">
       <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PaginatedListBox\FeedListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
@@ -115,6 +114,27 @@
     <Compile Include="Service\LoadingEventArgs.cs" />
     <Compile Include="Service\Navigation\INavigationService.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
+    <Compile Include="Service\Request\Base\IGithubSingleRequest.cs" />
+    <Compile Include="Service\Request\CommitsRequest.cs" />
+    <Compile Include="Service\Request\CommitRequest.cs" />
+    <Compile Include="Service\Request\CommitCommentsRequest.cs" />
+    <Compile Include="Service\Request\PullRequestCommentsRequest.cs" />
+    <Compile Include="Service\Request\PullRequestRequest.cs" />
+    <Compile Include="Service\Request\IssueCommentsRequest.cs" />
+    <Compile Include="Service\Request\IssueRequest.cs" />
+    <Compile Include="Service\Request\IssuesRequest.cs" />
+    <Compile Include="Service\Request\PullRequestsRequest.cs" />
+    <Compile Include="Service\Request\UserRequest.cs" />
+    <Compile Include="Service\Request\FollowingsRequest.cs" />
+    <Compile Include="Service\Request\FeedsRequest.cs" />
+    <Compile Include="Service\Request\Base\GithubSingleRequest.cs" />
+    <Compile Include="Service\Request\Base\GithubPaginatedRequest.cs" />
+    <Compile Include="Service\Request\Base\IGithubRequest.cs" />
+    <Compile Include="Service\Request\Base\IGithubPaginatedRequest.cs" />
+    <Compile Include="Service\Request\FollowersRequest.cs" />
+    <Compile Include="Service\Request\OverrideSettings.cs" />
+    <Compile Include="Service\Request\RepositoryRequest.cs" />
+    <Compile Include="Service\Request\WatchedRepoRequest.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />

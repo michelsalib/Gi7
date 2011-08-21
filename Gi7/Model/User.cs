@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Media;
-using Kawagoe.Storage;
 
 namespace Gi7.Model
 {
@@ -44,15 +43,6 @@ namespace Gi7.Model
             {
                 // trim GET parameters
                 _avatarUrl = new String(value.TakeWhile(c => c != '?').ToArray()); 
-            }
-        }
-
-        private ImageCache _cache = new PersistentImageCache("User");
-        public ImageSource Avatar
-        {
-            get
-            {
-                return _cache.Get(AvatarUrl);
             }
         }
     }

@@ -17,7 +17,7 @@
             <StackPanel.Resources>
                 <DataTemplate x:Key="UserTemplate">
                     <StackPanel Orientation="Horizontal" Margin="0,2">
-                        <Image Source="{Binding Path=Avatar}" Width="50" Height="50" />
+                        <Image Source="{Binding Path=AvatarUrl}" Width="50" Height="50" />
                         <TextBlock Text="{Binding Login}" FontSize="26" VerticalAlignment="Center" Margin="10,0,0,0" />
                     </StackPanel>
                 </DataTemplate>

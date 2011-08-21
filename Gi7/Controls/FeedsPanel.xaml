@@ -6,17 +6,18 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    xmlns:local="clr-namespace:Gi7.Controls.PaginatedListBox"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
-    
-    <ListBox ItemsSource="{Binding Feeds}" x:Name="FeedsList">
-        <ListBox.ItemTemplate>
+
+    <local:FeedListBox Service="{Binding GithubService}" Request="{Binding FeedsRequest}" x:Name="FeedsList">
+        <local:FeedListBox.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Image Source="{Binding Path=User.Avatar}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Source="{Binding Path=User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <Image Source="{Binding Path=Image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />
                     <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                         <Paragraph>
@@ -31,11 +32,11 @@
                     <Image Source="{Binding Path=Image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />
                 </Grid>
             </DataTemplate>
-        </ListBox.ItemTemplate>
+        </local:FeedListBox.ItemTemplate>
         <Interactivity:Interaction.Triggers>
             <Interactivity:EventTrigger EventName="Tap">
                 <Command:EventToCommand Command="{Binding FeedSelectedCommand}" CommandParameter="{Binding ElementName=FeedsList, Path=SelectedItem}" />
             </Interactivity:EventTrigger>
         </Interactivity:Interaction.Triggers>
-    </ListBox>
+    </local:FeedListBox>
 </UserControl>

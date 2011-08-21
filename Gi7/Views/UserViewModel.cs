@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service;
 using Gi7.Service.Navigation;
+using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -116,7 +117,7 @@ namespace Gi7.Views
         {
             Username = user;
 
-            User = githubService.GetUser(Username, u => User = u);
+            User = githubService.Load(new UserRequest(Username), u => User = u);
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
@@ -136,7 +137,7 @@ namespace Gi7.Views
                     case "Repos":
                         if (Repos == null)
                         {
-                            Repos = githubService.GetWatchedRepos(Username);
+                            Repos = githubService.Load(new WatchedRepoRequest(Username));
                             Repos.CollectionChanged += (sender, e) =>
                             {
                                 RaisePropertyChanged("WatchedRepos");
@@ -146,13 +147,13 @@ namespace Gi7.Views
                         break;
                     case "Users":
                         if (Following == null)
-                            Following = githubService.GetFollowing(Username);
+                            Following = githubService.Load(new FollowingsRequest(Username));
                         if (Followers == null)
-                            Followers = githubService.GetFollowers(Username);
+                            Followers = githubService.Load(new FollowersRequest(Username));
                         break;
                     case "Profile":
                         if (User == null)
-                            User = githubService.GetUser(Username, u => User = u);
+                            User = githubService.Load(new UserRequest(Username), u => User = u);
                         break;
                     default:
                         break;

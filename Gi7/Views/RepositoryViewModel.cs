@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service;
 using Gi7.Service.Navigation;
+using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -76,11 +77,11 @@ namespace Gi7.Views
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
-            Repository = githubService.GetRepository(user, repo, r => Repository = r);
+            Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
 
-            PullRequests = githubService.GetPullRequests(user, repo);
+            PullRequests = githubService.Load(new PullRequestsRequest(user, repo));
 
-            Issues = githubService.GetIssues(user, repo);
+            Issues = githubService.Load(new IssuesRequest(user, repo));
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
@@ -90,7 +91,7 @@ namespace Gi7.Views
                 {
                     case "Commits":
                         if(Commits == null)
-                            Commits = githubService.GetCommits(user, repo);
+                            Commits = githubService.Load(new CommitsRequest(user, repo));
                         break;
                     default:
                         break;

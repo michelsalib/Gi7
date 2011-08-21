@@ -5,6 +5,10 @@ using System.Xml.Serialization;
 
 namespace Gi7.Service
 {
+    /// <summary>
+    /// Provide simple access to store/retrieve typed data from the isolated file storage
+    /// These data as considered as cache
+    /// </summary>
     public class CacheProvider
     {
         private string _path;

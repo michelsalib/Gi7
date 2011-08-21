@@ -20,7 +20,7 @@
         </TextBlock>
         <Button Grid.Row="1" HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}" CommandParameter="{Binding Michelsalib}" Padding="0" BorderThickness="0">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding Michelsalib.Avatar}" Width="34" Height="34" />
+                <Image Source="{Binding Michelsalib.AvatarUrl}" Width="34" Height="34" />
                 <TextBlock Text="{Binding Michelsalib.Login}" Margin="10,0,0,0" />
             </StackPanel>
         </Button>

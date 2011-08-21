@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using Gi7.Model;
+using Gi7.Service.Request;
 
 namespace Gi7.Views
 {
@@ -68,8 +69,8 @@ namespace Gi7.Views
             RepoName = String.Format("{0}/{1}", username, repo);
             IssueName = "Issue #" + number;
 
-            Issue = githubService.GetIssue(username, repo, number, i => Issue = i);
-            Comments = githubService.GetIssueComments(username, repo, number);
+            Issue = githubService.Load(new IssueRequest(username, repo, number), i => Issue = i);
+            Comments = githubService.Load(new IssueCommentsRequest(username, repo, number));
         }
     }
 }

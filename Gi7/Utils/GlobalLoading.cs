@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 // using AgFx;
 using Microsoft.Phone.Controls;

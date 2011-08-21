@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using RestSharp;
 using Gi7.Utils;
+using RestSharp;
 
 namespace Gi7.Service
 {
@@ -14,8 +14,6 @@ namespace Gi7.Service
     {
         public CacheProvider CacheProvider { get; private set; }
 
-        public event EventHandler<LoadingEventArgs> Loading;
-
         public CachedClient(String baseUri, String username, String password = "")
             : base (baseUri)
         {
@@ -25,19 +23,22 @@ namespace Gi7.Service
                 Authenticator = new HttpBasicAuthenticator(username, password);
         }
 
-        public ObservableCollection<T> GetList<T>(String uri)
+        public ObservableCollection<T> GetList<T>(String uri, Action<ObservableCollection<T>> callback = null, bool useCache = true)
             where T : new()
         {
             GlobalLoading.Instance.IsLoading = true;
 
             var result = new ObservableCollection<T>();
 
-            var cache = CacheProvider.Get<List<T>>(uri);
-            if (cache != null)
+            if (useCache)
             {
-                foreach (var item in cache)
+                var cache = CacheProvider.Get<List<T>>(uri);
+                if (cache != null)
                 {
-                    result.Add(item);
+                    foreach (var item in cache)
+                    {
+                        result.Add(item);
+                    }
                 }
             }
 
@@ -48,6 +49,12 @@ namespace Gi7.Service
                 {
                     result.Add(item);
                 }
+
+                if (callback != null)
+                {
+                    callback(result);
+                }
+
                 CacheProvider.Save(uri, r.Data.AsEnumerable());
 
                 GlobalLoading.Instance.IsLoading = false;
@@ -56,13 +63,22 @@ namespace Gi7.Service
             return result;
         }
 
-        public T Get<T>(string uri, Action<T> callback)
+        public T Get<T>(string uri, Action<T> callback, bool useCache = true)
             where T : new()
         {
             GlobalLoading.Instance.IsLoading = true;
-            var cache = CacheProvider.Get<T>(uri);
+            T result;
 
-            var result = cache != null ? cache : new T();
+            if (useCache)
+            {
+                var cache = CacheProvider.Get<T>(uri);
+                result = cache != null ? cache : new T();
+            }
+            else
+            {
+                result = new T();
+            }
+
 
             ExecuteAsync<T>(new RestRequest(uri), r =>
             {

@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
+using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -58,7 +59,7 @@ namespace Gi7.Views
         {
             RepoName = String.Format("{0}/{1}", username, repo);
 
-            PullRequest = githubService.GetPullRequest(username, repo, number, pr => PullRequest = pr);
+            PullRequest = githubService.Load(new PullRequestRequest(username, repo, number), pr => PullRequest = pr);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
@@ -67,7 +68,7 @@ namespace Gi7.Views
                 {
                     case "Comments":
                         if (Comments == null)
-                            Comments = githubService.GetIssueComments(username, repo, number);
+                            Comments = githubService.Load(new IssueCommentsRequest(username, repo, number));
                         break;
                     default:
                         break;

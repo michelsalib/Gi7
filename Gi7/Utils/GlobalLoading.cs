@@ -25,6 +25,8 @@ namespace Gi7.Utils
             _mangoIndicator = new ProgressIndicator();
 
             frame.Navigated += OnRootFrameNavigated;
+
+            (frame.Content as PhoneApplicationPage).SetValue(SystemTray.ProgressIndicatorProperty, _mangoIndicator);
         }
 
         private void OnRootFrameNavigated(object sender, NavigationEventArgs e)

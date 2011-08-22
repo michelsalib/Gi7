@@ -27,44 +27,58 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<Push> _commits;
-        public ObservableCollection<Push> Commits
+        private CommitsRequest _commitsRequest;
+        public CommitsRequest CommitsRequest
         {
-            get { return _commits; }
+            get { return _commitsRequest; }
             set
             {
-                if (_commits != value)
+                if (_commitsRequest != value)
                 {
-                    _commits = value;
-                    RaisePropertyChanged("Commits");
+                    _commitsRequest = value;
+                    RaisePropertyChanged("CommitsRequest");
                 }
             }
         }
 
-        private ObservableCollection<PullRequest> _pullRequests;
-        public ObservableCollection<PullRequest> PullRequests
+        private PullRequestsRequest _pullRequestsRequest;
+        public PullRequestsRequest PullRequestsRequest
         {
-            get { return _pullRequests; }
+            get { return _pullRequestsRequest; }
             set
             {
-                if (_pullRequests != value)
+                if (_pullRequestsRequest != value)
                 {
-                    _pullRequests = value;
-                    RaisePropertyChanged("PullRequests");
+                    _pullRequestsRequest = value;
+                    RaisePropertyChanged("PullRequestsRequest");
                 }
             }
         }
 
-        private ObservableCollection<Issue> _issues;
-        public ObservableCollection<Issue> Issues
+        private IssuesRequest _issuesRequest;
+        public IssuesRequest IssuesRequest
         {
-            get { return _issues; }
+            get { return _issuesRequest; }
             set
             {
-                if (_issues != value)
+                if (_issuesRequest != value)
                 {
-                    _issues = value;
-                    RaisePropertyChanged("Issues");
+                    _issuesRequest = value;
+                    RaisePropertyChanged("IssuesRequest");
+                }
+            }
+        }
+
+        private GithubService _githubService;
+        public GithubService GithubService
+        {
+            get { return _githubService; }
+            set
+            {
+                if (_githubService != value)
+                {
+                    _githubService = value;
+                    RaisePropertyChanged("GithubService");
                 }
             }
         }
@@ -77,11 +91,9 @@ namespace Gi7.Views
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
+            GithubService = githubService;
+
             Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
-
-            PullRequests = githubService.Load(new PullRequestsRequest(user, repo));
-
-            Issues = githubService.Load(new IssuesRequest(user, repo));
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
@@ -90,8 +102,16 @@ namespace Gi7.Views
                 switch (header)
                 {
                     case "Commits":
-                        if(Commits == null)
-                            Commits = githubService.Load(new CommitsRequest(user, repo));
+                        if(CommitsRequest == null)
+                            CommitsRequest = new CommitsRequest(user, repo);
+                        break;
+                    case "Pull requests":
+                        if (PullRequestsRequest == null)
+                            PullRequestsRequest = new PullRequestsRequest(user, repo);
+                        break;
+                    case "Issues":
+                        if (IssuesRequest == null)
+                            IssuesRequest = new IssuesRequest(user, repo);
                         break;
                     default:
                         break;

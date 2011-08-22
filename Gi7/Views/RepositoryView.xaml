@@ -11,6 +11,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -51,11 +52,8 @@
                         <TextBlock Text="{Binding Repository.Forks}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="1" Grid.Row="0" />
                         <TextBlock Text="Forks" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="0" />
 
-                        <TextBlock Text="{Binding PullRequests.Count}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="1" />
-                        <TextBlock Text="Pull requests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1" />
-
-                        <TextBlock Text="{Binding Issues.Count}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="1" Grid.Row="1" />
-                        <TextBlock Text="Issues" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" />
+                        <TextBlock Text="{Binding Repository.OpenIssues}" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="1" />
+                        <TextBlock Text="Issues" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1" />
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -77,7 +75,7 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Header="Commits">
-                <ListBox ItemsSource="{Binding Commits}" x:Name="CommitsList">
+                <paginated:CommitListBox Request="{Binding CommitsRequest}" Service="{Binding GithubService}" x:Name="CommitsList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding CommitSelectedCommand}" CommandParameter="{Binding ElementName=CommitsList, Path=SelectedItem}" />
@@ -93,11 +91,11 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </paginated:CommitListBox>
             </controls:PivotItem>
 
             <controls:PivotItem Header="Pull requests">
-                <ListBox ItemsSource="{Binding PullRequests}" x:Name="PullRequestsList">
+                <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" Service="{Binding GithubService}" x:Name="PullRequestsList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding PullRequestSelectedCommand}" CommandParameter="{Binding ElementName=PullRequestsList, Path=SelectedItem}" />
@@ -116,11 +114,11 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </paginated:PullRequestListBox>
             </controls:PivotItem>
 
             <controls:PivotItem Header="Issues">
-                <ListBox ItemsSource="{Binding Issues}" x:Name="IssuesList">
+                <paginated:IssueListBox Request="{Binding IssuesRequest}" Service="{Binding GithubService}" x:Name="IssuesList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding IssueSelectedCommand}" CommandParameter="{Binding ElementName=IssuesList, Path=SelectedItem}" />
@@ -149,7 +147,7 @@
                             </RichTextBox>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </paginated:IssueListBox>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

@@ -6,7 +6,11 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -18,28 +22,28 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <controls:Pivot Title="{Binding RepoName}">
+            <Interactivity:Interaction.Triggers>
+                <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+                </Interactivity:EventTrigger>
+            </Interactivity:Interaction.Triggers>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="{Binding IssueName}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+            <controls:PivotItem Header="{Binding IssueName}">
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Issue.Title}" FontWeight="Bold" TextWrapping="Wrap" FontSize="36" />
+                        <Grid>
+                            <Image Source="{Binding Issue.User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <TextBlock Text="{Binding Issue.User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Issue.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PivotItem>
 
-        <!--ContentPanel - place additional content here-->
-        <ScrollViewer Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel>
-                <TextBlock Text="{Binding Issue.Title}" FontWeight="Bold" TextWrapping="Wrap" FontSize="36" />
-                <Grid>
-                    <Image Source="{Binding Issue.User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <TextBlock Text="{Binding Issue.User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                    <TextBlock Text="{Binding Issue.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                </Grid>
-                <TextBlock Text="{Binding Issue.Body}" TextWrapping="Wrap" />
-                <ListBox ItemsSource="{Binding Comments}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,20,0,0">
+            <controls:PivotItem Header="Comments">
+                <paginated:CommentListBox Request="{Binding CommentsRequest}" Service="{Binding GithubService}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="440">
@@ -50,8 +54,8 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </ScrollViewer>
+                </paginated:CommentListBox>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
 </phone:PhoneApplicationPage>

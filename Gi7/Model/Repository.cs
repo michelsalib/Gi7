@@ -38,6 +38,8 @@ namespace Gi7.Model
 
         public int Forks { get; set; }
 
+        public int OpenIssues { get; set; }
+
         public String SshUrl { get; set; }
 
         public String HtmlUrl { get; set; }

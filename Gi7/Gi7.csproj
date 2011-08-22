@@ -85,8 +85,12 @@
     <Compile Include="Controls\AboutPanel.xaml.cs">
       <DependentUpon>AboutPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\FeedListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />

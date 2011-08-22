@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
+using Gi7.Service;
 
 namespace Gi7.Views
 {
@@ -39,16 +40,30 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<Comment> _comments;
-        public ObservableCollection<Comment> Comments
+        private IssueCommentsRequest _commentsRequest;
+        public IssueCommentsRequest CommentsRequest
         {
-            get { return _comments; }
+            get { return _commentsRequest; }
             set
             {
-                if (_comments != value)
+                if (_commentsRequest != value)
                 {
-                    _comments = value;
-                    RaisePropertyChanged();
+                    _commentsRequest = value;
+                    RaisePropertyChanged("CommentsRequest");
+                }
+            }
+        }
+
+        private GithubService _githubService;
+        public GithubService GithubService
+        {
+            get { return _githubService; }
+            set
+            {
+                if (_githubService != value)
+                {
+                    _githubService = value;
+                    RaisePropertyChanged("GithubService");
                 }
             }
         }
@@ -59,6 +74,7 @@ namespace Gi7.Views
         {
             RepoName = String.Format("{0}/{1}", username, repo);
 
+            GithubService = githubService;
             PullRequest = githubService.Load(new PullRequestRequest(username, repo, number), pr => PullRequest = pr);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
@@ -67,8 +83,8 @@ namespace Gi7.Views
                 switch (header)
                 {
                     case "Comments":
-                        if (Comments == null)
-                            Comments = githubService.Load(new IssueCommentsRequest(username, repo, number));
+                        if (CommentsRequest == null)
+                            CommentsRequest = new IssueCommentsRequest(username, repo, number);
                         break;
                     default:
                         break;

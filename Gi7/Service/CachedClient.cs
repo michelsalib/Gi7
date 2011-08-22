@@ -23,44 +23,14 @@ namespace Gi7.Service
                 Authenticator = new HttpBasicAuthenticator(username, password);
         }
 
-        public ObservableCollection<T> GetList<T>(String uri, Action<ObservableCollection<T>> callback = null, bool useCache = true)
+        public List<T> GetList<T>(String uri, Action<List<T>> callback = null, bool useCache = true)
             where T : new()
         {
-            GlobalLoading.Instance.IsLoading = true;
-
-            var result = new ObservableCollection<T>();
-
-            if (useCache)
+            return Get<List<T>>(uri, r =>
             {
-                var cache = CacheProvider.Get<List<T>>(uri);
-                if (cache != null)
-                {
-                    foreach (var item in cache)
-                    {
-                        result.Add(item);
-                    }
-                }
-            }
-
-            ExecuteAsync<List<T>>(new RestRequest(uri), r =>
-            {
-                result.Clear();
-                foreach (var item in r.Data)
-                {
-                    result.Add(item);
-                }
-
                 if (callback != null)
-                {
-                    callback(result);
-                }
-
-                CacheProvider.Save(uri, r.Data.AsEnumerable());
-
-                GlobalLoading.Instance.IsLoading = false;
-            });
-
-            return result;
+                    callback(r);
+            }, useCache);
         }
 
         public T Get<T>(string uri, Action<T> callback, bool useCache = true)

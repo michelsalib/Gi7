@@ -10,6 +10,7 @@
     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -65,18 +66,18 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Comments">
-                <ListBox ItemsSource="{Binding Comments}">
+                <paginated:CommentListBox Request="{Binding CommentsRequest}" Service="{Binding GithubService}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="440">
                                 <Image Source="{Binding User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                <TextBlock Text="{Binding UpdatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                                <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
                                 <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </paginated:CommentListBox>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

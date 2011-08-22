@@ -1,8 +1,9 @@
 ﻿
+using GalaSoft.MvvmLight;
 namespace Gi7.Service.Request.Base
 {
-    public abstract class GithubSingleRequest<T> : IGithubSingleRequest<T>
-        where T : new ()
+    public abstract class GithubSingleRequest<T> : ViewModelBase, IGithubSingleRequest<T>
+        where T : new()
     {
         public string Uri
         {
@@ -14,6 +15,17 @@ namespace Gi7.Service.Request.Base
         {
             get;
             protected set;
+        }
+
+        private T _result;
+        public T Result
+        {
+            get { return _result; }
+            set
+            {
+                _result = value;
+                RaisePropertyChanged("Result");
+            }
         }
     }
 }

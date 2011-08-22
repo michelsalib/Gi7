@@ -10,6 +10,7 @@
     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -55,7 +56,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Comments">
-                <ListBox ItemsSource="{Binding Comments}">
+                <paginated:CommentListBox Request="{Binding CommentsRequest}" Service="{Binding GithubService}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="440">
@@ -66,7 +67,7 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </paginated:CommentListBox>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

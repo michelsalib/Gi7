@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Gi7.Service;
 using Gi7.Service.Request.Base;
+using System.Windows.Data;
 
 namespace Gi7.Controls.PaginatedListBox
 {
@@ -70,32 +71,16 @@ namespace Gi7.Controls.PaginatedListBox
         private static void _newRequest(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var listBox = (PaginatedListBox<T>)d;
-            listBox.ItemsSource = null;
-            listBox.Request.Page = 0;
+            listBox.SetBinding(ListBox.ItemsSourceProperty, new Binding("Request.Result") { RelativeSource = new RelativeSource(RelativeSourceMode.Self) });
             listBox._load();
         }
 
         private void _load()
         {
-            if (Loading == false)
+            if (Loading == false && Request.HasMoreItems)
             {
                 Loading = true;
-                Request.Page++;
-                if (Request.Page == 1)
-                {
-                    ItemsSource = Service.Load<T>(Request, r => Loading = false);
-                }
-                else
-                {
-                    Service.Load<T>(Request, r =>
-                    {
-                        foreach (var f in r)
-                        {
-                            ((ObservableCollection<T>)ItemsSource).Add(f);
-                        }
-                        Loading = false;
-                    });
-                }
+                Service.Load<T>(Request, r => Loading = false);
             }
         }
 

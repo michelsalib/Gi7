@@ -9,7 +9,7 @@ namespace Gi7.Utils
     /// <summary>
     /// <see cref="http://www.jeff.wilcox.name/2011/07/creating-a-global-progressindicator-experience-using-the-windows-phone-7-1-sdk-beta-2/"/>
     /// </summary>
-    public class GlobalLoading : INotifyPropertyChanged
+    public class GlobalLoading
     {
         private ProgressIndicator _mangoIndicator;
 
@@ -19,9 +19,6 @@ namespace Gi7.Utils
 
         public void Initialize(PhoneApplicationFrame frame)
         {
-            // If using AgFx:
-            // DataManager.Current.PropertyChanged += OnDataManagerPropertyChanged;
-
             _mangoIndicator = new ProgressIndicator();
 
             frame.Navigated += OnRootFrameNavigated;
@@ -37,15 +34,6 @@ namespace Gi7.Utils
             if (pp != null)
             {
                 pp.SetValue(SystemTray.ProgressIndicatorProperty, _mangoIndicator);
-            }
-        }
-
-        private void OnDataManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if ("IsLoading" == e.PropertyName)
-            {
-                // if AgFx: IsDataManagerLoading = DataManager.Current.IsLoading;
-                NotifyValueChanged();
             }
         }
 
@@ -92,22 +80,10 @@ namespace Gi7.Utils
             {
                 _mangoIndicator.IsIndeterminate = _loadingCount > 0;
 
-                // for now, just make sure it's always visible.
                 if (_mangoIndicator.IsVisible == false)
                 {
                     _mangoIndicator.IsVisible = true;
                 }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

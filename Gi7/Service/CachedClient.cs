@@ -26,14 +26,10 @@ namespace Gi7.Service
         public List<T> GetList<T>(String uri, Action<List<T>> callback = null, bool useCache = true)
             where T : new()
         {
-            return Get<List<T>>(uri, r =>
-            {
-                if (callback != null)
-                    callback(r);
-            }, useCache);
+            return Get<List<T>>(uri, callback, useCache);
         }
 
-        public T Get<T>(string uri, Action<T> callback, bool useCache = true)
+        public T Get<T>(string uri, Action<T> callback = null, bool useCache = true)
             where T : new()
         {
             GlobalLoading.Instance.IsLoading = true;
@@ -52,9 +48,9 @@ namespace Gi7.Service
 
             ExecuteAsync<T>(new RestRequest(uri), r =>
             {
-                callback(r.Data);
+                if (callback != null)
+                    callback(r.Data);
                 CacheProvider.Save(uri, r.Data);
-
                 GlobalLoading.Instance.IsLoading = false;
             });
 

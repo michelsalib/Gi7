@@ -126,11 +126,11 @@ namespace Gi7.Service
             {
                 request.Result = new ObservableCollection<T>(client.GetList<T>(request.Uri, r =>
                 {
+                    request.Result.Clear();
                     if (r.Count < 30)
                     {
                         request.HasMoreItems = false;
                     }
-                    request.Result.Clear();
                     foreach (var i in r)
                     {
                         request.Result.Add(i);
@@ -141,7 +141,7 @@ namespace Gi7.Service
                     }
                 }, true));
             }
-            // else the collection already exists, there is no cache
+            // else the collection already exists and there is no cache
             else
             {
                 client.GetList<T>(request.Uri, r =>

@@ -1,5 +1,5 @@
 ﻿using System;
-using Gi7.Model.Feed;
+using Gi7.Model.Feed.Base;
 using Gi7.Service.Request.Base;
 using Gi7.Utils;
 

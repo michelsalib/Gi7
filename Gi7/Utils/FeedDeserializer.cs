@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Gi7.Model;
 using Gi7.Model.Feed;
+using Gi7.Model.Feed.Base;
 using Newtonsoft.Json.Linq;
 using RestSharp.Deserializers;
 
@@ -15,7 +16,7 @@ namespace Gi7.Utils
 
         public string Namespace { get; set; }
 
-        public T Deserialize<T>(RestSharp.RestResponse response) where T: new()
+        public T Deserialize<T>(RestSharp.RestResponse response) where T : new()
         {
             T result = new T();
             var feeds = result as List<Feed>;
@@ -26,7 +27,8 @@ namespace Gi7.Utils
             var json = JArray.Parse(response.Content);
             var defaultDeserializer = new JsonDeserializer();
 
-            foreach(var feedData in json){
+            foreach (var feedData in json)
+            {
                 Feed feed = null;
 
                 switch (feedData["type"].Value<String>())
@@ -100,6 +102,18 @@ namespace Gi7.Utils
                             Action = feedData["payload"]["action"].Value<String>()
                         };
                         break;
+                    case "FollowEvent":
+                        feed = new FollowFeed()
+                        {
+                            Target = new User()
+                            {
+                                Login = feedData["payload"]["target"]["login"].Value<String>(),
+                                PublicRepos = feedData["payload"]["target"]["repos"].Value<int>(),
+                                Followers = feedData["payload"]["target"]["followers"].Value<int>(),
+                                AvatarUrl = "https://secure.gravatar.com/avatar/" + feedData["payload"]["target"]["gravatar_id"].Value<String>()
+                            }
+                        };
+                        break;
                     default:
                         feed = new Feed();
                         break;
@@ -110,14 +124,19 @@ namespace Gi7.Utils
                 feed.CreatedAt = feedData["created_at"].Value<DateTime>();
                 feed.Url = feedData["url"].Value<String>();
 
-                feed.Repository = new Repository()
+                var repoFeed = feed as RepositoryFeed;
+                if (repoFeed != null)
                 {
-                    Name = feedData["repository"]["name"].Value<String>(),
-                    Url = feedData["repository"]["url"].Value<String>(),
-                    Owner = new User(){
-                        Login = feedData["repository"]["owner"].Value<String>()
-                    }
-                };
+                    repoFeed.Repository = new Repository()
+                    {
+                        Name = feedData["repository"]["name"].Value<String>(),
+                        Url = feedData["repository"]["url"].Value<String>(),
+                        Owner = new User()
+                        {
+                            Login = feedData["repository"]["owner"].Value<String>()
+                        }
+                    };
+                }
 
                 feed.User = new User()
                 {

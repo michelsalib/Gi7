@@ -1,9 +1,10 @@
 ﻿using System;
+using Gi7.Model.Feed.Base;
 using Gi7.Service;
 
 namespace Gi7.Model.Feed
 {
-    public class IssueCommentFeed : Feed
+    public class IssueCommentFeed : RepositoryFeed
     {
         public int IssueId { get; set; }
 

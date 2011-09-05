@@ -94,9 +94,11 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
+    <Compile Include="Model\Feed\Base\RepositoryFeed.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
     <Compile Include="Model\Feed\DeleteFeed.cs" />
     <Compile Include="Model\Feed\CreateFeed.cs" />
+    <Compile Include="Model\Feed\FollowFeed.cs" />
     <Compile Include="Model\Feed\IssueCommentFeed.cs" />
     <Compile Include="Model\Feed\IssueFeed.cs" />
     <Compile Include="Model\Feed\PullRequestFeed.cs" />
@@ -164,7 +166,7 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeViewModel.cs" />
-    <Compile Include="Model\Feed\Feed.cs" />
+    <Compile Include="Model\Feed\Base\Feed.cs" />
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -265,6 +267,7 @@
     <Resource Include="Images\issues_comment.png" />
     <Resource Include="Images\issues_opened.png" />
     <Resource Include="Images\push.png" />
+    <Resource Include="Images\follow.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

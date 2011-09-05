@@ -1,8 +1,9 @@
 ﻿using System;
+using Gi7.Model.Feed.Base;
 
 namespace Gi7.Model.Feed
 {
-    public class PullRequestFeed : Feed
+    public class PullRequestFeed : RepositoryFeed
     {
         public int Number { get; set; }
 

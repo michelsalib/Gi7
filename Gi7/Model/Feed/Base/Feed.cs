@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using Gi7.Service;
 
-namespace Gi7.Model.Feed
+namespace Gi7.Model.Feed.Base
 {
     [XmlInclude(typeof(IssueCommentFeed))]
     [XmlInclude(typeof(CommitCommentFeed))]
@@ -12,10 +12,9 @@ namespace Gi7.Model.Feed
     [XmlInclude(typeof(CreateFeed))]
     [XmlInclude(typeof(WatchFeed))]
     [XmlInclude(typeof(DeleteFeed))]
+    [XmlInclude(typeof(FollowFeed))]
     public class Feed
     {
-        public Repository Repository { get; set; }
-
         public User User { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -46,7 +45,7 @@ namespace Gi7.Model.Feed
         {
             get
             {
-                return String.Format(ViewModelLocator.RepositoryUrl, Repository.Owner.Login, Repository.Name);
+                return String.Format(ViewModelLocator.UserUrl, Actor);
             }
         }
     }

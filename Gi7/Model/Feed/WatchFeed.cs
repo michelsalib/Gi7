@@ -1,8 +1,9 @@
 ﻿using System;
+using Gi7.Model.Feed.Base;
 
 namespace Gi7.Model.Feed
 {
-    public class WatchFeed : Feed
+    public class WatchFeed : RepositoryFeed
     {
         public String Action { get; set; }
 

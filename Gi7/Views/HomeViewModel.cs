@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Gi7.Model;
-using Gi7.Model.Feed;
+using Gi7.Model.Feed.Base;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Service.Request;

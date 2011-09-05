@@ -1,9 +1,10 @@
 ﻿using System;
 using Gi7.Service;
+using Gi7.Model.Feed.Base;
 
 namespace Gi7.Model.Feed
 {
-    public class PushFeed : Feed
+    public class PushFeed : RepositoryFeed
     {
         public String Head { get; set; }
 

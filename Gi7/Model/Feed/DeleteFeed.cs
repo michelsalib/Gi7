@@ -1,8 +1,9 @@
 ﻿using System;
+using Gi7.Model.Feed.Base;
 
 namespace Gi7.Model.Feed
 {
-    public class DeleteFeed : Feed
+    public class DeleteFeed : RepositoryFeed
     {
         public String RefType { get; set; }
         public String Ref { get; set; }

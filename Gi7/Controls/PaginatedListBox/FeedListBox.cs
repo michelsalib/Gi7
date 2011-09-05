@@ -1,4 +1,4 @@
-﻿using Gi7.Model.Feed;
+﻿using Gi7.Model.Feed.Base;
 
 namespace Gi7.Controls.PaginatedListBox
 {

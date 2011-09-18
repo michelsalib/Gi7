@@ -15,10 +15,10 @@ namespace Gi7.Service
 
         public CacheProvider(String key)
         {
-            _path = String.Format("cache/{0}/", key);
+            _path = String.Format("cache/{0}/", key).TrimEnd('/');
 
-            if (!IsolatedStorageFile.GetUserStoreForApplication().DirectoryExists(_path.TrimEnd('/')))
-                IsolatedStorageFile.GetUserStoreForApplication().CreateDirectory(_path.TrimEnd('/'));
+            if (!IsolatedStorageFile.GetUserStoreForApplication().DirectoryExists(_path))
+                IsolatedStorageFile.GetUserStoreForApplication().CreateDirectory(_path);
         }
 
         public void Save(String key, object item)
@@ -34,14 +34,14 @@ namespace Gi7.Service
 
         public T Get<T>(String key)
         {
-            var file = CleanFilePath(key);
+            var file = String.Format("{0}/{1}", _path, CleanFilePath(key));
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    if (store.FileExists(_path + file))
+                    if (store.FileExists(file))
                     {
-                        using (var stream = store.OpenFile(_path + file, FileMode.Open))
+                        using (var stream = store.OpenFile(file, FileMode.Open))
                         {
                             var serializer = new XmlSerializer(typeof(T));
                             return (T)serializer.Deserialize(stream);
@@ -65,7 +65,13 @@ namespace Gi7.Service
             {
                 IsolatedStorageFile.GetUserStoreForApplication().DeleteFile(_path + file);
             }
-            IsolatedStorageFile.GetUserStoreForApplication().DeleteDirectory(_path.TrimEnd('/'));
+
+            try
+            {
+                if (IsolatedStorageFile.GetUserStoreForApplication().DirectoryExists(_path))
+                    IsolatedStorageFile.GetUserStoreForApplication().DeleteDirectory(_path);
+            }
+            catch (Exception) { }
         }
 
         private String CleanFilePath(String key)

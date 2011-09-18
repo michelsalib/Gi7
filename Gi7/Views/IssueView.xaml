@@ -43,7 +43,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Comments">
-                <paginated:CommentListBox Request="{Binding CommentsRequest}" Service="{Binding GithubService}">
+                <paginated:CommentListBox Request="{Binding CommentsRequest}" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="440">

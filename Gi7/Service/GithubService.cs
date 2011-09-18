@@ -6,6 +6,7 @@ using Gi7.Model;
 using Gi7.Service.Request.Base;
 using RestSharp;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace Gi7.Service
 {
@@ -34,6 +35,8 @@ namespace Gi7.Service
         }
 
         public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
+        public event EventHandler ConnectionError;
+        public event EventHandler Unauthorized;
 
         private CachedClient _client;
         private String _password;
@@ -54,7 +57,7 @@ namespace Gi7.Service
             else
             {
                 Username = "default";
-                _client = new CachedClient("https://api.github.com", Username);
+                _client = _createClient("https://api.github.com", Username, "");
             }
         }
 
@@ -68,23 +71,15 @@ namespace Gi7.Service
             Username = username;
             _password = password;
 
-            _client = new CachedClient("https://api.github.com", username, password);
+            _client = _createClient("https://api.github.com", username, password);
 
             _client.ExecuteAsync<User>(new RestRequest("/user"), r =>
             {
-                if (r.StatusCode != HttpStatusCode.NotFound &&
-                    r.StatusCode != HttpStatusCode.Unauthorized)
-                {
-                    // set storage
-                    IsolatedStorageSettings.ApplicationSettings["username"] = Username;
-                    IsolatedStorageSettings.ApplicationSettings["password"] = _password;
+                // set storage
+                IsolatedStorageSettings.ApplicationSettings["username"] = Username;
+                IsolatedStorageSettings.ApplicationSettings["password"] = _password;
 
-                    IsAuthenticated = true;
-                }
-                else
-                {
-                    Logout();
-                }
+                IsAuthenticated = true;
             });
         }
 
@@ -100,7 +95,7 @@ namespace Gi7.Service
             IsolatedStorageSettings.ApplicationSettings.Remove("password");
 
             _client.ClearCache();
-            _client = new CachedClient("https://api.github.com", "");
+            _client = _createClient("https://api.github.com", "", "");
 
             IsAuthenticated = false;
         }
@@ -112,7 +107,7 @@ namespace Gi7.Service
             CachedClient client;
             if (request.OverrideSettings != null)
             {
-                client = new CachedClient(request.OverrideSettings.BaseUri, Username, _password);
+                client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
                 client.AddHandler("application/json", request.OverrideSettings.Deserializer);
             }
             else
@@ -171,7 +166,7 @@ namespace Gi7.Service
             CachedClient client;
             if (request.OverrideSettings != null)
             {
-                client = new CachedClient(request.OverrideSettings.BaseUri, Username, _password);
+                client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
                 client.AddHandler("application/json", request.OverrideSettings.Deserializer);
             }
             else
@@ -189,6 +184,26 @@ namespace Gi7.Service
             }, true);
 
             return request.Result;
+        }
+
+        private CachedClient _createClient(String baseUri, String usernamne, String password)
+        {
+            var client = new CachedClient(baseUri, usernamne, password);
+            client.ConnectionError += (s, e) =>
+            {
+                MessageBox.Show("Server unreachable.");
+                if (ConnectionError != null)
+                    ConnectionError(this, new EventArgs());
+            };
+            client.Unauthorized += (s, e) =>
+            {
+                MessageBox.Show("Wrong credentials.");
+                Logout();
+                if(Unauthorized != null)
+                    Unauthorized(this, new EventArgs());
+            };
+
+            return client;
         }
     }
 }

@@ -20,11 +20,16 @@ namespace Gi7.Service.Navigation
             if (EnsureMainFrame())
             {
                 _mainFrame.Navigate(new Uri(pageUri, UriKind.RelativeOrAbsolute));
-                _currentQueryString = pageUri.Substring(pageUri.IndexOf('?') + 1).Split('&').Select(i =>
+                if (pageUri.Contains("?"))
                 {
-                    var values = i.Split('=');
-                    return new KeyValuePair<String, String>(values[0], values[1]);
-                }).ToDictionary(i => i.Key, i => i.Value);
+                    _currentQueryString = pageUri.Substring(pageUri.IndexOf('?') + 1).Split('&').Select(i =>
+                    {
+                        var values = i.Split('=');
+                        return new KeyValuePair<String, String>(values[0], values[1]);
+                    }).ToDictionary(i => i.Key, i => i.Value);
+                }
+                else
+                    _currentQueryString = new Dictionary<string, string>();
             }
         }
 
@@ -63,7 +68,6 @@ namespace Gi7.Service.Navigation
             return false;
         }
 
-
         public string GetParameter(string key, string defaultValue = "")
         {
             var result = defaultValue;
@@ -74,6 +78,15 @@ namespace Gi7.Service.Navigation
             }
 
             return result;
+        }
+
+        public string CurrentUri()
+        {
+            if (EnsureMainFrame())
+            {
+                return _mainFrame.CurrentSource.ToString();
+            }
+            return "unknown";
         }
     }
 }

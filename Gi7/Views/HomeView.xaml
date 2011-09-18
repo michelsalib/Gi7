@@ -52,16 +52,13 @@
             <controls:PanoramaItem Header="Profile" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:UserPanel/>
             </controls:PanoramaItem>
-
-            <controls:PanoramaItem Header="About">
-                <localControls:AboutPanel/>
-            </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
             <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="About" Click="About"/>
                 <shell:ApplicationBarMenuItem Text="Logout" Click="Logout"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>

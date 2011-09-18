@@ -15,5 +15,10 @@ namespace Gi7.Views
         {
             Messenger.Default.Send<bool>(true, "logout");
         }
+
+        private void About(object sender, EventArgs e)
+        {
+            Messenger.Default.Send<bool>(true, "about");
+        }
     }
 }

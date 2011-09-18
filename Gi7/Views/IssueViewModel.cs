@@ -68,26 +68,10 @@ namespace Gi7.Views
             }
         }
 
-        private GithubService _githubService;
-        public GithubService GithubService
-        {
-            get { return _githubService; }
-            set
-            {
-                if (_githubService != value)
-                {
-                    _githubService = value;
-                    RaisePropertyChanged("GithubService");
-                }
-            }
-        }
-
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
 
         public IssueViewModel(Service.GithubService githubService, string username, string repo, string number)
         {
-            GithubService = githubService;
-
             RepoName = String.Format("{0}/{1}", username, repo);
             IssueName = "Issue #" + number;
 

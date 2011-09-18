@@ -69,20 +69,6 @@ namespace Gi7.Views
             }
         }
 
-        private GithubService _githubService;
-        public GithubService GithubService
-        {
-            get { return _githubService; }
-            set
-            {
-                if (_githubService != value)
-                {
-                    _githubService = value;
-                    RaisePropertyChanged("GithubService");
-                }
-            }
-        }
-
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
@@ -91,8 +77,6 @@ namespace Gi7.Views
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
-            GithubService = githubService;
-
             Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));

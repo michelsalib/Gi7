@@ -21,15 +21,6 @@ namespace Gi7.Controls.PaginatedListBox
         public static readonly DependencyProperty RequestProperty =
             DependencyProperty.Register("Request", typeof(IGithubPaginatedRequest<T>), typeof(PaginatedListBox<T>), new PropertyMetadata(_newRequest));
 
-        public GithubService Service
-        {
-            get { return (GithubService)GetValue(ServiceProperty); }
-            set { SetValue(ServiceProperty, value); }
-        }
-        public static readonly DependencyProperty ServiceProperty =
-            DependencyProperty.Register("Service", typeof(GithubService), typeof(PaginatedListBox<T>), null);
-
-
         protected bool Loading = false;
 
         private bool _alreadyHookedScrollEvents = false;
@@ -77,10 +68,17 @@ namespace Gi7.Controls.PaginatedListBox
 
         private void _load()
         {
-            if (Loading == false && Request.HasMoreItems)
+            try
             {
-                Loading = true;
-                Service.Load<T>(Request, r => Loading = false);
+                if (Loading == false && Request.HasMoreItems)
+                {
+                    Loading = true;
+                    ViewModelLocator.GithubService.Load<T>(Request, r => Loading = false);
+                }
+            }
+            catch (Exception)
+            {
+                ClearValue(ItemsSourceProperty);
             }
         }
 

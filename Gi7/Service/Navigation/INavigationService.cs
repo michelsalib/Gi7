@@ -10,5 +10,7 @@ namespace Gi7.Service.Navigation
         event NavigatingCancelEventHandler Navigating;
 
         string GetParameter(string key, string defaultValue = "");
+
+        string CurrentUri();
     }
 }

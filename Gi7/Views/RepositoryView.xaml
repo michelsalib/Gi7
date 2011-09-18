@@ -75,7 +75,7 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Header="Commits">
-                <paginated:CommitListBox Request="{Binding CommitsRequest}" Service="{Binding GithubService}" x:Name="CommitsList">
+                <paginated:CommitListBox Request="{Binding CommitsRequest}" x:Name="CommitsList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding CommitSelectedCommand}" CommandParameter="{Binding ElementName=CommitsList, Path=SelectedItem}" />
@@ -95,7 +95,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Pull requests">
-                <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" Service="{Binding GithubService}" x:Name="PullRequestsList">
+                <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" x:Name="PullRequestsList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding PullRequestSelectedCommand}" CommandParameter="{Binding ElementName=PullRequestsList, Path=SelectedItem}" />
@@ -118,7 +118,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Issues">
-                <paginated:IssueListBox Request="{Binding IssuesRequest}" Service="{Binding GithubService}" x:Name="IssuesList">
+                <paginated:IssueListBox Request="{Binding IssuesRequest}" x:Name="IssuesList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding IssueSelectedCommand}" CommandParameter="{Binding ElementName=IssuesList, Path=SelectedItem}" />

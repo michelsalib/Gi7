@@ -17,8 +17,13 @@ namespace Gi7.Service
         {
             if (!ViewModelBase.IsInDesignModeStatic)
             {
-                GithubService = new GithubService();
                 NavigationService = new NavigationService();
+                GithubService = new GithubService();
+                GithubService.IsAuthenticatedChanged += (s,e) => {
+                    if(e.IsAuthenticated == false && !NavigationService.CurrentUri().Contains(HomeUrl)){
+                        NavigationService.NavigateTo(ViewModelLocator.HomeUrl);
+                    }
+                };
             }
         }
 
@@ -30,6 +35,7 @@ namespace Gi7.Service
             }
         }
 
+        public const string HomeUrl = "/Views/HomeView.xaml";
         public Object HomeViewModel
         {
             get
@@ -110,6 +116,20 @@ namespace Gi7.Service
                 }
                 else
                     return new IssueViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
+            }
+        }
+
+        public const string AboutUrl = "/Views/AboutView.xaml";
+        public Object AboutViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                {
+                    return new AboutDataModel();
+                }
+                else
+                    return new AboutViewModel(GithubService);
             }
         }
     }

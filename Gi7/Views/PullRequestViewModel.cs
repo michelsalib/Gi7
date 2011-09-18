@@ -54,27 +54,11 @@ namespace Gi7.Views
             }
         }
 
-        private GithubService _githubService;
-        public GithubService GithubService
-        {
-            get { return _githubService; }
-            set
-            {
-                if (_githubService != value)
-                {
-                    _githubService = value;
-                    RaisePropertyChanged("GithubService");
-                }
-            }
-        }
-
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
 
         public PullRequestViewModel(Service.GithubService githubService, string username, string repo, string number)
         {
             RepoName = String.Format("{0}/{1}", username, repo);
-
-            GithubService = githubService;
             PullRequest = githubService.Load(new PullRequestRequest(username, repo, number), pr => PullRequest = pr);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>

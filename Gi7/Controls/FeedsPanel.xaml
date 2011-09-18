@@ -13,7 +13,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
-    <local:FeedListBox Service="{Binding GithubService}" Request="{Binding FeedsRequest}" x:Name="FeedsList">
+    <local:FeedListBox Request="{Binding FeedsRequest}" x:Name="FeedsList">
         <local:FeedListBox.ItemTemplate>
             <DataTemplate>
                 <Grid>

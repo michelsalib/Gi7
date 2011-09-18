@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Gi7.Utils;
 using RestSharp;
+using System.Net;
 
 namespace Gi7.Service
 {
@@ -14,7 +15,10 @@ namespace Gi7.Service
     {
         public CacheProvider CacheProvider { get; private set; }
 
-        public CachedClient(String baseUri, String username, String password = "")
+        public event EventHandler ConnectionError;
+        public event EventHandler Unauthorized;
+
+        public CachedClient(String baseUri, String username, String password)
             : base (baseUri)
         {
             CacheProvider = new CacheProvider(username);
@@ -45,7 +49,6 @@ namespace Gi7.Service
                 result = new T();
             }
 
-
             ExecuteAsync<T>(new RestRequest(uri), r =>
             {
                 if (callback != null)
@@ -60,6 +63,29 @@ namespace Gi7.Service
         public void ClearCache()
         {
             CacheProvider.Clear();
+        }
+
+        public override void ExecuteAsync<T>(RestRequest request, Action<RestResponse<T>> callback)
+        {
+            base.ExecuteAsync<T>(request, r =>
+            {
+                if (r.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    if (Unauthorized != null)
+                    {
+                        Unauthorized(this, new EventArgs());
+                    }
+                }
+                else if (r.ResponseStatus == ResponseStatus.Error)
+                {
+                    if (ConnectionError != null)
+                    {
+                        ConnectionError(this, new EventArgs());
+                    }
+                }
+                else
+                    callback(r);
+            });
         }
     }
 }

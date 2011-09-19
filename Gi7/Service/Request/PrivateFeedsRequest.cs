@@ -5,7 +5,7 @@ using Gi7.Utils;
 
 namespace Gi7.Service.Request
 {
-    public class PrivateFeedsRequest : GithubPaginatedRequest<Feed>
+    public class PrivateFeedsRequest : PaginatedRequest<Feed>
     {
         public PrivateFeedsRequest(String username)
         {
@@ -13,7 +13,8 @@ namespace Gi7.Service.Request
             OverrideSettings = new OverrideSettings()
             {
                 BaseUri = "https://github.com/",
-                Deserializer = new FeedDeserializer()
+                Deserializer = new FeedDeserializer(),
+                ContentType = "application/json",
             };
         }
     }

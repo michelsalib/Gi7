@@ -5,6 +5,7 @@ using System.Linq;
 using Gi7.Utils;
 using RestSharp;
 using System.Net;
+using Gi7.Service.Request.Base;
 
 namespace Gi7.Service
 {
@@ -27,7 +28,7 @@ namespace Gi7.Service
                 Authenticator = new HttpBasicAuthenticator(username, password);
         }
 
-        public List<T> GetList<T>(String uri, Action<List<T>> callback = null, bool useCache = true)
+        public List<T> GetList<T>(string uri, Action<List<T>> callback = null, bool useCache = true)
             where T : new()
         {
             return Get<List<T>>(uri, callback, useCache);
@@ -49,7 +50,8 @@ namespace Gi7.Service
                 result = new T();
             }
 
-            ExecuteAsync<T>(new RestRequest(uri), r =>
+            var restRequest = new RestRequest(uri);
+            ExecuteAsync<T>(restRequest, r =>
             {
                 if (callback != null)
                     callback(r.Data);
@@ -75,6 +77,7 @@ namespace Gi7.Service
                     {
                         Unauthorized(this, new EventArgs());
                     }
+                    GlobalLoading.Instance.IsLoading = false;
                 }
                 else if (r.ResponseStatus == ResponseStatus.Error)
                 {
@@ -82,6 +85,7 @@ namespace Gi7.Service
                     {
                         ConnectionError(this, new EventArgs());
                     }
+                    GlobalLoading.Instance.IsLoading = false;
                 }
                 else
                     callback(r);

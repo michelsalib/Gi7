@@ -25,7 +25,7 @@
             <TextBlock Text="Following" FontSize="30"/>
             <ListBox x:Name="Following" ItemsSource="{Binding Following}" ItemTemplate="{StaticResource UserTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <Interactivity:Interaction.Triggers>
-                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Interactivity:EventTrigger EventName="Tap">
                         <Command:EventToCommand Command="{Binding UserSelectedCommand}" CommandParameter="{Binding ElementName=Following, Path=SelectedItem}" />
                     </Interactivity:EventTrigger>
                 </Interactivity:Interaction.Triggers>
@@ -33,7 +33,7 @@
             <TextBlock Text="Followers" FontSize="30"/>
             <ListBox x:Name="Followers" ItemsSource="{Binding Followers}" ItemTemplate="{StaticResource UserTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <Interactivity:Interaction.Triggers>
-                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Interactivity:EventTrigger EventName="Tap">
                         <Command:EventToCommand Command="{Binding UserSelectedCommand}" CommandParameter="{Binding ElementName=Followers, Path=SelectedItem}" />
                     </Interactivity:EventTrigger>
                 </Interactivity:Interaction.Triggers>

@@ -47,8 +47,8 @@ namespace Gi7.Views
             }
         }
 
-        private IGithubPaginatedRequest<Feed> _feedsRequest;
-        public IGithubPaginatedRequest<Feed> FeedsRequest
+        private IPaginatedRequest<Feed> _feedsRequest;
+        public IPaginatedRequest<Feed> FeedsRequest
         {
             get { return _feedsRequest; }
             set

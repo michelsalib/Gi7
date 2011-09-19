@@ -22,7 +22,7 @@
             <TextBlock Text="Watched Repos" FontSize="30"/>
             <ListBox x:Name="WatchedRepos" ItemsSource="{Binding WatchedRepos}" ItemTemplate="{StaticResource RepoTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <Interactivity:Interaction.Triggers>
-                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Interactivity:EventTrigger EventName="Tap">
                         <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding ElementName=WatchedRepos, Path=SelectedItem}" />
                     </Interactivity:EventTrigger>
                 </Interactivity:Interaction.Triggers>
@@ -30,7 +30,7 @@
             <TextBlock Text="Owned Repos" FontSize="30"/>
             <ListBox x:Name="OwnedRepos" ItemsSource="{Binding OwnedRepos}" ItemTemplate="{StaticResource RepoTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <Interactivity:Interaction.Triggers>
-                    <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Interactivity:EventTrigger EventName="Tap">
                         <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding ElementName=OwnedRepos, Path=SelectedItem}" />
                     </Interactivity:EventTrigger>
                 </Interactivity:Interaction.Triggers>

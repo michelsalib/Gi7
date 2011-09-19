@@ -13,13 +13,13 @@ namespace Gi7.Controls.PaginatedListBox
     public class PaginatedListBox<T> : ListBox
         where T : new()
     {
-        public IGithubPaginatedRequest<T> Request
+        public IPaginatedRequest<T> Request
         {
-            get { return (IGithubPaginatedRequest<T>)GetValue(RequestProperty); }
+            get { return (IPaginatedRequest<T>)GetValue(RequestProperty); }
             set { SetValue(RequestProperty, value); }
         }
         public static readonly DependencyProperty RequestProperty =
-            DependencyProperty.Register("Request", typeof(IGithubPaginatedRequest<T>), typeof(PaginatedListBox<T>), new PropertyMetadata(_newRequest));
+            DependencyProperty.Register("Request", typeof(IPaginatedRequest<T>), typeof(PaginatedListBox<T>), new PropertyMetadata(_newRequest));
 
         protected bool Loading = false;
 

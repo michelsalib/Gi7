@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class RepositoryRequest : GithubSingleRequest<Repository>
+    public class RepositoryRequest : SingleRequest<Repository>
     {
         public RepositoryRequest(string username, string reponame)
         {

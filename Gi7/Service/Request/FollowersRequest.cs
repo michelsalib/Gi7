@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class FollowersRequest : GithubPaginatedRequest<User>
+    public class FollowersRequest : PaginatedRequest<User>
     {
         public FollowersRequest(string username)
         {

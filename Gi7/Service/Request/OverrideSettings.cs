@@ -8,5 +8,7 @@ namespace Gi7.Service.Request
         public String BaseUri { get; set; }
 
         public IDeserializer Deserializer { get; set; }
+
+        public String ContentType { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace Gi7.Service.Request.Base
 {
-    public interface IGithubSingleRequest<T> : IGithubRequest<T>
+    public interface ISingleRequest<T> : IGenericRequest<T>
         where T : new()
     {
         T Result { get; set; }

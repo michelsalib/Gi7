@@ -129,7 +129,7 @@ namespace Gi7.Service
                     return new AboutDataModel();
                 }
                 else
-                    return new AboutViewModel(GithubService);
+                    return new AboutViewModel(GithubService, NavigationService);
             }
         }
     }

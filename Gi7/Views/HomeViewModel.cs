@@ -14,6 +14,7 @@ using Gi7.Service.Request;
 using Gi7.Service.Request.Base;
 using Microsoft.Phone.Controls;
 using System.Windows;
+using Gi7.Model.Extra;
 
 namespace Gi7.Views
 {
@@ -55,8 +56,8 @@ namespace Gi7.Views
             }
         }
 
-        private IGithubPaginatedRequest<Feed> _feedsRequest;
-        public IGithubPaginatedRequest<Feed> FeedsRequest
+        private IPaginatedRequest<Feed> _feedsRequest;
+        public IPaginatedRequest<Feed> FeedsRequest
         {
             get { return _feedsRequest; }
             set
@@ -132,9 +133,24 @@ namespace Gi7.Views
             }
         }
 
+        private ObservableCollection<FeaturedRepo> _featuredRepos;
+        public ObservableCollection<FeaturedRepo> FeaturedRepos
+        {
+            get { return _featuredRepos; }
+            set
+            {
+                if (_featuredRepos != value)
+                {
+                    _featuredRepos = value;
+                    RaisePropertyChanged("FeaturedRepos");
+                }
+            }
+        }
+
         public RelayCommand<Feed> FeedSelectedCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
+        public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
         private readonly GithubService _githubService;
 
@@ -143,6 +159,11 @@ namespace Gi7.Views
             _githubService = githubService;
 
             // commands
+            FeaturedRepoSelectedCommand = new RelayCommand<FeaturedRepo>(r =>
+            {
+                if (r != null)
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.User, r.Repo));
+            });
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
                 if (r != null)
@@ -218,6 +239,10 @@ namespace Gi7.Views
                 case "Profile":
                     if(User == null)
                         User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                    break;
+                case "Explore":
+                    if (FeaturedRepos == null)
+                        FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
                     break;
                 default:
                     break;

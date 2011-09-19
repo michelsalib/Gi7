@@ -25,7 +25,6 @@ namespace Gi7.Utils
                 throw new InvalidOperationException("The type must be List<Feed>.");
 
             var json = JArray.Parse(response.Content);
-            var defaultDeserializer = new JsonDeserializer();
 
             foreach (var feedData in json)
             {

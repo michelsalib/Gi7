@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class CommitRequest : GithubSingleRequest<Push>
+    public class CommitRequest : SingleRequest<Push>
     {
         public CommitRequest(string username, string repo, string sha)
         {

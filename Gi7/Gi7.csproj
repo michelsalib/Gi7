@@ -76,6 +76,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +92,7 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
+    <Compile Include="Model\Extra\FeaturedRepo.cs" />
     <Compile Include="Model\Feed\Base\RepositoryFeed.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
     <Compile Include="Model\Feed\DeleteFeed.cs" />
@@ -118,10 +120,12 @@
     <Compile Include="Service\LoadingEventArgs.cs" />
     <Compile Include="Service\Navigation\INavigationService.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
-    <Compile Include="Service\Request\Base\IGithubSingleRequest.cs" />
+    <Compile Include="Service\Request\Base\ISingleRequest.cs" />
+    <Compile Include="Service\Request\Base\IRequest.cs" />
     <Compile Include="Service\Request\CommitsRequest.cs" />
     <Compile Include="Service\Request\CommitRequest.cs" />
     <Compile Include="Service\Request\CommitCommentsRequest.cs" />
+    <Compile Include="Service\Request\FeaturedRepoRequest.cs" />
     <Compile Include="Service\Request\FeedsRequest.cs" />
     <Compile Include="Service\Request\PullRequestCommentsRequest.cs" />
     <Compile Include="Service\Request\PullRequestRequest.cs" />
@@ -132,10 +136,10 @@
     <Compile Include="Service\Request\UserRequest.cs" />
     <Compile Include="Service\Request\FollowingsRequest.cs" />
     <Compile Include="Service\Request\PrivateFeedsRequest.cs" />
-    <Compile Include="Service\Request\Base\GithubSingleRequest.cs" />
-    <Compile Include="Service\Request\Base\GithubPaginatedRequest.cs" />
-    <Compile Include="Service\Request\Base\IGithubRequest.cs" />
-    <Compile Include="Service\Request\Base\IGithubPaginatedRequest.cs" />
+    <Compile Include="Service\Request\Base\SingleRequest.cs" />
+    <Compile Include="Service\Request\Base\PaginatedRequest.cs" />
+    <Compile Include="Service\Request\Base\IGenericRequest.cs" />
+    <Compile Include="Service\Request\Base\IPaginatedRequest.cs" />
     <Compile Include="Service\Request\FollowersRequest.cs" />
     <Compile Include="Service\Request\OverrideSettings.cs" />
     <Compile Include="Service\Request\RepositoryRequest.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
     <Compile Include="Views\AboutView.xaml.cs">

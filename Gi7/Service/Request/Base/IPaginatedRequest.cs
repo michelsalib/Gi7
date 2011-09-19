@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 namespace Gi7.Service.Request.Base
 {
-    public interface IGithubPaginatedRequest<T> : IGithubRequest<T>
+    public interface IPaginatedRequest<T> : IGenericRequest<T>
         where T : new()
     {
         int Page { get; set; }

@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class IssuesRequest : GithubPaginatedRequest<Issue>
+    public class IssuesRequest : PaginatedRequest<Issue>
     {
         public IssuesRequest(string username, string repo)
         {

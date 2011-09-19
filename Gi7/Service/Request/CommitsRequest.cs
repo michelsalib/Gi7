@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class CommitsRequest : GithubPaginatedRequest<Push>
+    public class CommitsRequest : PaginatedRequest<Push>
     {
         public CommitsRequest(string username, string repo)
         {

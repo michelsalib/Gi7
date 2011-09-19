@@ -100,7 +100,7 @@ namespace Gi7.Service
             IsAuthenticated = false;
         }
 
-        public ObservableCollection<T> Load<T>(IGithubPaginatedRequest<T> request, Action<List<T>> callback = null)
+        public ObservableCollection<T> Load<T>(IPaginatedRequest<T> request, Action<List<T>> callback = null)
             where T : new()
         {
             // prepare client
@@ -108,7 +108,7 @@ namespace Gi7.Service
             if (request.OverrideSettings != null)
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
-                client.AddHandler("application/json", request.OverrideSettings.Deserializer);
+                client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
             }
             else
             {
@@ -159,7 +159,7 @@ namespace Gi7.Service
             return request.Result;
         }
 
-        public T Load<T>(IGithubSingleRequest<T> request, Action<T> callback = null)
+        public T Load<T>(ISingleRequest<T> request, Action<T> callback = null)
             where T : new()
         {
             // prepare the client
@@ -167,7 +167,7 @@ namespace Gi7.Service
             if (request.OverrideSettings != null)
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
-                client.AddHandler("application/json", request.OverrideSettings.Deserializer);
+                client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
             }
             else
             {

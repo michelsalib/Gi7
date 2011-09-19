@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight;
 namespace Gi7.Service.Request.Base
 {
-    public abstract class GithubSingleRequest<T> : ViewModelBase, IGithubSingleRequest<T>
+    public abstract class SingleRequest<T> : ViewModelBase, ISingleRequest<T>
         where T : new()
     {
         public string Uri

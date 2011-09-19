@@ -52,6 +52,29 @@
             <controls:PanoramaItem Header="Profile" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:UserPanel/>
             </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="Explore">
+                <ScrollViewer>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Featured Repos" FontSize="30"/>
+                        <ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock FontSize="26" Text="{Binding Fullname}" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <Interactivity:Interaction.Triggers>
+                                <Interactivity:EventTrigger EventName="Tap">
+                                    <Command:EventToCommand Command="{Binding FeaturedRepoSelectedCommand}" CommandParameter="{Binding ElementName=FeaturedRepos, Path=SelectedItem}" />
+                                </Interactivity:EventTrigger>
+                            </Interactivity:Interaction.Triggers>
+                        </ListBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>
 

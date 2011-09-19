@@ -2,6 +2,9 @@
 using Gi7.Model;
 using Gi7.Service;
 using Gi7.Service.Request;
+using GalaSoft.MvvmLight.Command;
+using System;
+using Gi7.Service.Navigation;
 
 namespace Gi7.Views
 {
@@ -35,10 +38,24 @@ namespace Gi7.Views
             }
         }
 
-        public AboutViewModel(GithubService githubService)
+        public RelayCommand<User> UserSelectedCommand { get; private set; }
+        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
+
+        public AboutViewModel(GithubService githubService, INavigationService navigationService)
         {
             Michelsalib = githubService.Load(new UserRequest("michelsalib"), u => Michelsalib = u);
             Gi7 = githubService.Load(new RepositoryRequest("michelsalib", "Gi7"), r => Gi7 = r);
+
+            RepoSelectedCommand = new RelayCommand<Repository>(r =>
+            {
+                if (r != null)
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+            });
+            UserSelectedCommand = new RelayCommand<User>(user =>
+            {
+                if (user != null)
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, user.Login));
+            });
         }
     }
 }

@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight;
 
 namespace Gi7.Service.Request.Base
 {
-    public abstract class GithubPaginatedRequest<T> : ViewModelBase, IGithubPaginatedRequest<T>
+    public abstract class PaginatedRequest<T> : ViewModelBase, IPaginatedRequest<T>
         where T : new()
     {
         public int Page { get; set; }
@@ -26,7 +26,7 @@ namespace Gi7.Service.Request.Base
 
         public OverrideSettings OverrideSettings { get; protected set; }
 
-        public GithubPaginatedRequest()
+        public PaginatedRequest()
         {
             Page = 0;
             HasMoreItems = true;

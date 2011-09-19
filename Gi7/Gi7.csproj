@@ -122,6 +122,7 @@
     <Compile Include="Service\Request\CommitsRequest.cs" />
     <Compile Include="Service\Request\CommitRequest.cs" />
     <Compile Include="Service\Request\CommitCommentsRequest.cs" />
+    <Compile Include="Service\Request\FeedsRequest.cs" />
     <Compile Include="Service\Request\PullRequestCommentsRequest.cs" />
     <Compile Include="Service\Request\PullRequestRequest.cs" />
     <Compile Include="Service\Request\IssueCommentsRequest.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Service\Request\PullRequestsRequest.cs" />
     <Compile Include="Service\Request\UserRequest.cs" />
     <Compile Include="Service\Request\FollowingsRequest.cs" />
-    <Compile Include="Service\Request\FeedsRequest.cs" />
+    <Compile Include="Service\Request\PrivateFeedsRequest.cs" />
     <Compile Include="Service\Request\Base\GithubSingleRequest.cs" />
     <Compile Include="Service\Request\Base\GithubPaginatedRequest.cs" />
     <Compile Include="Service\Request\Base\IGithubRequest.cs" />

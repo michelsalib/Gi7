@@ -5,11 +5,11 @@ using Gi7.Utils;
 
 namespace Gi7.Service.Request
 {
-    public class FeedsRequest : GithubPaginatedRequest<Feed>
+    public class PrivateFeedsRequest : GithubPaginatedRequest<Feed>
     {
-        public FeedsRequest(String username)
+        public PrivateFeedsRequest(String username)
         {
-            Uri = String.Format("{0}.json", username);
+            Uri = String.Format("{0}.private.json", username);
             OverrideSettings = new OverrideSettings()
             {
                 BaseUri = "https://github.com/",

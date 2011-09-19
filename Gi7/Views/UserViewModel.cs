@@ -10,6 +10,8 @@ using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
+using Gi7.Service.Request.Base;
+using Gi7.Model.Feed.Base;
 
 namespace Gi7.Views
 {
@@ -41,6 +43,20 @@ namespace Gi7.Views
                 {
                     _user = value;
                     RaisePropertyChanged("User");
+                }
+            }
+        }
+
+        private IGithubPaginatedRequest<Feed> _feedsRequest;
+        public IGithubPaginatedRequest<Feed> FeedsRequest
+        {
+            get { return _feedsRequest; }
+            set
+            {
+                if (_feedsRequest != value)
+                {
+                    _feedsRequest = value;
+                    RaisePropertyChanged("FeedsRequest");
                 }
             }
         }
@@ -116,8 +132,7 @@ namespace Gi7.Views
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
             Username = user;
-
-            User = githubService.Load(new UserRequest(Username), u => User = u);
+            FeedsRequest = new FeedsRequest(Username);
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
@@ -134,6 +149,12 @@ namespace Gi7.Views
                 var header = (args.AddedItems[0] as PivotItem).Header as String;
                 switch (header)
                 {
+                    case "Feed":
+                        if (FeedsRequest == null)
+                        {
+                            FeedsRequest = new FeedsRequest(Username);
+                        }
+                        break;
                     case "Repos":
                         if (Repos == null)
                         {
@@ -152,6 +173,7 @@ namespace Gi7.Views
                             Followers = githubService.Load(new FollowersRequest(Username));
                         break;
                     case "Profile":
+                    case "Details":
                         if (User == null)
                             User = githubService.Load(new UserRequest(Username), u => User = u);
                         break;

@@ -196,7 +196,7 @@ namespace Gi7.Views
             {
                 case "News Feed":
                     if (FeedsRequest == null)
-                        FeedsRequest = new FeedsRequest(_githubService.Username);
+                        FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
                     break;
                 case "Repos":
                     if (Repos == null)

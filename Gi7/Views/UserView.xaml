@@ -30,18 +30,19 @@
                     <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
                 </Interactivity:EventTrigger>
             </Interactivity:Interaction.Triggers>
-            
-            <!--Pivot item one-->
+
+            <controls:PivotItem Header="Feed">
+                <localControls:FeedsPanel />
+            </controls:PivotItem>
+
             <controls:PivotItem Header="Details">
                 <localControls:UserPanel />
             </controls:PivotItem>
 
-            <!--Pivot item two-->
             <controls:PivotItem Header="Repos">
                 <localControls:RepositoryPanel />
             </controls:PivotItem>
 
-            <!--Pivot item two-->
             <controls:PivotItem Header="Users">
                 <localControls:UsersPanel />
             </controls:PivotItem>

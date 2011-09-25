@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using Gi7.Service;
 using Gi7.Service.Request.Base;
-using System.Windows.Data;
 
 namespace Gi7.Controls.PaginatedListBox
 {

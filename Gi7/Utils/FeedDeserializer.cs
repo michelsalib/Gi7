@@ -113,29 +113,39 @@ namespace Gi7.Utils
                             }
                         };
                         break;
+                    case "ForkEvent":
+                        feed = new ForkFeed();
+                        break;
                     default:
                         feed = new Feed();
                         break;
+                }
+
+                try
+                {
+                    var repoFeed = feed as RepositoryFeed;
+                    if (repoFeed != null)
+                    {
+                        repoFeed.Repository = new Repository()
+                        {
+                            Name = feedData["repository"]["name"].Value<String>(),
+                            Url = feedData["repository"]["url"].Value<String>(),
+                            Owner = new User()
+                            {
+                                Login = feedData["repository"]["owner"].Value<String>()
+                            }
+                        };
+                    }
+                }
+                catch (Exception)
+                {
+                    feed = new Feed();
                 }
 
                 feed.Actor = feedData["actor"].Value<String>();
                 feed.Public = feedData["public"].Value<bool>();
                 feed.CreatedAt = feedData["created_at"].Value<DateTime>();
                 feed.Url = feedData["url"].Value<String>();
-
-                var repoFeed = feed as RepositoryFeed;
-                if (repoFeed != null)
-                {
-                    repoFeed.Repository = new Repository()
-                    {
-                        Name = feedData["repository"]["name"].Value<String>(),
-                        Url = feedData["repository"]["url"].Value<String>(),
-                        Owner = new User()
-                        {
-                            Login = feedData["repository"]["owner"].Value<String>()
-                        }
-                    };
-                }
 
                 feed.User = new User()
                 {

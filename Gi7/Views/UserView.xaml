@@ -12,6 +12,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -36,15 +37,31 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="Details">
-                <localControls:UserPanel />
+                <localControls:ProfilePanel />
             </controls:PivotItem>
 
             <controls:PivotItem Header="Repos">
                 <localControls:RepositoryPanel />
             </controls:PivotItem>
 
-            <controls:PivotItem Header="Users">
-                <localControls:UsersPanel />
+            <controls:PivotItem Header="Following">
+                <lists:UserListBox Request="{Binding FollowingsRequest}">
+                    <lists:UserListBox.ItemTemplate>
+                        <DataTemplate>
+                            <localControls:UserTemplate />
+                        </DataTemplate>
+                    </lists:UserListBox.ItemTemplate>
+                </lists:UserListBox>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="Follower">
+                <lists:UserListBox Request="{Binding FollowersRequest}">
+                    <lists:UserListBox.ItemTemplate>
+                        <DataTemplate>
+                            <localControls:UserTemplate />
+                        </DataTemplate>
+                    </lists:UserListBox.ItemTemplate>
+                </lists:UserListBox>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

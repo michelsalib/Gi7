@@ -13,6 +13,7 @@ namespace Gi7.Model.Feed.Base
     [XmlInclude(typeof(WatchFeed))]
     [XmlInclude(typeof(DeleteFeed))]
     [XmlInclude(typeof(FollowFeed))]
+    [XmlInclude(typeof(ForkFeed))]
     public class Feed
     {
         public User User { get; set; }

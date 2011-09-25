@@ -1,5 +1,4 @@
 ﻿using System;
-using Gi7.Service;
 
 namespace Gi7.Model.Feed
 {

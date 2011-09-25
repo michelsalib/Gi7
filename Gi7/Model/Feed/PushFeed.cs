@@ -1,6 +1,6 @@
 ﻿using System;
-using Gi7.Service;
 using Gi7.Model.Feed.Base;
+using Gi7.Service;
 
 namespace Gi7.Model.Feed
 {

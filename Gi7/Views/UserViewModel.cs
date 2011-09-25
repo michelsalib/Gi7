@@ -6,12 +6,12 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
+using Gi7.Model.Feed.Base;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Service.Request;
-using Microsoft.Phone.Controls;
 using Gi7.Service.Request.Base;
-using Gi7.Model.Feed.Base;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
@@ -97,30 +97,30 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<User> _following;
-        public ObservableCollection<User> Following
+        private PaginatedRequest<User> _followingsRequest;
+        public PaginatedRequest<User> FollowingsRequest
         {
-            get { return _following; }
+            get { return _followingsRequest; }
             set
             {
-                if (_following != value)
+                if (_followingsRequest != value)
                 {
-                    _following = value;
-                    RaisePropertyChanged("Following");
+                    _followingsRequest = value;
+                    RaisePropertyChanged("FollowingsRequest");
                 }
             }
         }
 
-        private ObservableCollection<User> _followers;
-        public ObservableCollection<User> Followers
+        private PaginatedRequest<User> _followersRequest;
+        public PaginatedRequest<User> FollowersRequest
         {
-            get { return _followers; }
+            get { return _followersRequest; }
             set
             {
-                if (_followers != value)
+                if (_followersRequest != value)
                 {
-                    _followers = value;
-                    RaisePropertyChanged("Followers");
+                    _followersRequest = value;
+                    RaisePropertyChanged("FollowersRequest");
                 }
             }
         }
@@ -166,11 +166,13 @@ namespace Gi7.Views
                             };
                         }
                         break;
-                    case "Users":
-                        if (Following == null)
-                            Following = githubService.Load(new FollowingsRequest(Username));
-                        if (Followers == null)
-                            Followers = githubService.Load(new FollowersRequest(Username));
+                    case "Follower":
+                        if (FollowersRequest == null)
+                            FollowersRequest = new FollowersRequest(Username);
+                        break;
+                    case "Following":
+                        if (FollowingsRequest == null)
+                            FollowingsRequest = new FollowingsRequest(Username);
                         break;
                     case "Profile":
                     case "Details":

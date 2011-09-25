@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+using System.Net;
 using Gi7.Utils;
 using RestSharp;
-using System.Net;
-using Gi7.Service.Request.Base;
 
 namespace Gi7.Service
 {

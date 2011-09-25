@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Gi7.Model;
-using Gi7.Model.Feed;
-using Gi7.Model.Feed.Base;
-using Newtonsoft.Json.Linq;
-using RestSharp.Deserializers;
-using Gi7.Model.Extra;
-using System.Linq;
-using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using Gi7.Model.Extra;
+using RestSharp.Deserializers;
 
 namespace Gi7.Utils
 {

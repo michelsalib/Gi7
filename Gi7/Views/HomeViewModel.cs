@@ -7,14 +7,13 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Gi7.Model;
+using Gi7.Model.Extra;
 using Gi7.Model.Feed.Base;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Service.Request;
 using Gi7.Service.Request.Base;
 using Microsoft.Phone.Controls;
-using System.Windows;
-using Gi7.Model.Extra;
 
 namespace Gi7.Views
 {
@@ -105,30 +104,30 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<User> _following;
-        public ObservableCollection<User> Following
+        private PaginatedRequest<User> _followingsRequest;
+        public PaginatedRequest<User> FollowingsRequest
         {
-            get { return _following; }
+            get { return _followingsRequest; }
             set
             {
-                if (_following != value)
+                if (_followingsRequest != value)
                 {
-                    _following = value;
-                    RaisePropertyChanged("Following");
+                    _followingsRequest = value;
+                    RaisePropertyChanged("FollowingsRequest");
                 }
             }
         }
 
-        private ObservableCollection<User> _followers;
-        public ObservableCollection<User> Followers
+        private PaginatedRequest<User> _followersRequest;
+        public PaginatedRequest<User> FollowersRequest
         {
-            get { return _followers; }
+            get { return _followersRequest; }
             set
             {
-                if (_followers != value)
+                if (_followersRequest != value)
                 {
-                    _followers = value;
-                    RaisePropertyChanged("Followers");
+                    _followersRequest = value;
+                    RaisePropertyChanged("FollowersRequest");
                 }
             }
         }
@@ -230,11 +229,13 @@ namespace Gi7.Views
                         };
                     }
                     break;
-                case "Users":
-                    if(Following == null)
-                        Following = _githubService.Load(new FollowingsRequest(_githubService.Username));
-                    if (Followers == null)
-                        Followers = _githubService.Load(new FollowersRequest(_githubService.Username));
+                case "Follower":
+                    if (FollowersRequest == null)
+                        FollowersRequest = new FollowersRequest(_githubService.Username);
+                    break;
+                case "Following":
+                    if(FollowingsRequest == null)
+                        FollowingsRequest = new FollowingsRequest(_githubService.Username);
                     break;
                 case "Profile":
                     if(User == null)
@@ -262,8 +263,8 @@ namespace Gi7.Views
             User = null;
             FeedsRequest = null;
             Repos = null;
-            Followers = null;
-            Following = null;
+            FollowersRequest = null;
+            FollowingsRequest = null;
         }
     }
 }

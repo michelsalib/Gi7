@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -45,12 +46,28 @@
                 <localControls:RepositoryPanel/>
             </controls:PanoramaItem>
             
-            <controls:PanoramaItem Header="Users" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:UsersPanel/>
+            <controls:PanoramaItem Header="Following" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <lists:UserListBox Request="{Binding FollowingsRequest}">
+                    <lists:UserListBox.ItemTemplate>
+                        <DataTemplate>
+                            <localControls:UserTemplate />
+                        </DataTemplate>
+                    </lists:UserListBox.ItemTemplate>
+                </lists:UserListBox>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="Follower" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <lists:UserListBox Request="{Binding FollowersRequest}">
+                    <lists:UserListBox.ItemTemplate>
+                        <DataTemplate>
+                            <localControls:UserTemplate />
+                        </DataTemplate>
+                    </lists:UserListBox.ItemTemplate>
+                </lists:UserListBox>
             </controls:PanoramaItem>
 
             <controls:PanoramaItem Header="Profile" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:UserPanel/>
+                <localControls:ProfilePanel/>
             </controls:PanoramaItem>
 
             <controls:PanoramaItem Header="Explore">

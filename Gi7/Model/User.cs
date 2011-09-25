@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Media;
 
 namespace Gi7.Model
 {

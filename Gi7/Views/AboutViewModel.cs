@@ -1,10 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service;
-using Gi7.Service.Request;
-using GalaSoft.MvvmLight.Command;
-using System;
 using Gi7.Service.Navigation;
+using Gi7.Service.Request;
 
 namespace Gi7.Views
 {

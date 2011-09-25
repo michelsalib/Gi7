@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\UserListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\FeedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Model\Feed\DeleteFeed.cs" />
     <Compile Include="Model\Feed\CreateFeed.cs" />
     <Compile Include="Model\Feed\FollowFeed.cs" />
+    <Compile Include="Model\Feed\ForkFeed.cs" />
     <Compile Include="Model\Feed\IssueCommentFeed.cs" />
     <Compile Include="Model\Feed\IssueFeed.cs" />
     <Compile Include="Model\Feed\PullRequestFeed.cs" />
@@ -180,8 +182,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\GithubService.cs" />
     <Compile Include="Utils\FeedDeserializer.cs" />
-    <Compile Include="Controls\UsersPanel.xaml.cs">
-      <DependentUpon>UsersPanel.xaml</DependentUpon>
+    <Compile Include="Controls\UserTemplate.xaml.cs">
+      <DependentUpon>UserTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RepositoryPanel.xaml.cs">
       <DependentUpon>RepositoryPanel.xaml</DependentUpon>
@@ -193,8 +195,8 @@
       <DependentUpon>FeedsPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LoginPanelViewModel.cs" />
-    <Compile Include="Controls\UserPanel.xaml.cs">
-      <DependentUpon>UserPanel.xaml</DependentUpon>
+    <Compile Include="Controls\ProfilePanel.xaml.cs">
+      <DependentUpon>ProfilePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
@@ -230,7 +232,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\UsersPanel.xaml">
+    <Page Include="Controls\UserTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -246,7 +248,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\UserPanel.xaml">
+    <Page Include="Controls\ProfilePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -276,6 +278,7 @@
     <Resource Include="Images\issues_opened.png" />
     <Resource Include="Images\push.png" />
     <Resource Include="Images\follow.png" />
+    <Resource Include="Images\fork.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

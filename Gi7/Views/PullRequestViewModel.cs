@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
-using Gi7.Service;
 
 namespace Gi7.Views
 {

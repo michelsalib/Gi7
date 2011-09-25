@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
-using System.Net;
+using System.Windows;
 using Gi7.Model;
 using Gi7.Service.Request.Base;
 using RestSharp;
-using System.Collections.Generic;
-using System.Windows;
 
 namespace Gi7.Service
 {

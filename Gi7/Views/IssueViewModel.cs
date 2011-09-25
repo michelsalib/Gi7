@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
 using Gi7.Service.Request;
-using GalaSoft.MvvmLight.Command;
-using System.Windows.Controls;
-using Gi7.Service;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views

@@ -2,9 +2,9 @@
 
 namespace Gi7.Controls
 {
-    public partial class UserPanel : UserControl
+    public partial class ProfilePanel : UserControl
     {
-        public UserPanel()
+        public ProfilePanel()
         {
             InitializeComponent();
         }

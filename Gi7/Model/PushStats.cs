@@ -1,5 +1,4 @@
-﻿
-namespace Gi7.Model
+﻿namespace Gi7.Model
 {
     public class PushStats
     {

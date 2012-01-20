@@ -13,18 +13,12 @@ namespace Gi7.Model.Feed
 
         public override String Template
         {
-            get
-            {
-                return String.Format("{0} pull request on", Action);
-            }
+            get { return String.Format("{0} pull request on", Action); }
         }
 
         public override String Image
         {
-            get
-            {
-                return "/Gi7;component/Images/issues_opened.png";
-            }
+            get { return "/Gi7;component/Images/issues_opened.png"; }
         }
     }
 }

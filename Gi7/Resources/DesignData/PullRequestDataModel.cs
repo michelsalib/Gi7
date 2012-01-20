@@ -4,13 +4,11 @@ namespace Gi7.Resources.DesignData
 {
     public class PullRequestDataModel
     {
-        public PullRequest PullRequest { get; set; }
-
         public PullRequestDataModel()
         {
-            PullRequest = new PullRequest()
+            PullRequest = new PullRequest
             {
-                User = new User()
+                User = new User
                 {
                     Login = "michelsalib",
                     AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
@@ -22,5 +20,7 @@ namespace Gi7.Resources.DesignData
                 State = "Open"
             };
         }
+
+        public PullRequest PullRequest { get; set; }
     }
 }

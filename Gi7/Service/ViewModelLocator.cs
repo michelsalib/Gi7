@@ -9,9 +9,13 @@ namespace Gi7.Service
 {
     public class ViewModelLocator
     {
-        public static GithubService GithubService {get;private set;}
-
-        public static INavigationService NavigationService { get; private set; }
+        public const string HomeUrl = "/Views/HomeView.xaml";
+        public const string RepositoryUrl = "/Views/RepositoryView.xaml?user={0}&repo={1}";
+        public const string UserUrl = "/Views/UserView.xaml?user={0}";
+        public const string CommitUrl = "/Views/CommitView.xaml?user={0}&repo={1}&sha={2}";
+        public const string PullRequestUrl = "/Views/PullRequestView.xaml?user={0}&repo={1}&number={2}";
+        public const string IssueUrl = "/Views/IssueView.xaml?user={0}&repo={1}&number={2}";
+        public const string AboutUrl = "/Views/AboutView.xaml";
 
         static ViewModelLocator()
         {
@@ -19,23 +23,25 @@ namespace Gi7.Service
             {
                 NavigationService = new NavigationService();
                 GithubService = new GithubService();
-                GithubService.IsAuthenticatedChanged += (s,e) => {
-                    if(e.IsAuthenticated == false && !NavigationService.CurrentUri().Contains(HomeUrl)){
-                        NavigationService.NavigateTo(ViewModelLocator.HomeUrl);
+                GithubService.IsAuthenticatedChanged += (s, e) =>
+                {
+                    if (e.IsAuthenticated == false && !NavigationService.CurrentUri().Contains(HomeUrl))
+                    {
+                        NavigationService.NavigateTo(HomeUrl);
                     }
                 };
             }
         }
 
+        public static GithubService GithubService { get; private set; }
+
+        public static INavigationService NavigationService { get; private set; }
+
         public LoginPanelViewModel LoginPanelViewModel
         {
-            get
-            {
-                return new LoginPanelViewModel(GithubService);
-            }
+            get { return new LoginPanelViewModel(GithubService); }
         }
 
-        public const string HomeUrl = "/Views/HomeView.xaml";
         public Object HomeViewModel
         {
             get
@@ -43,13 +49,11 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return null;
-                }
-                else
+                } else
                     return new HomeViewModel(GithubService, NavigationService);
             }
         }
 
-        public const string RepositoryUrl = "/Views/RepositoryView.xaml?user={0}&repo={1}";
         public Object RepositoryViewModel
         {
             get
@@ -57,13 +61,11 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return new RepositoryDataModel();
-                }
-                else
+                } else
                     return new RepositoryViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"));
             }
         }
 
-        public const string UserUrl = "/Views/UserView.xaml?user={0}";
         public Object UserViewModel
         {
             get
@@ -71,13 +73,11 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return new UserDataModel();
-                }
-                else
+                } else
                     return new UserViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"));
             }
         }
 
-        public const string CommitUrl = "/Views/CommitView.xaml?user={0}&repo={1}&sha={2}";
         public Object CommitViewModel
         {
             get
@@ -85,13 +85,11 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return new CommitDataModel();
-                }
-                else
+                } else
                     return new CommitViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
             }
         }
 
-        public const string PullRequestUrl = "/Views/PullRequestView.xaml?user={0}&repo={1}&number={2}";
         public Object PullRequestViewModel
         {
             get
@@ -99,13 +97,11 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return new PullRequestDataModel();
-                }
-                else
+                } else
                     return new PullRequestViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
             }
         }
 
-        public const string IssueUrl = "/Views/IssueView.xaml?user={0}&repo={1}&number={2}";
         public Object IssueViewModel
         {
             get
@@ -113,13 +109,11 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return new IssueDataModel();
-                }
-                else
+                } else
                     return new IssueViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
             }
         }
 
-        public const string AboutUrl = "/Views/AboutView.xaml";
         public Object AboutViewModel
         {
             get
@@ -127,8 +121,7 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                 {
                     return new AboutDataModel();
-                }
-                else
+                } else
                     return new AboutViewModel(GithubService, NavigationService);
             }
         }

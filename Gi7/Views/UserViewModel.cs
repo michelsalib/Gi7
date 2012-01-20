@@ -17,7 +17,69 @@ namespace Gi7.Views
 {
     public class UserViewModel : ViewModelBase
     {
+        private IPaginatedRequest<Feed> _feedsRequest;
+        private PaginatedRequest<User> _followersRequest;
+        private PaginatedRequest<User> _followingsRequest;
+        private ObservableCollection<Repository> _repos;
+        private User _user;
         private String _username;
+
+        public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
+        {
+            Username = user;
+            FeedsRequest = new FeedsRequest(Username);
+
+            RepoSelectedCommand = new RelayCommand<Repository>(r =>
+            {
+                if (r != null)
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+            });
+            UserSelectedCommand = new RelayCommand<User>(u =>
+            {
+                if (user != null)
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, u.Login));
+            });
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
+            {
+                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                switch (header)
+                {
+                case "Feed":
+                    if (FeedsRequest == null)
+                    {
+                        FeedsRequest = new FeedsRequest(Username);
+                    }
+                    break;
+                case "Repos":
+                    if (Repos == null)
+                    {
+                        Repos = githubService.Load(new WatchedRepoRequest(Username));
+                        Repos.CollectionChanged += (sender, e) =>
+                        {
+                            RaisePropertyChanged("WatchedRepos");
+                            RaisePropertyChanged("OwnedRepos");
+                        };
+                    }
+                    break;
+                case "Follower":
+                    if (FollowersRequest == null)
+                        FollowersRequest = new FollowersRequest(Username);
+                    break;
+                case "Following":
+                    if (FollowingsRequest == null)
+                        FollowingsRequest = new FollowingsRequest(Username);
+                    break;
+                case "Profile":
+                case "Details":
+                    if (User == null)
+                        User = githubService.Load(new UserRequest(Username), u => User = u);
+                    break;
+                default:
+                    break;
+                }
+            });
+        }
+
         public String Username
         {
             get { return _username; }
@@ -33,7 +95,6 @@ namespace Gi7.Views
             }
         }
 
-        private User _user;
         public User User
         {
             get { return _user; }
@@ -47,7 +108,6 @@ namespace Gi7.Views
             }
         }
 
-        private IPaginatedRequest<Feed> _feedsRequest;
         public IPaginatedRequest<Feed> FeedsRequest
         {
             get { return _feedsRequest; }
@@ -83,7 +143,6 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<Repository> _repos;
         public ObservableCollection<Repository> Repos
         {
             get { return _repos; }
@@ -97,7 +156,6 @@ namespace Gi7.Views
             }
         }
 
-        private PaginatedRequest<User> _followingsRequest;
         public PaginatedRequest<User> FollowingsRequest
         {
             get { return _followingsRequest; }
@@ -111,7 +169,6 @@ namespace Gi7.Views
             }
         }
 
-        private PaginatedRequest<User> _followersRequest;
         public PaginatedRequest<User> FollowersRequest
         {
             get { return _followersRequest; }
@@ -128,61 +185,5 @@ namespace Gi7.Views
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-
-        public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
-        {
-            Username = user;
-            FeedsRequest = new FeedsRequest(Username);
-
-            RepoSelectedCommand = new RelayCommand<Repository>(r =>
-            {
-                if (r != null)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
-            });
-            UserSelectedCommand = new RelayCommand<User>(u =>
-            {
-                if (user != null)
-                    navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, u.Login));
-            });
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
-                switch (header)
-                {
-                    case "Feed":
-                        if (FeedsRequest == null)
-                        {
-                            FeedsRequest = new FeedsRequest(Username);
-                        }
-                        break;
-                    case "Repos":
-                        if (Repos == null)
-                        {
-                            Repos = githubService.Load(new WatchedRepoRequest(Username));
-                            Repos.CollectionChanged += (sender, e) =>
-                            {
-                                RaisePropertyChanged("WatchedRepos");
-                                RaisePropertyChanged("OwnedRepos");
-                            };
-                        }
-                        break;
-                    case "Follower":
-                        if (FollowersRequest == null)
-                            FollowersRequest = new FollowersRequest(Username);
-                        break;
-                    case "Following":
-                        if (FollowingsRequest == null)
-                            FollowingsRequest = new FollowingsRequest(Username);
-                        break;
-                    case "Profile":
-                    case "Details":
-                        if (User == null)
-                            User = githubService.Load(new UserRequest(Username), u => User = u);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
     }
 }

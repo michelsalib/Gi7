@@ -14,26 +14,17 @@ namespace Gi7.Model.Feed
 
         public override String Template
         {
-            get
-            {
-                return "pushed on";
-            }
+            get { return "pushed on"; }
         }
 
         public override String Image
         {
-            get
-            {
-                return "/Gi7;component/Images/push.png";
-            }
+            get { return "/Gi7;component/Images/push.png"; }
         }
 
         public override String Destination
         {
-            get
-            {
-                return String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, Ref);
-            }
+            get { return String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, Ref); }
         }
     }
 }

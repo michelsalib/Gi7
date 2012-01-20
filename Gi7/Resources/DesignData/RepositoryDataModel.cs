@@ -6,19 +6,11 @@ namespace Gi7.Resources.DesignData
 {
     public class RepositoryDataModel
     {
-        public Repository Repository { get; set; }
-
-        public ObservableCollection<Push> Commits { get; set; }
-
-        public ObservableCollection<PullRequest> PullRequests { get; set; }
-
-        public ObservableCollection<Issue> Issues { get; set; }
-
         public RepositoryDataModel()
         {
-            Repository = new Repository()
+            Repository = new Repository
             {
-                Owner = new User()
+                Owner = new User
                 {
                     Login = "michelsalib",
                     AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
@@ -29,9 +21,9 @@ namespace Gi7.Resources.DesignData
                 Watchers = 3,
                 Forks = 1,
                 Homepage = "symfony.com",
-                Parent = new Repository()
+                Parent = new Repository
                 {
-                    Owner = new User()
+                    Owner = new User
                     {
                         Login = "symfony",
                         AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317"
@@ -41,17 +33,17 @@ namespace Gi7.Resources.DesignData
             };
 
             Commits = new ObservableCollection<Push>();
-            Commits.Add(new Push()
+            Commits.Add(new Push
             {
-                Author = new User()
+                Author = new User
                 {
                     Login = "michelsalib",
                     AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
                 },
-                Commit = new Commit()
+                Commit = new Commit
                 {
                     Message = "message",
-                    Author = new Committer()
+                    Author = new Committer
                     {
                         Date = DateTime.Now,
                     }
@@ -59,13 +51,13 @@ namespace Gi7.Resources.DesignData
             });
 
             PullRequests = new ObservableCollection<PullRequest>();
-            PullRequests.Add(new PullRequest()
+            PullRequests.Add(new PullRequest
             {
                 Title = "my pull requets",
                 Body = "the description",
                 UpdatedAt = DateTime.Now,
                 State = "Open",
-                User = new User()
+                User = new User
                 {
                     Login = "michelsalib",
                     AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
@@ -73,18 +65,26 @@ namespace Gi7.Resources.DesignData
             });
 
             Issues = new ObservableCollection<Issue>();
-            Issues.Add(new Issue()
+            Issues.Add(new Issue
             {
                 Title = "my issue",
                 Body = "the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long",
                 UpdatedAt = DateTime.Now,
                 State = "Open",
-                User = new User()
+                User = new User
                 {
                     Login = "michelsalib",
                     AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
                 },
             });
         }
+
+        public Repository Repository { get; set; }
+
+        public ObservableCollection<Push> Commits { get; set; }
+
+        public ObservableCollection<PullRequest> PullRequests { get; set; }
+
+        public ObservableCollection<Issue> Issues { get; set; }
     }
 }

@@ -19,7 +19,68 @@ namespace Gi7.Views
 {
     public class HomeViewModel : ViewModelBase
     {
+        private readonly GithubService _githubService;
+        private ObservableCollection<FeaturedRepo> _featuredRepos;
+        private IPaginatedRequest<Feed> _feedsRequest;
+        private PaginatedRequest<User> _followersRequest;
+        private PaginatedRequest<User> _followingsRequest;
         private bool _isLoggedIn;
+        private ObservableCollection<Repository> _repos;
+        private User _user;
+
+        public HomeViewModel(GithubService githubService, INavigationService navigationService)
+        {
+            _githubService = githubService;
+
+            // commands
+            FeaturedRepoSelectedCommand = new RelayCommand<FeaturedRepo>(r =>
+            {
+                if (r != null)
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.User, r.Repo));
+            });
+            RepoSelectedCommand = new RelayCommand<Repository>(r =>
+            {
+                if (r != null)
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+            });
+            FeedSelectedCommand = new RelayCommand<Feed>(feed =>
+            {
+                if (feed != null)
+                    navigationService.NavigateTo(feed.Destination);
+            });
+            UserSelectedCommand = new RelayCommand<User>(user =>
+            {
+                if (user != null)
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, user.Login));
+            });
+            PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => { _loadPanel((args.AddedItems[0] as PanoramaItem).Header as String); });
+
+            // init
+            if (_githubService.IsAuthenticated)
+            {
+                _login();
+            } else
+            {
+                _logout();
+            }
+
+            // listenning to the github service
+            githubService.IsAuthenticatedChanged += (s, e) =>
+            {
+                if (e.IsAuthenticated)
+                {
+                    _login();
+                } else
+                {
+                    _logout();
+                }
+            };
+
+            // listening to view events
+            Messenger.Default.Register<bool>(this, "logout", b => githubService.Logout());
+            Messenger.Default.Register<bool>(this, "about", b => navigationService.NavigateTo(ViewModelLocator.AboutUrl));
+        }
+
         public bool IsLoggedIn
         {
             get { return _isLoggedIn; }
@@ -33,15 +94,12 @@ namespace Gi7.Views
                 }
             }
         }
+
         public bool IsLoggedOut
         {
-            get
-            {
-                return !IsLoggedIn;
-            }
+            get { return !IsLoggedIn; }
         }
 
-        private User _user;
         public User User
         {
             get { return _user; }
@@ -55,7 +113,6 @@ namespace Gi7.Views
             }
         }
 
-        private IPaginatedRequest<Feed> _feedsRequest;
         public IPaginatedRequest<Feed> FeedsRequest
         {
             get { return _feedsRequest; }
@@ -82,15 +139,15 @@ namespace Gi7.Views
 
         public IEnumerable<Repository> WatchedRepos
         {
-            get {
-                if(Repos != null)
+            get
+            {
+                if (Repos != null)
                     return Repos.Where(r => r.Owner.Login != _githubService.Username);
                 else
                     return null;
             }
         }
 
-        private ObservableCollection<Repository> _repos;
         public ObservableCollection<Repository> Repos
         {
             get { return _repos; }
@@ -104,7 +161,6 @@ namespace Gi7.Views
             }
         }
 
-        private PaginatedRequest<User> _followingsRequest;
         public PaginatedRequest<User> FollowingsRequest
         {
             get { return _followingsRequest; }
@@ -118,7 +174,6 @@ namespace Gi7.Views
             }
         }
 
-        private PaginatedRequest<User> _followersRequest;
         public PaginatedRequest<User> FollowersRequest
         {
             get { return _followersRequest; }
@@ -132,7 +187,6 @@ namespace Gi7.Views
             }
         }
 
-        private ObservableCollection<FeaturedRepo> _featuredRepos;
         public ObservableCollection<FeaturedRepo> FeaturedRepos
         {
             get { return _featuredRepos; }
@@ -151,102 +205,44 @@ namespace Gi7.Views
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
         public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
-        private readonly GithubService _githubService;
-
-        public HomeViewModel(GithubService githubService, INavigationService navigationService)
-        {
-            _githubService = githubService;
-
-            // commands
-            FeaturedRepoSelectedCommand = new RelayCommand<FeaturedRepo>(r =>
-            {
-                if (r != null)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.User, r.Repo));
-            });
-            RepoSelectedCommand = new RelayCommand<Repository>(r =>
-            {
-                if (r != null)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
-            });
-            FeedSelectedCommand = new RelayCommand<Feed>(feed =>
-            {
-                if (feed != null)
-                    navigationService.NavigateTo(feed.Destination);
-            });
-            UserSelectedCommand = new RelayCommand<User>(user => {
-                if (user != null)
-                    navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, user.Login));
-            });
-            PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                _loadPanel((args.AddedItems[0] as PanoramaItem).Header as String);
-            });
-            
-            // init
-            if (_githubService.IsAuthenticated)
-            {
-                _login();
-            }
-            else
-            {
-                _logout();
-            }
-
-            // listenning to the github service
-            githubService.IsAuthenticatedChanged += (s, e) =>
-            {
-                if (e.IsAuthenticated)
-                {
-                    _login();
-                }
-                else
-                {
-                    _logout();
-                }
-            };
-
-            // listening to view events
-            Messenger.Default.Register<bool>(this, "logout", b => githubService.Logout());
-            Messenger.Default.Register<bool>(this, "about", b => navigationService.NavigateTo(ViewModelLocator.AboutUrl));
-        }
 
         private void _loadPanel(string header)
         {
             switch (header)
             {
-                case "News Feed":
-                    if (FeedsRequest == null)
-                        FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
-                    break;
-                case "Repos":
-                    if (Repos == null)
+            case "News Feed":
+                if (FeedsRequest == null)
+                    FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
+                break;
+            case "Repos":
+                if (Repos == null)
+                {
+                    Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
+                    Repos.CollectionChanged += (sender, args) =>
                     {
-                        Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
-                        Repos.CollectionChanged += (sender, args) =>
-                        {
-                            RaisePropertyChanged("WatchedRepos");
-                            RaisePropertyChanged("OwnedRepos");
-                        };
-                    }
-                    break;
-                case "Follower":
-                    if (FollowersRequest == null)
-                        FollowersRequest = new FollowersRequest(_githubService.Username);
-                    break;
-                case "Following":
-                    if(FollowingsRequest == null)
-                        FollowingsRequest = new FollowingsRequest(_githubService.Username);
-                    break;
-                case "Profile":
-                    if(User == null)
-                        User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
-                    break;
-                case "Explore":
-                    if (FeaturedRepos == null)
-                        FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
-                    break;
-                default:
-                    break;
+                        RaisePropertyChanged("WatchedRepos");
+                        RaisePropertyChanged("OwnedRepos");
+                    };
+                }
+                break;
+            case "Follower":
+                if (FollowersRequest == null)
+                    FollowersRequest = new FollowersRequest(_githubService.Username);
+                break;
+            case "Following":
+                if (FollowingsRequest == null)
+                    FollowingsRequest = new FollowingsRequest(_githubService.Username);
+                break;
+            case "Profile":
+                if (User == null)
+                    User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                break;
+            case "Explore":
+                if (FeaturedRepos == null)
+                    FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
+                break;
+            default:
+                break;
             }
         }
 

@@ -9,7 +9,7 @@ namespace Gi7.Service.Request
         public FeaturedRepoRequest()
         {
             Uri = "/thechangelog";
-            OverrideSettings = new OverrideSettings()
+            OverrideSettings = new OverrideSettings
             {
                 BaseUri = "http://feeds.feedburner.com/",
                 Deserializer = new FeaturedRepoDeserializer(),

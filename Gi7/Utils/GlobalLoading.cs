@@ -1,7 +1,7 @@
 ﻿using System.Windows.Navigation;
-// using AgFx;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+    // using AgFx;
 
 namespace Gi7.Utils
 {
@@ -10,10 +10,42 @@ namespace Gi7.Utils
     /// </summary>
     public class GlobalLoading
     {
+        private static GlobalLoading _in;
+        private int _loadingCount;
         private ProgressIndicator _mangoIndicator;
 
         private GlobalLoading()
         {
+        }
+
+        public static GlobalLoading Instance
+        {
+            get
+            {
+                if (_in == null)
+                {
+                    _in = new GlobalLoading();
+                }
+
+                return _in;
+            }
+        }
+
+        public bool IsLoading
+        {
+            get { return _loadingCount > 0; }
+            set
+            {
+                if (value)
+                {
+                    ++_loadingCount;
+                } else
+                {
+                    --_loadingCount;
+                }
+
+                NotifyValueChanged();
+            }
         }
 
         public void Initialize(PhoneApplicationFrame frame)
@@ -28,48 +60,11 @@ namespace Gi7.Utils
         private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
         {
             // Use in Mango to share a single progress indicator instance.
-            var ee = e.Content;
+            object ee = e.Content;
             var pp = ee as PhoneApplicationPage;
             if (pp != null)
             {
                 pp.SetValue(SystemTray.ProgressIndicatorProperty, _mangoIndicator);
-            }
-        }
-
-        private static GlobalLoading _in;
-        public static GlobalLoading Instance
-        {
-            get
-            {
-                if (_in == null)
-                {
-                    _in = new GlobalLoading();
-                }
-
-                return _in;
-            }
-        }
-
-        private int _loadingCount;
-
-        public bool IsLoading
-        {
-            get
-            {
-                return _loadingCount > 0;
-            }
-            set
-            {
-                if (value)
-                {
-                    ++_loadingCount;
-                }
-                else
-                {
-                    --_loadingCount;
-                }
-
-                NotifyValueChanged();
             }
         }
 

@@ -1,5 +1,5 @@
-﻿using Gi7.Model.Feed.Base;
-using System;
+﻿using System;
+using Gi7.Model.Feed.Base;
 
 namespace Gi7.Model.Feed
 {
@@ -7,18 +7,12 @@ namespace Gi7.Model.Feed
     {
         public override String Template
         {
-            get
-            {
-                return "forked";
-            }
+            get { return "forked"; }
         }
 
         public override String Image
         {
-            get
-            {
-                return "/Gi7;component/Images/fork.png";
-            }
+            get { return "/Gi7;component/Images/fork.png"; }
         }
     }
 }

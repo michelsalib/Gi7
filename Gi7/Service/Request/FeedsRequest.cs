@@ -10,7 +10,7 @@ namespace Gi7.Service.Request
         public FeedsRequest(String username)
         {
             Uri = String.Format("{0}.json", username);
-            OverrideSettings = new OverrideSettings()
+            OverrideSettings = new OverrideSettings
             {
                 BaseUri = "https://github.com/",
                 Deserializer = new FeedDeserializer(),

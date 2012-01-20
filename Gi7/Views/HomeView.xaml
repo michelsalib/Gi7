@@ -1,26 +1,20 @@
-﻿<phone:PhoneApplicationPage 
-    x:Class="Gi7.Views.HomeView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
-    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:utils="clr-namespace:Gi7.Utils"
-    xmlns:localControls="clr-namespace:Gi7.Controls"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True"
-    toolkit:TiltEffect.IsTiltEnabled="True"
-    DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}">
+﻿<phone:PhoneApplicationPage x:Class="Gi7.Views.HomeView"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
+                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:utils="clr-namespace:Gi7.Utils"
+                            xmlns:localControls="clr-namespace:Gi7.Controls" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
+                            DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}">
 
     <Grid x:Name="LayoutRoot">
         <controls:Panorama x:Name="Panorama">
@@ -29,24 +23,28 @@
                     <Command:EventToCommand Command="{Binding PanoramaChangedCommand}" PassEventArgsToCommand="True" />
                 </Interactivity:EventTrigger>
             </Interactivity:Interaction.Triggers>
-            
+
             <controls:Panorama.Title>
                 <TextBlock Text="Gi7" FontSize="100" Margin="0,50,0,0" />
             </controls:Panorama.Title>
 
-            <controls:PanoramaItem Header="Login" Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:LoginPanel/>
+            <controls:PanoramaItem Header="Login"
+                                   Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}">
+                <localControls:LoginPanel />
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem Header="News Feed" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:FeedsPanel/>
+            <controls:PanoramaItem Header="News Feed"
+                                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <localControls:FeedsPanel />
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem Header="Repos" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:RepositoryPanel/>
+            <controls:PanoramaItem Header="Repos"
+                                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <localControls:RepositoryPanel />
             </controls:PanoramaItem>
-            
-            <controls:PanoramaItem Header="Following" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+
+            <controls:PanoramaItem Header="Following"
+                                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <lists:UserListBox Request="{Binding FollowingsRequest}">
                     <lists:UserListBox.ItemTemplate>
                         <DataTemplate>
@@ -56,7 +54,8 @@
                 </lists:UserListBox>
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem Header="Follower" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+            <controls:PanoramaItem Header="Follower"
+                                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <lists:UserListBox Request="{Binding FollowersRequest}">
                     <lists:UserListBox.ItemTemplate>
                         <DataTemplate>
@@ -66,15 +65,17 @@
                 </lists:UserListBox>
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem Header="Profile" Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:ProfilePanel/>
+            <controls:PanoramaItem Header="Profile"
+                                   Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <localControls:ProfilePanel />
             </controls:PanoramaItem>
 
             <controls:PanoramaItem Header="Explore">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Featured Repos" FontSize="30"/>
-                        <ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <TextBlock Text="Featured Repos" FontSize="30" />
+                        <ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}"
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
@@ -85,7 +86,8 @@
                             </ListBox.ItemTemplate>
                             <Interactivity:Interaction.Triggers>
                                 <Interactivity:EventTrigger EventName="Tap">
-                                    <Command:EventToCommand Command="{Binding FeaturedRepoSelectedCommand}" CommandParameter="{Binding ElementName=FeaturedRepos, Path=SelectedItem}" />
+                                    <Command:EventToCommand Command="{Binding FeaturedRepoSelectedCommand}"
+                                                            CommandParameter="{Binding ElementName=FeaturedRepos, Path=SelectedItem}" />
                                 </Interactivity:EventTrigger>
                             </Interactivity:Interaction.Triggers>
                         </ListBox>
@@ -98,8 +100,8 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="About" Click="About"/>
-                <shell:ApplicationBarMenuItem Text="Logout" Click="Logout"/>
+                <shell:ApplicationBarMenuItem Text="About" Click="About" />
+                <shell:ApplicationBarMenuItem Text="Logout" Click="Logout" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

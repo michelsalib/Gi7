@@ -10,36 +10,8 @@ namespace Gi7.Views
 {
     public class AboutViewModel : ViewModelBase
     {
-        private User _michelsalib;
-        public User Michelsalib
-        {
-            get { return _michelsalib; }
-            set
-            {
-                if (_michelsalib != value)
-                {
-                    _michelsalib = value;
-                    RaisePropertyChanged("Michelsalib");
-                }
-            }
-        }
-
         private Repository _Gi7;
-        public Repository Gi7
-        {
-            get { return _Gi7; }
-            set
-            {
-                if (_Gi7 != value)
-                {
-                    _Gi7 = value;
-                    RaisePropertyChanged("Gi7");
-                }
-            }
-        }
-
-        public RelayCommand<User> UserSelectedCommand { get; private set; }
-        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
+        private User _michelsalib;
 
         public AboutViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -57,5 +29,34 @@ namespace Gi7.Views
                     navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, user.Login));
             });
         }
+
+        public User Michelsalib
+        {
+            get { return _michelsalib; }
+            set
+            {
+                if (_michelsalib != value)
+                {
+                    _michelsalib = value;
+                    RaisePropertyChanged("Michelsalib");
+                }
+            }
+        }
+
+        public Repository Gi7
+        {
+            get { return _Gi7; }
+            set
+            {
+                if (_Gi7 != value)
+                {
+                    _Gi7 = value;
+                    RaisePropertyChanged("Gi7");
+                }
+            }
+        }
+
+        public RelayCommand<User> UserSelectedCommand { get; private set; }
+        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
     }
 }

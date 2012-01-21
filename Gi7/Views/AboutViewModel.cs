@@ -12,10 +12,12 @@ namespace Gi7.Views
     {
         private Repository _Gi7;
         private User _michelsalib;
+		private User _albertomonteiro;
 
         public AboutViewModel(GithubService githubService, INavigationService navigationService)
         {
             Michelsalib = githubService.Load(new UserRequest("michelsalib"), u => Michelsalib = u);
+			AlbertoMonteiro = githubService.Load(new UserRequest("albertomonteiro"), u => AlbertoMonteiro = u);
             Gi7 = githubService.Load(new RepositoryRequest("michelsalib", "Gi7"), r => Gi7 = r);
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
@@ -39,6 +41,19 @@ namespace Gi7.Views
                 {
                     _michelsalib = value;
                     RaisePropertyChanged("Michelsalib");
+                }
+            }
+        }
+		
+		public User AlbertoMonteiro
+        {
+            get { return _albertomonteiro; }
+            set
+            {
+                if (_albertomonteiro != value)
+                {
+                    _albertomonteiro = value;
+                    RaisePropertyChanged("AlbertoMonteiro");
                 }
             }
         }

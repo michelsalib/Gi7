@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Gi7.Model
 {
@@ -11,5 +12,13 @@ namespace Gi7.Model
         public String Message { get; set; }
 
         public Committer Author { get; set; }
+
+        public String TrunkedMessage 
+		{ 
+			get 
+			{
+				return (Message.Length > 65 ? Message.Substring(0, 65).Insert(65,"...") : Message).Replace("\n",". "); 
+			} 
+		}
     }
 }

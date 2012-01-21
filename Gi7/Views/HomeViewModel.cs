@@ -26,6 +26,8 @@ namespace Gi7.Views
         private PaginatedRequest<User> _followingsRequest;
         private bool _isLoggedIn;
         private ObservableCollection<Repository> _repos;
+        private ObservableCollection<Repository> _ownedRepos;
+        private ObservableCollection<Repository> _watchedRepos;
         private User _user;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
@@ -130,10 +132,7 @@ namespace Gi7.Views
         {
             get
             {
-                if (Repos != null)
-                    return Repos.Where(r => r.Owner.Login == _githubService.Username);
-                else
-                    return null;
+                return _ownedRepos;
             }
         }
 
@@ -141,21 +140,32 @@ namespace Gi7.Views
         {
             get
             {
-                if (Repos != null)
-                    return Repos.Where(r => r.Owner.Login != _githubService.Username);
-                else
-                    return null;
+                return _watchedRepos;
             }
         }
 
         public ObservableCollection<Repository> Repos
         {
-            get { return _repos; }
+            get
+            {
+                return _repos;
+            }
             set
             {
                 if (_repos != value)
                 {
                     _repos = value;
+                    _repos.CollectionChanged += (sender, args) =>
+                    {
+                        var repositories = sender as IEnumerable<Repository>;
+                        if (repositories != null && repositories.Any())
+                        {
+                            foreach (var repository in repositories)
+                                repository.CurrentUser = _githubService.Username;
+                            _ownedRepos = new ObservableCollection<Repository>(repositories.Where(r => r.IsFrom(_githubService.Username)));
+                            _watchedRepos = new ObservableCollection<Repository>(repositories.Except(_ownedRepos));
+                        }
+                    };
                     RaisePropertyChanged("Repos");
                 }
             }

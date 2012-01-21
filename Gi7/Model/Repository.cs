@@ -1,4 +1,5 @@
 ﻿using System;
+using Gi7.Service;
 
 namespace Gi7.Model
 {
@@ -53,9 +54,25 @@ namespace Gi7.Model
 
         public String HtmlUrl { get; set; }
 
+        public string CurrentUser { get; set; }
+
         public String Fullname
         {
-            get { return String.Format("{0}/{1}", Owner.Login, Name); }
+            get
+            {
+                return String.Format(CurrentUser != null && CurrentUser.Equals(Owner.Login, StringComparison.InvariantCultureIgnoreCase) ? "{1}" : "{0}/{1}", Owner.Login, Name);
+            }
+        }
+
+
+        public bool IsFrom(string name)
+        {
+            return Owner.Login.Equals(name, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public override string ToString()
+        {
+            return Fullname;
         }
     }
 }

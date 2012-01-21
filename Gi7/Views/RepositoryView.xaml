@@ -40,40 +40,36 @@
                             <RowDefinition Height="60" />
                             <RowDefinition Height="60" />
                         </Grid.RowDefinitions>
-
-                        <TextBlock Text="{Binding Repository.Watchers}" HorizontalAlignment="Right"
-                                   VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="0" />
-                        <TextBlock Text="Watchers" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                                   Grid.Column="0" Grid.Row="0" />
-
-                        <TextBlock Text="{Binding Repository.Forks}" HorizontalAlignment="Right"
-                                   VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="1" Grid.Row="0" />
-                        <TextBlock Text="Forks" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="1"
-                                   Grid.Row="0" />
-
-                        <TextBlock Text="{Binding Repository.OpenIssues}" HorizontalAlignment="Right"
-                                   VerticalAlignment="Top" FontSize="100" Margin="0,-35,0,0" Foreground="Gray" Grid.Column="0" Grid.Row="1" />
-                        <TextBlock Text="Issues" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0"
-                                   Grid.Row="1" />
+						
+						<Grid Grid.Column="0" Grid.Row="0">
+							<TextBlock Text="Watchers" FontSize="42" />	
+							<TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" />	                        
+						</Grid>
+                        <Grid Grid.Column="1" Grid.Row="0">
+                        	<TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                        	<TextBlock Text="Forks" FontSize="42" />
+                        </Grid>
+						<Grid Grid.Column="0" Grid.Row="1">
+							<TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" />
+                        	<TextBlock Text="Issues" FontSize="42" />
+						</Grid>                        
                     </Grid>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Owner" Grid.Row="0" VerticalAlignment="Center" />
-                        <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0"
-                                Command="{Binding OwnerCommand}">
+                        <TextBlock Text="Owner" Grid.Row="0" VerticalAlignment="Center" FontSize="42.667" />
+                        <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0" Command="{Binding OwnerCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Repository.Owner.AvatarUrl}" Width="34" Height="34" />
                                 <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
                             </StackPanel>
                         </Button>
-                        <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center"
-                                   Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" />
+                        <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center" Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" FontSize="42.667" />
                     </Grid>
                     <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}"
-                                     TargetName="_blank" HorizontalAlignment="Right" />
+                                     TargetName="_blank" HorizontalAlignment="Right" FontSize="32" />
                 </StackPanel>
             </controls:PivotItem>
 

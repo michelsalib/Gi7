@@ -14,24 +14,23 @@
     
     <ScrollViewer>
         <StackPanel Orientation="Vertical">
-            <StackPanel.Resources>
-                <DataTemplate x:Key="RepoTemplate">
-                    <TextBlock FontSize="26" Text="{Binding Fullname}" TextWrapping="Wrap" />
-                </DataTemplate>
-            </StackPanel.Resources>
-            <TextBlock Text="Watched Repos" FontSize="30"/>
-            <ListBox x:Name="WatchedRepos" ItemsSource="{Binding WatchedRepos}" ItemTemplate="{StaticResource RepoTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
+            	<TextBlock Text="Watched Repos" FontSize="48"/>
+			</Border>
+            <ListBox x:Name="WatchedRepos" ItemsSource="{Binding WatchedRepos}" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontSize="26.667">
                 <Interactivity:Interaction.Triggers>
                     <Interactivity:EventTrigger EventName="Tap">
-                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding ElementName=WatchedRepos, Path=SelectedItem}" />
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding SelectedItem, ElementName=WatchedRepos}" />
                     </Interactivity:EventTrigger>
                 </Interactivity:Interaction.Triggers>
             </ListBox>
-            <TextBlock Text="Owned Repos" FontSize="30"/>
-            <ListBox x:Name="OwnedRepos" ItemsSource="{Binding OwnedRepos}" ItemTemplate="{StaticResource RepoTemplate}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
+				<TextBlock Text="Owned Repos" FontSize="48"/>
+			</Border>
+            <ListBox x:Name="OwnedRepos" ItemsSource="{Binding OwnedRepos}" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontSize="26.667">
                 <Interactivity:Interaction.Triggers>
                     <Interactivity:EventTrigger EventName="Tap">
-                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding ElementName=OwnedRepos, Path=SelectedItem}" />
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" CommandParameter="{Binding SelectedItem, ElementName=OwnedRepos}" />
                     </Interactivity:EventTrigger>
                 </Interactivity:Interaction.Triggers>
             </ListBox>

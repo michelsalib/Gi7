@@ -26,6 +26,8 @@ namespace Gi7.Views
         private PaginatedRequest<User> _followingsRequest;
         private bool _isLoggedIn;
         private ObservableCollection<Repository> _repos;
+        private ObservableCollection<Repository> _ownedRepos;
+        private ObservableCollection<Repository> _watchedRepos;
         private User _user;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
@@ -130,10 +132,7 @@ namespace Gi7.Views
         {
             get
             {
-                if (Repos != null)
-                    return Repos.Where(r => r.Owner.Login == _githubService.Username);
-                else
-                    return null;
+                return _ownedRepos;
             }
         }
 
@@ -141,21 +140,30 @@ namespace Gi7.Views
         {
             get
             {
-                if (Repos != null)
-                    return Repos.Where(r => r.Owner.Login != _githubService.Username);
-                else
-                    return null;
+                return _watchedRepos;
             }
         }
 
         public ObservableCollection<Repository> Repos
         {
-            get { return _repos; }
+            get
+            {
+                return _repos;
+            }
             set
             {
                 if (_repos != value)
                 {
                     _repos = value;
+                    _repos.CollectionChanged += (sender, args) =>
+                    {
+                        var repositories = sender as IEnumerable<Repository>;
+                        if (repositories != null && repositories.Any())
+                        {
+                            _ownedRepos = new ObservableCollection<Repository>(repositories.Where(r => r.IsFrom(GithubService.Username)));
+                            _watchedRepos = new ObservableCollection<Repository>(repositories.Except(_ownedRepos));
+                        }
+                    };
                     RaisePropertyChanged("Repos");
                 }
             }
@@ -212,12 +220,12 @@ namespace Gi7.Views
             {
             case "News Feed":
                 if (FeedsRequest == null)
-                    FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
+                    FeedsRequest = new PrivateFeedsRequest(GithubService.Username);
                 break;
             case "Repos":
                 if (Repos == null)
                 {
-                    Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
+                    Repos = _githubService.Load(new WatchedRepoRequest(GithubService.Username));
                     Repos.CollectionChanged += (sender, args) =>
                     {
                         RaisePropertyChanged("WatchedRepos");
@@ -227,15 +235,15 @@ namespace Gi7.Views
                 break;
             case "Follower":
                 if (FollowersRequest == null)
-                    FollowersRequest = new FollowersRequest(_githubService.Username);
+                    FollowersRequest = new FollowersRequest(GithubService.Username);
                 break;
             case "Following":
                 if (FollowingsRequest == null)
-                    FollowingsRequest = new FollowingsRequest(_githubService.Username);
+                    FollowingsRequest = new FollowingsRequest(GithubService.Username);
                 break;
             case "Profile":
                 if (User == null)
-                    User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                    User = _githubService.Load(new UserRequest(GithubService.Username), u => User = u);
                 break;
             case "Explore":
                 if (FeaturedRepos == null)

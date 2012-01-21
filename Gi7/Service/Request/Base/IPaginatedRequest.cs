@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Gi7.Utils;
 
 namespace Gi7.Service.Request.Base
 {
@@ -9,6 +10,6 @@ namespace Gi7.Service.Request.Base
 
         bool HasMoreItems { get; set; }
 
-        ObservableCollection<T> Result { get; set; }
+        BetterObservableCollection<T> Result { get; set; }
     }
 }

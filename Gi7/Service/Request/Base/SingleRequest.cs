@@ -1,23 +1,18 @@
-﻿
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
+
 namespace Gi7.Service.Request.Base
 {
     public abstract class SingleRequest<T> : ViewModelBase, ISingleRequest<T>
         where T : new()
     {
-        public string Uri
-        {
-            get;
-            protected set;
-        }
-
-        public OverrideSettings OverrideSettings
-        {
-            get;
-            protected set;
-        }
-
         private T _result;
+
+        #region ISingleRequest<T> Members
+
+        public string Uri { get; protected set; }
+
+        public OverrideSettings OverrideSettings { get; protected set; }
+
         public T Result
         {
             get { return _result; }
@@ -27,5 +22,7 @@ namespace Gi7.Service.Request.Base
                 RaisePropertyChanged("Result");
             }
         }
+
+        #endregion
     }
 }

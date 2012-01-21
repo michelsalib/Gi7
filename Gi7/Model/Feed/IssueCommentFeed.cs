@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Gi7.Model.Feed.Base;
 using Gi7.Service;
 
@@ -12,26 +13,17 @@ namespace Gi7.Model.Feed
 
         public override String Template
         {
-            get
-            {
-                return "commented issue on";
-            }
+            get { return "commented issue on"; }
         }
 
         public override String Image
         {
-            get
-            {
-                return "/Gi7;component/Images/issues_comment.png";
-            }
+            get { return "/Gi7;component/Images/issues_comment.png"; }
         }
 
         public override String Destination
         {
-            get
-            {
-                return String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, new System.Text.RegularExpressions.Regex("/issues/(\\d+)").Match(Url).Groups[1].Value);
-            }
+            get { return String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, new Regex("/issues/(\\d+)").Match(Url).Groups[1].Value); }
         }
     }
 }

@@ -4,6 +4,15 @@ namespace Gi7.Model
 {
     public class Repository
     {
+        public Repository()
+        {
+            Name = "";
+            Owner = new User
+            {
+                Login = ""
+            };
+        }
+
         public String Url { get; set; }
 
         public String Name { get; set; }
@@ -46,19 +55,7 @@ namespace Gi7.Model
 
         public String Fullname
         {
-            get
-            {
-                return String.Format("{0}/{1}", Owner.Login, Name);
-            }
-        }
-
-        public Repository()
-        {
-            Name = "";
-            Owner = new User()
-            {
-                Login = ""
-            };
+            get { return String.Format("{0}/{1}", Owner.Login, Name); }
         }
     }
 }

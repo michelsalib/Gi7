@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
+using Gi7.Service;
 using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
 
@@ -10,7 +11,33 @@ namespace Gi7.Views
 {
     public class IssueViewModel : ViewModelBase
     {
+        private IssueCommentsRequest _commentsRequest;
+        private Issue _issue;
+        private String _issueName;
         private String _repoName;
+
+        public IssueViewModel(GithubService githubService, string username, string repo, string number)
+        {
+            RepoName = String.Format("{0}/{1}", username, repo);
+            IssueName = "Issue #" + number;
+
+            Issue = githubService.Load(new IssueRequest(username, repo, number), i => Issue = i);
+
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
+            {
+                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                switch (header)
+                {
+                case "Comments":
+                    if (CommentsRequest == null)
+                        CommentsRequest = new IssueCommentsRequest(username, repo, number);
+                    break;
+                default:
+                    break;
+                }
+            });
+        }
+
         public String RepoName
         {
             get { return _repoName; }
@@ -24,7 +51,6 @@ namespace Gi7.Views
             }
         }
 
-        private String _issueName;
         public String IssueName
         {
             get { return _issueName; }
@@ -38,7 +64,6 @@ namespace Gi7.Views
             }
         }
 
-        private Issue _issue;
         public Issue Issue
         {
             get { return _issue; }
@@ -52,7 +77,6 @@ namespace Gi7.Views
             }
         }
 
-        private IssueCommentsRequest _commentsRequest;
         public IssueCommentsRequest CommentsRequest
         {
             get { return _commentsRequest; }
@@ -67,27 +91,5 @@ namespace Gi7.Views
         }
 
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-
-        public IssueViewModel(Service.GithubService githubService, string username, string repo, string number)
-        {
-            RepoName = String.Format("{0}/{1}", username, repo);
-            IssueName = "Issue #" + number;
-
-            Issue = githubService.Load(new IssueRequest(username, repo, number), i => Issue = i);
-
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
-                switch (header)
-                {
-                    case "Comments":
-                        if (CommentsRequest == null)
-                            CommentsRequest = new IssueCommentsRequest(username, repo, number);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
     }
 }

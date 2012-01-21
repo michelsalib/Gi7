@@ -11,7 +11,34 @@ namespace Gi7.Views
 {
     public class CommitViewModel : ViewModelBase
     {
+        private CommitCommentsRequest _commentsRequest;
+        private Push _commit;
+        private GithubService _githubService;
         private String _repoName;
+
+        public CommitViewModel(GithubService githubService, string username, string repo, string sha)
+        {
+            GithubService = githubService;
+
+            RepoName = String.Format("{0}/{1}", username, repo);
+
+            Commit = githubService.Load(new CommitRequest(username, repo, sha), p => Commit = p);
+
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
+            {
+                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                switch (header)
+                {
+                case "Comments":
+                    if (CommentsRequest == null)
+                        CommentsRequest = new CommitCommentsRequest(username, repo, sha);
+                    break;
+                default:
+                    break;
+                }
+            });
+        }
+
         public String RepoName
         {
             get { return _repoName; }
@@ -36,7 +63,6 @@ namespace Gi7.Views
             }
         }
 
-        private Push _commit;
         public Push Commit
         {
             get { return _commit; }
@@ -51,7 +77,6 @@ namespace Gi7.Views
             }
         }
 
-        private CommitCommentsRequest _commentsRequest;
         public CommitCommentsRequest CommentsRequest
         {
             get { return _commentsRequest; }
@@ -65,7 +90,6 @@ namespace Gi7.Views
             }
         }
 
-        private GithubService _githubService;
         public GithubService GithubService
         {
             get { return _githubService; }
@@ -80,28 +104,5 @@ namespace Gi7.Views
         }
 
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-
-        public CommitViewModel(Service.GithubService githubService, string username, string repo, string sha)
-        {
-            GithubService = githubService;
-
-            RepoName = String.Format("{0}/{1}", username, repo);
-
-            Commit = githubService.Load(new CommitRequest(username, repo, sha), p => Commit = p);
-
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
-                switch (header)
-                {
-                    case "Comments":
-                        if (CommentsRequest == null)
-                            CommentsRequest = new CommitCommentsRequest(username, repo, sha);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
     }
 }

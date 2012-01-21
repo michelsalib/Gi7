@@ -11,13 +11,8 @@ namespace Gi7.Service
     /// </summary>
     public class CachedClient : RestClient
     {
-        public CacheProvider CacheProvider { get; private set; }
-
-        public event EventHandler ConnectionError;
-        public event EventHandler Unauthorized;
-
         public CachedClient(String baseUri, String username, String password)
-            : base (baseUri)
+            : base(baseUri)
         {
             CacheProvider = new CacheProvider(username);
 
@@ -25,10 +20,15 @@ namespace Gi7.Service
                 Authenticator = new HttpBasicAuthenticator(username, password);
         }
 
+        public CacheProvider CacheProvider { get; private set; }
+
+        public event EventHandler ConnectionError;
+        public event EventHandler Unauthorized;
+
         public List<T> GetList<T>(string uri, Action<List<T>> callback = null, bool useCache = true)
             where T : new()
         {
-            return Get<List<T>>(uri, callback, useCache);
+            return Get(uri, callback, useCache);
         }
 
         public T Get<T>(string uri, Action<T> callback = null, bool useCache = true)
@@ -41,8 +41,7 @@ namespace Gi7.Service
             {
                 var cache = CacheProvider.Get<T>(uri);
                 result = cache != null ? cache : new T();
-            }
-            else
+            } else
             {
                 result = new T();
             }
@@ -75,16 +74,14 @@ namespace Gi7.Service
                         Unauthorized(this, new EventArgs());
                     }
                     GlobalLoading.Instance.IsLoading = false;
-                }
-                else if (r.ResponseStatus == ResponseStatus.Error)
+                } else if (r.ResponseStatus == ResponseStatus.Error)
                 {
                     if (ConnectionError != null)
                     {
                         ConnectionError(this, new EventArgs());
                     }
                     GlobalLoading.Instance.IsLoading = false;
-                }
-                else
+                } else
                     callback(r);
             });
         }

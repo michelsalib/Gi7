@@ -11,7 +11,7 @@ namespace Gi7.Service
     /// </summary>
     public class CacheProvider
     {
-        private string _path;
+        private readonly string _path;
 
         public CacheProvider(String key)
         {
@@ -23,37 +23,35 @@ namespace Gi7.Service
 
         public void Save(String key, object item)
         {
-            var file = CleanFilePath(key);
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-            using (var stream = store.OpenFile(_path + file, FileMode.Create))
-            {
-                var serializer = new XmlSerializer(item.GetType());
-                serializer.Serialize(stream, item);
-            }
+            string file = CleanFilePath(key);
+            using (IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication())
+                using (IsolatedStorageFileStream stream = store.OpenFile(_path + file, FileMode.Create))
+                {
+                    var serializer = new XmlSerializer(item.GetType());
+                    serializer.Serialize(stream, item);
+                }
         }
 
         public T Get<T>(String key)
         {
-            var file = String.Format("{0}/{1}", _path, CleanFilePath(key));
+            string file = String.Format("{0}/{1}", _path, CleanFilePath(key));
             try
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                using (IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication())
                 {
                     if (store.FileExists(file))
                     {
-                        using (var stream = store.OpenFile(file, FileMode.Open))
+                        using (IsolatedStorageFileStream stream = store.OpenFile(file, FileMode.Open))
                         {
-                            var serializer = new XmlSerializer(typeof(T));
-                            return (T)serializer.Deserialize(stream);
+                            var serializer = new XmlSerializer(typeof (T));
+                            return (T) serializer.Deserialize(stream);
                         }
-                    }
-                    else
+                    } else
                     {
                         return default(T);
                     }
                 }
-            }
-            catch (Exception)
+            } catch (Exception)
             {
                 return default(T);
             }
@@ -61,7 +59,7 @@ namespace Gi7.Service
 
         public void Clear()
         {
-            foreach (var file in IsolatedStorageFile.GetUserStoreForApplication().GetFileNames(_path + "*"))
+            foreach (string file in IsolatedStorageFile.GetUserStoreForApplication().GetFileNames(_path + "*"))
             {
                 IsolatedStorageFile.GetUserStoreForApplication().DeleteFile(_path + file);
             }
@@ -70,8 +68,9 @@ namespace Gi7.Service
             {
                 if (IsolatedStorageFile.GetUserStoreForApplication().DirectoryExists(_path))
                     IsolatedStorageFile.GetUserStoreForApplication().DeleteDirectory(_path);
+            } catch (Exception)
+            {
             }
-            catch (Exception) { }
         }
 
         private String CleanFilePath(String key)

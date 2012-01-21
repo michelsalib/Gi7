@@ -13,6 +13,8 @@ namespace Gi7.Service.Navigation
 
         private PhoneApplicationFrame _mainFrame;
 
+        #region INavigationService Members
+
         public event NavigatingCancelEventHandler Navigating;
 
         public void NavigateTo(string pageUri)
@@ -24,11 +26,10 @@ namespace Gi7.Service.Navigation
                 {
                     _currentQueryString = pageUri.Substring(pageUri.IndexOf('?') + 1).Split('&').Select(i =>
                     {
-                        var values = i.Split('=');
+                        string[] values = i.Split('=');
                         return new KeyValuePair<String, String>(values[0], values[1]);
                     }).ToDictionary(i => i.Key, i => i.Value);
-                }
-                else
+                } else
                     _currentQueryString = new Dictionary<string, string>();
             }
         }
@@ -41,6 +42,29 @@ namespace Gi7.Service.Navigation
                 _mainFrame.GoBack();
             }
         }
+
+        public string GetParameter(string key, string defaultValue = "")
+        {
+            string result = defaultValue;
+
+            if (_currentQueryString != null && _currentQueryString.ContainsKey(key))
+            {
+                result = _currentQueryString[key];
+            }
+
+            return result;
+        }
+
+        public string CurrentUri()
+        {
+            if (EnsureMainFrame())
+            {
+                return _mainFrame.CurrentSource.ToString();
+            }
+            return "unknown";
+        }
+
+        #endregion
 
         private bool EnsureMainFrame()
         {
@@ -66,27 +90,6 @@ namespace Gi7.Service.Navigation
             }
 
             return false;
-        }
-
-        public string GetParameter(string key, string defaultValue = "")
-        {
-            var result = defaultValue;
-
-            if (_currentQueryString != null && _currentQueryString.ContainsKey(key))
-            {
-                result = _currentQueryString[key];
-            }
-
-            return result;
-        }
-
-        public string CurrentUri()
-        {
-            if (EnsureMainFrame())
-            {
-                return _mainFrame.CurrentSource.ToString();
-            }
-            return "unknown";
         }
     }
 }

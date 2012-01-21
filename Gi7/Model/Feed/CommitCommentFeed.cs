@@ -12,26 +12,17 @@ namespace Gi7.Model.Feed
 
         public override String Template
         {
-            get
-            {
-                return "commented commit on";
-            }
+            get { return "commented commit on"; }
         }
 
         public override String Image
         {
-            get
-            {
-                return "/Gi7;component/Images/comment.png";
-            }
+            get { return "/Gi7;component/Images/comment.png"; }
         }
 
         public override String Destination
         {
-            get
-            {
-                return String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, Commit);
-            }
+            get { return String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, Commit); }
         }
     }
 }

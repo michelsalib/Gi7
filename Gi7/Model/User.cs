@@ -5,6 +5,7 @@ namespace Gi7.Model
 {
     public class User
     {
+        private String _avatarUrl;
         public String Login { get; set; }
 
         public String Name { get; set; }
@@ -31,17 +32,13 @@ namespace Gi7.Model
 
         public int TotalPrivateRepos { get; set; }
 
-        private String _avatarUrl;
         public String AvatarUrl
         {
-            get
-            {
-                return _avatarUrl;
-            }
+            get { return _avatarUrl; }
             set
             {
                 // trim GET parameters
-                _avatarUrl = new String(value.TakeWhile(c => c != '?').ToArray()); 
+                _avatarUrl = new String(value.TakeWhile(c => c != '?').ToArray());
             }
         }
     }

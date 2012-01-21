@@ -9,10 +9,7 @@ namespace Gi7.Model.Feed.Base
 
         public override String Destination
         {
-            get
-            {
-                return String.Format(ViewModelLocator.RepositoryUrl, Repository.Owner.Login, Repository.Name);
-            }
+            get { return String.Format(ViewModelLocator.RepositoryUrl, Repository.Owner.Login, Repository.Name); }
         }
     }
 }

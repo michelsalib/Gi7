@@ -1,5 +1,4 @@
-﻿
-namespace Gi7.Service.Request.Base
+﻿namespace Gi7.Service.Request.Base
 {
     public interface ISingleRequest<T> : IGenericRequest<T>
         where T : new()

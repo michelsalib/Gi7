@@ -11,15 +11,34 @@ namespace Gi7.Service
 {
     public class GithubService
     {
+        private CachedClient _client;
+        private bool _isAuthenticated;
+        private String _password;
+
+        /// <summary>
+        /// The ctor will auto-authenticate if a username/password is in isolated storage
+        /// </summary>
+        public GithubService()
+        {
+            String username;
+            String password;
+            if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
+            {
+                AuthenticateUser(username, password);
+                IsAuthenticated = true;
+            } else
+            {
+                Username = "default";
+                _client = _createClient("https://api.github.com", Username, "");
+            }
+        }
+
         public String Username { get; private set; }
 
-        private bool _isAuthenticated;
         public bool IsAuthenticated
         {
-            get
-            {
-                return _isAuthenticated;
-            }
+            get { return _isAuthenticated; }
             set
             {
                 if (_isAuthenticated != value)
@@ -36,29 +55,6 @@ namespace Gi7.Service
         public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
         public event EventHandler ConnectionError;
         public event EventHandler Unauthorized;
-
-        private CachedClient _client;
-        private String _password;
-
-        /// <summary>
-        /// The ctor will auto-authenticate if a username/password is in isolated storage
-        /// </summary>
-        public GithubService()
-        {
-            String username;
-            String password;
-            if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
-            {
-                AuthenticateUser(username, password);
-                IsAuthenticated = true;
-            }
-            else
-            {
-                Username = "default";
-                _client = _createClient("https://api.github.com", Username, "");
-            }
-        }
 
         /// <summary>
         /// Tries to authenticate and save the username/password in isolated storage
@@ -108,8 +104,7 @@ namespace Gi7.Service
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            }
-            else
+            } else
             {
                 client = _client;
             }
@@ -125,7 +120,7 @@ namespace Gi7.Service
                     {
                         request.HasMoreItems = false;
                     }
-                    foreach (var i in r)
+                    foreach (T i in r)
                     {
                         request.Result.Add(i);
                     }
@@ -135,7 +130,7 @@ namespace Gi7.Service
                     }
                 }, true));
             }
-            // else the collection already exists and there is no cache
+                // else the collection already exists and there is no cache
             else
             {
                 client.GetList<T>(request.Uri, r =>
@@ -144,7 +139,7 @@ namespace Gi7.Service
                     {
                         request.HasMoreItems = false;
                     }
-                    foreach (var i in r)
+                    foreach (T i in r)
                     {
                         request.Result.Add(i);
                     }
@@ -167,8 +162,7 @@ namespace Gi7.Service
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            }
-            else
+            } else
             {
                 client = _client;
             }
@@ -198,7 +192,7 @@ namespace Gi7.Service
             {
                 MessageBox.Show("Wrong credentials.");
                 Logout();
-                if(Unauthorized != null)
+                if (Unauthorized != null)
                     Unauthorized(this, new EventArgs());
             };
 

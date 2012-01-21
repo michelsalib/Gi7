@@ -14,26 +14,17 @@ namespace Gi7.Model.Feed
 
         public override String Template
         {
-            get
-            {
-                return String.Format("{0} issue on", Action);
-            }
+            get { return String.Format("{0} issue on", Action); }
         }
 
         public override String Image
         {
-            get
-            {
-                return String.Format("/Gi7;component/Images/issues_{0}.png", Action);
-            }
+            get { return String.Format("/Gi7;component/Images/issues_{0}.png", Action); }
         }
 
         public override String Destination
         {
-            get
-            {
-                return String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, Number);
-            }
+            get { return String.Format(ViewModelLocator.IssueUrl, Repository.Owner.Login, Repository.Name, Number); }
         }
     }
 }

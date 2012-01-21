@@ -1,5 +1,5 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+
 namespace Gi7.Service.Request.Base
 {
     public interface IPaginatedRequest<T> : IGenericRequest<T>

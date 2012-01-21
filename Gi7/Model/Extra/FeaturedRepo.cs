@@ -12,10 +12,7 @@ namespace Gi7.Model.Extra
 
         public String Fullname
         {
-            get
-            {
-                return String.Format("{0}/{1}", User, Repo);
-            }
+            get { return String.Format("{0}/{1}", User, Repo); }
         }
     }
 }

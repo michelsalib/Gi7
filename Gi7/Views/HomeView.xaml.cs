@@ -13,12 +13,12 @@ namespace Gi7.Views
 
         private void Logout(object sender, EventArgs e)
         {
-            Messenger.Default.Send<bool>(true, "logout");
+            Messenger.Default.Send(true, "logout");
         }
 
         private void About(object sender, EventArgs e)
         {
-            Messenger.Default.Send<bool>(true, "about");
+            Messenger.Default.Send(true, "about");
         }
     }
 }

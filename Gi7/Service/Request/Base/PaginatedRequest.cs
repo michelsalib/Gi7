@@ -7,24 +7,8 @@ namespace Gi7.Service.Request.Base
     public abstract class PaginatedRequest<T> : ViewModelBase, IPaginatedRequest<T>
         where T : new()
     {
-        public int Page { get; set; }
-
-        public bool HasMoreItems { get; set; }
-
+        private ObservableCollection<T> _result;
         private string _uri;
-        public string Uri
-        {
-            get
-            {
-                return String.Format("{0}?page={1}", _uri, Page);
-            }
-            protected set
-            {
-                _uri = value;
-            }
-        }
-
-        public OverrideSettings OverrideSettings { get; protected set; }
 
         public PaginatedRequest()
         {
@@ -32,7 +16,20 @@ namespace Gi7.Service.Request.Base
             HasMoreItems = true;
         }
 
-        private ObservableCollection<T> _result;
+        #region IPaginatedRequest<T> Members
+
+        public int Page { get; set; }
+
+        public bool HasMoreItems { get; set; }
+
+        public string Uri
+        {
+            get { return String.Format("{0}?page={1}", _uri, Page); }
+            protected set { _uri = value; }
+        }
+
+        public OverrideSettings OverrideSettings { get; protected set; }
+
         public ObservableCollection<T> Result
         {
             get { return _result; }
@@ -45,5 +42,7 @@ namespace Gi7.Service.Request.Base
                 }
             }
         }
+
+        #endregion
     }
 }

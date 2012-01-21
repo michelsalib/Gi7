@@ -8,13 +8,15 @@ namespace Gi7.Resources.DesignData
     {
         public RepositoryDataModel()
         {
+            var user = new User
+            {
+                Login = "michelsalib",
+                AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+            };
+
             Repository = new Repository
             {
-                Owner = new User
-                {
-                    Login = "michelsalib",
-                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
-                },
+                Owner = user,
                 Name = "symfony",
                 HtmlUrl = "http://github.com/michelsalib/symfony",
                 Description = "The Symfony2 PHP framework",
@@ -23,60 +25,50 @@ namespace Gi7.Resources.DesignData
                 Homepage = "symfony.com",
                 Parent = new Repository
                 {
-                    Owner = new User
-                    {
-                        Login = "symfony",
-                        AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317"
-                    },
+                    Owner = user,
                     Name = "symfnoy"
                 }
             };
 
-            Commits = new ObservableCollection<Push>();
-            Commits.Add(new Push
+            Commits = new ObservableCollection<Push>
             {
-                Author = new User
+                new Push
                 {
-                    Login = "michelsalib",
-                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
-                },
-                Commit = new Commit
-                {
-                    Message = "message",
-                    Author = new Committer
+                    Author = user,
+                    Commit = new Commit
                     {
-                        Date = DateTime.Now,
+                        Message = "Removing static access to Username on github service",
+                        Author = new Committer
+                        {
+                            Date = DateTime.Now,
+                        }
                     }
                 }
-            });
+            };
 
-            PullRequests = new ObservableCollection<PullRequest>();
-            PullRequests.Add(new PullRequest
+            PullRequests = new ObservableCollection<PullRequest>
             {
-                Title = "my pull requets",
-                Body = "the description",
-                UpdatedAt = DateTime.Now,
-                State = "Open",
-                User = new User
+                new PullRequest
                 {
-                    Login = "michelsalib",
-                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
-                },
-            });
+                    Title = "my pull requets",
+                    Body = "the description",
+                    UpdatedAt = DateTime.Now,
+                    State = "Open",
+                    User = user,
+                }
+            };
 
-            Issues = new ObservableCollection<Issue>();
-            Issues.Add(new Issue
+            Issues = new ObservableCollection<Issue>
             {
-                Title = "my issue",
-                Body = "the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long",
-                UpdatedAt = DateTime.Now,
-                State = "Open",
-                User = new User
+                new Issue
                 {
-                    Login = "michelsalib",
-                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
-                },
-            });
+                    Title = "my issue",
+                    Body = "the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long the description is very long",
+                    UpdatedAt = DateTime.Now,
+                    State = "Open",
+                    User = user,
+                }
+            };
         }
 
         public Repository Repository { get; set; }

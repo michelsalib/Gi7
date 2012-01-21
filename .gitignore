@@ -2,3 +2,4 @@ Bin
 obj
 *.suo
 /_ReSharper.Gi7/
+/*.sln.DotSettings.user

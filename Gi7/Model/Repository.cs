@@ -54,13 +54,16 @@ namespace Gi7.Model
 
         public String HtmlUrl { get; set; }
 
+        public string CurrentUser { get; set; }
+
         public String Fullname
         {
             get
             {
-                return String.Format(GithubService.Username.Equals(Owner.Login, StringComparison.InvariantCultureIgnoreCase) ? "{1}" : "{0}/{1}", Owner.Login, Name);
+                return String.Format(CurrentUser != null && CurrentUser.Equals(Owner.Login, StringComparison.InvariantCultureIgnoreCase) ? "{1}" : "{0}/{1}", Owner.Login, Name);
             }
         }
+
 
         public bool IsFrom(string name)
         {

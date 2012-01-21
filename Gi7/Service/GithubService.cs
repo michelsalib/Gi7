@@ -36,7 +36,7 @@ namespace Gi7.Service
             }
         }
 
-        public static String Username { get; private set; }
+        public String Username { get; private set; }
 
         public bool IsAuthenticated
         {

@@ -160,7 +160,9 @@ namespace Gi7.Views
                         var repositories = sender as IEnumerable<Repository>;
                         if (repositories != null && repositories.Any())
                         {
-                            _ownedRepos = new ObservableCollection<Repository>(repositories.Where(r => r.IsFrom(GithubService.Username)));
+                            foreach (var repository in repositories)
+                                repository.CurrentUser = _githubService.Username;
+                            _ownedRepos = new ObservableCollection<Repository>(repositories.Where(r => r.IsFrom(_githubService.Username)));
                             _watchedRepos = new ObservableCollection<Repository>(repositories.Except(_ownedRepos));
                         }
                     };
@@ -220,12 +222,12 @@ namespace Gi7.Views
             {
             case "News Feed":
                 if (FeedsRequest == null)
-                    FeedsRequest = new PrivateFeedsRequest(GithubService.Username);
+                    FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
                 break;
             case "Repos":
                 if (Repos == null)
                 {
-                    Repos = _githubService.Load(new WatchedRepoRequest(GithubService.Username));
+                    Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
                     Repos.CollectionChanged += (sender, args) =>
                     {
                         RaisePropertyChanged("WatchedRepos");
@@ -235,15 +237,15 @@ namespace Gi7.Views
                 break;
             case "Follower":
                 if (FollowersRequest == null)
-                    FollowersRequest = new FollowersRequest(GithubService.Username);
+                    FollowersRequest = new FollowersRequest(_githubService.Username);
                 break;
             case "Following":
                 if (FollowingsRequest == null)
-                    FollowingsRequest = new FollowingsRequest(GithubService.Username);
+                    FollowingsRequest = new FollowingsRequest(_githubService.Username);
                 break;
             case "Profile":
                 if (User == null)
-                    User = _githubService.Load(new UserRequest(GithubService.Username), u => User = u);
+                    User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
                 break;
             case "Explore":
                 if (FeaturedRepos == null)

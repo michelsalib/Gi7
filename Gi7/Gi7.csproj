@@ -113,6 +113,7 @@
     <Compile Include="Resources\DesignData\AboutDataModel.cs" />
     <Compile Include="Resources\DesignData\CommitDataModel.cs" />
     <Compile Include="Resources\DesignData\IssueDataModel.cs" />
+    <Compile Include="Resources\DesignData\ProfileRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\PullRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
+    <Compile Include="Utils\BetterObservableCollection.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>

@@ -5,6 +5,7 @@ using System.IO.IsolatedStorage;
 using System.Windows;
 using Gi7.Model;
 using Gi7.Service.Request.Base;
+using Gi7.Utils;
 using RestSharp;
 
 namespace Gi7.Service
@@ -27,7 +28,8 @@ namespace Gi7.Service
             {
                 AuthenticateUser(username, password);
                 IsAuthenticated = true;
-            } else
+            }
+            else
             {
                 Username = "default";
                 _client = _createClient("https://api.github.com", Username, "");
@@ -104,7 +106,8 @@ namespace Gi7.Service
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            } else
+            }
+            else
             {
                 client = _client;
             }
@@ -113,41 +116,30 @@ namespace Gi7.Service
             // if page is 1, we need to set the collection and use cache
             if (request.Page == 1)
             {
-                request.Result = new ObservableCollection<T>(client.GetList<T>(request.Uri, r =>
+                request.Result = new BetterObservableCollection<T>(client.GetList<T>(request.Uri, r =>
                 {
                     request.Result.Clear();
                     if (r.Count < 30)
-                    {
                         request.HasMoreItems = false;
-                    }
-                    foreach (T i in r)
-                    {
-                        request.Result.Add(i);
-                    }
+
+                    request.Result.AddRange(r);
+
                     if (callback != null)
-                    {
                         callback(r);
-                    }
-                }, true));
-            }
-                // else the collection already exists and there is no cache
+                }));
+            } // else the collection already exists and there is no cache
             else
             {
                 client.GetList<T>(request.Uri, r =>
                 {
                     if (r.Count < 30)
-                    {
                         request.HasMoreItems = false;
-                    }
-                    foreach (T i in r)
-                    {
-                        request.Result.Add(i);
-                    }
+
+                    request.Result.AddRange(r);
+
                     if (callback != null)
-                    {
                         callback(r);
-                    }
-                }, true);
+                });
             }
 
             return request.Result;
@@ -162,7 +154,8 @@ namespace Gi7.Service
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            } else
+            }
+            else
             {
                 client = _client;
             }
@@ -174,7 +167,7 @@ namespace Gi7.Service
                 {
                     callback(r);
                 }
-            }, true);
+            });
 
             return request.Result;
         }
@@ -184,13 +177,13 @@ namespace Gi7.Service
             var client = new CachedClient(baseUri, usernamne, password);
             client.ConnectionError += (s, e) =>
             {
-                MessageBox.Show("Server unreachable.");
+                MessageBox.Show("Server unreachable.", "Gi7", MessageBoxButton.OK);
                 if (ConnectionError != null)
                     ConnectionError(this, new EventArgs());
             };
             client.Unauthorized += (s, e) =>
             {
-                MessageBox.Show("Wrong credentials.");
+                MessageBox.Show("Wrong credentials.", "Gi7", MessageBoxButton.OK);
                 Logout();
                 if (Unauthorized != null)
                     Unauthorized(this, new EventArgs());

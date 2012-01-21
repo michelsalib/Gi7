@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
+using Gi7.Utils;
 
 namespace Gi7.Service.Request.Base
 {
     public abstract class PaginatedRequest<T> : ViewModelBase, IPaginatedRequest<T>
         where T : new()
     {
-        private ObservableCollection<T> _result;
+        private BetterObservableCollection<T> _result;
         private string _uri;
 
         public PaginatedRequest()
@@ -30,7 +31,7 @@ namespace Gi7.Service.Request.Base
 
         public OverrideSettings OverrideSettings { get; protected set; }
 
-        public ObservableCollection<T> Result
+        public BetterObservableCollection<T> Result
         {
             get { return _result; }
             set

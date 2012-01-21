@@ -96,7 +96,7 @@
 								<Image Source="{Binding Author.AvatarUrl}" Height="80" Grid.RowSpan="2" Margin="0,0,5,0" VerticalAlignment="Top" />
 								<TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
 								<TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray" Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667" VerticalAlignment="Bottom" />
-								<TextBlock Text="{Binding Path=Commit.TrunkedMessage}" TextWrapping="Wrap" Grid.Column="1" TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
+                                <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1" TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
 							</Grid>
 						</DataTemplate>
 					</ListBox.ItemTemplate>

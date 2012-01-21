@@ -17,6 +17,7 @@
     <Application.Resources>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:TextTrimConverter x:Key="TextTrimConverter" />
         <toolkit:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
         <service:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
 

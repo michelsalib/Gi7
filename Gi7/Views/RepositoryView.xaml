@@ -18,7 +18,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="{Binding Repository.Fullname}" x:Name="Pivot">
+        <controls:Pivot Title="{Binding Repository.Fullname}" x:Name="Pivot" Tap="Pivot_Tap">
             <Interactivity:Interaction.Triggers>
                 <Interactivity:EventTrigger EventName="SelectionChanged">
                     <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />

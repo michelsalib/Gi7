@@ -7,16 +7,16 @@ namespace Gi7.Controls
 {
     public class LoginPanelViewModel : ViewModelBase
     {
-        private String _username;
-        public String Username
+        private String _email;
+        public String Email
         {
-            get { return _username; }
+            get { return _email; }
             set
             {
-                if (_username != value)
+                if (_email != value)
                 {
-                    _username = value;
-                    RaisePropertyChanged("Username");
+                    _email = value;
+                    RaisePropertyChanged("Email");
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace Gi7.Controls
         {
             LoginCommand = new RelayCommand(() =>
             {
-                githubService.AuthenticateUser(Username, Password);
+                githubService.AuthenticateUser(Email, Password);
             });
         }
     }

@@ -68,7 +68,6 @@ namespace Gi7.Utils
                             Commits = feedData["payload"]["pull_request"]["commits"].Value<int>(),
                             Deletions = feedData["payload"]["pull_request"]["deletions"].Value<int>(),
                             Id = feedData["payload"]["pull_request"]["id"].Value<int>(),
-                            IssueId = feedData["payload"]["pull_request"]["issue_id"].Value<int>(),
                             Number = feedData["payload"]["pull_request"]["number"].Value<int>(),
                             Title = feedData["payload"]["pull_request"]["title"].Value<String>(),
                         }

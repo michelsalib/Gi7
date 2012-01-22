@@ -11,13 +11,13 @@ namespace Gi7.Service
     /// </summary>
     public class CachedClient : RestClient
     {
-        public CachedClient(String baseUri, String username, String password)
+        public CachedClient(String baseUri, String email, String password)
             : base(baseUri)
         {
-            CacheProvider = new CacheProvider(username);
+            CacheProvider = new CacheProvider(email);
 
             if (!String.IsNullOrWhiteSpace(password))
-                Authenticator = new HttpBasicAuthenticator(username, password);
+                Authenticator = new HttpBasicAuthenticator(email, password);
         }
 
         public CacheProvider CacheProvider { get; private set; }

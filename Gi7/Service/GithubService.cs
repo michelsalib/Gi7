@@ -22,21 +22,28 @@ namespace Gi7.Service
         public GithubService()
         {
             String username;
+            String email;
             String password;
             if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password) &&
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("email", out email))
             {
-                AuthenticateUser(username, password);
+                Email = email;
+                Username = username;
+                AuthenticateUser(email, password);
                 IsAuthenticated = true;
             }
             else
             {
                 Username = "default";
-                _client = _createClient("https://api.github.com", Username, "");
+                Email = "default";
+                _client = _createClient("https://api.github.com", "", "");
             }
         }
 
         public String Username { get; private set; }
+
+        public String Email { get; private set; }
 
         public bool IsAuthenticated
         {
@@ -59,22 +66,24 @@ namespace Gi7.Service
         public event EventHandler Unauthorized;
 
         /// <summary>
-        /// Tries to authenticate and save the username/password in isolated storage
+        /// Tries to authenticate and save the email/password in isolated storage
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="email"></param>
         /// <param name="password"></param>
-        public void AuthenticateUser(String username, String password)
+        public void AuthenticateUser(String email, String password)
         {
-            Username = username;
+            Email = email;
             _password = password;
-
-            _client = _createClient("https://api.github.com", username, password);
+            _client = _createClient("https://api.github.com", email, password);
 
             _client.ExecuteAsync<User>(new RestRequest("/user"), r =>
             {
                 // set storage
-                IsolatedStorageSettings.ApplicationSettings["username"] = Username;
-                IsolatedStorageSettings.ApplicationSettings["password"] = _password;
+                IsolatedStorageSettings.ApplicationSettings["username"] = r.Data.Login;
+                IsolatedStorageSettings.ApplicationSettings["email"] = email;
+                IsolatedStorageSettings.ApplicationSettings["password"] = password;
+
+                Username = r.Data.Login;
 
                 IsAuthenticated = true;
             });
@@ -89,6 +98,7 @@ namespace Gi7.Service
             _password = "";
 
             IsolatedStorageSettings.ApplicationSettings.Remove("username");
+            IsolatedStorageSettings.ApplicationSettings.Remove("email");
             IsolatedStorageSettings.ApplicationSettings.Remove("password");
 
             _client.ClearCache();
@@ -104,7 +114,7 @@ namespace Gi7.Service
             CachedClient client;
             if (request.OverrideSettings != null)
             {
-                client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
+                client = _createClient(request.OverrideSettings.BaseUri, Email, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
             }
             else
@@ -152,7 +162,7 @@ namespace Gi7.Service
             CachedClient client;
             if (request.OverrideSettings != null)
             {
-                client = _createClient(request.OverrideSettings.BaseUri, Username, _password);
+                client = _createClient(request.OverrideSettings.BaseUri, Email, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
             }
             else
@@ -172,9 +182,9 @@ namespace Gi7.Service
             return request.Result;
         }
 
-        private CachedClient _createClient(String baseUri, String usernamne, String password)
+        private CachedClient _createClient(String baseUri, String email, String password)
         {
-            var client = new CachedClient(baseUri, usernamne, password);
+            var client = new CachedClient(baseUri, email, password);
             client.ConnectionError += (s, e) =>
             {
                 MessageBox.Show("Server unreachable.", "Gi7", MessageBoxButton.OK);

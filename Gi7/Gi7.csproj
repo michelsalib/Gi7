@@ -150,6 +150,7 @@
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\TextTrimConverter.cs" />
     <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />

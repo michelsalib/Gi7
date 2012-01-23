@@ -10,6 +10,7 @@ namespace Gi7.Service.Request.Base
     {
         private BetterObservableCollection<T> _result;
         private string _uri;
+        private object _customResult;
 
         public PaginatedRequest()
         {
@@ -40,6 +41,18 @@ namespace Gi7.Service.Request.Base
                 {
                     _result = value;
                     RaisePropertyChanged("Result");
+                }
+            }
+        }
+
+        public object CustomResult
+        {
+            get { return _customResult; }
+            set {
+                if (value != _customResult)
+                {
+                    _customResult = value;
+                    RaisePropertyChanged("CustomResult");
                 }
             }
         }

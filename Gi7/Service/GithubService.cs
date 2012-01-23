@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Windows;
 using Gi7.Model;
 using Gi7.Service.Request.Base;
@@ -107,7 +108,7 @@ namespace Gi7.Service
             IsAuthenticated = false;
         }
 
-        public ObservableCollection<T> Load<T>(IPaginatedRequest<T> request, Action<List<T>> callback = null)
+        public ObservableCollection<T> Load<T>(IPaginatedRequest<T> request, Action<List<T>> callback = null, Action<List<T>, bool> defaultAction = null)
             where T : new()
         {
             // prepare client
@@ -122,34 +123,30 @@ namespace Gi7.Service
                 client = _client;
             }
 
+            if (defaultAction == null)
+                defaultAction = (pushList, clear) =>
+                {
+                    if (clear)
+                        request.Result.Clear();
+
+                    if (pushList.Count() < 30)
+                        request.HasMoreItems = false;
+
+                    request.Result.AddRange(pushList);
+
+                    if (callback != null)
+                        callback(pushList);
+                };
+
             request.Page++;
             // if page is 1, we need to set the collection and use cache
             if (request.Page == 1)
             {
-                request.Result = new BetterObservableCollection<T>(client.GetList<T>(request.Uri, r =>
-                {
-                    request.Result.Clear();
-                    if (r.Count < 30)
-                        request.HasMoreItems = false;
-
-                    request.Result.AddRange(r);
-
-                    if (callback != null)
-                        callback(r);
-                }));
+                request.Result = client.GetList<T>(request.Uri, r => defaultAction(r, true)).ToObservableCollection();
             } // else the collection already exists and there is no cache
             else
             {
-                client.GetList<T>(request.Uri, r =>
-                {
-                    if (r.Count < 30)
-                        request.HasMoreItems = false;
-
-                    request.Result.AddRange(r);
-
-                    if (callback != null)
-                        callback(r);
-                });
+                client.GetList<T>(request.Uri, r => defaultAction(r, false));
             }
 
             return request.Result;

@@ -14,6 +14,11 @@ namespace Gi7.Utils
             : base(list)
         {
         }
+        
+        public BetterObservableCollection(IEnumerable<T> list)
+            : base(list)
+        {
+        }
 
         public void AddRange(IEnumerable<T> items)
         {

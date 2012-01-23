@@ -18,5 +18,10 @@ namespace Gi7.Model
         public PushStats Stats { get; set; }
 
         public List<File> Files { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Push && ((Push)obj).Sha == Sha;
+        }
     }
 }

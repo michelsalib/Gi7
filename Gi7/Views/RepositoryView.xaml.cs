@@ -35,5 +35,12 @@ namespace Gi7.Views
                 selectedItem = currSelectedItem;
             }
         }
+
+        private void ListBox_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            var listBox = (ListBox) sender;
+            var repositoryViewModel = this.DataContext as RepositoryViewModel;
+            repositoryViewModel.CommitSelectedCommand.Execute(listBox.SelectedItem);
+        }
     }
 }

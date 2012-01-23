@@ -15,6 +15,8 @@ namespace Gi7.Model.Extra
             Pushes = new BetterObservableCollection<Push>();
         }
 
+        public GroupPush(IGrouping<DateTime, Push> grouping) : this(grouping.Key, grouping) { }
+
         public GroupPush(DateTime date, BetterObservableCollection<Push> pushes)
         {
             Date = date;

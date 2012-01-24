@@ -5,15 +5,6 @@ using Gi7.Service;
 namespace Gi7.Model.Feed.Base
 {
     [XmlInclude(typeof (IssueCommentFeed)), XmlInclude(typeof (CommitCommentFeed)), XmlInclude(typeof (PullRequestFeed)), XmlInclude(typeof (IssueFeed)), XmlInclude(typeof (PushFeed)), XmlInclude(typeof (CreateFeed)), XmlInclude(typeof (WatchFeed)), XmlInclude(typeof (DeleteFeed)), XmlInclude(typeof (FollowFeed)), XmlInclude(typeof (ForkFeed))]
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public class Feed
     {
         public User User { get; set; }

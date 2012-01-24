@@ -1,7 +1,8 @@
 ﻿using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-    // using AgFx;
+
+// using AgFx;
 
 namespace Gi7.Utils
 {
@@ -14,18 +15,14 @@ namespace Gi7.Utils
         private int _loadingCount;
         private ProgressIndicator _mangoIndicator;
 
-        private GlobalLoading()
-        {
-        }
+        private GlobalLoading() {}
 
         public static GlobalLoading Instance
         {
             get
             {
                 if (_in == null)
-                {
                     _in = new GlobalLoading();
-                }
 
                 return _in;
             }
@@ -37,12 +34,9 @@ namespace Gi7.Utils
             set
             {
                 if (value)
-                {
                     ++_loadingCount;
-                } else
-                {
+                else
                     --_loadingCount;
-                }
 
                 NotifyValueChanged();
             }
@@ -63,9 +57,7 @@ namespace Gi7.Utils
             object ee = e.Content;
             var pp = ee as PhoneApplicationPage;
             if (pp != null)
-            {
                 pp.SetValue(SystemTray.ProgressIndicatorProperty, _mangoIndicator);
-            }
         }
 
         private void NotifyValueChanged()
@@ -75,9 +67,7 @@ namespace Gi7.Utils
                 _mangoIndicator.IsIndeterminate = _loadingCount > 0;
 
                 if (_mangoIndicator.IsVisible == false)
-                {
                     _mangoIndicator.IsVisible = true;
-                }
             }
         }
     }

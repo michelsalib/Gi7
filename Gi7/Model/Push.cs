@@ -21,7 +21,7 @@ namespace Gi7.Model
 
         public override bool Equals(object obj)
         {
-            return obj is Push && ((Push)obj).Sha == Sha;
+            return obj is Push && ((Push) obj).Sha == Sha;
         }
     }
 }

@@ -2,8 +2,5 @@
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class PullRequestListBox : PaginatedListBox<PullRequest, PullRequest>
-    {
-
-    }
+    public class PullRequestListBox : PaginatedListBox<PullRequest, PullRequest> {}
 }

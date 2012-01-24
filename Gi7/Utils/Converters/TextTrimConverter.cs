@@ -12,8 +12,8 @@ namespace Gi7.Utils.Converters
         {
             var b = value as string;
 
-            if (b != null && b.Length > 65 ) 
-                return b.Substring(0, 65).Insert(65,"...").Replace("\n", ". ");
+            if (b != null && b.Length > 65)
+                return b.Substring(0, 65).Insert(65, "...").Replace("\n", ". ");
             return value;
         }
 

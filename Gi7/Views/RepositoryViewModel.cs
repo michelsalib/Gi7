@@ -24,23 +24,21 @@ namespace Gi7.Views
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                var header = ((PivotItem)args.AddedItems[0]).Header as String;
                 switch (header)
                 {
-                case "Commits":
-                    if (CommitsRequest == null)
-                        CommitsRequest = new CommitsRequest(user, repo);
-                    break;
-                case "Pull requests":
-                    if (PullRequestsRequest == null)
-                        PullRequestsRequest = new PullRequestsRequest(user, repo);
-                    break;
-                case "Issues":
-                    if (IssuesRequest == null)
-                        IssuesRequest = new IssuesRequest(user, repo);
-                    break;
-                default:
-                    break;
+                    case "Commits":
+                        if (CommitsRequest == null)
+                            CommitsRequest = new CommitsRequest(user, repo);
+                        break;
+                    case "Pull requests":
+                        if (PullRequestsRequest == null)
+                            PullRequestsRequest = new PullRequestsRequest(user, repo);
+                        break;
+                    case "Issues":
+                        if (IssuesRequest == null)
+                            IssuesRequest = new IssuesRequest(user, repo);
+                        break;
                 }
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>

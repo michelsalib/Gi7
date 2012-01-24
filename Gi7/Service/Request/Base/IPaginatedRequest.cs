@@ -1,6 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using Gi7.Utils;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Gi7.Service.Request.Base
 {
@@ -12,8 +11,7 @@ namespace Gi7.Service.Request.Base
 
         bool HasMoreItems { get; set; }
 
-        void AddResults(IEnumerable<TSource> result);
-
         ObservableCollection<TDestination> Result { get; set; }
+        void AddResults(IEnumerable<TSource> result);
     }
 }

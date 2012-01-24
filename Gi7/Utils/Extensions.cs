@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Gi7.Utils
 {
@@ -23,13 +14,22 @@ namespace Gi7.Utils
         /// <returns></returns>
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> collection)
         {
-            ObservableCollection<T> observableCollection = new ObservableCollection<T>();
-            foreach (T item in collection)
-            {
-                observableCollection.Add(item);
-            }
+            var observableCollection = new ObservableCollection<T>();
+            observableCollection.AddRange(collection);
 
             return observableCollection;
+        }
+
+        /// <summary>
+        /// Adds the elements of the specified collection to the end of the List Of T.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="itemsToAdd">The collection whose elements should be added to the end of the List Of T. The collection itself cannot be Nothing, but it can contain elements that are Nothing, if type T is a reference type.</param>
+        public static void AddRange<T>(this IList<T> collection, IEnumerable<T> itemsToAdd)
+        {
+            foreach (T item in itemsToAdd)
+                collection.Add(item);
         }
 
         /// <summary>

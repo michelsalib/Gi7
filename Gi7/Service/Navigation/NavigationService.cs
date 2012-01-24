@@ -23,13 +23,12 @@ namespace Gi7.Service.Navigation
             {
                 _mainFrame.Navigate(new Uri(pageUri, UriKind.RelativeOrAbsolute));
                 if (pageUri.Contains("?"))
-                {
                     _currentQueryString = pageUri.Substring(pageUri.IndexOf('?') + 1).Split('&').Select(i =>
                     {
                         string[] values = i.Split('=');
                         return new KeyValuePair<String, String>(values[0], values[1]);
                     }).ToDictionary(i => i.Key, i => i.Value);
-                } else
+                else
                     _currentQueryString = new Dictionary<string, string>();
             }
         }
@@ -38,9 +37,7 @@ namespace Gi7.Service.Navigation
         {
             if (EnsureMainFrame()
                 && _mainFrame.CanGoBack)
-            {
                 _mainFrame.GoBack();
-            }
         }
 
         public string GetParameter(string key, string defaultValue = "")
@@ -48,9 +45,7 @@ namespace Gi7.Service.Navigation
             string result = defaultValue;
 
             if (_currentQueryString != null && _currentQueryString.ContainsKey(key))
-            {
                 result = _currentQueryString[key];
-            }
 
             return result;
         }
@@ -58,9 +53,7 @@ namespace Gi7.Service.Navigation
         public string CurrentUri()
         {
             if (EnsureMainFrame())
-            {
                 return _mainFrame.CurrentSource.ToString();
-            }
             return "unknown";
         }
 
@@ -69,9 +62,7 @@ namespace Gi7.Service.Navigation
         private bool EnsureMainFrame()
         {
             if (_mainFrame != null)
-            {
                 return true;
-            }
 
             _mainFrame = Application.Current.RootVisual as PhoneApplicationFrame;
 
@@ -81,9 +72,7 @@ namespace Gi7.Service.Navigation
                 _mainFrame.Navigating += (s, e) =>
                 {
                     if (Navigating != null)
-                    {
                         Navigating(s, e);
-                    }
                 };
 
                 return true;

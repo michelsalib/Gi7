@@ -1,5 +1,5 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
+using GalaSoft.MvvmLight;
 
 namespace Gi7.Service.Request.Base
 {
@@ -9,7 +9,7 @@ namespace Gi7.Service.Request.Base
     {
         private TDestination _result;
 
-        #region ISingleRequest<TSource, TDestination> Members
+        #region ISingleRequest<TSource,TDestination> Members
 
         public string Uri { get; protected set; }
 
@@ -29,15 +29,11 @@ namespace Gi7.Service.Request.Base
         {
             var cast = result as TDestination;
             if (cast != null)
-            {
-                Result = cast as TDestination;
-            }
+                Result = cast;
             else
-            {
                 throw new NotImplementedException();
-            }
         }
-        #endregion
 
+        #endregion
     }
 }

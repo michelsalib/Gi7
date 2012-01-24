@@ -4,7 +4,7 @@ using Gi7.Utils;
 
 namespace Gi7.Service.Request
 {
-    public class FeaturedRepoRequest : PaginatedRequest<FeaturedRepo>
+    public class FeaturedRepoRequest : PaginatedRequest<FeaturedRepo, FeaturedRepo>
     {
         public FeaturedRepoRequest()
         {

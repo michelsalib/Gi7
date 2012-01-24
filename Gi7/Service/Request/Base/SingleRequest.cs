@@ -1,19 +1,21 @@
 ﻿using GalaSoft.MvvmLight;
+using System;
 
 namespace Gi7.Service.Request.Base
 {
-    public abstract class SingleRequest<T> : ViewModelBase, ISingleRequest<T>
-        where T : new()
+    public abstract class SingleRequest<TSource, TDestination> : ViewModelBase, ISingleRequest<TSource, TDestination>
+        where TSource : class, new()
+        where TDestination : class, new()
     {
-        private T _result;
+        private TDestination _result;
 
-        #region ISingleRequest<T> Members
+        #region ISingleRequest<TSource, TDestination> Members
 
         public string Uri { get; protected set; }
 
         public OverrideSettings OverrideSettings { get; protected set; }
 
-        public T Result
+        public TDestination Result
         {
             get { return _result; }
             set
@@ -23,6 +25,19 @@ namespace Gi7.Service.Request.Base
             }
         }
 
+        public void SetResult(TSource result)
+        {
+            var cast = result as TDestination;
+            if (cast != null)
+            {
+                Result = cast as TDestination;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
         #endregion
+
     }
 }

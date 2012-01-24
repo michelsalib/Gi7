@@ -17,9 +17,9 @@ namespace Gi7.Views
 {
     public class UserViewModel : ViewModelBase
     {
-        private IPaginatedRequest<Feed> _feedsRequest;
-        private PaginatedRequest<User> _followersRequest;
-        private PaginatedRequest<User> _followingsRequest;
+        private FeedsRequest _feedsRequest;
+        private FollowersRequest _followersRequest;
+        private FollowingsRequest _followingsRequest;
         private ObservableCollection<Repository> _repos;
         private User _user;
         private String _username;
@@ -108,7 +108,7 @@ namespace Gi7.Views
             }
         }
 
-        public IPaginatedRequest<Feed> FeedsRequest
+        public FeedsRequest FeedsRequest
         {
             get { return _feedsRequest; }
             set
@@ -156,7 +156,7 @@ namespace Gi7.Views
             }
         }
 
-        public PaginatedRequest<User> FollowingsRequest
+        public FollowingsRequest FollowingsRequest
         {
             get { return _followingsRequest; }
             set
@@ -169,7 +169,7 @@ namespace Gi7.Views
             }
         }
 
-        public PaginatedRequest<User> FollowersRequest
+        public FollowersRequest FollowersRequest
         {
             get { return _followersRequest; }
             set

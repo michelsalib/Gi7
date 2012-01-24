@@ -94,6 +94,7 @@
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
     <Compile Include="Model\Extra\FeaturedRepo.cs" />
+    <Compile Include="Model\Extra\PushGroup.cs" />
     <Compile Include="Model\Feed\Base\RepositoryFeed.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
     <Compile Include="Model\Feed\DeleteFeed.cs" />
@@ -151,10 +152,10 @@
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\TextTrimConverter.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
-    <Compile Include="Utils\BetterObservableCollection.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>

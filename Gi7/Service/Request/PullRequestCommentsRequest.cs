@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class PullRequestCommentsRequest : PaginatedRequest<Comment>
+    public class PullRequestCommentsRequest : PaginatedRequest<Comment, Comment>
     {
         public PullRequestCommentsRequest(string username, string repo, string number)
         {

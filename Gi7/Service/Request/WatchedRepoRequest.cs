@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class WatchedRepoRequest : PaginatedRequest<Repository>
+    public class WatchedRepoRequest : PaginatedRequest<Repository, Repository>
     {
         public WatchedRepoRequest(string username)
         {

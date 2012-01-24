@@ -5,7 +5,7 @@ using Gi7.Utils;
 
 namespace Gi7.Service.Request
 {
-    public class PrivateFeedsRequest : PaginatedRequest<Feed>
+    public class PrivateFeedsRequest : PaginatedRequest<Feed, Feed>
     {
         public PrivateFeedsRequest(String username)
         {

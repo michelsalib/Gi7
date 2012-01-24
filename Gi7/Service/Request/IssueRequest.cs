@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class IssueRequest : SingleRequest<Issue>
+    public class IssueRequest : SingleRequest<Issue, Issue>
     {
         public IssueRequest(string username, string repo, string number)
         {

@@ -21,9 +21,9 @@ namespace Gi7.Views
     {
         private readonly GithubService _githubService;
         private ObservableCollection<FeaturedRepo> _featuredRepos;
-        private IPaginatedRequest<Feed> _feedsRequest;
-        private PaginatedRequest<User> _followersRequest;
-        private PaginatedRequest<User> _followingsRequest;
+        private PrivateFeedsRequest _feedsRequest;
+        private FollowersRequest _followersRequest;
+        private FollowingsRequest _followingsRequest;
         private bool _isLoggedIn;
         private ObservableCollection<Repository> _repos;
         private ObservableCollection<Repository> _ownedRepos;
@@ -115,7 +115,7 @@ namespace Gi7.Views
             }
         }
 
-        public IPaginatedRequest<Feed> FeedsRequest
+        public PrivateFeedsRequest FeedsRequest
         {
             get { return _feedsRequest; }
             set
@@ -171,7 +171,7 @@ namespace Gi7.Views
             }
         }
 
-        public PaginatedRequest<User> FollowingsRequest
+        public FollowingsRequest FollowingsRequest
         {
             get { return _followingsRequest; }
             set
@@ -184,7 +184,7 @@ namespace Gi7.Views
             }
         }
 
-        public PaginatedRequest<User> FollowersRequest
+        public FollowersRequest FollowersRequest
         {
             get { return _followersRequest; }
             set

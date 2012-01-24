@@ -2,7 +2,7 @@
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class FeedListBox : PaginatedListBox<Feed>
+    public class FeedListBox : PaginatedListBox<Feed, Feed>
     {
 
     }

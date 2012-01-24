@@ -9,16 +9,17 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class PaginatedListBox<T> : ListBox
-        where T : new()
+    public class PaginatedListBox<TSource, TDestination> : ListBox
+        where TSource : class, new()
+        where TDestination : class, new()
     {
-        public IPaginatedRequest<T> Request
+        public IPaginatedRequest<TSource, TDestination> Request
         {
-            get { return (IPaginatedRequest<T>)GetValue(RequestProperty); }
+            get { return (IPaginatedRequest<TSource, TDestination>)GetValue(RequestProperty); }
             set { SetValue(RequestProperty, value); }
         }
         public static readonly DependencyProperty RequestProperty =
-            DependencyProperty.Register("Request", typeof(IPaginatedRequest<T>), typeof(PaginatedListBox<T>), new PropertyMetadata(_newRequest));
+            DependencyProperty.Register("Request", typeof(IPaginatedRequest<TSource, TDestination>), typeof(PaginatedListBox<TSource, TDestination>), new PropertyMetadata(_newRequest));
 
         protected bool Loading = false;
 
@@ -60,7 +61,7 @@ namespace Gi7.Controls.PaginatedListBox
 
         private static void _newRequest(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var listBox = (PaginatedListBox<T>)d;
+            var listBox = (PaginatedListBox<TSource, TDestination>)d;
             listBox.SetBinding(ListBox.ItemsSourceProperty, new Binding("Request.Result") { RelativeSource = new RelativeSource(RelativeSourceMode.Self) });
             listBox._load();
         }
@@ -72,7 +73,7 @@ namespace Gi7.Controls.PaginatedListBox
                 if (Loading == false && Request.HasMoreItems)
                 {
                     Loading = true;
-                    ViewModelLocator.GithubService.Load<T>(Request, r => Loading = false);
+                    ViewModelLocator.GithubService.Load<TSource, TDestination>(Request, r => Loading = false);
                 }
             }
             catch (Exception)

@@ -2,7 +2,7 @@
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class UserListBox : PaginatedListBox<User>
+    public class UserListBox : PaginatedListBox<User, User>
     {
 
     }

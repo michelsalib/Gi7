@@ -4,7 +4,7 @@ using Gi7.Service.Request.Base;
 
 namespace Gi7.Service.Request
 {
-    public class PullRequestRequest : SingleRequest<PullRequest>
+    public class PullRequestRequest : SingleRequest<PullRequest, PullRequest>
     {
         public PullRequestRequest(string username, string repo, string number)
         {

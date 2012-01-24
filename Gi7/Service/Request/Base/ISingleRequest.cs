@@ -1,8 +1,11 @@
 ﻿namespace Gi7.Service.Request.Base
 {
-    public interface ISingleRequest<T> : IGenericRequest<T>
-        where T : new()
+    public interface ISingleRequest<TSource, TDestination> : IGenericRequest<TSource, TDestination>
+        where TSource : class, new()
+        where TDestination : class, new()
     {
-        T Result { get; set; }
+        TDestination Result { get; set; }
+
+        void SetResult(TSource result);
     }
 }

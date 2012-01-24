@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Windows;
+using System.Linq;
 using Gi7.Model;
 using Gi7.Service.Request.Base;
 using Gi7.Utils;
@@ -107,8 +108,9 @@ namespace Gi7.Service
             IsAuthenticated = false;
         }
 
-        public ObservableCollection<T> Load<T>(IPaginatedRequest<T> request, Action<List<T>> callback = null)
-            where T : new()
+        public ObservableCollection<TDestination> Load<TSource, TDestination>(IPaginatedRequest<TSource, TDestination> request, Action<List<TDestination>> callback = null)
+            where TSource : class, new()
+            where TDestination : class, new()
         {
             // prepare client
             CachedClient client;
@@ -126,37 +128,40 @@ namespace Gi7.Service
             // if page is 1, we need to set the collection and use cache
             if (request.Page == 1)
             {
-                request.Result = new BetterObservableCollection<T>(client.GetList<T>(request.Uri, r =>
+                request.Result = new ObservableCollection<TDestination>();
+                var rawResult = client.GetList<TSource>(request.Uri, r =>
                 {
                     request.Result.Clear();
                     if (r.Count < 30)
                         request.HasMoreItems = false;
 
-                    request.Result.AddRange(r);
+                    request.AddResults(r);
 
                     if (callback != null)
-                        callback(r);
-                }));
+                        callback(request.Result.ToList());
+                });
+                request.AddResults(rawResult);
             } // else the collection already exists and there is no cache
             else
             {
-                client.GetList<T>(request.Uri, r =>
+                client.GetList<TSource>(request.Uri, r =>
                 {
                     if (r.Count < 30)
                         request.HasMoreItems = false;
 
-                    request.Result.AddRange(r);
-
+                    request.AddResults(r);
+                    
                     if (callback != null)
-                        callback(r);
+                        callback(request.Result.ToList());
                 });
             }
 
             return request.Result;
         }
 
-        public T Load<T>(ISingleRequest<T> request, Action<T> callback = null)
-            where T : new()
+        public TDestination Load<TSource, TDestination>(ISingleRequest<TSource, TDestination> request, Action<TDestination> callback = null)
+            where TSource : class, new()
+            where TDestination : class, new()
         {
             // prepare the client
             CachedClient client;
@@ -170,14 +175,15 @@ namespace Gi7.Service
                 client = _client;
             }
 
-            request.Result = client.Get<T>(request.Uri, r =>
+            var rawResult = client.Get<TSource>(request.Uri, r =>
             {
-                request.Result = r;
+                request.SetResult(r);
                 if (callback != null)
                 {
-                    callback(r);
+                    callback(request.Result);
                 }
             });
+            request.SetResult(rawResult);
 
             return request.Result;
         }

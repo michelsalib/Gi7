@@ -2,13 +2,15 @@
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using Gi7.Utils;
+using System.Collections.Generic;
 
 namespace Gi7.Service.Request.Base
 {
-    public abstract class PaginatedRequest<T> : ViewModelBase, IPaginatedRequest<T>
-        where T : new()
+    public abstract class PaginatedRequest<TSource, TDestination> : ViewModelBase, IPaginatedRequest<TSource, TDestination>
+        where TSource : class, new()
+        where TDestination : class, new()
     {
-        private BetterObservableCollection<T> _result;
+        private ObservableCollection<TDestination> _result;
         private string _uri;
 
         public PaginatedRequest()
@@ -17,7 +19,7 @@ namespace Gi7.Service.Request.Base
             HasMoreItems = true;
         }
 
-        #region IPaginatedRequest<T> Members
+        #region IPaginatedRequest<TSource, TDestination> Members
 
         public int Page { get; set; }
 
@@ -31,7 +33,7 @@ namespace Gi7.Service.Request.Base
 
         public OverrideSettings OverrideSettings { get; protected set; }
 
-        public BetterObservableCollection<T> Result
+        public ObservableCollection<TDestination> Result
         {
             get { return _result; }
             set
@@ -41,6 +43,22 @@ namespace Gi7.Service.Request.Base
                     _result = value;
                     RaisePropertyChanged("Result");
                 }
+            }
+        }
+
+        public virtual void AddResults(IEnumerable<TSource> result)
+        {
+            var cast = result as IEnumerable<TDestination>;
+            if (cast != null)
+            {
+                foreach (var item in cast)
+                {
+                    Result.Add(item);
+                }
+            }
+            else
+            {
+                throw new NotImplementedException();
             }
         }
 

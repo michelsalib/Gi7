@@ -94,7 +94,7 @@
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
     <Compile Include="Model\Extra\FeaturedRepo.cs" />
-    <Compile Include="Model\Extra\GroupPush.cs" />
+    <Compile Include="Model\Extra\PushGroup.cs" />
     <Compile Include="Model\Feed\Base\RepositoryFeed.cs" />
     <Compile Include="Model\Feed\CommitCommentFeed.cs" />
     <Compile Include="Model\Feed\DeleteFeed.cs" />
@@ -156,7 +156,6 @@
     <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
-    <Compile Include="Utils\BetterObservableCollection.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>

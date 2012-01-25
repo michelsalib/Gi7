@@ -17,22 +17,19 @@ namespace Gi7.Service.Request
 
         public override void AddResults(IEnumerable<Push> result)
         {
-            var groupedResult = result.GroupBy(i => i.Commit.Author.Date.Trunk());
+            IEnumerable<IGrouping<DateTime, Push>> groupedResult = result.GroupBy(i => i.Commit.Author.Date.Trunk());
             foreach (var group in groupedResult)
             {
-                var existingGroup = Result.FirstOrDefault(g => g.Date == group.Key);
+                PushGroup existingGroup = Result.FirstOrDefault(g => g.Date == group.Key);
                 if (existingGroup == null)
                 {
-                    existingGroup = new PushGroup()
+                    existingGroup = new PushGroup
                     {
                         Date = group.Key
                     };
                     Result.Add(existingGroup);
                 }
-                foreach (var item in group)
-                {
-                    existingGroup.Add(item);
-                }
+                existingGroup.AddRange(group);
             }
         }
     }

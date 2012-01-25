@@ -127,7 +127,6 @@ namespace Gi7.Utils
                 {
                     var repoFeed = feed as RepositoryFeed;
                     if (repoFeed != null)
-                    {
                         repoFeed.Repository = new Repository
                         {
                             Name = feedData["repository"]["name"].Value<String>(),
@@ -137,7 +136,6 @@ namespace Gi7.Utils
                                 Login = feedData["repository"]["owner"].Value<String>()
                             }
                         };
-                    }
                 } catch (Exception)
                 {
                     feed = new Feed();

@@ -12,7 +12,6 @@ using Gi7.Model.Feed.Base;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Service.Request;
-using Gi7.Service.Request.Base;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -25,10 +24,10 @@ namespace Gi7.Views
         private FollowersRequest _followersRequest;
         private FollowingsRequest _followingsRequest;
         private bool _isLoggedIn;
-        private ObservableCollection<Repository> _repos;
         private ObservableCollection<Repository> _ownedRepos;
-        private ObservableCollection<Repository> _watchedRepos;
+        private ObservableCollection<Repository> _repos;
         private User _user;
+        private ObservableCollection<Repository> _watchedRepos;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -59,23 +58,17 @@ namespace Gi7.Views
 
             // init
             if (_githubService.IsAuthenticated)
-            {
                 _login();
-            } else
-            {
+            else
                 _logout();
-            }
 
             // listenning to the github service
             githubService.IsAuthenticatedChanged += (s, e) =>
             {
                 if (e.IsAuthenticated)
-                {
                     _login();
-                } else
-                {
+                else
                     _logout();
-                }
             };
 
             // listening to view events
@@ -130,26 +123,17 @@ namespace Gi7.Views
 
         public IEnumerable<Repository> OwnedRepos
         {
-            get
-            {
-                return _ownedRepos;
-            }
+            get { return _ownedRepos; }
         }
 
         public IEnumerable<Repository> WatchedRepos
         {
-            get
-            {
-                return _watchedRepos;
-            }
+            get { return _watchedRepos; }
         }
 
         public ObservableCollection<Repository> Repos
         {
-            get
-            {
-                return _repos;
-            }
+            get { return _repos; }
             set
             {
                 if (_repos != value)
@@ -160,7 +144,7 @@ namespace Gi7.Views
                         var repositories = sender as IEnumerable<Repository>;
                         if (repositories != null && repositories.Any())
                         {
-                            foreach (var repository in repositories)
+                            foreach (Repository repository in repositories)
                                 repository.CurrentUser = _githubService.Username;
                             _ownedRepos = new ObservableCollection<Repository>(repositories.Where(r => r.IsFrom(_githubService.Username)));
                             _watchedRepos = new ObservableCollection<Repository>(repositories.Except(_ownedRepos));

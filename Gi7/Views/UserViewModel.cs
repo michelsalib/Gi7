@@ -6,11 +6,9 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Model;
-using Gi7.Model.Feed.Base;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Service.Request;
-using Gi7.Service.Request.Base;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -46,9 +44,7 @@ namespace Gi7.Views
                 {
                 case "Feed":
                     if (FeedsRequest == null)
-                    {
                         FeedsRequest = new FeedsRequest(Username);
-                    }
                     break;
                 case "Repos":
                     if (Repos == null)

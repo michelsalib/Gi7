@@ -8,6 +8,14 @@ namespace Gi7.Controls
     public class LoginPanelViewModel : ViewModelBase
     {
         private String _email;
+
+        private String _password;
+
+        public LoginPanelViewModel(GithubService githubService)
+        {
+            LoginCommand = new RelayCommand(() => { githubService.AuthenticateUser(Email, Password); });
+        }
+
         public String Email
         {
             get { return _email; }
@@ -21,7 +29,6 @@ namespace Gi7.Controls
             }
         }
 
-        private String _password;
         public String Password
         {
             get { return _password; }
@@ -36,13 +43,5 @@ namespace Gi7.Controls
         }
 
         public RelayCommand LoginCommand { get; private set; }
-
-        public LoginPanelViewModel(GithubService githubService)
-        {
-            LoginCommand = new RelayCommand(() =>
-            {
-                githubService.AuthenticateUser(Email, Password);
-            });
-        }
     }
 }

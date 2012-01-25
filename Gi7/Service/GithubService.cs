@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
-using System.Windows;
 using System.Linq;
+using System.Windows;
 using Gi7.Model;
 using Gi7.Service.Request.Base;
-using Gi7.Utils;
 using RestSharp;
 
 namespace Gi7.Service
@@ -33,8 +32,7 @@ namespace Gi7.Service
                 Username = username;
                 AuthenticateUser(email, password);
                 IsAuthenticated = true;
-            }
-            else
+            } else
             {
                 Username = "default";
                 Email = "default";
@@ -55,9 +53,7 @@ namespace Gi7.Service
                 {
                     _isAuthenticated = value;
                     if (IsAuthenticatedChanged != null)
-                    {
                         IsAuthenticatedChanged(this, new AuthenticatedEventArgs(value));
-                    }
                 }
             }
         }
@@ -118,18 +114,15 @@ namespace Gi7.Service
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Email, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            }
-            else
-            {
+            } else
                 client = _client;
-            }
 
             request.Page++;
             // if page is 1, we need to set the collection and use cache
             if (request.Page == 1)
             {
                 request.Result = new ObservableCollection<TDestination>();
-                var rawResult = client.GetList<TSource>(request.Uri, r =>
+                List<TSource> rawResult = client.GetList<TSource>(request.Uri, r =>
                 {
                     request.Result.Clear();
                     if (r.Count < 30)
@@ -143,18 +136,16 @@ namespace Gi7.Service
                 request.AddResults(rawResult);
             } // else the collection already exists and there is no cache
             else
-            {
                 client.GetList<TSource>(request.Uri, r =>
                 {
                     if (r.Count < 30)
                         request.HasMoreItems = false;
 
                     request.AddResults(r);
-                    
+
                     if (callback != null)
                         callback(request.Result.ToList());
                 });
-            }
 
             return request.Result;
         }
@@ -169,19 +160,14 @@ namespace Gi7.Service
             {
                 client = _createClient(request.OverrideSettings.BaseUri, Email, _password);
                 client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            }
-            else
-            {
+            } else
                 client = _client;
-            }
 
             var rawResult = client.Get<TSource>(request.Uri, r =>
             {
                 request.SetResult(r);
                 if (callback != null)
-                {
                     callback(request.Result);
-                }
             });
             request.SetResult(rawResult);
 

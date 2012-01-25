@@ -46,16 +46,12 @@ namespace Gi7.Views
             CommitSelectedCommand = new RelayCommand<Push>(push =>
             {
                 if (push != null)
-                {
                     navigationService.NavigateTo(String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
-                }
             });
             PullRequestSelectedCommand = new RelayCommand<PullRequest>(pullRequest =>
             {
                 if (pullRequest != null)
-                {
                     navigationService.NavigateTo(String.Format(ViewModelLocator.PullRequestUrl, Repository.Owner.Login, Repository.Name, pullRequest.Number));
-                }
             });
             IssueSelectedCommand = new RelayCommand<Issue>(issue =>
             {

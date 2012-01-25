@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using Gi7.Utils;
-using System.Collections.Generic;
 
 namespace Gi7.Service.Request.Base
 {
@@ -19,7 +19,7 @@ namespace Gi7.Service.Request.Base
             HasMoreItems = true;
         }
 
-        #region IPaginatedRequest<TSource, TDestination> Members
+        #region IPaginatedRequest<TSource,TDestination> Members
 
         public int Page { get; set; }
 
@@ -50,16 +50,9 @@ namespace Gi7.Service.Request.Base
         {
             var cast = result as IEnumerable<TDestination>;
             if (cast != null)
-            {
-                foreach (var item in cast)
-                {
-                    Result.Add(item);
-                }
-            }
+                Result.AddRange(cast);
             else
-            {
                 throw new NotImplementedException();
-            }
         }
 
         #endregion

@@ -116,7 +116,7 @@ namespace Gi7.Service
                     return new IssueViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
             }
         }
-            
+
         public Object AboutViewModel
         {
             get

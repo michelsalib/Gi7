@@ -42,9 +42,7 @@ namespace Gi7.Service
                 var cache = CacheProvider.Get<T>(uri);
                 result = cache != null ? cache : new T();
             } else
-            {
                 result = new T();
-            }
 
             var restRequest = new RestRequest(uri);
             ExecuteAsync<T>(restRequest, r =>
@@ -70,16 +68,12 @@ namespace Gi7.Service
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     if (Unauthorized != null)
-                    {
                         Unauthorized(this, new EventArgs());
-                    }
                     GlobalLoading.Instance.IsLoading = false;
                 } else if (r.ResponseStatus == ResponseStatus.Error)
                 {
                     if (ConnectionError != null)
-                    {
                         ConnectionError(this, new EventArgs());
-                    }
                     GlobalLoading.Instance.IsLoading = false;
                 } else
                     callback(r);

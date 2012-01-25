@@ -15,48 +15,48 @@
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=UserViewModel, Source={StaticResource ViewModelLocator}}">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <!--Pivot Control-->
-        <controls:Pivot Title="{Binding Username}">
-            <Interactivity:Interaction.Triggers>
-                <Interactivity:EventTrigger EventName="SelectionChanged">
-                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
-                </Interactivity:EventTrigger>
-            </Interactivity:Interaction.Triggers>
+  <!--LayoutRoot is the root grid where all page content is placed-->
+  <Grid x:Name="LayoutRoot" Background="Transparent">
+    <!--Pivot Control-->
+    <controls:Pivot Title="{Binding Username}">
+      <Interactivity:Interaction.Triggers>
+        <Interactivity:EventTrigger EventName="SelectionChanged">
+          <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+        </Interactivity:EventTrigger>
+      </Interactivity:Interaction.Triggers>
 
-            <controls:PivotItem Header="Feed">
-                <localControls:FeedsPanel />
-            </controls:PivotItem>
+      <controls:PivotItem Header="Feed">
+        <localControls:FeedsPanel />
+      </controls:PivotItem>
 
-            <controls:PivotItem Header="Details">
-                <localControls:ProfilePanel />
-            </controls:PivotItem>
+      <controls:PivotItem Header="Details">
+        <localControls:ProfilePanel />
+      </controls:PivotItem>
 
-            <controls:PivotItem Header="Repos">
-                <localControls:RepositoryPanel />
-            </controls:PivotItem>
+      <controls:PivotItem Header="Repos">
+        <localControls:RepositoryPanel />
+      </controls:PivotItem>
 
-            <controls:PivotItem Header="Following">
-                <lists:UserListBox Request="{Binding FollowingsRequest}">
-                    <lists:UserListBox.ItemTemplate>
-                        <DataTemplate>
-                            <localControls:UserTemplate />
-                        </DataTemplate>
-                    </lists:UserListBox.ItemTemplate>
-                </lists:UserListBox>
-            </controls:PivotItem>
+      <controls:PivotItem Header="Following">
+        <lists:UserListBox Request="{Binding FollowingsRequest}">
+          <lists:UserListBox.ItemTemplate>
+            <DataTemplate>
+              <localControls:UserTemplate />
+            </DataTemplate>
+          </lists:UserListBox.ItemTemplate>
+        </lists:UserListBox>
+      </controls:PivotItem>
 
-            <controls:PivotItem Header="Follower">
-                <lists:UserListBox Request="{Binding FollowersRequest}">
-                    <lists:UserListBox.ItemTemplate>
-                        <DataTemplate>
-                            <localControls:UserTemplate />
-                        </DataTemplate>
-                    </lists:UserListBox.ItemTemplate>
-                </lists:UserListBox>
-            </controls:PivotItem>
-        </controls:Pivot>
-    </Grid>
+      <controls:PivotItem Header="Follower">
+        <lists:UserListBox Request="{Binding FollowersRequest}">
+          <lists:UserListBox.ItemTemplate>
+            <DataTemplate>
+              <localControls:UserTemplate />
+            </DataTemplate>
+          </lists:UserListBox.ItemTemplate>
+        </lists:UserListBox>
+      </controls:PivotItem>
+    </controls:Pivot>
+  </Grid>
 
 </phone:PhoneApplicationPage>

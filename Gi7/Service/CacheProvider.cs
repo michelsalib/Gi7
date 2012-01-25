@@ -38,19 +38,14 @@ namespace Gi7.Service
             try
             {
                 using (IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
                     if (store.FileExists(file))
-                    {
                         using (IsolatedStorageFileStream stream = store.OpenFile(file, FileMode.Open))
                         {
                             var serializer = new XmlSerializer(typeof (T));
                             return (T) serializer.Deserialize(stream);
                         }
-                    } else
-                    {
+                    else
                         return default(T);
-                    }
-                }
             } catch (Exception)
             {
                 return default(T);
@@ -60,17 +55,13 @@ namespace Gi7.Service
         public void Clear()
         {
             foreach (string file in IsolatedStorageFile.GetUserStoreForApplication().GetFileNames(_path + "*"))
-            {
                 IsolatedStorageFile.GetUserStoreForApplication().DeleteFile(_path + file);
-            }
 
             try
             {
                 if (IsolatedStorageFile.GetUserStoreForApplication().DirectoryExists(_path))
                     IsolatedStorageFile.GetUserStoreForApplication().DeleteDirectory(_path);
-            } catch (Exception)
-            {
-            }
+            } catch (Exception) {}
         }
 
         private String CleanFilePath(String key)

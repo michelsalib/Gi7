@@ -15,65 +15,65 @@
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=PullRequestViewModel, Source={StaticResource ViewModelLocator}}">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+  <!--LayoutRoot is the root grid where all page content is placed-->
+  <Grid x:Name="LayoutRoot" Background="Transparent">
 
-        <controls:Pivot Title="{Binding RepoName}">
-            <Interactivity:Interaction.Triggers>
-                <Interactivity:EventTrigger EventName="SelectionChanged">
-                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
-                </Interactivity:EventTrigger>
-            </Interactivity:Interaction.Triggers>
+    <controls:Pivot Title="{Binding RepoName}">
+      <Interactivity:Interaction.Triggers>
+        <Interactivity:EventTrigger EventName="SelectionChanged">
+          <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+        </Interactivity:EventTrigger>
+      </Interactivity:Interaction.Triggers>
 
-            <controls:PivotItem Header="Pull Request">
-                <ScrollViewer Grid.Row="1">
-                    <StackPanel>
-                        <Grid>
-                            <Image Source="{Binding PullRequest.User.AvatarUrl}" Width="75" Height="75"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
-                            <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
-                                       VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                            <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right"
-                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                            <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0"
-                                         TextWrapping="Wrap">
-                                <Paragraph>
-                                    <Run Text="{Binding PullRequest.State}" />
-                                    <Run Text=" with " />
-                                    <Run Text="{Binding PullRequest.Additions}" FontWeight="Bold" Foreground="Green" />
-                                    <Run Text=" addition(s) and " />
-                                    <Run Text="{Binding PullRequest.Deletions}" FontWeight="Bold" Foreground="Red" />
-                                    <Run Text=" deletion(s) over " />
-                                    <Run Text="{Binding PullRequest.Commits}" FontWeight="Bold" />
-                                    <Run Text=" commit(s)" />
-                                </Paragraph>
-                            </RichTextBox>
-                        </Grid>
-                        <TextBlock Text="{Binding PullRequest.Body}" TextWrapping="Wrap" />
-                    </StackPanel>
-                </ScrollViewer>
-            </controls:PivotItem>
+      <controls:PivotItem Header="Pull Request">
+        <ScrollViewer Grid.Row="1">
+          <StackPanel>
+            <Grid>
+              <Image Source="{Binding PullRequest.User.AvatarUrl}" Width="75" Height="75"
+                     HorizontalAlignment="Left" VerticalAlignment="Top" />
+              <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
+                         VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+              <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right"
+                         VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+              <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0"
+                           TextWrapping="Wrap">
+                <Paragraph>
+                  <Run Text="{Binding PullRequest.State}" />
+                  <Run Text=" with " />
+                  <Run Text="{Binding PullRequest.Additions}" FontWeight="Bold" Foreground="Green" />
+                  <Run Text=" addition(s) and " />
+                  <Run Text="{Binding PullRequest.Deletions}" FontWeight="Bold" Foreground="Red" />
+                  <Run Text=" deletion(s) over " />
+                  <Run Text="{Binding PullRequest.Commits}" FontWeight="Bold" />
+                  <Run Text=" commit(s)" />
+                </Paragraph>
+              </RichTextBox>
+            </Grid>
+            <TextBlock Text="{Binding PullRequest.Body}" TextWrapping="Wrap" />
+          </StackPanel>
+        </ScrollViewer>
+      </controls:PivotItem>
 
-            <controls:PivotItem Header="Comments">
-                <paginated:CommentListBox Request="{Binding CommentsRequest}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Width="440">
-                                <Image Source="{Binding User.AvatarUrl}" Width="75" Height="75"
-                                       HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
-                                           VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                <TextBlock
+      <controls:PivotItem Header="Comments">
+        <paginated:CommentListBox Request="{Binding CommentsRequest}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid Width="440">
+                <Image Source="{Binding User.AvatarUrl}" Width="75" Height="75"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
+                           VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                <TextBlock
 Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
 HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                                <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                           Margin="80,25,0,0" TextWrapping="Wrap" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </paginated:CommentListBox>
-            </controls:PivotItem>
-        </controls:Pivot>
-    </Grid>
+                <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                           Margin="80,25,0,0" TextWrapping="Wrap" />
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </paginated:CommentListBox>
+      </controls:PivotItem>
+    </controls:Pivot>
+  </Grid>
 
 </phone:PhoneApplicationPage>

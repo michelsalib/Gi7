@@ -11,21 +11,19 @@ namespace Gi7.Service.Request.Base
         where TDestination : class, new()
     {
         private ObservableCollection<TDestination> _result;
-        private string _uri;
+        protected string _uri;
 
         public PaginatedRequest()
         {
-            Page = 0;
+            Page = 1;
             HasMoreItems = true;
         }
-
-        #region IPaginatedRequest<TSource,TDestination> Members
 
         public int Page { get; set; }
 
         public bool HasMoreItems { get; set; }
 
-        public string Uri
+        public virtual string Uri
         {
             get { return String.Format("{0}?page={1}", _uri, Page); }
             protected set { _uri = value; }
@@ -55,6 +53,9 @@ namespace Gi7.Service.Request.Base
                 throw new NotImplementedException();
         }
 
-        #endregion
+        public virtual void MoveToNextPage()
+        {
+            Page++;
+        }
     }
 }

@@ -117,7 +117,6 @@ namespace Gi7.Service
             } else
                 client = _client;
 
-            request.Page++;
             // if page is 1, we need to set the collection and use cache
             if (request.Page == 1)
             {
@@ -129,6 +128,7 @@ namespace Gi7.Service
                         request.HasMoreItems = false;
 
                     request.AddResults(r);
+                    request.MoveToNextPage();
 
                     if (callback != null)
                         callback(request.Result.ToList());
@@ -142,6 +142,7 @@ namespace Gi7.Service
                         request.HasMoreItems = false;
 
                     request.AddResults(r);
+                    request.MoveToNextPage();
 
                     if (callback != null)
                         callback(request.Result.ToList());

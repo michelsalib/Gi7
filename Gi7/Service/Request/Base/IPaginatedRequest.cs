@@ -12,6 +12,9 @@ namespace Gi7.Service.Request.Base
         bool HasMoreItems { get; set; }
 
         ObservableCollection<TDestination> Result { get; set; }
+
         void AddResults(IEnumerable<TSource> result);
+        
+        void MoveToNextPage();
     }
 }

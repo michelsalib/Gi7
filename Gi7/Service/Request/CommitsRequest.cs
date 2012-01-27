@@ -32,5 +32,21 @@ namespace Gi7.Service.Request
                 existingGroup.AddRange(group);
             }
         }
+
+        public override string Uri
+        {
+            get {
+                var lastGroup = Result.LastOrDefault();
+                if (lastGroup != null)
+                {
+                    return String.Format("{0}?last_sha={1}", _uri, lastGroup.Last().Sha);
+                }
+                else
+                {
+                    return _uri;
+                }
+            }
+            protected set { base.Uri = value; }
+        }
     }
 }

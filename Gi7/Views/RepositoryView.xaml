@@ -24,7 +24,7 @@
           <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
         </Interactivity:EventTrigger>
       </Interactivity:Interaction.Triggers>
-			
+            
       <!--Pivot item one-->
       <controls:PivotItem Header="Details">
         <StackPanel>
@@ -79,7 +79,7 @@
         <paginated:CommitListBox Request="{Binding CommitsRequest}" x:Name="CommitsList" VerticalAlignment="Top">
           <ListBox.ItemTemplate>
             <DataTemplate>
-              <StackPanel d:DesignWidth="480">
+                <StackPanel d:DesignWidth="480">
                 <Border Background="{StaticResource PhoneAccentBrush}" Height="50" Padding="3">
                   <TextBlock Text="{Binding Path=Date, StringFormat='\{0:D\}'}" FontWeight="Bold"
                              Foreground="White" />
@@ -88,33 +88,29 @@
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                   <ListBox.ItemTemplate>
                     <DataTemplate>
-                      <Grid Width="450" MaxHeight="80">
-                        <Grid.RowDefinitions>
-                          <RowDefinition Height="Auto" />
-                          <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="Auto" />
-                          <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Author.AvatarUrl}" Height="80" Grid.RowSpan="2"
-                               Margin="0,0,5,0" VerticalAlignment="Top" />
-                        <TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1"
-                                   d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
-                        <TextBlock
-Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
-Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667"
-VerticalAlignment="Bottom" />
-                        <TextBlock
-Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
-TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
-                      </Grid>
-                      <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                          <Command:EventToCommand
-Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
-                        </Interactivity:EventTrigger>
-                      </Interactivity:Interaction.Triggers>
+                        <Grid Width="450" MaxHeight="80">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Author.AvatarUrl}" Height="80" Grid.RowSpan="2"
+                                    Margin="0,0,5,0" VerticalAlignment="Top" />
+                            <TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1"
+                                        d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
+                                        Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
+                                       TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
+                            <Interactivity:Interaction.Triggers>
+                                <Interactivity:EventTrigger EventName="Tap">
+                                    <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
+                                </Interactivity:EventTrigger>
+                            </Interactivity:Interaction.Triggers>
+                        </Grid>
                     </DataTemplate>
                   </ListBox.ItemTemplate>
                 </ListBox>

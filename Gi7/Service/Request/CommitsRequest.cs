@@ -10,17 +10,20 @@ namespace Gi7.Service.Request
 {
     public class CommitsRequest : PaginatedRequest<Push, PushGroup>
     {
-        public CommitsRequest(string username, string repo)
+        private readonly string branch;
+
+        public CommitsRequest(string username, string repo, string branch = "master")
         {
-            Uri = String.Format("/repos/{0}/{1}/commits", username, repo);
+            this.branch = branch;
+            Uri = String.Format("/repos/{0}/{1}/commits?sha={2}", username, repo, branch);
         }
 
         public override void AddResults(IEnumerable<Push> result)
         {
-            IEnumerable<IGrouping<DateTime, Push>> groupedResult = result.GroupBy(i => i.Commit.Author.Date.Trunk());
+            var groupedResult = result.GroupBy(i => i.Commit.Author.Date.Trunk());
             foreach (var group in groupedResult)
             {
-                PushGroup existingGroup = Result.FirstOrDefault(g => g.Date == group.Key);
+                var existingGroup = Result.FirstOrDefault(g => g.Date == group.Key);
                 if (existingGroup == null)
                 {
                     existingGroup = new PushGroup
@@ -37,14 +40,9 @@ namespace Gi7.Service.Request
         {
             get {
                 var lastGroup = Result.LastOrDefault();
-                if (lastGroup != null)
-                {
-                    return String.Format("{0}?last_sha={1}", _uri, lastGroup.Last().Sha);
-                }
-                else
-                {
-                    return _uri;
-                }
+                return lastGroup != null ?
+                    String.Format("{0}?last_sha={1}&sha={2}", _uri, lastGroup.Last().Sha, branch) : 
+                    _uri;
             }
             protected set { base.Uri = value; }
         }

@@ -54,6 +54,7 @@
     <Reference Include="GalaSoft.MvvmLight.WP71, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\MVVMLightToolkit\GalaSoft.MvvmLight.WP71.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
@@ -85,11 +86,15 @@
     </Compile>
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\BranchesListPicker.cs" />
+    <Compile Include="Controls\PaginatedListBox\PaginatedListPicker.cs" />
     <Compile Include="Controls\PaginatedListBox\UserListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\FeedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
+    <Compile Include="Model\Branch.cs" />
+    <Compile Include="Model\BranchCommit.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
@@ -126,6 +131,7 @@
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\Request\Base\ISingleRequest.cs" />
     <Compile Include="Service\Request\Base\IRequest.cs" />
+    <Compile Include="Service\Request\BranchesRequest.cs" />
     <Compile Include="Service\Request\CommitsRequest.cs" />
     <Compile Include="Service\Request\CommitRequest.cs" />
     <Compile Include="Service\Request\CommitCommentsRequest.cs" />

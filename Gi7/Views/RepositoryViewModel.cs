@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -13,34 +14,49 @@ namespace Gi7.Views
     public class RepositoryViewModel : ViewModelBase
     {
         private CommitsRequest _commitsRequest;
+        private BranchesRequest _branchesRequest;
         private IssuesRequest _issuesRequest;
         private PullRequestsRequest _pullRequestsRequest;
         private Repository _repository;
+        private string branch;
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
+            branch = "master";
             Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
+
+            if (BranchesRequest == null)
+                BranchesRequest = new BranchesRequest(user, repo);
+
+            BranchChangedCommand = new RelayCommand<ListPicker>(e =>
+            {
+                if (e != null)
+                {
+                    if (e.SelectedItem != null)
+                        branch = ((Branch) e.SelectedItem).Name;
+                    CommitsRequest = null;
+                }
+            });
+
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
                 var header = (args.AddedItems[0] as PivotItem).Header as String;
                 switch (header)
                 {
-                case "Commits":
-                    if (CommitsRequest == null)
-                        CommitsRequest = new CommitsRequest(user, repo);
-                    break;
-                case "Pull requests":
-                    if (PullRequestsRequest == null)
-                        PullRequestsRequest = new PullRequestsRequest(user, repo);
-                    break;
-                case "Issues":
-                    if (IssuesRequest == null)
-                        IssuesRequest = new IssuesRequest(user, repo);
-                    break;
-                default:
-                    break;
+                    case "Commits":
+                        if (CommitsRequest == null)
+                            CommitsRequest = new CommitsRequest(user, repo, branch);
+                        break;
+                    case "Pull requests":
+                        if (PullRequestsRequest == null)
+                            PullRequestsRequest = new PullRequestsRequest(user, repo);
+                        break;
+                    case "Issues":
+                        if (IssuesRequest == null)
+                            IssuesRequest = new IssuesRequest(user, repo);
+                        break;
                 }
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>
@@ -57,7 +73,7 @@ namespace Gi7.Views
             {
                 if (issue != null)
                 {
-                    string destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
+                    var destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
@@ -85,6 +101,19 @@ namespace Gi7.Views
                 {
                     _commitsRequest = value;
                     RaisePropertyChanged("CommitsRequest");
+                }
+            }
+        }
+
+        public BranchesRequest BranchesRequest
+        {
+            get { return _branchesRequest; }
+            set
+            {
+                if (_branchesRequest != value)
+                {
+                    _branchesRequest = value;
+                    RaisePropertyChanged("BranchesRequest");
                 }
             }
         }
@@ -117,6 +146,7 @@ namespace Gi7.Views
 
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
         public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
         public RelayCommand<Issue> IssueSelectedCommand { get; private set; }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,21 +6,22 @@ using System.Windows.Data;
 using System.Windows.Media;
 using Gi7.Service;
 using Gi7.Service.Request.Base;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class PaginatedListBox<TSource, TDestination> : ListBox
+    public class PaginatedListPicker<TSource, TDestination> : ListPicker
         where TSource : class, new()
         where TDestination : class, new()
     {
         public static readonly DependencyProperty RequestProperty =
-            DependencyProperty.Register("Request", typeof (IPaginatedRequest<TSource, TDestination>), typeof (PaginatedListBox<TSource, TDestination>), new PropertyMetadata(_newRequest));
+            DependencyProperty.Register("Request", typeof(IPaginatedRequest<TSource, TDestination>), typeof(PaginatedListPicker<TSource, TDestination>), new PropertyMetadata(_newRequest));
 
         protected bool Loading;
 
         private bool _alreadyHookedScrollEvents;
 
-        public PaginatedListBox()
+        public PaginatedListPicker()
         {
             Loaded += (s, e) =>
             {
@@ -58,7 +59,7 @@ namespace Gi7.Controls.PaginatedListBox
 
         private static void _newRequest(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var listBox = (PaginatedListBox<TSource, TDestination>) d;
+            var listBox = (PaginatedListPicker<TSource, TDestination>)d;
             listBox.SetBinding(ItemsSourceProperty, new Binding("Request.Result") {RelativeSource = new RelativeSource(RelativeSourceMode.Self)});
             listBox._load();
         }

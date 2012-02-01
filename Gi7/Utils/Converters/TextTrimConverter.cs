@@ -10,11 +10,9 @@ namespace Gi7.Utils.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var b = value as string;
+            var b = (string)value;
 
-            if (b != null && b.Length > 65)
-                return b.Substring(0, 65).Insert(65, "...").Replace("\n", ". ");
-            return value;
+            return b.Substring(0, Math.Min(b.Length, 65)).Replace("\n", ". ");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -12,16 +12,33 @@ namespace Gi7.Views
 {
     public class RepositoryViewModel : ViewModelBase
     {
+        private BranchesRequest _branchesRequest;
         private CommitsRequest _commitsRequest;
         private IssuesRequest _issuesRequest;
         private PullRequestsRequest _pullRequestsRequest;
         private Repository _repository;
+        private string branch;
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
+            branch = "master";
             Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
+
+            if (BranchesRequest == null)
+                BranchesRequest = new BranchesRequest(user, repo);
+
+            BranchChangedCommand = new RelayCommand<ListPicker>(e =>
+            {
+                if (e != null)
+                {
+                    if (e.SelectedItem != null)
+                        branch = ((Branch) e.SelectedItem).Name;
+                    CommitsRequest = null;
+                }
+            });
+
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
                 var header = (args.AddedItems[0] as PivotItem).Header as String;
@@ -29,7 +46,7 @@ namespace Gi7.Views
                 {
                 case "Commits":
                     if (CommitsRequest == null)
-                        CommitsRequest = new CommitsRequest(user, repo);
+                        CommitsRequest = new CommitsRequest(user, repo, branch);
                     break;
                 case "Pull requests":
                     if (PullRequestsRequest == null)
@@ -38,8 +55,6 @@ namespace Gi7.Views
                 case "Issues":
                     if (IssuesRequest == null)
                         IssuesRequest = new IssuesRequest(user, repo);
-                    break;
-                default:
                     break;
                 }
             });
@@ -89,6 +104,19 @@ namespace Gi7.Views
             }
         }
 
+        public BranchesRequest BranchesRequest
+        {
+            get { return _branchesRequest; }
+            set
+            {
+                if (_branchesRequest != value)
+                {
+                    _branchesRequest = value;
+                    RaisePropertyChanged("BranchesRequest");
+                }
+            }
+        }
+
         public PullRequestsRequest PullRequestsRequest
         {
             get { return _pullRequestsRequest; }
@@ -117,6 +145,7 @@ namespace Gi7.Views
 
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
         public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
         public RelayCommand<Issue> IssueSelectedCommand { get; private set; }

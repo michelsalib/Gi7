@@ -83,13 +83,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PaginatedListBox\BranchesListPicker.cs" />
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\PaginatedListPicker.cs" />
     <Compile Include="Controls\PaginatedListBox\UserListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\FeedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
+    <Compile Include="Model\Branch.cs" />
+    <Compile Include="Model\BranchCommit.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\Request\Base\ISingleRequest.cs" />
     <Compile Include="Service\Request\Base\IRequest.cs" />
+    <Compile Include="Service\Request\BranchesRequest.cs" />
     <Compile Include="Service\Request\CommitsRequest.cs" />
     <Compile Include="Service\Request\CommitRequest.cs" />
     <Compile Include="Service\Request\CommitCommentsRequest.cs" />
@@ -284,6 +289,9 @@
     <Resource Include="Images\follow.png" />
     <Resource Include="Images\fork.png" />
     <Content Include="SplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

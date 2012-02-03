@@ -84,6 +84,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PaginatedListBox\BranchesListPicker.cs" />
+    <Compile Include="Model\Collaborator.cs" />
+    <Compile Include="Controls\PaginatedListBox\CollaboratosListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListPicker.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
+    <Compile Include="Model\BoolModel.cs" />
     <Compile Include="Model\Branch.cs" />
     <Compile Include="Model\BranchCommit.cs" />
     <Compile Include="Model\Comment.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="Service\Request\Base\ISingleRequest.cs" />
     <Compile Include="Service\Request\Base\IRequest.cs" />
     <Compile Include="Service\Request\BranchesRequest.cs" />
+    <Compile Include="Service\Request\CollaboratorRequest.cs" />
     <Compile Include="Service\Request\CommitsRequest.cs" />
     <Compile Include="Service\Request\CommitRequest.cs" />
     <Compile Include="Service\Request\CommitCommentsRequest.cs" />

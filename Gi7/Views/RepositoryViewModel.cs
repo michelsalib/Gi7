@@ -14,6 +14,7 @@ namespace Gi7.Views
     {
         private BranchesRequest _branchesRequest;
         private CommitsRequest _commitsRequest;
+        private CollaboratorRequest _collaboratorRequest;
         private IssuesRequest _issuesRequest;
         private PullRequestsRequest _pullRequestsRequest;
         private Repository _repository;
@@ -34,28 +35,32 @@ namespace Gi7.Views
                 if (e != null)
                 {
                     if (e.SelectedItem != null)
-                        branch = ((Branch) e.SelectedItem).Name;
+                        branch = ((Branch)e.SelectedItem).Name;
                     CommitsRequest = null;
                 }
             });
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                var header = ((PivotItem) args.AddedItems[0]).Header as String;
+                var header = ((PivotItem)args.AddedItems[0]).Header as String;
                 switch (header)
                 {
-                case "Commits":
-                    if (CommitsRequest == null)
-                        CommitsRequest = new CommitsRequest(user, repo, branch);
-                    break;
-                case "Pull requests":
-                    if (PullRequestsRequest == null)
-                        PullRequestsRequest = new PullRequestsRequest(user, repo);
-                    break;
-                case "Issues":
-                    if (IssuesRequest == null)
-                        IssuesRequest = new IssuesRequest(user, repo);
-                    break;
+                    case "Commits":
+                        if (CommitsRequest == null)
+                            CommitsRequest = new CommitsRequest(user, repo, branch);
+                        break;
+                    case "Pull requests":
+                        if (PullRequestsRequest == null)
+                            PullRequestsRequest = new PullRequestsRequest(user, repo);
+                        break;
+                    case "Issues":
+                        if (IssuesRequest == null)
+                            IssuesRequest = new IssuesRequest(user, repo);
+                        break;
+                    case "Collaborators":
+                        if (CollaboratorRequest == null)
+                            CollaboratorRequest = new CollaboratorRequest(user, repo);
+                        break;
                 }
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>
@@ -113,6 +118,19 @@ namespace Gi7.Views
                 {
                     _branchesRequest = value;
                     RaisePropertyChanged("BranchesRequest");
+                }
+            }
+        }
+
+        public CollaboratorRequest CollaboratorRequest
+        {
+            get { return _collaboratorRequest; }
+            set
+            {
+                if (_collaboratorRequest != value)
+                {
+                    _collaboratorRequest = value;
+                    RaisePropertyChanged("CollaboratorRequest");
                 }
             }
         }

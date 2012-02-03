@@ -209,6 +209,21 @@ Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" C
                     </ListBox.ItemTemplate>
                 </paginated:IssueListBox>
             </controls:PivotItem>
+
+            <controls:PivotItem Header="Collaborators">
+                <paginated:CollaboratosListBox Request="{Binding CollaboratorRequest}" x:Name="CollaboratorList">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <toolkit:HubTile Title="{Binding Login}" Message="{Binding Login}" Source="{Binding AvatarUrl}" Margin="3"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </paginated:CollaboratosListBox>
+            </controls:PivotItem>
         </controls:Pivot>
     </Grid>
 

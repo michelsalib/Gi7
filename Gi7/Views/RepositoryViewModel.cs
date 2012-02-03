@@ -41,7 +41,7 @@ namespace Gi7.Views
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                var header = ((PivotItem) args.AddedItems[0]).Header as String;
                 switch (header)
                 {
                 case "Commits":
@@ -60,19 +60,19 @@ namespace Gi7.Views
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>
             {
-                if (push != null)
+                if (push)
                     navigationService.NavigateTo(String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
             });
             PullRequestSelectedCommand = new RelayCommand<PullRequest>(pullRequest =>
             {
-                if (pullRequest != null)
+                if (pullRequest)
                     navigationService.NavigateTo(String.Format(ViewModelLocator.PullRequestUrl, Repository.Owner.Login, Repository.Name, pullRequest.Number));
             });
             IssueSelectedCommand = new RelayCommand<Issue>(issue =>
             {
-                if (issue != null)
+                if (issue)
                 {
-                    string destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
+                    var destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });

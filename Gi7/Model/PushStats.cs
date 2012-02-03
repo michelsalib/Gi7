@@ -1,6 +1,6 @@
 ﻿namespace Gi7.Model
 {
-    public class PushStats
+    public class PushStats : BoolModel
     {
         public int Additions { get; set; }
 

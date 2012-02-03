@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gi7.Model
 {
-    public class Push
+    public class Push : BoolModel
     {
         public String Url { get; set; }
 

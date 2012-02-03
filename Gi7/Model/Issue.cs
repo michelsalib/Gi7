@@ -2,7 +2,7 @@
 
 namespace Gi7.Model
 {
-    public class Issue
+    public class Issue : BoolModel
     {
         public PullRequest PullRequest { get; set; }
 

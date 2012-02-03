@@ -2,7 +2,7 @@
 
 namespace Gi7.Model
 {
-    public class Commit
+    public class Commit : BoolModel
     {
         public String Url { get; set; }
 

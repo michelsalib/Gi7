@@ -2,7 +2,7 @@
 
 namespace Gi7.Model
 {
-    public class Committer
+    public class Committer : BoolModel
     {
         public DateTime Date { get; set; }
 

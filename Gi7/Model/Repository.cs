@@ -2,7 +2,7 @@
 
 namespace Gi7.Model
 {
-    public class Repository
+    public class Repository : BoolModel
     {
         public Repository()
         {

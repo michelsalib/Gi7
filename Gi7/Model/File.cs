@@ -2,7 +2,7 @@
 
 namespace Gi7.Model
 {
-    public class File
+    public class File : BoolModel
     {
         public String Status { get; set; }
 

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Gi7.Model
 {
-    public class User
+    public class User : BoolModel
     {
         private String _avatarUrl;
         public String Login { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Gi7.Model
 {
-    public class Comment
+    public class Comment : BoolModel
     {
         public int Id { get; set; }
 

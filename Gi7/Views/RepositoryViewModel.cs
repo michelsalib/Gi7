@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -81,6 +83,7 @@ namespace Gi7.Views
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
+            CollaboratosCommand = new RelayCommand<Collaborator>(collaborator => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, collaborator.Login)));
         }
 
         public Repository Repository
@@ -164,6 +167,7 @@ namespace Gi7.Views
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
+        public RelayCommand<Collaborator> CollaboratosCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
         public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
         public RelayCommand<Issue> IssueSelectedCommand { get; private set; }

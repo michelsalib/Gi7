@@ -212,6 +212,11 @@ Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" C
 
             <controls:PivotItem Header="Collaborators">
                 <paginated:CollaboratosListBox Request="{Binding CollaboratorRequest}" x:Name="CollaboratorList">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding CollaboratosCommand}" CommandParameter="{Binding ElementName=CollaboratorList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel Orientation="Horizontal" />

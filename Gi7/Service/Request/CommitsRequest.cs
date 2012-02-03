@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Gi7.Model;
 using Gi7.Model.Extra;
 using Gi7.Service.Request.Base;
@@ -15,7 +16,7 @@ namespace Gi7.Service.Request
         public CommitsRequest(string username, string repo, string branch)
         {
             this.branch = branch;
-            Uri = String.Format("/repos/{0}/{1}/commits?sha={2}", username, repo, branch);
+            Uri = String.Format("/repos/{0}/{1}/commits?top={2}&sha={2}", username, repo, branch);
         }
 
         public override void AddResults(IEnumerable<Push> result)
@@ -37,8 +38,14 @@ namespace Gi7.Service.Request
         {
             get
             {
-                var lastGroup = Result.LastOrDefault();
-                return lastGroup != null ? String.Format("{0}?last_sha={1}&sha={2}", _uri, lastGroup.Last().Sha, branch) : _uri;
+                PushGroup lastGroup;
+                if (lastGroup = Result.LastOrDefault())
+                {
+                    const string format = "{0}&last_sha={1}";
+                    var url = string.Format(format, _uri, lastGroup.Last().Sha);
+                    return Regex.Replace(url, @"top=.+&sha=+.&", string.Format("top={0}&sha={0}&", branch));
+                }
+                return _uri;
             }
             protected set { base.Uri = value; }
         }

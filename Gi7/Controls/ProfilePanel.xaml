@@ -19,7 +19,7 @@
           <ColumnDefinition Width="Auto" MinWidth="150" />
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image Source="{Binding Path=User.AvatarUrl}" Grid.RowSpan="4" Stretch="None" />
+        <Image Source="{Binding Path=User.AvatarUrl}" Grid.RowSpan="4" />
         <Grid Grid.Column="1">
           <TextBlock Text="Login:" d:LayoutOverrides="Height" VerticalAlignment="Center" Margin="5,0,0,0" />
           <TextBlock Text="{Binding User.Login}" FontSize="21.333" Grid.Column="1" TextAlignment="Right"

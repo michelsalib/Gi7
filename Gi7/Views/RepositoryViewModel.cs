@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -15,8 +13,8 @@ namespace Gi7.Views
     public class RepositoryViewModel : ViewModelBase
     {
         private BranchesRequest _branchesRequest;
-        private CommitsRequest _commitsRequest;
         private CollaboratorRequest _collaboratorRequest;
+        private CommitsRequest _commitsRequest;
         private IssuesRequest _issuesRequest;
         private PullRequestsRequest _pullRequestsRequest;
         private Repository _repository;
@@ -37,32 +35,32 @@ namespace Gi7.Views
                 if (e != null)
                 {
                     if (e.SelectedItem != null)
-                        branch = ((Branch)e.SelectedItem).Name;
+                        branch = ((Branch) e.SelectedItem).Name;
                     CommitsRequest = null;
                 }
             });
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                var header = ((PivotItem)args.AddedItems[0]).Header as String;
+                var header = ((PivotItem) args.AddedItems[0]).Header as String;
                 switch (header)
                 {
-                    case "Commits":
-                        if (CommitsRequest == null)
-                            CommitsRequest = new CommitsRequest(user, repo, branch);
-                        break;
-                    case "Pull requests":
-                        if (PullRequestsRequest == null)
-                            PullRequestsRequest = new PullRequestsRequest(user, repo);
-                        break;
-                    case "Issues":
-                        if (IssuesRequest == null)
-                            IssuesRequest = new IssuesRequest(user, repo);
-                        break;
-                    case "Collaborators":
-                        if (CollaboratorRequest == null)
-                            CollaboratorRequest = new CollaboratorRequest(user, repo);
-                        break;
+                case "Commits":
+                    if (CommitsRequest == null)
+                        CommitsRequest = new CommitsRequest(user, repo, branch);
+                    break;
+                case "Pull requests":
+                    if (PullRequestsRequest == null)
+                        PullRequestsRequest = new PullRequestsRequest(user, repo);
+                    break;
+                case "Issues":
+                    if (IssuesRequest == null)
+                        IssuesRequest = new IssuesRequest(user, repo);
+                    break;
+                case "Collaborators":
+                    if (CollaboratorRequest == null)
+                        CollaboratorRequest = new CollaboratorRequest(user, repo);
+                    break;
                 }
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>
@@ -79,7 +77,7 @@ namespace Gi7.Views
             {
                 if (issue)
                 {
-                    var destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
+                    string destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });

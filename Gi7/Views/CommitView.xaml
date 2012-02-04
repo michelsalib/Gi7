@@ -11,20 +11,17 @@
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox" FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=CommitViewModel, Source={StaticResource ViewModelLocator}}">
-
   <!--LayoutRoot is the root grid where all page content is placed-->
   <Grid x:Name="LayoutRoot" Background="Transparent">
-
     <controls:Pivot Title="{Binding RepoName}">
       <Interactivity:Interaction.Triggers>
         <Interactivity:EventTrigger EventName="SelectionChanged">
           <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
         </Interactivity:EventTrigger>
       </Interactivity:Interaction.Triggers>
-
       <controls:PivotItem Header="Commit">
         <ScrollViewer Grid.Row="1">
           <StackPanel>
@@ -64,7 +61,6 @@
           </StackPanel>
         </ScrollViewer>
       </controls:PivotItem>
-
       <controls:PivotItem Header="Comments">
         <paginated:CommentListBox Request="{Binding CommentsRequest}">
           <ListBox.ItemTemplate>
@@ -86,5 +82,4 @@ HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foregroun
       </controls:PivotItem>
     </controls:Pivot>
   </Grid>
-
 </phone:PhoneApplicationPage>

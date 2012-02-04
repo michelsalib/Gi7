@@ -25,6 +25,8 @@
     <SilverlightAppEntry>Gi7.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -195,9 +197,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\GithubService.cs" />
     <Compile Include="Utils\FeedDeserializer.cs" />
-    <Compile Include="Controls\UserTemplate.xaml.cs">
-      <DependentUpon>UserTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\RepositoryPanel.xaml.cs">
       <DependentUpon>RepositoryPanel.xaml</DependentUpon>
     </Compile>
@@ -221,6 +220,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\UserTemplate.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,10 +247,6 @@
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\UserTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RepositoryPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

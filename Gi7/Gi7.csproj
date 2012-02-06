@@ -135,6 +135,7 @@
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\Request\Base\ISingleRequest.cs" />
     <Compile Include="Service\Request\Base\IRequest.cs" />
+    <Compile Include="Service\Request\Base\NewResultsEventArgs.cs" />
     <Compile Include="Service\Request\BranchesRequest.cs" />
     <Compile Include="Service\Request\CollaboratorRequest.cs" />
     <Compile Include="Service\Request\CommitsRequest.cs" />

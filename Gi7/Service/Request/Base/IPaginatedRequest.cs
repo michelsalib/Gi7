@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Gi7.Service.Request.Base
 {
@@ -7,6 +8,8 @@ namespace Gi7.Service.Request.Base
         where TSource : class, new()
         where TDestination : class, new()
     {
+        event EventHandler<NewResultsEventArgs<TDestination>> NewResult;
+
         int Page { get; set; }
 
         bool HasMoreItems { get; set; }

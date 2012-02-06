@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -12,30 +13,33 @@ namespace Gi7.Views
 {
     public class RepositoryViewModel : ViewModelBase
     {
+        private Branch _branch;
         private BranchesRequest _branchesRequest;
         private CollaboratorRequest _collaboratorRequest;
         private CommitsRequest _commitsRequest;
         private IssuesRequest _issuesRequest;
         private PullRequestsRequest _pullRequestsRequest;
         private Repository _repository;
-        private string branch;
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
-            branch = "master";
             Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
 
             if (BranchesRequest == null)
+            {
                 BranchesRequest = new BranchesRequest(user, repo);
+                BranchesRequest.NewResult += (s, e) =>
+                {
+                    Branch = e.NewResults.FirstOrDefault(b => b.Name == "master");
+                };
+            }
 
             BranchChangedCommand = new RelayCommand<ListPicker>(e =>
             {
                 if (e != null)
                 {
-                    if (e.SelectedItem != null)
-                        branch = ((Branch) e.SelectedItem).Name;
                     CommitsRequest = null;
                 }
             });
@@ -47,7 +51,7 @@ namespace Gi7.Views
                 {
                 case "Commits":
                     if (CommitsRequest == null)
-                        CommitsRequest = new CommitsRequest(user, repo, branch);
+                        CommitsRequest = new CommitsRequest(user, repo, Branch ? Branch.Name : "master");
                     break;
                 case "Pull requests":
                     if (PullRequestsRequest == null)
@@ -158,6 +162,19 @@ namespace Gi7.Views
                 {
                     _issuesRequest = value;
                     RaisePropertyChanged("IssuesRequest");
+                }
+            }
+        }
+
+        public Branch Branch
+        {
+            get { return _branch; }
+            set
+            {
+                if (_branch != value)
+                {
+                    _branch = value;
+                    RaisePropertyChanged("Branch");
                 }
             }
         }

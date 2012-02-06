@@ -10,6 +10,7 @@ namespace Gi7.Service.Request.Base
         where TSource : class, new()
         where TDestination : class, new()
     {
+        public event EventHandler<NewResultsEventArgs<TDestination>> NewResult;
         private ObservableCollection<TDestination> _result;
         protected string _uri;
 
@@ -48,7 +49,10 @@ namespace Gi7.Service.Request.Base
         {
             var cast = result as IEnumerable<TDestination>;
             if (cast != null)
+            {
                 Result.AddRange(cast);
+                newResult(cast);
+            }
             else
                 throw new NotImplementedException();
         }
@@ -56,6 +60,17 @@ namespace Gi7.Service.Request.Base
         public virtual void MoveToNextPage()
         {
             Page++;
+        }
+
+        protected void newResult(IEnumerable<TDestination> newResults)
+        {
+            if (NewResult != null)
+            {
+                NewResult(this, new NewResultsEventArgs<TDestination>()
+                {
+                    NewResults = newResults
+                });
+            }
         }
     }
 }

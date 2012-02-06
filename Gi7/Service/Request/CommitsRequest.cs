@@ -16,12 +16,12 @@ namespace Gi7.Service.Request
         public CommitsRequest(string username, string repo, string branch)
         {
             this.branch = branch;
-            Uri = String.Format("/repos/{0}/{1}/commits?top={2}&sha={2}", username, repo, branch);
+            Uri = String.Format("/repos/{0}/{1}/commits", username, repo);
         }
 
         public override void AddResults(IEnumerable<Push> result)
         {
-            var groupedResult = result.GroupBy(i => i.Commit.Author.Date.Trunk());
+            var groupedResult = result.GroupBy(i => i.Commit.Commiter ? i.Commit.Commiter.Date.Trunk() : i.Commit.Author.Date.Trunk());
             foreach (var group in groupedResult)
             {
                 var existingGroup = Result.FirstOrDefault(g => g.Date == group.Key);
@@ -29,6 +29,7 @@ namespace Gi7.Service.Request
                 {
                     existingGroup = new PushGroup { Date = group.Key };
                     Result.Add(existingGroup);
+                    newResult(new List<PushGroup>(){existingGroup});
                 }
                 existingGroup.AddRange(group);
             }
@@ -41,13 +42,11 @@ namespace Gi7.Service.Request
                 PushGroup lastGroup;
                 if (lastGroup = Result.LastOrDefault())
                 {
-                    const string format = "{0}&last_sha={1}";
-                    var url = string.Format(format, _uri, lastGroup.Last().Sha);
-                    return Regex.Replace(url, @"top=.+&sha=+.&", string.Format("top={0}&sha={0}&", branch));
+                    return String.Format("{0}?last_sha={1}", _uri, lastGroup.Last().Sha);
                 }
-                return _uri;
+                return String.Format("{0}?sha={1}", _uri, branch);
             }
-            protected set { base.Uri = value; }
+            protected set { _uri = value; }
         }
     }
 }

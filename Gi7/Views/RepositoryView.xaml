@@ -70,9 +70,8 @@
             </Button>
             <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center"
                        Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" FontSize="42.667" />
-            <paginated:BranchesListPicker x:Name="BranchesList" Grid.Row="2"
-                                          Request="{Binding BranchesRequest}" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0"
-                                          ExpansionMode="FullScreenOnly">
+                        <paginated:BranchesListPicker x:Name="BranchesList" Grid.Row="2" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0" ExpansionMode="FullScreenOnly"
+                                          Request="{Binding BranchesRequest}" SelectedItem="{Binding Branch, Mode=TwoWay}" >
               <Interactivity:Interaction.Triggers>
                 <Interactivity:EventTrigger EventName="SelectionChanged">
                   <Interactivity:InvokeCommandAction Command="{Binding BranchChangedCommand}"

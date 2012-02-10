@@ -12,7 +12,7 @@
     <local:FeedListBox.ItemTemplate>
       <DataTemplate>
         <Grid>
-          <Image Source="{Binding Path=User.AvatarUrl}" Width="75" Height="75" HorizontalAlignment="Left"
+          <Image Source="{Binding Path=User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75" HorizontalAlignment="Left"
                  VerticalAlignment="Top" />
           <Image Source="{Binding Path=Image}" Width="16" Height="16" HorizontalAlignment="Left"
                  VerticalAlignment="Top" Margin="70,0,0,0" />

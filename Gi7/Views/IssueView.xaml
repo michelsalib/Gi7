@@ -29,7 +29,7 @@
           <StackPanel>
             <TextBlock Text="{Binding Issue.Title}" FontWeight="Bold" TextWrapping="Wrap" FontSize="36" />
             <Grid>
-              <Image Source="{Binding Issue.User.AvatarUrl}" Width="75" Height="75"
+              <Image Source="{Binding Issue.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                      HorizontalAlignment="Left" VerticalAlignment="Top" />
               <TextBlock Text="{Binding Issue.User.Login}" HorizontalAlignment="Left"
                          VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
@@ -45,7 +45,7 @@
           <ListBox.ItemTemplate>
             <DataTemplate>
               <Grid Width="440">
-                <Image Source="{Binding User.AvatarUrl}" Width="75" Height="75"
+                <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                        HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
                            VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />

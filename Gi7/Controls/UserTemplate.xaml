@@ -1,12 +1,12 @@
 ﻿<ResourceDictionary
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
-	<!-- Resource dictionary entries should be defined here. -->
-	<DataTemplate x:Key="UserTemplate">
-		<toolkit:HubTile Title="{Binding Login}" Message="{Binding Login}" Source="{Binding AvatarUrl}" Margin="3" FontSize="13.333" />
-	</DataTemplate>
-	<ItemsPanelTemplate x:Key="UserTemplateFormat">
-		<toolkit:WrapPanel Orientation="Horizontal" />
-	</ItemsPanelTemplate>
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+    <!-- Resource dictionary entries should be defined here. -->
+    <DataTemplate x:Key="UserTemplate">
+        <toolkit:HubTile Title="{Binding Login}" Message="{Binding Login}" Source="{Binding AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=175}" Margin="3" FontSize="13.333" />
+    </DataTemplate>
+    <ItemsPanelTemplate x:Key="UserTemplateFormat">
+        <toolkit:WrapPanel Orientation="Horizontal" />
+    </ItemsPanelTemplate>
 </ResourceDictionary>

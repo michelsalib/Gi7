@@ -29,7 +29,7 @@
         <ScrollViewer Grid.Row="1">
           <StackPanel>
             <Grid>
-              <Image Source="{Binding PullRequest.User.AvatarUrl}" Width="75" Height="75"
+              <Image Source="{Binding PullRequest.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                      HorizontalAlignment="Left" VerticalAlignment="Top" />
               <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
                          VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
@@ -59,13 +59,12 @@
           <ListBox.ItemTemplate>
             <DataTemplate>
               <Grid Width="440">
-                <Image Source="{Binding User.AvatarUrl}" Width="75" Height="75"
+                <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                        HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
                            VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                <TextBlock
-Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
+                           HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
                 <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
                            Margin="80,25,0,0" TextWrapping="Wrap" />
               </Grid>

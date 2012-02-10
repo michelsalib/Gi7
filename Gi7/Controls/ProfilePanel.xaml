@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-             xmlns:Model="clr-namespace:Gi7.Model" mc:Ignorable="d" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+             mc:Ignorable="d" FontFamily="{StaticResource PhoneFontFamilyNormal}"
              FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480"
              d:DesignWidth="380" d:DataContext="{Binding Path=ProfileViewModel, Source={StaticResource ViewModelLocator}}">
 
@@ -19,7 +19,7 @@
           <ColumnDefinition Width="Auto" MinWidth="150" />
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image Source="{Binding Path=User.AvatarUrl}" Grid.RowSpan="4" />
+        <Image Source="{Binding Path=User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=150}" Grid.RowSpan="4" />
         <Grid Grid.Column="1">
           <TextBlock Text="Login:" d:LayoutOverrides="Height" VerticalAlignment="Center" Margin="5,0,0,0" />
           <TextBlock Text="{Binding User.Login}" FontSize="21.333" Grid.Column="1" TextAlignment="Right"

@@ -64,7 +64,7 @@
             <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0"
                     Command="{Binding OwnerCommand}">
               <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding Repository.Owner.AvatarUrl}" Width="34" Height="34" />
+                <Image Source="{Binding Repository.Owner.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
                 <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
               </StackPanel>
             </Button>
@@ -118,21 +118,17 @@
                           <ColumnDefinition Width="Auto" />
                           <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Author.AvatarUrl}" Height="80" Grid.RowSpan="2"
-                               Margin="0,0,5,0" VerticalAlignment="Top" />
+                            <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=80}" Height="80" Grid.RowSpan="2"
+                                   Margin="0,0,5,0" VerticalAlignment="Top" />
                         <TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1"
                                    d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
-                        <TextBlock
-Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
-Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667"
-VerticalAlignment="Bottom" />
-                        <TextBlock
-Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
-TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
+                        <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
+                                   Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
+                                   TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
                         <Interactivity:Interaction.Triggers>
                           <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand
-Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
+                            <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
                           </Interactivity:EventTrigger>
                         </Interactivity:Interaction.Triggers>
                       </Grid>
@@ -160,7 +156,7 @@ Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" C
                 <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis"
                            MaxHeight="85" />
                 <StackPanel Orientation="Horizontal">
-                  <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25" />
+                  <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
                   <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
                   <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
                 </StackPanel>
@@ -192,7 +188,7 @@ Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" C
                 </Paragraph>
                 <Paragraph>
                   <InlineUIContainer>
-                    <Image Source="{Binding User.AvatarUrl}" Width="25" Height="25" />
+                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
                   </InlineUIContainer>
                   <Run Text="{Binding Path=User.Login}" FontWeight="Bold" />
                   <Run Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Gi7.Model;
+using Gi7.Client.Model;
 
 namespace Gi7.Resources.DesignData
 {

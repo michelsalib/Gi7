@@ -2,10 +2,10 @@
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Gi7.Model;
-using Gi7.Service;
-using Gi7.Service.Request;
+using Gi7.Client;
+using Gi7.Client.Request;
 using Microsoft.Phone.Controls;
+using Gi7.Client.Model;
 
 namespace Gi7.Views
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Gi7.Service;
+using Gi7.Client;
 
 namespace Gi7.Controls
 {

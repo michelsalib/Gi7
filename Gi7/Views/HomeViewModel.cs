@@ -6,13 +6,15 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using Gi7.Model;
-using Gi7.Model.Extra;
-using Gi7.Model.Feed.Base;
+using Gi7.Client;
+using Gi7.Client.Model;
+using Gi7.Client.Model.Extra;
+using Gi7.Client.Model.Feed.Base;
+using Gi7.Client.Request;
 using Gi7.Service;
 using Gi7.Service.Navigation;
-using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
+using Gi7.Utils;
 
 namespace Gi7.Views
 {
@@ -204,39 +206,45 @@ namespace Gi7.Views
         {
             switch (header)
             {
-            case "News Feed":
-                if (FeedsRequest == null)
-                    FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
-                break;
-            case "Repos":
-                if (Repos == null)
-                {
-                    Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
-                    Repos.CollectionChanged += (sender, args) =>
+                case "News Feed":
+                    if (FeedsRequest == null)
                     {
-                        RaisePropertyChanged("WatchedRepos");
-                        RaisePropertyChanged("OwnedRepos");
-                    };
-                }
-                break;
-            case "Follower":
-                if (FollowersRequest == null)
-                    FollowersRequest = new FollowersRequest(_githubService.Username);
-                break;
-            case "Following":
-                if (FollowingsRequest == null)
-                    FollowingsRequest = new FollowingsRequest(_githubService.Username);
-                break;
-            case "Profile":
-                if (User == null)
-                    User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
-                break;
-            case "Explore":
-                if (FeaturedRepos == null)
-                    FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
-                break;
-            default:
-                break;
+                        FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
+                        FeedsRequest.NewResult += (s, r) =>
+                        {
+                            new FeedManager().PopulateDestinationFormat(r.NewResults);
+                        };
+                    }
+                    break;
+                case "Repos":
+                    if (Repos == null)
+                    {
+                        Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
+                        Repos.CollectionChanged += (sender, args) =>
+                        {
+                            RaisePropertyChanged("WatchedRepos");
+                            RaisePropertyChanged("OwnedRepos");
+                        };
+                    }
+                    break;
+                case "Follower":
+                    if (FollowersRequest == null)
+                        FollowersRequest = new FollowersRequest(_githubService.Username);
+                    break;
+                case "Following":
+                    if (FollowingsRequest == null)
+                        FollowingsRequest = new FollowingsRequest(_githubService.Username);
+                    break;
+                case "Profile":
+                    if (User == null)
+                        User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                    break;
+                case "Explore":
+                    if (FeaturedRepos == null)
+                        FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
+                    break;
+                default:
+                    break;
             }
         }
 

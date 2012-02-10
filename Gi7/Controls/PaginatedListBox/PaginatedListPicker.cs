@@ -4,8 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using Gi7.Client.Request.Base;
 using Gi7.Service;
-using Gi7.Service.Request.Base;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Controls.PaginatedListBox

@@ -1,5 +1,5 @@
-﻿using Gi7.Model;
-using Gi7.Model.Extra;
+﻿using Gi7.Client.Model;
+using Gi7.Client.Model.Extra;
 
 namespace Gi7.Controls.PaginatedListBox
 {

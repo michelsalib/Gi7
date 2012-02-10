@@ -86,7 +86,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PaginatedListBox\BranchesListPicker.cs" />
-    <Compile Include="Model\Collaborator.cs" />
     <Compile Include="Controls\PaginatedListBox\CollaboratosListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
@@ -96,30 +95,6 @@
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
-    <Compile Include="Model\BoolModel.cs" />
-    <Compile Include="Model\Branch.cs" />
-    <Compile Include="Model\BranchCommit.cs" />
-    <Compile Include="Model\Comment.cs" />
-    <Compile Include="Model\Commit.cs" />
-    <Compile Include="Model\Committer.cs" />
-    <Compile Include="Model\Extra\FeaturedRepo.cs" />
-    <Compile Include="Model\Extra\PushGroup.cs" />
-    <Compile Include="Model\Feed\Base\RepositoryFeed.cs" />
-    <Compile Include="Model\Feed\CommitCommentFeed.cs" />
-    <Compile Include="Model\Feed\DeleteFeed.cs" />
-    <Compile Include="Model\Feed\CreateFeed.cs" />
-    <Compile Include="Model\Feed\FollowFeed.cs" />
-    <Compile Include="Model\Feed\ForkFeed.cs" />
-    <Compile Include="Model\Feed\IssueCommentFeed.cs" />
-    <Compile Include="Model\Feed\IssueFeed.cs" />
-    <Compile Include="Model\Feed\PullRequestFeed.cs" />
-    <Compile Include="Model\Feed\PushFeed.cs" />
-    <Compile Include="Model\Feed\WatchFeed.cs" />
-    <Compile Include="Model\File.cs" />
-    <Compile Include="Model\Issue.cs" />
-    <Compile Include="Model\PullRequest.cs" />
-    <Compile Include="Model\Push.cs" />
-    <Compile Include="Model\PushStats.cs" />
     <Compile Include="Resources\DesignData\AboutDataModel.cs" />
     <Compile Include="Resources\DesignData\CommitDataModel.cs" />
     <Compile Include="Resources\DesignData\IssueDataModel.cs" />
@@ -127,45 +102,14 @@
     <Compile Include="Resources\DesignData\PullRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
-    <Compile Include="Service\AuthenticatedEventArgs.cs" />
-    <Compile Include="Service\CachedClient.cs" />
-    <Compile Include="Service\CacheProvider.cs" />
     <Compile Include="Service\LoadingEventArgs.cs" />
     <Compile Include="Service\Navigation\INavigationService.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
-    <Compile Include="Service\Request\Base\ISingleRequest.cs" />
-    <Compile Include="Service\Request\Base\IRequest.cs" />
-    <Compile Include="Service\Request\Base\NewResultsEventArgs.cs" />
-    <Compile Include="Service\Request\BranchesRequest.cs" />
-    <Compile Include="Service\Request\CollaboratorRequest.cs" />
-    <Compile Include="Service\Request\CommitsRequest.cs" />
-    <Compile Include="Service\Request\CommitRequest.cs" />
-    <Compile Include="Service\Request\CommitCommentsRequest.cs" />
-    <Compile Include="Service\Request\FeaturedRepoRequest.cs" />
-    <Compile Include="Service\Request\FeedsRequest.cs" />
-    <Compile Include="Service\Request\PullRequestCommentsRequest.cs" />
-    <Compile Include="Service\Request\PullRequestRequest.cs" />
-    <Compile Include="Service\Request\IssueCommentsRequest.cs" />
-    <Compile Include="Service\Request\IssueRequest.cs" />
-    <Compile Include="Service\Request\IssuesRequest.cs" />
-    <Compile Include="Service\Request\PullRequestsRequest.cs" />
-    <Compile Include="Service\Request\UserRequest.cs" />
-    <Compile Include="Service\Request\FollowingsRequest.cs" />
-    <Compile Include="Service\Request\PrivateFeedsRequest.cs" />
-    <Compile Include="Service\Request\Base\SingleRequest.cs" />
-    <Compile Include="Service\Request\Base\PaginatedRequest.cs" />
-    <Compile Include="Service\Request\Base\IGenericRequest.cs" />
-    <Compile Include="Service\Request\Base\IPaginatedRequest.cs" />
-    <Compile Include="Service\Request\FollowersRequest.cs" />
-    <Compile Include="Service\Request\OverrideSettings.cs" />
-    <Compile Include="Service\Request\RepositoryRequest.cs" />
-    <Compile Include="Service\Request\WatchedRepoRequest.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\TextTrimConverter.cs" />
-    <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
+    <Compile Include="Utils\FeedManager.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -192,12 +136,7 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeViewModel.cs" />
-    <Compile Include="Model\Feed\Base\Feed.cs" />
-    <Compile Include="Model\Repository.cs" />
-    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\GithubService.cs" />
-    <Compile Include="Utils\FeedDeserializer.cs" />
     <Compile Include="Controls\RepositoryPanel.xaml.cs">
       <DependentUpon>RepositoryPanel.xaml</DependentUpon>
     </Compile>
@@ -296,6 +235,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gi7.Client\Gi7.Client.csproj">
+      <Project>{63C4BCAD-E1D0-4377-8F03-1D3C9D53349F}</Project>
+      <Name>Gi7.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

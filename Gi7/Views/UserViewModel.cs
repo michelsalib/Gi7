@@ -5,11 +5,13 @@ using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Gi7.Model;
+using Gi7.Client;
+using Gi7.Client.Model;
+using Gi7.Client.Request;
 using Gi7.Service;
 using Gi7.Service.Navigation;
-using Gi7.Service.Request;
 using Microsoft.Phone.Controls;
+using Gi7.Utils;
 
 namespace Gi7.Views
 {
@@ -26,6 +28,10 @@ namespace Gi7.Views
         {
             Username = user;
             FeedsRequest = new FeedsRequest(Username);
+            FeedsRequest.NewResult += (s, r) =>
+            {
+                new FeedManager().PopulateDestinationFormat(r.NewResults);
+            };
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {

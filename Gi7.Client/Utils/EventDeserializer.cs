@@ -168,9 +168,16 @@ namespace Gi7.Client.Utils
 
         private JsonSerializer serializer;
 
-        private T deserialize<T>(JToken token, String member)
+        private T deserialize<T>(JToken token, String member) where T : new()
         {
-            return serializer.Deserialize<T>(token.SelectToken(member).CreateReader());
+            try
+            {
+                return serializer.Deserialize<T>(token.SelectToken(member).CreateReader());
+            }
+            catch (Exception ex)
+            {
+                return new T();
+            }
         }
     }
 }

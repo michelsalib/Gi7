@@ -89,7 +89,6 @@
     <Compile Include="Model\Event\TeamAddEvent.cs" />
     <Compile Include="Model\Event\WatchEvent.cs" />
     <Compile Include="Model\Gist.cs" />
-    <Compile Include="Model\Collaborator.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
     <Compile Include="Model\Committer.cs" />
@@ -126,6 +125,7 @@
     <Compile Include="Request\CommitCommentsRequest.cs" />
     <Compile Include="Request\CommitRequest.cs" />
     <Compile Include="Request\CommitsRequest.cs" />
+    <Compile Include="Request\WatchersRequest.cs" />
     <Compile Include="Request\ReceivedEventsRequest.cs" />
     <Compile Include="Request\EventsRequest.cs" />
     <Compile Include="Request\FeaturedRepoRequest.cs" />

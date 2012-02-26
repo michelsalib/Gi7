@@ -6,6 +6,8 @@ using Gi7.Client;
 using Gi7.Client.Model;
 using Gi7.Client.Request;
 using Microsoft.Phone.Controls;
+using Gi7.Service.Navigation;
+using Gi7.Service;
 
 namespace Gi7.Views
 {
@@ -16,7 +18,7 @@ namespace Gi7.Views
         private String _issueName;
         private String _repoName;
 
-        public IssueViewModel(GithubService githubService, string username, string repo, string number)
+        public IssueViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
             RepoName = String.Format("{0}/{1}", username, repo);
             IssueName = "Issue #" + number;
@@ -35,6 +37,11 @@ namespace Gi7.Views
                 default:
                     break;
                 }
+            });
+
+            RepoSelectedCommand = new RelayCommand(() =>
+            {
+                navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, username, repo));
             });
         }
 
@@ -91,5 +98,6 @@ namespace Gi7.Views
         }
 
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand RepoSelectedCommand { get; private set; }
     }
 }

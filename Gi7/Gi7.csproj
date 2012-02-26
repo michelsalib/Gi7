@@ -86,7 +86,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PaginatedListBox\BranchesListPicker.cs" />
-    <Compile Include="Controls\PaginatedListBox\CollaboratosListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListPicker.cs" />

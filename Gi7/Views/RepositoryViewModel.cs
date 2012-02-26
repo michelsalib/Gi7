@@ -17,6 +17,7 @@ namespace Gi7.Views
         private Branch _branch;
         private BranchesRequest _branchesRequest;
         private CollaboratorRequest _collaboratorRequest;
+        private WatchersRequest _watchersRequest;
         private CommitsRequest _commitsRequest;
         private IssuesRequest _issuesRequest;
         private PullRequestsRequest _pullRequestsRequest;
@@ -47,25 +48,29 @@ namespace Gi7.Views
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                var header = ((PivotItem) args.AddedItems[0]).Header as String;
+                var header = ((PivotItem)args.AddedItems[0]).Header as String;
                 switch (header)
                 {
-                case "Commits":
-                    if (CommitsRequest == null)
-                        CommitsRequest = new CommitsRequest(user, repo, Branch ? Branch.Name : "master");
-                    break;
-                case "Pull requests":
-                    if (PullRequestsRequest == null)
-                        PullRequestsRequest = new PullRequestsRequest(user, repo);
-                    break;
-                case "Issues":
-                    if (IssuesRequest == null)
-                        IssuesRequest = new IssuesRequest(user, repo);
-                    break;
-                case "Collaborators":
-                    if (CollaboratorRequest == null)
-                        CollaboratorRequest = new CollaboratorRequest(user, repo);
-                    break;
+                    case "Commits":
+                        if (CommitsRequest == null)
+                            CommitsRequest = new CommitsRequest(user, repo, Branch ? Branch.Name : "master");
+                        break;
+                    case "Pull requests":
+                        if (PullRequestsRequest == null)
+                            PullRequestsRequest = new PullRequestsRequest(user, repo);
+                        break;
+                    case "Issues":
+                        if (IssuesRequest == null)
+                            IssuesRequest = new IssuesRequest(user, repo);
+                        break;
+                    case "Collaborators":
+                        if (CollaboratorRequest == null)
+                            CollaboratorRequest = new CollaboratorRequest(user, repo);
+                        break;
+                    case "Watchers":
+                        if (WatchersRequest == null)
+                            WatchersRequest = new WatchersRequest(user, repo);
+                        break;
                 }
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>
@@ -86,7 +91,7 @@ namespace Gi7.Views
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
-            CollaboratosCommand = new RelayCommand<Collaborator>(collaborator => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, collaborator.Login)));
+            UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, collaborator.Login)));
         }
 
         public Repository Repository
@@ -141,6 +146,19 @@ namespace Gi7.Views
             }
         }
 
+        public WatchersRequest WatchersRequest
+        {
+            get { return _watchersRequest; }
+            set
+            {
+                if (_watchersRequest != value)
+                {
+                    _watchersRequest = value;
+                    RaisePropertyChanged("WatchersRequest");
+                }
+            }
+        }
+
         public PullRequestsRequest PullRequestsRequest
         {
             get { return _pullRequestsRequest; }
@@ -183,7 +201,7 @@ namespace Gi7.Views
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
-        public RelayCommand<Collaborator> CollaboratosCommand { get; private set; }
+        public RelayCommand<User> UserCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
         public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
         public RelayCommand<Issue> IssueSelectedCommand { get; private set; }

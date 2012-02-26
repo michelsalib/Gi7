@@ -107,7 +107,7 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                     return new CommitDataModel();
                 else
-                    return new CommitViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
+                    return new CommitViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
             }
         }
 
@@ -118,7 +118,7 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                     return new PullRequestDataModel();
                 else
-                    return new PullRequestViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
+                    return new PullRequestViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
             }
         }
 
@@ -129,7 +129,7 @@ namespace Gi7.Service
                 if (ViewModelBase.IsInDesignModeStatic)
                     return new IssueDataModel();
                 else
-                    return new IssueViewModel(GithubService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
+                    return new IssueViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("number"));
             }
         }
 

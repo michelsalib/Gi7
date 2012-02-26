@@ -14,46 +14,46 @@
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=UserViewModel, Source={StaticResource ViewModelLocator}}">
-  <!--LayoutRoot is the root grid where all page content is placed-->
-  <Grid x:Name="LayoutRoot" Background="Transparent">
-    <!--Pivot Control-->
-    <controls:Pivot Title="{Binding Username}">
-      <Interactivity:Interaction.Triggers>
-        <Interactivity:EventTrigger EventName="SelectionChanged">
-          <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
-        </Interactivity:EventTrigger>
-      </Interactivity:Interaction.Triggers>
-      <controls:PivotItem Header="Feed">
-        <localControls:EventsPanel />
-      </controls:PivotItem>
-      <controls:PivotItem Header="Details">
-        <localControls:ProfilePanel />
-      </controls:PivotItem>
-      <controls:PivotItem Header="Repos">
-        <localControls:RepositoryPanel />
-      </controls:PivotItem>
-      <controls:PivotItem Header="Following">
-        <lists:UserListBox Name="FollowingList" Request="{Binding FollowingsRequest}"
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Title="{Binding Username}">
+            <Interactivity:Interaction.Triggers>
+                <Interactivity:EventTrigger EventName="SelectionChanged">
+                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+                </Interactivity:EventTrigger>
+            </Interactivity:Interaction.Triggers>
+            <controls:PivotItem Header="Feed">
+                <localControls:EventsPanel />
+            </controls:PivotItem>
+            <controls:PivotItem Header="Details">
+                <localControls:ProfilePanel />
+            </controls:PivotItem>
+            <controls:PivotItem Header="Repos">
+                <localControls:RepositoryPanel />
+            </controls:PivotItem>
+            <controls:PivotItem Header="Following">
+                <lists:UserListBox Name="FollowingList" Request="{Binding FollowingsRequest}"
+                                   ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding UserSelectedCommand}"
+                                                    CommandParameter="{Binding ElementName=FollowingList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                </lists:UserListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Follower">
+                <lists:UserListBox Name="FollowerList" Request="{Binding FollowersRequest}"
                            ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-          <Interactivity:Interaction.Triggers>
-            <Interactivity:EventTrigger EventName="Tap">
-              <Command:EventToCommand Command="{Binding CollaboratosCommand}"
-                                      CommandParameter="{Binding ElementName=FollowingList, Path=SelectedItem}" />
-            </Interactivity:EventTrigger>
-          </Interactivity:Interaction.Triggers>
-        </lists:UserListBox>
-      </controls:PivotItem>
-      <controls:PivotItem Header="Follower">
-        <lists:UserListBox Name="FollowerList" Request="{Binding FollowersRequest}"
-                           ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-          <Interactivity:Interaction.Triggers>
-            <Interactivity:EventTrigger EventName="Tap">
-              <Command:EventToCommand Command="{Binding CollaboratosCommand}"
-                                      CommandParameter="{Binding ElementName=FollowerList, Path=SelectedItem}" />
-            </Interactivity:EventTrigger>
-          </Interactivity:Interaction.Triggers>
-        </lists:UserListBox>
-      </controls:PivotItem>
-    </controls:Pivot>
-  </Grid>
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding UserSelectedCommand}"
+                                                    CommandParameter="{Binding ElementName=FollowerList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                </lists:UserListBox>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
 </phone:PhoneApplicationPage>

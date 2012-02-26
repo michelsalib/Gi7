@@ -14,201 +14,205 @@
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=RepositoryViewModel, Source={StaticResource ViewModelLocator}}">
-  <!--LayoutRoot is the root grid where all page content is placed-->
-  <Grid x:Name="LayoutRoot" Background="Transparent">
-    <!--Pivot Control-->
-    <controls:Pivot Title="{Binding Repository.Fullname}" x:Name="Pivot" Tap="Pivot_Tap">
-      <Interactivity:Interaction.Triggers>
-        <Interactivity:EventTrigger EventName="SelectionChanged">
-          <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
-        </Interactivity:EventTrigger>
-      </Interactivity:Interaction.Triggers>
-      <!--Pivot item one-->
-      <controls:PivotItem Header="Details">
-        <StackPanel>
-          <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap" />
-          <HyperlinkButton Content="Website" HorizontalAlignment="Right"
-                           NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="60" />
-              <RowDefinition Height="60" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0">
-              <TextBlock Text="Watchers" FontSize="42" />
-              <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray"
-                         TextAlignment="Right" />
-            </Grid>
-            <Grid Grid.Column="1" Grid.Row="0">
-              <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray"
-                         TextAlignment="Right" />
-              <TextBlock Text="Forks" FontSize="42" />
-            </Grid>
-            <Grid Grid.Column="0" Grid.Row="1">
-              <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42"
-                         Foreground="Gray" />
-              <TextBlock Text="Issues" FontSize="42" />
-            </Grid>
-          </Grid>
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition />
-              <RowDefinition />
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <TextBlock Text="Owner" Grid.Row="0" VerticalAlignment="Center" FontSize="42.667" />
-            <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0"
-                    Command="{Binding OwnerCommand}">
-              <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding Repository.Owner.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
-                <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
-              </StackPanel>
-            </Button>
-            <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center"
-                       Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" FontSize="42.667" />
-                        <paginated:BranchesListPicker x:Name="BranchesList" Grid.Row="2" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0" ExpansionMode="FullScreenOnly"
-                                          Request="{Binding BranchesRequest}" SelectedItem="{Binding Branch, Mode=TwoWay}" >
-              <Interactivity:Interaction.Triggers>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--Pivot Control-->
+        <controls:Pivot Title="{Binding Repository.Fullname}" x:Name="Pivot" Tap="Pivot_Tap">
+            <Interactivity:Interaction.Triggers>
                 <Interactivity:EventTrigger EventName="SelectionChanged">
-                  <Interactivity:InvokeCommandAction Command="{Binding BranchChangedCommand}"
-                                                     CommandParameter="{Binding ElementName=BranchesList, Path=.}" />
+                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
                 </Interactivity:EventTrigger>
-              </Interactivity:Interaction.Triggers>
-              <paginated:BranchesListPicker.FullModeItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Name}" FontSize="42.667"></TextBlock>
-                </DataTemplate>
-              </paginated:BranchesListPicker.FullModeItemTemplate>
-              <paginated:BranchesListPicker.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Name}"></TextBlock>
-                </DataTemplate>
-              </paginated:BranchesListPicker.ItemTemplate>
-            </paginated:BranchesListPicker>
-          </Grid>
-          <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}"
-                           TargetName="_blank" HorizontalAlignment="Right" FontSize="32" />
-        </StackPanel>
-      </controls:PivotItem>
-      <!--Pivot item two-->
-      <controls:PivotItem Header="Commits">
-        <paginated:CommitListBox Request="{Binding CommitsRequest}" x:Name="CommitsList"
-                                 VerticalAlignment="Top">
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <StackPanel d:DesignWidth="480">
-                <Border Background="{StaticResource PhoneAccentBrush}" Height="50" Padding="3">
-                  <TextBlock Text="{Binding Path=Date, StringFormat='\{0:D\}'}" FontWeight="Bold"
-                             Foreground="White" />
-                </Border>
-                <ListBox ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                  <ListBox.ItemTemplate>
-                    <DataTemplate>
-                      <Grid Width="450" MaxHeight="80">
-                        <Grid.RowDefinitions>
-                          <RowDefinition Height="Auto" />
-                          <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+            </Interactivity:Interaction.Triggers>
+            <!--Pivot item one-->
+            <controls:PivotItem Header="Details">
+                <StackPanel>
+                    <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap" />
+                    <HyperlinkButton Content="Website" HorizontalAlignment="Right"
+                           NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="Auto" />
-                          <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                            <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=80}" Height="80" Grid.RowSpan="2"
-                                   Margin="0,0,5,0" VerticalAlignment="Top" />
-                        <TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1"
-                                   d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
-                        <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
-                                   Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667" VerticalAlignment="Bottom" />
-                        <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
-                                   TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
-                        <Interactivity:Interaction.Triggers>
-                          <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
-                          </Interactivity:EventTrigger>
-                        </Interactivity:Interaction.Triggers>
-                      </Grid>
-                    </DataTemplate>
-                  </ListBox.ItemTemplate>
-                </ListBox>
-              </StackPanel>
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </paginated:CommitListBox>
-      </controls:PivotItem>
-      <controls:PivotItem Header="Pull requests">
-        <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" x:Name="PullRequestsList">
-          <Interactivity:Interaction.Triggers>
-            <Interactivity:EventTrigger EventName="Tap">
-              <Command:EventToCommand Command="{Binding PullRequestSelectedCommand}"
-                                      CommandParameter="{Binding ElementName=PullRequestsList, Path=SelectedItem}" />
-            </Interactivity:EventTrigger>
-          </Interactivity:Interaction.Triggers>
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <StackPanel Width="450">
-                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26"
-                           TextWrapping="Wrap" />
-                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis"
-                           MaxHeight="85" />
-                <StackPanel Orientation="Horizontal">
-                  <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
-                  <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
-                  <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0" Grid.Row="0">
+                            <TextBlock Text="Watchers" FontSize="42" />
+                            <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.Row="0">
+                            <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                            <TextBlock Text="Forks" FontSize="42" />
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" />
+                            <TextBlock Text="Issues" FontSize="42" />
+                        </Grid>
+                    </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Owner" Grid.Row="0" VerticalAlignment="Center" FontSize="42.667" />
+                        <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0" Command="{Binding OwnerCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Repository.Owner.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
+                                <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center"
+                                   Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" FontSize="42.667" />
+                        <paginated:BranchesListPicker x:Name="BranchesList" Grid.Row="2" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0" ExpansionMode="FullScreenOnly"
+                                                      Request="{Binding BranchesRequest}" SelectedItem="{Binding Branch, Mode=TwoWay}" >
+                            <Interactivity:Interaction.Triggers>
+                                <Interactivity:EventTrigger EventName="SelectionChanged">
+                                    <Interactivity:InvokeCommandAction Command="{Binding BranchChangedCommand}"
+                                                                       CommandParameter="{Binding ElementName=BranchesList, Path=.}" />
+                                </Interactivity:EventTrigger>
+                            </Interactivity:Interaction.Triggers>
+                            <paginated:BranchesListPicker.FullModeItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" FontSize="42.667"></TextBlock>
+                                </DataTemplate>
+                            </paginated:BranchesListPicker.FullModeItemTemplate>
+                            <paginated:BranchesListPicker.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                </DataTemplate>
+                            </paginated:BranchesListPicker.ItemTemplate>
+                        </paginated:BranchesListPicker>
+                    </Grid>
+                    <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}"
+                           TargetName="_blank" HorizontalAlignment="Right" FontSize="32" />
                 </StackPanel>
-              </StackPanel>
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </paginated:PullRequestListBox>
-      </controls:PivotItem>
-      <controls:PivotItem Header="Issues">
-        <paginated:IssueListBox Request="{Binding IssuesRequest}" x:Name="IssuesList">
-          <Interactivity:Interaction.Triggers>
-            <Interactivity:EventTrigger EventName="Tap">
-              <Command:EventToCommand Command="{Binding IssueSelectedCommand}"
+            </controls:PivotItem>
+            <!--Pivot item two-->
+            <controls:PivotItem Header="Commits">
+                <paginated:CommitListBox Request="{Binding CommitsRequest}" x:Name="CommitsList"
+                                 VerticalAlignment="Top">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel d:DesignWidth="480">
+                                <Border Background="{StaticResource PhoneAccentBrush}" Height="50" Padding="3">
+                                    <TextBlock Text="{Binding Path=Date, StringFormat='\{0:D\}'}" FontWeight="Bold" Foreground="White" />
+                                </Border>
+                                <ListBox ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Width="450" MaxHeight="80">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=80}" Height="80" Grid.RowSpan="2"
+                                                       Margin="0,0,5,0" VerticalAlignment="Top" />
+                                                <TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1"
+                                                           d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
+                                                <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
+                                                           Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667" VerticalAlignment="Bottom" />
+                                                <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
+                                                           TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
+                                                <Interactivity:Interaction.Triggers>
+                                                    <Interactivity:EventTrigger EventName="Tap">
+                                                        <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
+                                                    </Interactivity:EventTrigger>
+                                                </Interactivity:Interaction.Triggers>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </paginated:CommitListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Pull requests">
+                <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" x:Name="PullRequestsList">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding PullRequestSelectedCommand}"
+                                                    CommandParameter="{Binding ElementName=PullRequestsList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="450">
+                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
+                                    <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </paginated:PullRequestListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Issues">
+                <paginated:IssueListBox Request="{Binding IssuesRequest}" x:Name="IssuesList">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding IssueSelectedCommand}"
                                       CommandParameter="{Binding ElementName=IssuesList, Path=SelectedItem}" />
-            </Interactivity:EventTrigger>
-          </Interactivity:Interaction.Triggers>
-          <ListBox.ItemTemplate>
-            <DataTemplate>
-              <RichTextBox Width="450">
-                <Paragraph>
-                  <Run Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" />
-                </Paragraph>
-                <Paragraph>
-                  <Run Text="{Binding Path=Body}" />
-                </Paragraph>
-                <Paragraph TextAlignment="Right">
-                  <Run Text="{Binding Path=Comments}" />
-                  <Run Text=" comments" />
-                </Paragraph>
-                <Paragraph>
-                  <InlineUIContainer>
-                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
-                  </InlineUIContainer>
-                  <Run Text="{Binding Path=User.Login}" FontWeight="Bold" />
-                  <Run Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
-                </Paragraph>
-              </RichTextBox>
-            </DataTemplate>
-          </ListBox.ItemTemplate>
-        </paginated:IssueListBox>
-      </controls:PivotItem>
-      <controls:PivotItem Header="Collaborators">
-        <paginated:CollaboratosListBox Request="{Binding CollaboratorRequest}" x:Name="CollaboratorList"
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <RichTextBox Width="450">
+                                <Paragraph>
+                                    <Run Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" />
+                                </Paragraph>
+                                <Paragraph>
+                                    <Run Text="{Binding Path=Body}" />
+                                </Paragraph>
+                                <Paragraph TextAlignment="Right">
+                                    <Run Text="{Binding Path=Comments}" />
+                                    <Run Text=" comments" />
+                                </Paragraph>
+                                <Paragraph>
+                                    <InlineUIContainer>
+                                        <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
+                                    </InlineUIContainer>
+                                    <Run Text="{Binding Path=User.Login}" FontWeight="Bold" />
+                                    <Run Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
+                                </Paragraph>
+                            </RichTextBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </paginated:IssueListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Collaborators">
+                <paginated:UserListBox Request="{Binding CollaboratorRequest}" x:Name="CollaboratorList"
                                        ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-          <Interactivity:Interaction.Triggers>
-            <Interactivity:EventTrigger EventName="Tap">
-              <Command:EventToCommand Command="{Binding CollaboratosCommand}"
-                                      CommandParameter="{Binding ElementName=CollaboratorList, Path=SelectedItem}" />
-            </Interactivity:EventTrigger>
-          </Interactivity:Interaction.Triggers>
-        </paginated:CollaboratosListBox>
-      </controls:PivotItem>
-    </controls:Pivot>
-  </Grid>
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding UserCommand}"
+                                                    CommandParameter="{Binding ElementName=CollaboratorList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                </paginated:UserListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Watchers">
+                <paginated:UserListBox Request="{Binding WatchersRequest}" x:Name="WatcherList"
+                                       ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding UserCommand}"
+                                                    CommandParameter="{Binding ElementName=WatcherList, Path=SelectedItem}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                </paginated:UserListBox>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
 </phone:PhoneApplicationPage>

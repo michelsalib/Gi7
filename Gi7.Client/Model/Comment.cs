@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Gi7.Client.Model
 {
@@ -18,6 +19,7 @@ namespace Gi7.Client.Model
 
         public String Url { get; set; }
 
+        [JsonProperty("commit_id")]
         public String CommitId { get; set; }
     }
 }

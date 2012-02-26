@@ -1,6 +1,7 @@
 ﻿using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Windows.Controls;
 
 // using AgFx;
 
@@ -64,10 +65,18 @@ namespace Gi7.Utils
         {
             if (_mangoIndicator != null)
             {
-                _mangoIndicator.IsIndeterminate = _loadingCount > 0;
-
-                if (_mangoIndicator.IsVisible == false)
+                if (_loadingCount > 0)
+                {
+                    _mangoIndicator.IsIndeterminate = true;
                     _mangoIndicator.IsVisible = true;
+                    _mangoIndicator.Text = "loading...";
+                }
+                else
+                {
+                    _mangoIndicator.IsIndeterminate = false;
+                    _mangoIndicator.IsVisible = false;
+                    _mangoIndicator.Text = "";
+                }
             }
         }
     }

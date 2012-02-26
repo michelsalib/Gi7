@@ -10,14 +10,14 @@ using Gi7.Client.Model;
 using Gi7.Client.Request;
 using Gi7.Service;
 using Gi7.Service.Navigation;
-using Microsoft.Phone.Controls;
 using Gi7.Utils;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
     public class UserViewModel : ViewModelBase
     {
-        private FeedsRequest _feedsRequest;
+        private EventsRequest _eventsRequest;
         private FollowersRequest _followersRequest;
         private FollowingsRequest _followingsRequest;
         private ObservableCollection<Repository> _repos;
@@ -27,11 +27,7 @@ namespace Gi7.Views
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
             Username = user;
-            FeedsRequest = new FeedsRequest(Username);
-            FeedsRequest.NewResult += (s, r) =>
-            {
-                new FeedManager().PopulateDestinationFormat(r.NewResults);
-            };
+            EventsRequest = new EventsRequest(Username);
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
@@ -49,8 +45,8 @@ namespace Gi7.Views
                 switch (header)
                 {
                 case "Feed":
-                    if (FeedsRequest == null)
-                        FeedsRequest = new FeedsRequest(Username);
+                    if (EventsRequest == null)
+                        EventsRequest = new EventsRequest(Username);
                     break;
                 case "Repos":
                     if (Repos == null)
@@ -110,15 +106,15 @@ namespace Gi7.Views
             }
         }
 
-        public FeedsRequest FeedsRequest
+        public EventsRequest EventsRequest
         {
-            get { return _feedsRequest; }
+            get { return _eventsRequest; }
             set
             {
-                if (_feedsRequest != value)
+                if (_eventsRequest != value)
                 {
-                    _feedsRequest = value;
-                    RaisePropertyChanged("FeedsRequest");
+                    _eventsRequest = value;
+                    RaisePropertyChanged("EventsRequest");
                 }
             }
         }

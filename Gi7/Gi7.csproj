@@ -91,7 +91,7 @@
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListPicker.cs" />
     <Compile Include="Controls\PaginatedListBox\UserListBox.cs" />
-    <Compile Include="Controls\PaginatedListBox\FeedListBox.cs" />
+    <Compile Include="Controls\PaginatedListBox\EventListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
@@ -107,10 +107,11 @@
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\EventConverter.cs" />
     <Compile Include="Utils\Converters\GravatarSizeConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\TextTrimConverter.cs" />
-    <Compile Include="Utils\FeedManager.cs" />
+    <Compile Include="Utils\EventManager.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\Messages\PanelMessage.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -144,8 +145,8 @@
     <Compile Include="Controls\LoginPanel.xaml.cs">
       <DependentUpon>LoginPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FeedsPanel.xaml.cs">
-      <DependentUpon>FeedsPanel.xaml</DependentUpon>
+    <Compile Include="Controls\EventsPanel.xaml.cs">
+      <DependentUpon>EventsPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LoginPanelViewModel.cs" />
     <Compile Include="Controls\ProfilePanel.xaml.cs">
@@ -197,7 +198,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\FeedsPanel.xaml">
+    <Page Include="Controls\EventsPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

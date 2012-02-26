@@ -8,13 +8,13 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Gi7.Client;
 using Gi7.Client.Model;
+using Gi7.Client.Model.Event;
 using Gi7.Client.Model.Extra;
-using Gi7.Client.Model.Feed.Base;
 using Gi7.Client.Request;
 using Gi7.Service;
 using Gi7.Service.Navigation;
-using Microsoft.Phone.Controls;
 using Gi7.Utils;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
@@ -22,7 +22,7 @@ namespace Gi7.Views
     {
         private readonly GithubService _githubService;
         private ObservableCollection<FeaturedRepo> _featuredRepos;
-        private PrivateFeedsRequest _feedsRequest;
+        private ReceivedEventsRequest _eventsRequest;
         private FollowersRequest _followersRequest;
         private FollowingsRequest _followingsRequest;
         private bool _isLoggedIn;
@@ -46,10 +46,10 @@ namespace Gi7.Views
                 if (r != null)
                     navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
             });
-            FeedSelectedCommand = new RelayCommand<Feed>(feed =>
+            EventSelectedCommand = new RelayCommand<Event>(e =>
             {
-                if (feed != null)
-                    navigationService.NavigateTo(feed.Destination);
+                if (e != null)
+                    navigationService.NavigateTo(new EventManager().GetDestination(e));
             });
             UserSelectedCommand = new RelayCommand<User>(user =>
             {
@@ -110,15 +110,15 @@ namespace Gi7.Views
             }
         }
 
-        public PrivateFeedsRequest FeedsRequest
+        public ReceivedEventsRequest EventsRequest
         {
-            get { return _feedsRequest; }
+            get { return _eventsRequest; }
             set
             {
-                if (_feedsRequest != value)
+                if (_eventsRequest != value)
                 {
-                    _feedsRequest = value;
-                    RaisePropertyChanged("FeedsRequest");
+                    _eventsRequest = value;
+                    RaisePropertyChanged("EventsRequest");
                 }
             }
         }
@@ -196,7 +196,7 @@ namespace Gi7.Views
             }
         }
 
-        public RelayCommand<Feed> FeedSelectedCommand { get; private set; }
+        public RelayCommand<Event> EventSelectedCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
         public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
@@ -207,13 +207,9 @@ namespace Gi7.Views
             switch (header)
             {
                 case "News Feed":
-                    if (FeedsRequest == null)
+                    if (EventsRequest == null)
                     {
-                        FeedsRequest = new PrivateFeedsRequest(_githubService.Username);
-                        FeedsRequest.NewResult += (s, r) =>
-                        {
-                            new FeedManager().PopulateDestinationFormat(r.NewResults);
-                        };
+                        EventsRequest = new ReceivedEventsRequest(_githubService.Username);
                     }
                     break;
                 case "Repos":
@@ -259,7 +255,7 @@ namespace Gi7.Views
         {
             IsLoggedIn = false;
             User = null;
-            FeedsRequest = null;
+            EventsRequest = null;
             Repos = null;
             FollowersRequest = null;
             FollowingsRequest = null;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Gi7.Client.Model
 {
@@ -15,7 +16,23 @@ namespace Gi7.Client.Model
 
         public String Url { get; set; }
 
-        public String Name { get; set; }
+        private String name;
+        public String Name
+        {
+            get { return name; }
+            set
+            {
+                if (value.Contains("/"))
+                {
+                    Owner.Login = new String(value.TakeWhile(c => c != '/').ToArray());
+                    name = new String(value.SkipWhile(c => c != '/').Skip(1).ToArray());
+                }
+                else
+                {
+                    name = value;
+                }
+            }
+        }
 
         public User Owner { get; set; }
 

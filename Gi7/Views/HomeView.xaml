@@ -31,7 +31,7 @@
       </controls:PanoramaItem>
       <controls:PanoramaItem Header="News Feed"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-        <localControls:FeedsPanel />
+        <localControls:EventsPanel />
       </controls:PanoramaItem>
       <controls:PanoramaItem Header="Repos"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">

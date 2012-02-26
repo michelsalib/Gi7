@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Gi7.Client.Model
 {
@@ -39,6 +40,15 @@ namespace Gi7.Client.Model
             {
                 // trim GET parameters
                 _avatarUrl = new String(value.TakeWhile(c => c != '?').ToArray());
+            }
+        }
+
+        [JsonProperty("gravatar_id")]
+        public String GravatarId
+        {
+            set
+            {
+                _avatarUrl = String.Format("https://secure.gravatar.com/avatar/{0}", value);
             }
         }
     }

@@ -24,7 +24,7 @@
         </Interactivity:EventTrigger>
       </Interactivity:Interaction.Triggers>
       <controls:PivotItem Header="Feed">
-        <localControls:FeedsPanel />
+        <localControls:EventsPanel />
       </controls:PivotItem>
       <controls:PivotItem Header="Details">
         <localControls:ProfilePanel />

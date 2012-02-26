@@ -2,9 +2,9 @@
 
 namespace Gi7.Controls
 {
-    public partial class FeedsPanel : UserControl
+    public partial class EventsPanel : UserControl
     {
-        public FeedsPanel()
+        public EventsPanel()
         {
             InitializeComponent();
         }

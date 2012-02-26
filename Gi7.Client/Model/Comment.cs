@@ -10,7 +10,7 @@ namespace Gi7.Client.Model
 
         public DateTime CreatedAt { get; set; }
 
-        public int Line { get; set; }
+        public int? Line { get; set; }
 
         public User User { get; set; }
 

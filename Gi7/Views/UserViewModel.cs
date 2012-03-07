@@ -10,7 +10,6 @@ using Gi7.Client.Model;
 using Gi7.Client.Request;
 using Gi7.Service;
 using Gi7.Service.Navigation;
-using Gi7.Utils;
 using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
@@ -23,9 +22,12 @@ namespace Gi7.Views
         private ObservableCollection<Repository> _repos;
         private User _user;
         private String _username;
+        private bool showFollowButton;
 
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
+            Following = false;
+            NotFollowing = false;
             Username = user;
             EventsRequest = new EventsRequest(Username);
 
@@ -41,41 +43,75 @@ namespace Gi7.Views
             });
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
+                var header = ((PivotItem)args.AddedItems[0]).Header as String;
+                ShowFollowButton = false;
                 switch (header)
                 {
-                case "Feed":
-                    if (EventsRequest == null)
-                        EventsRequest = new EventsRequest(Username);
-                    break;
-                case "Repos":
-                    if (Repos == null)
-                    {
-                        Repos = githubService.Load(new WatchedRepoRequest(Username));
-                        Repos.CollectionChanged += (sender, e) =>
+                    case "Feed":
+                        if (EventsRequest == null)
+                            EventsRequest = new EventsRequest(Username);
+                        break;
+                    case "Repos":
+                        if (Repos == null)
                         {
-                            RaisePropertyChanged("WatchedRepos");
-                            RaisePropertyChanged("OwnedRepos");
-                        };
-                    }
-                    break;
-                case "Follower":
-                    if (FollowersRequest == null)
-                        FollowersRequest = new FollowersRequest(Username);
-                    break;
-                case "Following":
-                    if (FollowingsRequest == null)
-                        FollowingsRequest = new FollowingsRequest(Username);
-                    break;
-                case "Profile":
-                case "Details":
-                    if (User == null)
-                        User = githubService.Load(new UserRequest(Username), u => User = u);
-                    break;
-                default:
-                    break;
+                            Repos = githubService.Load(new WatchedRepoRequest(Username));
+                            Repos.CollectionChanged += (sender, e) =>
+                            {
+                                RaisePropertyChanged("WatchedRepos");
+                                RaisePropertyChanged("OwnedRepos");
+                            };
+                        }
+                        break;
+                    case "Follower":
+                        if (FollowersRequest == null)
+                            FollowersRequest = new FollowersRequest(Username);
+                        break;
+                    case "Following":
+                        if (FollowingsRequest == null)
+                            FollowingsRequest = new FollowingsRequest(Username);
+                        break;
+                    case "Profile":
+                    case "Details":
+                        if (User == null)
+                            User = githubService.Load(new UserRequest(Username), u => User = u);
+                        githubService.ConnectionError += (sender, eventArgs) => { NotFollowing = true; };
+                        githubService.Load(new UserFollowingRequest(Username), user1 => Following = true);
+                        ShowFollowButton = true;
+                        break;
                 }
             });
+        }
+
+        private bool following;
+        public bool Following
+        {
+            get { return following; }
+            set
+            {
+                following = value;
+                RaisePropertyChanged("Following");
+            }
+        }
+
+        private bool notFollowing;
+        public bool NotFollowing
+        {
+            get { return notFollowing; }
+            set
+            {
+                notFollowing = value;
+                RaisePropertyChanged("NotFollowing");
+            }
+        }
+
+        public bool ShowFollowButton
+        {
+            get { return showFollowButton; }
+            set
+            {
+                showFollowButton = value;
+                RaisePropertyChanged("ShowFollowButton");
+            }
         }
 
         public String Username
@@ -125,8 +161,7 @@ namespace Gi7.Views
             {
                 if (Repos != null)
                     return Repos.Where(r => r.Owner.Login == Username);
-                else
-                    return null;
+                return null;
             }
         }
 
@@ -136,8 +171,7 @@ namespace Gi7.Views
             {
                 if (Repos != null)
                     return Repos.Where(r => r.Owner.Login != Username);
-                else
-                    return null;
+                return null;
             }
         }
 

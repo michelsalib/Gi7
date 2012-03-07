@@ -5,14 +5,16 @@
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                             xmlns:localControls="clr-namespace:Gi7.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:utils="clr-namespace:Gi7.Utils"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-                            xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
-                            Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
+                            xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
+                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar" mc:Ignorable="d" d:DesignWidth="480"
+                            d:DesignHeight="696" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait" Orientation="Portrait" shell:SystemTray.IsVisible="True"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=UserViewModel, Source={StaticResource ViewModelLocator}}">
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -33,27 +35,33 @@
                 <localControls:RepositoryPanel />
             </controls:PivotItem>
             <controls:PivotItem Header="Following">
-                <lists:UserListBox Name="FollowingList" Request="{Binding FollowingsRequest}"
-                                   ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+                <lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
+                           ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding UserSelectedCommand}"
-                                                    CommandParameter="{Binding ElementName=FollowingList, Path=SelectedItem}" />
+                                      CommandParameter="{Binding ElementName=FollowingList, Path=SelectedItem}" />
                         </Interactivity:EventTrigger>
                     </Interactivity:Interaction.Triggers>
                 </lists:UserListBox>
             </controls:PivotItem>
             <controls:PivotItem Header="Follower">
-                <lists:UserListBox Name="FollowerList" Request="{Binding FollowersRequest}"
+                <lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
                            ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding UserSelectedCommand}"
-                                                    CommandParameter="{Binding ElementName=FollowerList, Path=SelectedItem}" />
+                                      CommandParameter="{Binding ElementName=FollowerList, Path=SelectedItem}" />
                         </Interactivity:EventTrigger>
                     </Interactivity:Interaction.Triggers>
                 </lists:UserListBox>
             </controls:PivotItem>
         </controls:Pivot>
-    </Grid>
+    </Grid>    
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar IsVisible="{Binding ShowFollowButton}">
+            <bar:BindableApplicationBarButton Text="Follow" IconUri="/Images/appbar.user.add.png" IsEnabled="{Binding Following}" />
+            <bar:BindableApplicationBarButton Text="Unfollow" IconUri="/Images/appbar.user.minus.png" IsEnabled="{Binding NotFollowing}"/>
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
 </phone:PhoneApplicationPage>

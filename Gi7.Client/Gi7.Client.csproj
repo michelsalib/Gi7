@@ -125,6 +125,7 @@
     <Compile Include="Request\CommitCommentsRequest.cs" />
     <Compile Include="Request\CommitRequest.cs" />
     <Compile Include="Request\CommitsRequest.cs" />
+    <Compile Include="Request\UserFollowingRequest.cs" />
     <Compile Include="Request\WatchersRequest.cs" />
     <Compile Include="Request\ReceivedEventsRequest.cs" />
     <Compile Include="Request\EventsRequest.cs" />

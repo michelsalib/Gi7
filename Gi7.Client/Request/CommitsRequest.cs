@@ -19,9 +19,12 @@ namespace Gi7.Client.Request
             Uri = String.Format("/repos/{0}/{1}/commits", username, repo);
         }
 
-        public override void AddResults(IEnumerable<Push> result)
+        public override IEnumerable<PushGroup> AddResults(IEnumerable<Push> result)
         {
             var groupedResult = result.GroupBy(i => i.Commit.Commiter ? i.Commit.Commiter.Date.Trunk() : i.Commit.Author.Date.Trunk());
+
+            var r = new List<PushGroup>();
+
             foreach (var group in groupedResult)
             {
                 var existingGroup = Result.FirstOrDefault(g => g.Date == group.Key);
@@ -29,12 +32,17 @@ namespace Gi7.Client.Request
                 {
                     existingGroup = new PushGroup { Date = group.Key };
                     Result.Add(existingGroup);
-                    newResult(new List<PushGroup>(){existingGroup});
+                    r.Add(existingGroup);
+
                 }
                 existingGroup.AddRange(group);
             }
-        }
 
+            newResult(r);
+
+            return r;
+        }
+        
         public override string Uri
         {
             get

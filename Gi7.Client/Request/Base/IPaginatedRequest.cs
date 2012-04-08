@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
+using RestSharp;
 
 namespace Gi7.Client.Request.Base
 {
@@ -8,7 +9,7 @@ namespace Gi7.Client.Request.Base
         where TSource : class, new()
         where TDestination : class, new()
     {
-        event EventHandler<NewResultsEventArgs<TDestination>> NewResult;
+        event EventHandler<NewResultEventArgs<IEnumerable<TDestination>>> NewResult;
 
         int Page { get; set; }
 
@@ -16,8 +17,8 @@ namespace Gi7.Client.Request.Base
 
         ObservableCollection<TDestination> Result { get; set; }
 
-        void AddResults(IEnumerable<TSource> result);
-        
-        void MoveToNextPage();
+        IEnumerable<TDestination> AddResults(IEnumerable<TSource> result);
+
+        ObservableCollection<TDestination> Execute(RestClient client, Action<IEnumerable<TDestination>> callback = null);
     }
 }

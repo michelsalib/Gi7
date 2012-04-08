@@ -11,38 +11,15 @@ namespace Gi7.Client
 {
     public class GithubService
     {
-        private CachedClient _client;
         private bool _isAuthenticated;
         private String _password;
-
-        /// <summary>
-        /// Init will auto-authenticate if a username/password is in isolated storage
-        /// </summary>
-        public void Init()
-        {
-            String username;
-            String email;
-            String password;
-            if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password) &&
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("email", out email))
-            {
-                Email = email;
-                Username = username;
-                AuthenticateUser(email, password);
-                IsAuthenticated = true;
-            }
-            else
-            {
-                Username = "default";
-                Email = "default";
-                _client = _createClient("https://api.github.com", "", "");
-            }
-        }
-
         public String Username { get; private set; }
 
-        public String Email { get; private set; }
+        public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
+        public event EventHandler ConnectionError;
+        public event EventHandler Unauthorized;
+        public event EventHandler Success;
+        public event EventHandler<LoadingEventArgs> Loading;
 
         public bool IsAuthenticated
         {
@@ -58,30 +35,42 @@ namespace Gi7.Client
             }
         }
 
-        public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
-        public event EventHandler ConnectionError;
-        public event EventHandler Unauthorized;
-        public event EventHandler<LoadingEventArgs> Loading;
+        /// <summary>
+        /// Init will auto-authenticate if a username/password is in isolated storage
+        /// </summary>
+        public void Init()
+        {
+            String username;
+            String password;
+            if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
+            {
+                AuthenticateUser(username, password);
+                IsAuthenticated = true;
+            }
+            else
+            {
+                Username = "";
+            }
+        }
+
 
         /// <summary>
         /// Tries to authenticate and save the email/password in isolated storage
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        public void AuthenticateUser(String email, String password)
+        public void AuthenticateUser(String username, String password)
         {
-            Email = email;
+            Username = username;
             _password = password;
-            _client = _createClient("https://api.github.com", email, password);
+            var client = _createClient();
 
-            _client.ExecuteAsync<User>(new RestRequest("/user"), r =>
+            client.ExecuteAsync<User>(new RestRequest("/user"), r =>
             {
                 // set storage
-                IsolatedStorageSettings.ApplicationSettings["username"] = r.Data.Login;
-                IsolatedStorageSettings.ApplicationSettings["email"] = email;
+                IsolatedStorageSettings.ApplicationSettings["username"] = username;
                 IsolatedStorageSettings.ApplicationSettings["password"] = password;
-
-                Username = r.Data.Login;
 
                 IsAuthenticated = true;
             });
@@ -96,58 +85,22 @@ namespace Gi7.Client
             _password = "";
 
             IsolatedStorageSettings.ApplicationSettings.Remove("username");
-            IsolatedStorageSettings.ApplicationSettings.Remove("email");
             IsolatedStorageSettings.ApplicationSettings.Remove("password");
-
-            _client.ClearCache();
-            _client = _createClient("https://api.github.com", "", "");
 
             IsAuthenticated = false;
         }
 
-        public ObservableCollection<TDestination> Load<TSource, TDestination>(IPaginatedRequest<TSource, TDestination> request, Action<List<TDestination>> callback = null)
+        public ObservableCollection<TDestination> Load<TSource, TDestination>(IPaginatedRequest<TSource, TDestination> request, Action<IEnumerable<TDestination>> callback = null)
             where TSource : class, new()
             where TDestination : class, new()
         {
             // prepare client
-            CachedClient client;
-            if (request.OverrideSettings != null)
-            {
-                client = _createClient(request.OverrideSettings.BaseUri, Email, _password);
-                client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            } else
-                client = _client;
+            var client = _createClient();
 
-            // if page is 1, we need to set the collection and use cache
-            if (request.Page == 1)
-            {
-                request.Result = new ObservableCollection<TDestination>();
-                List<TSource> rawResult = client.GetList<TSource>(request.Uri, r =>
-                {
-                    request.Result.Clear();
-                    if (r.Count < 30)
-                        request.HasMoreItems = false;
+            bindRequest(request);
 
-                    request.AddResults(r);
-                    request.MoveToNextPage();
-
-                    if (callback != null)
-                        callback(request.Result.ToList());
-                });
-                request.AddResults(rawResult);
-            } // else the collection already exists and there is no cache
-            else
-                client.GetList<TSource>(request.Uri, r =>
-                {
-                    if (r.Count < 30)
-                        request.HasMoreItems = false;
-
-                    request.AddResults(r);
-                    request.MoveToNextPage();
-
-                    if (callback != null)
-                        callback(request.Result.ToList());
-                });
+            // execute
+            request.Execute(client, callback);
 
             return request.Result;
         }
@@ -156,47 +109,49 @@ namespace Gi7.Client
             where TSource : class, new()
             where TDestination : class, new()
         {
-            // prepare the client
-            CachedClient client;
-            if (request.OverrideSettings != null)
-            {
-                client = _createClient(request.OverrideSettings.BaseUri, Email, _password);
-                client.AddHandler(request.OverrideSettings.ContentType, request.OverrideSettings.Deserializer);
-            } else
-                client = _client;
+            // prepare client
+            var client = _createClient();
 
-            var rawResult = client.Get<TSource>(request.Uri, r =>
-            {
-                request.SetResult(r);
-                if (callback != null)
-                    callback(request.Result);
-            });
-            request.SetResult(rawResult);
+            bindRequest(request);
+
+            // execute
+            request.Execute(client, callback);
 
             return request.Result;
         }
 
-        private CachedClient _createClient(String baseUri, String email, String password)
+        private RestClient _createClient()
         {
-            var client = new CachedClient(baseUri, email, password);
-            client.ConnectionError += (s, e) =>
+            var client = new RestClient("https://api.github.com");
+
+            client.Authenticator = new HttpBasicAuthenticator(Username, _password);
+
+            return client;
+        }
+
+        private void bindRequest(IRequest request)
+        {
+            request.ConnectionError += (s, e) =>
             {
                 if (ConnectionError != null)
                     ConnectionError(this, new EventArgs());
             };
-            client.Unauthorized += (s, e) =>
+            request.Unauthorized += (s, e) =>
             {
                 Logout();
                 if (Unauthorized != null)
                     Unauthorized(this, new EventArgs());
             };
-            client.Loading += (s, e) =>
+            request.Success += (s, e) =>
+            {
+                if (Success != null)
+                    Success(this, new EventArgs());
+            };
+            request.Loading += (s, e) =>
             {
                 if (Loading != null)
                     Loading(this, e);
             };
-
-            return client;
         }
     }
 }

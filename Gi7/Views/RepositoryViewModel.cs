@@ -34,7 +34,7 @@ namespace Gi7.Views
                 BranchesRequest = new BranchesRequest(user, repo);
                 BranchesRequest.NewResult += (s, e) =>
                 {
-                    Branch = e.NewResults.FirstOrDefault(b => b.Name == "master");
+                    Branch = e.NewResult.FirstOrDefault(b => b.Name == "master");
                 };
             }
 

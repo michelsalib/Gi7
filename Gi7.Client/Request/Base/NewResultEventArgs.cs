@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Gi7.Client.Request.Base
 {
-    public class NewResultsEventArgs<T> : EventArgs
+    public class NewResultEventArgs<T> : EventArgs
     {
-        public IEnumerable<T> NewResults { get; set; }
+        public T NewResult { get; set; }
     }
 }

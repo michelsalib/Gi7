@@ -9,12 +9,12 @@ namespace Gi7.Client.Request
         public FeaturedRepoRequest()
         {
             Uri = "/thechangelog";
-            OverrideSettings = new OverrideSettings
-            {
-                BaseUri = "http://feeds.feedburner.com/",
-                Deserializer = new FeaturedRepoDeserializer(),
-                ContentType = "text/xml",
-            };
+        }
+
+        protected override void preRequest(RestSharp.RestClient client, RestSharp.RestRequest request)
+        {
+            client.BaseUrl = "http://feeds.feedburner.com/";
+            client.AddHandler("text/xml", new FeaturedRepoDeserializer());
         }
     }
 }

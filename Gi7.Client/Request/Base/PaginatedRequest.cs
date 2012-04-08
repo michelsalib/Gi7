@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using Gi7.Client.Utils;
+using RestSharp;
+using System.Net;
 
 namespace Gi7.Client.Request.Base
 {
@@ -10,8 +12,12 @@ namespace Gi7.Client.Request.Base
         where TSource : class, new()
         where TDestination : class, new()
     {
-        public event EventHandler<NewResultsEventArgs<TDestination>> NewResult;
-        private ObservableCollection<TDestination> _result;
+        public event EventHandler Success;
+        public event EventHandler ConnectionError;
+        public event EventHandler Unauthorized;
+        public event EventHandler<LoadingEventArgs> Loading;
+        public event EventHandler<NewResultEventArgs<IEnumerable<TDestination>>> NewResult;
+        private ObservableCollection<TDestination> _result = new ObservableCollection<TDestination>();
         protected string _uri;
 
         public PaginatedRequest()
@@ -30,8 +36,6 @@ namespace Gi7.Client.Request.Base
             protected set { _uri = value; }
         }
 
-        public OverrideSettings OverrideSettings { get; protected set; }
-
         public ObservableCollection<TDestination> Result
         {
             get { return _result; }
@@ -45,30 +49,83 @@ namespace Gi7.Client.Request.Base
             }
         }
 
-        public virtual void AddResults(IEnumerable<TSource> result)
+        public virtual ObservableCollection<TDestination> Execute(RestClient client, Action<IEnumerable<TDestination>> callback = null)
+        {
+            var request = new RestRequest(Uri);
+
+            preRequest(client, request);
+
+            if (Loading != null)
+            {
+                Loading(this, new LoadingEventArgs(true));
+            }
+
+            client.ExecuteAsync<List<TSource>>(request, r =>
+            {
+                if (Loading != null)
+                {
+                    Loading(this, new LoadingEventArgs(false));
+                }
+
+                if (r.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    if (Unauthorized != null)
+                        Unauthorized(this, new EventArgs());
+                }
+                else if (r.ResponseStatus == ResponseStatus.Error)
+                {
+                    if (ConnectionError != null)
+                        ConnectionError(this, new EventArgs());
+                }
+                else
+                {
+                    if (Success != null)
+                        Success(this, new EventArgs());
+
+                    Page++;
+
+                    if (r.Data.Count < 30)
+                    {
+                        HasMoreItems = false;
+                    }
+
+                    var cast = AddResults(r.Data);
+
+                    if (callback != null)
+                        callback(cast);
+                }
+            });
+
+            return Result;
+        }
+
+        protected virtual void preRequest(RestClient client, RestRequest request)
+        {
+
+        }
+
+        public virtual IEnumerable<TDestination> AddResults(IEnumerable<TSource> result)
         {
             var cast = result as IEnumerable<TDestination>;
-            if (cast != null)
-            {
-                Result.AddRange(cast);
-                newResult(cast);
-            }
-            else
+
+            if (cast == null) {
                 throw new NotImplementedException();
+            }
+
+            Result.AddRange(cast);
+
+            newResult(cast);
+
+            return cast;
         }
 
-        public virtual void MoveToNextPage()
-        {
-            Page++;
-        }
-
-        protected void newResult(IEnumerable<TDestination> newResults)
+        protected void newResult(IEnumerable<TDestination> result)
         {
             if (NewResult != null)
             {
-                NewResult(this, new NewResultsEventArgs<TDestination>()
+                NewResult(this, new NewResultEventArgs<IEnumerable<TDestination>>()
                 {
-                    NewResults = newResults
+                    NewResult = result,
                 });
             }
         }

@@ -2,6 +2,7 @@
 using Gi7.Client.Model.Event;
 using Gi7.Client.Request.Base;
 using Gi7.Client.Utils;
+using RestSharp;
 
 namespace Gi7.Client.Request
 {
@@ -10,12 +11,11 @@ namespace Gi7.Client.Request
         public EventsRequest(String username)
         {
             Uri = String.Format("/users/{0}/events", username);
-            OverrideSettings = new OverrideSettings
-            {
-                BaseUri = "https://api.github.com",
-                Deserializer = new EventDeserializer(),
-                ContentType = "application/json",
-            };
+        }
+
+        protected override void preRequest(RestClient client, RestRequest request)
+        {
+            client.AddHandler("application/json", new EventDeserializer());
         }
     }
 }

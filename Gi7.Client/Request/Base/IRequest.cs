@@ -4,8 +4,11 @@ namespace Gi7.Client.Request.Base
 {
     public interface IRequest
     {
-        String Uri { get; }
+        event EventHandler Success;
+        event EventHandler ConnectionError;
+        event EventHandler Unauthorized;
+        event EventHandler<LoadingEventArgs> Loading;
 
-        OverrideSettings OverrideSettings { get; }
+        String Uri { get; }
     }
 }

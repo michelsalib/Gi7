@@ -73,8 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticatedEventArgs.cs" />
-    <Compile Include="CachedClient.cs" />
-    <Compile Include="CacheProvider.cs" />
     <Compile Include="LoadingEventArgs.cs" />
     <Compile Include="GithubService.cs" />
     <Compile Include="Model\BoolModel.cs" />
@@ -117,7 +115,7 @@
     <Compile Include="Request\Base\IPaginatedRequest.cs" />
     <Compile Include="Request\Base\IRequest.cs" />
     <Compile Include="Request\Base\ISingleRequest.cs" />
-    <Compile Include="Request\Base\NewResultsEventArgs.cs" />
+    <Compile Include="Request\Base\NewResultEventArgs.cs" />
     <Compile Include="Request\Base\PaginatedRequest.cs" />
     <Compile Include="Request\Base\SingleRequest.cs" />
     <Compile Include="Request\BranchesRequest.cs" />
@@ -135,7 +133,6 @@
     <Compile Include="Request\IssueCommentsRequest.cs" />
     <Compile Include="Request\IssueRequest.cs" />
     <Compile Include="Request\IssuesRequest.cs" />
-    <Compile Include="Request\OverrideSettings.cs" />
     <Compile Include="Request\PullRequestCommentsRequest.cs" />
     <Compile Include="Request\PullRequestRequest.cs" />
     <Compile Include="Request\PullRequestsRequest.cs" />

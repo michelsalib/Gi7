@@ -63,7 +63,7 @@ namespace Gi7.Views
         {
             get
             {
-                if (Commit.Stats != null)
+                if (Commit != null && Commit.Stats != null)
                     return String.Format("Showing {0} changed files with {1} additions and {2} deletions.", Commit.Files.Count, Commit.Stats.Additions, Commit.Stats.Deletions);
                 else
                     return "";

@@ -4,7 +4,7 @@ using Gi7.Client.Request.Base;
 
 namespace Gi7.Client.Request
 {
-    public class UserRequest : SingleRequest<User, User>
+    public class UserRequest : SingleRequest<User>
     {
         public UserRequest(string username)
         {

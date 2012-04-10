@@ -8,16 +8,15 @@ using System.Net;
 
 namespace Gi7.Client.Request.Base
 {
-    public abstract class PaginatedRequest<TSource, TDestination> : ViewModelBase, IPaginatedRequest<TSource, TDestination>
-        where TSource : class, new()
-        where TDestination : class, new()
+    public abstract class PaginatedRequest<TResult> : ViewModelBase, IPaginatedRequest<TResult>
+        where TResult : class, new()
     {
         public event EventHandler Success;
         public event EventHandler ConnectionError;
         public event EventHandler Unauthorized;
         public event EventHandler<LoadingEventArgs> Loading;
-        public event EventHandler<NewResultEventArgs<IEnumerable<TDestination>>> NewResult;
-        private ObservableCollection<TDestination> _result = new ObservableCollection<TDestination>();
+        public event EventHandler<NewResultEventArgs<ObservableCollection<TResult>>> NewResult;
+        private ObservableCollection<TResult> _result = new ObservableCollection<TResult>();
         protected string _uri;
 
         public PaginatedRequest()
@@ -36,7 +35,7 @@ namespace Gi7.Client.Request.Base
             protected set { _uri = value; }
         }
 
-        public ObservableCollection<TDestination> Result
+        public ObservableCollection<TResult> Result
         {
             get { return _result; }
             set
@@ -49,38 +48,29 @@ namespace Gi7.Client.Request.Base
             }
         }
 
-        public virtual ObservableCollection<TDestination> Execute(RestClient client, Action<IEnumerable<TDestination>> callback = null)
+        public virtual ObservableCollection<TResult> Execute(RestClient client, Action<ObservableCollection<TResult>> callback = null)
         {
             var request = new RestRequest(Uri);
 
             preRequest(client, request);
 
-            if (Loading != null)
-            {
-                Loading(this, new LoadingEventArgs(true));
-            }
+            RaiseLoading(true);
 
-            client.ExecuteAsync<List<TSource>>(request, r =>
+            client.ExecuteAsync<List<TResult>>(request, r =>
             {
-                if (Loading != null)
-                {
-                    Loading(this, new LoadingEventArgs(false));
-                }
+                RaiseLoading(false);
 
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    if (Unauthorized != null)
-                        Unauthorized(this, new EventArgs());
+                    RaiseUnauthorized();
                 }
                 else if (r.ResponseStatus == ResponseStatus.Error)
                 {
-                    if (ConnectionError != null)
-                        ConnectionError(this, new EventArgs());
+                    RaiseConnectionError();
                 }
                 else
                 {
-                    if (Success != null)
-                        Success(this, new EventArgs());
+                    RaiseSuccess();
 
                     Page++;
 
@@ -89,10 +79,14 @@ namespace Gi7.Client.Request.Base
                         HasMoreItems = false;
                     }
 
-                    var cast = AddResults(r.Data);
+                    Result.AddRange(r.Data);
+
+                    RaiseNewResult(new ObservableCollection<TResult>(r.Data));
 
                     if (callback != null)
-                        callback(cast);
+                    {
+                        callback(new ObservableCollection<TResult>(r.Data));
+                    }
                 }
             });
 
@@ -104,26 +98,43 @@ namespace Gi7.Client.Request.Base
 
         }
 
-        public virtual IEnumerable<TDestination> AddResults(IEnumerable<TSource> result)
+        protected void RaiseLoading(bool isLoading)
         {
-            var cast = result as IEnumerable<TDestination>;
-
-            if (cast == null) {
-                throw new NotImplementedException();
+            if (Loading != null)
+            {
+                Loading(this, new LoadingEventArgs(isLoading));
             }
-
-            Result.AddRange(cast);
-
-            newResult(cast);
-
-            return cast;
         }
 
-        protected void newResult(IEnumerable<TDestination> result)
+        protected void RaiseUnauthorized()
+        {
+            if (Unauthorized != null)
+            {
+                Unauthorized(this, new EventArgs());
+            }
+        }
+
+        protected void RaiseConnectionError()
+        {
+            if (ConnectionError != null)
+            {
+                ConnectionError(this, new EventArgs());
+            }
+        }
+
+        protected void RaiseSuccess()
+        {
+            if (Success != null)
+            {
+                Success(this, new EventArgs());
+            }
+        }
+
+        protected void RaiseNewResult(ObservableCollection<TResult> result)
         {
             if (NewResult != null)
             {
-                NewResult(this, new NewResultEventArgs<IEnumerable<TDestination>>()
+                NewResult(this, new NewResultEventArgs<ObservableCollection<TResult>>()
                 {
                     NewResult = result,
                 });

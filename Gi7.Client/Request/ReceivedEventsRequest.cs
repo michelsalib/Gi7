@@ -5,7 +5,7 @@ using Gi7.Client.Utils;
 
 namespace Gi7.Client.Request
 {
-    public class ReceivedEventsRequest : PaginatedRequest<Event, Event>
+    public class ReceivedEventsRequest : PaginatedRequest<Event>
     {
         public ReceivedEventsRequest(String username)
         {

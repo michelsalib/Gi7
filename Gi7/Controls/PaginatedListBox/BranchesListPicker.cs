@@ -2,5 +2,5 @@
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class BranchesListPicker : PaginatedListPicker<Branch, Branch> { }
+    public class BranchesListPicker : PaginatedListPicker<Branch> { }
 }

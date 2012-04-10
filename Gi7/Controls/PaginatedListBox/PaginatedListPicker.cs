@@ -10,12 +10,11 @@ using Microsoft.Phone.Controls;
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class PaginatedListPicker<TSource, TDestination> : ListPicker
-        where TSource : class, new()
-        where TDestination : class, new()
+    public class PaginatedListPicker<TResult> : ListPicker
+        where TResult : class, new()
     {
         public static readonly DependencyProperty RequestProperty =
-            DependencyProperty.Register("Request", typeof(IPaginatedRequest<TSource, TDestination>), typeof(PaginatedListPicker<TSource, TDestination>), new PropertyMetadata(_newRequest));
+            DependencyProperty.Register("Request", typeof(IPaginatedRequest<TResult>), typeof(PaginatedListPicker<TResult>), new PropertyMetadata(_newRequest));
 
         protected bool Loading;
 
@@ -51,15 +50,15 @@ namespace Gi7.Controls.PaginatedListBox
             };
         }
 
-        public IPaginatedRequest<TSource, TDestination> Request
+        public IPaginatedRequest<TResult> Request
         {
-            get { return (IPaginatedRequest<TSource, TDestination>) GetValue(RequestProperty); }
+            get { return (IPaginatedRequest<TResult>)GetValue(RequestProperty); }
             set { SetValue(RequestProperty, value); }
         }
 
         private static void _newRequest(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var listBox = (PaginatedListPicker<TSource, TDestination>)d;
+            var listBox = (PaginatedListPicker<TResult>)d;
             listBox.SetBinding(ItemsSourceProperty, new Binding("Request.Result") {RelativeSource = new RelativeSource(RelativeSourceMode.Self)});
             listBox._load();
         }

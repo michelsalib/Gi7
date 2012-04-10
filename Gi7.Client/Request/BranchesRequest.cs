@@ -4,7 +4,7 @@ using Gi7.Client.Request.Base;
 
 namespace Gi7.Client.Request
 {
-    public class BranchesRequest : PaginatedRequest<Branch, Branch>
+    public class BranchesRequest : PaginatedRequest<Branch>
     {
         public BranchesRequest(string username, string repo)
         {

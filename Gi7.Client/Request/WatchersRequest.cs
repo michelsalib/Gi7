@@ -3,7 +3,7 @@ using Gi7.Client.Request.Base;
 
 namespace Gi7.Client.Request
 {
-    public class WatchersRequest : PaginatedRequest<User, User>
+    public class WatchersRequest : PaginatedRequest< User>
     {
         public WatchersRequest(string username, string repo)
         {

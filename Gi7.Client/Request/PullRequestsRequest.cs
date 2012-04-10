@@ -4,7 +4,7 @@ using Gi7.Client.Request.Base;
 
 namespace Gi7.Client.Request
 {
-    public class PullRequestsRequest : PaginatedRequest<PullRequest, PullRequest>
+    public class PullRequestsRequest : PaginatedRequest<PullRequest>
     {
         public PullRequestsRequest(string username, string repo)
         {

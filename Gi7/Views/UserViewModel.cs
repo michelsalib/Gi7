@@ -16,21 +16,41 @@ namespace Gi7.Views
 {
     public class UserViewModel : ViewModelBase
     {
+        private bool _showFollowButton;
+        private bool? _following;
         private EventsRequest _eventsRequest;
         private FollowersRequest _followersRequest;
         private FollowingsRequest _followingsRequest;
         private ObservableCollection<Repository> _repos;
         private User _user;
         private String _username;
-        private bool showFollowButton;
+
+        public RelayCommand FollowUserCommand { get; private set; }
+        public RelayCommand UnFollowUserCommand { get; private set; }
+        public RelayCommand<User> UserSelectedCommand { get; private set; }
+        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
 
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
-            Following = false;
-            NotFollowing = false;
             Username = user;
             EventsRequest = new EventsRequest(Username);
+            ShowFollowButton = false;
 
+            FollowUserCommand = new RelayCommand(() =>
+            {
+                githubService.Load(new UserFollowingRequest(Username, UserFollowingRequest.Type.FOLLOW), r =>
+                {
+                    Following = true;
+                });
+            }, () => Following.HasValue && !Following.Value);
+            UnFollowUserCommand = new RelayCommand(() =>
+            {
+                githubService.Load(new UserFollowingRequest(Username, UserFollowingRequest.Type.UNFOLLOW), r =>
+                {
+                    Following = false;
+                });
+            }, () => Following.HasValue && Following.Value);
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
                 if (r != null)
@@ -73,44 +93,44 @@ namespace Gi7.Views
                     case "Profile":
                     case "Details":
                         if (User == null)
+                        {
                             User = githubService.Load(new UserRequest(Username), u => User = u);
-                        githubService.ConnectionError += (sender, eventArgs) => { NotFollowing = true; };
-                        githubService.Load(new UserFollowingRequest(Username), user1 => Following = true);
+                            Following = githubService.Load(new UserFollowingRequest(Username), r => {
+                                Following = r;
+                            });
+                        }
                         ShowFollowButton = true;
                         break;
                 }
             });
         }
 
-        private bool following;
-        public bool Following
+        public bool? Following
         {
-            get { return following; }
+            get { return _following; }
             set
             {
-                following = value;
-                RaisePropertyChanged("Following");
-            }
-        }
-
-        private bool notFollowing;
-        public bool NotFollowing
-        {
-            get { return notFollowing; }
-            set
-            {
-                notFollowing = value;
-                RaisePropertyChanged("NotFollowing");
+                if (value != _following)
+                {
+                    _following = value;
+                    RaisePropertyChanged("Following");
+                    FollowUserCommand.RaiseCanExecuteChanged();
+                    UnFollowUserCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
         public bool ShowFollowButton
         {
-            get { return showFollowButton; }
+        	
+            get { return _showFollowButton; }
             set
             {
-                showFollowButton = value;
-                RaisePropertyChanged("ShowFollowButton");
+                if (value != _showFollowButton)
+                {
+                    _showFollowButton = value;
+                    RaisePropertyChanged("ShowFollowButton");
+                }
             }
         }
 
@@ -213,9 +233,5 @@ namespace Gi7.Views
                 }
             }
         }
-
-        public RelayCommand<User> UserSelectedCommand { get; private set; }
-        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
-        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
     }
 }

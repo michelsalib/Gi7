@@ -2,5 +2,5 @@
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class CommentListBox : PaginatedListBox<Comment, Comment> {}
+    public class CommentListBox : PaginatedListBox<Comment> {}
 }

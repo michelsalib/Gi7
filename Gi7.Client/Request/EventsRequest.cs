@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace Gi7.Client.Request
 {
-    public class EventsRequest : PaginatedRequest<Event, Event>
+    public class EventsRequest : PaginatedRequest<Event>
     {
         public EventsRequest(String username)
         {

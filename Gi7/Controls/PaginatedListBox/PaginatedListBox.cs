@@ -10,12 +10,11 @@ using Gi7.Service;
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class PaginatedListBox<TSource, TDestination> : ListBox
-        where TSource : class, new()
-        where TDestination : class, new()
+    public class PaginatedListBox<TResult> : ListBox
+        where TResult : class, new()
     {
         public static readonly DependencyProperty RequestProperty =
-            DependencyProperty.Register("Request", typeof (IPaginatedRequest<TSource, TDestination>), typeof (PaginatedListBox<TSource, TDestination>), new PropertyMetadata(_newRequest));
+            DependencyProperty.Register("Request", typeof (IPaginatedRequest<TResult>), typeof (PaginatedListBox<TResult>), new PropertyMetadata(_newRequest));
 
         protected bool Loading;
 
@@ -51,15 +50,15 @@ namespace Gi7.Controls.PaginatedListBox
             };
         }
 
-        public IPaginatedRequest<TSource, TDestination> Request
+        public IPaginatedRequest<TResult> Request
         {
-            get { return (IPaginatedRequest<TSource, TDestination>) GetValue(RequestProperty); }
+            get { return (IPaginatedRequest<TResult>) GetValue(RequestProperty); }
             set { SetValue(RequestProperty, value); }
         }
 
         private static void _newRequest(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var listBox = (PaginatedListBox<TSource, TDestination>) d;
+            var listBox = (PaginatedListBox<TResult>) d;
             listBox.SetBinding(ItemsSourceProperty, new Binding("Request.Result") {RelativeSource = new RelativeSource(RelativeSourceMode.Self)});
             listBox._load();
         }

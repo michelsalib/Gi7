@@ -3,7 +3,7 @@ using Gi7.Client.Request.Base;
 
 namespace Gi7.Client.Request
 {
-    public class CollaboratorRequest : PaginatedRequest<User, User>
+    public class CollaboratorRequest : PaginatedRequest<User>
     {
         public CollaboratorRequest(string username, string repo)
         {

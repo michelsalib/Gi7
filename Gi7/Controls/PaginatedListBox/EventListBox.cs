@@ -2,5 +2,5 @@
 
 namespace Gi7.Controls.PaginatedListBox
 {
-    public class EventListBox : PaginatedListBox<Event, Event> { }
+    public class EventListBox : PaginatedListBox<Event> { }
 }

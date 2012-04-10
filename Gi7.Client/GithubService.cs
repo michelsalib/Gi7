@@ -90,24 +90,7 @@ namespace Gi7.Client
             IsAuthenticated = false;
         }
 
-        public ObservableCollection<TDestination> Load<TSource, TDestination>(IPaginatedRequest<TSource, TDestination> request, Action<IEnumerable<TDestination>> callback = null)
-            where TSource : class, new()
-            where TDestination : class, new()
-        {
-            // prepare client
-            var client = _createClient();
-
-            bindRequest(request);
-
-            // execute
-            request.Execute(client, callback);
-
-            return request.Result;
-        }
-
-        public TDestination Load<TSource, TDestination>(ISingleRequest<TSource, TDestination> request, Action<TDestination> callback = null)
-            where TSource : class, new()
-            where TDestination : class, new()
+        public TResult Load<TResult>(IRequest<TResult> request, Action<TResult> callback = null)
         {
             // prepare client
             var client = _createClient();
@@ -129,7 +112,7 @@ namespace Gi7.Client
             return client;
         }
 
-        private void bindRequest(IRequest request)
+        private void bindRequest<TResult>(IRequest<TResult> request)
         {
             request.ConnectionError += (s, e) =>
             {

@@ -5,21 +5,20 @@ using System.Net;
 
 namespace Gi7.Client.Request.Base
 {
-    public abstract class SingleRequest<TSource, TDestination> : ViewModelBase, ISingleRequest<TSource, TDestination>
-        where TSource : class, new()
-        where TDestination : class, new()
+    public abstract class SingleRequest<TResult> : ViewModelBase, IRequest<TResult>
+        where TResult : new()
     {
         public event EventHandler Success;
         public event EventHandler ConnectionError;
         public event EventHandler Unauthorized;
         public event EventHandler<LoadingEventArgs> Loading;
-        public event EventHandler<NewResultEventArgs<TDestination>> NewResult;
+        public event EventHandler<NewResultEventArgs<TResult>> NewResult;
 
-        private TDestination _result;
+        private TResult _result;
 
         public string Uri { get; protected set; }
 
-        public TDestination Result
+        public TResult Result
         {
             get { return _result; }
             set
@@ -29,7 +28,7 @@ namespace Gi7.Client.Request.Base
             }
         }
 
-        public virtual TDestination Execute(RestClient client, Action<TDestination> callback = null)
+        public virtual TResult Execute(RestClient client, Action<TResult> callback = null)
         {
             var request = new RestRequest(Uri);
 
@@ -40,7 +39,7 @@ namespace Gi7.Client.Request.Base
                 Loading(this, new LoadingEventArgs(true));
             }
 
-            client.ExecuteAsync<TSource>(request, r =>
+            client.ExecuteAsync<TResult>(request, r =>
             {
                 if (Loading != null)
                 {
@@ -62,11 +61,19 @@ namespace Gi7.Client.Request.Base
                     if (Success != null)
                         Success(this, new EventArgs());
 
-                    var cast = SetResult(r.Data);
+                    Result = r.Data;
+
+                    if (NewResult != null)
+                    {
+                        NewResult(this, new NewResultEventArgs<TResult>()
+                        {
+                            NewResult = r.Data,
+                        });
+                    }
 
                     if (callback != null)
                     {
-                        callback(cast);
+                        callback(r.Data);
                     }
                 }
             });
@@ -77,33 +84,6 @@ namespace Gi7.Client.Request.Base
         protected virtual void preRequest(RestClient client, RestRequest request)
         {
 
-        }
-
-        public virtual TDestination SetResult(TSource result)
-        {
-            var cast = result as TDestination;
-
-            if (cast == null)
-            {
-                throw new NotImplementedException();
-            }
-
-            Result = cast;
-
-            newResult(cast);
-
-            return cast;
-        }
-
-        protected void newResult(TDestination result)
-        {
-            if (NewResult != null)
-            {
-                NewResult(this, new NewResultEventArgs<TDestination>()
-                {
-                    NewResult = result,
-                });
-            }
         }
     }
 }

@@ -238,6 +238,8 @@
     <Resource Include="Images\push.png" />
     <Resource Include="Images\follow.png" />
     <Resource Include="Images\fork.png" />
+    <Content Include="Images\appbar.favs.addto.rest.png" />
+    <Content Include="Images\appbar.favs.rmfrom.rest.png" />
     <Content Include="Images\appbar.user.add.png" />
     <Content Include="Images\appbar.user.minus.png" />
     <Content Include="SplashScreenImage.jpg" />

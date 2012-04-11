@@ -14,6 +14,8 @@ namespace Gi7.Views
 {
     public class RepositoryViewModel : ViewModelBase
     {
+        private bool _showAppBar;
+        private bool? _isWatching;
         private Branch _branch;
         private BranchesRequest _branchesRequest;
         private CollaboratorRequest _collaboratorRequest;
@@ -23,9 +25,25 @@ namespace Gi7.Views
         private PullRequestsRequest _pullRequestsRequest;
         private Repository _repository;
 
+        public RelayCommand OwnerCommand { get; private set; }
+        public RelayCommand WatchCommand { get; private set; }
+        public RelayCommand UnWatchCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
+        public RelayCommand<User> UserCommand { get; private set; }
+        public RelayCommand<Push> CommitSelectedCommand { get; private set; }
+        public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
+        public RelayCommand<Issue> IssueSelectedCommand { get; private set; }
+
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
+            ShowAppBar = false;
+            
             Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
+            IsWatching = githubService.Load(new RepositoryWatchRequest(user, repo), r =>
+            {
+                IsWatching = r;
+            });
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
 
@@ -46,9 +64,26 @@ namespace Gi7.Views
                 }
             });
 
+            WatchCommand = new RelayCommand(() =>
+            {
+                githubService.Load(new RepositoryWatchRequest(user, repo, RepositoryWatchRequest.Type.WATCH), r =>
+                {
+                    IsWatching = true;
+                });
+            }, () => IsWatching.HasValue && !IsWatching.Value);
+
+            UnWatchCommand = new RelayCommand(() =>
+            {
+                githubService.Load(new RepositoryWatchRequest(user, repo, RepositoryWatchRequest.Type.UNWATCH), r =>
+                {
+                    IsWatching = false;
+                });
+            }, () => IsWatching.HasValue && IsWatching.Value);
+
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
                 var header = ((PivotItem)args.AddedItems[0]).Header as String;
+                ShowAppBar = false;
                 switch (header)
                 {
                     case "Commits":
@@ -71,6 +106,9 @@ namespace Gi7.Views
                         if (WatchersRequest == null)
                             WatchersRequest = new WatchersRequest(user, repo);
                         break;
+                    case "Details":
+                        ShowAppBar = false;
+                        break;
                 }
             });
             CommitSelectedCommand = new RelayCommand<Push>(push =>
@@ -92,6 +130,35 @@ namespace Gi7.Views
                 }
             });
             UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, collaborator.Login)));
+        }
+
+        public bool? IsWatching
+        {
+            get { return _isWatching; }
+            set
+            {
+                if (value != _isWatching)
+                {
+                    _isWatching = value;
+                    RaisePropertyChanged("IsWatching");
+                    WatchCommand.RaiseCanExecuteChanged();
+                    UnWatchCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public bool ShowAppBar
+        {
+
+            get { return _showAppBar; }
+            set
+            {
+                if (value != _showAppBar)
+                {
+                    _showAppBar = value;
+                    RaisePropertyChanged("ShowAppBar");
+                }
+            }
         }
 
         public Repository Repository
@@ -197,13 +264,5 @@ namespace Gi7.Views
                 }
             }
         }
-
-        public RelayCommand OwnerCommand { get; private set; }
-        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-        public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
-        public RelayCommand<User> UserCommand { get; private set; }
-        public RelayCommand<Push> CommitSelectedCommand { get; private set; }
-        public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
-        public RelayCommand<Issue> IssueSelectedCommand { get; private set; }
     }
 }

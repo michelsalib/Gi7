@@ -10,7 +10,8 @@
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
-                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar" mc:Ignorable="d" d:DesignWidth="480"
+                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            mc:Ignorable="d" d:DesignWidth="480"
                             d:DesignHeight="696" FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait" Orientation="Portrait" shell:SystemTray.IsVisible="True"
@@ -59,13 +60,11 @@
         </controls:Pivot>
     </Grid>
     <bar:Bindable.ApplicationBar>
-        <bar:BindableApplicationBar IsVisible="{Binding ShowFollowButton}">
+        <bar:BindableApplicationBar IsVisible="{Binding ShowAppBar}">
             <bar:BindableApplicationBarButton Text="Follow" IconUri="/Images/appbar.user.add.png"
-                                              IsEnabled="{Binding ShowFollowAppButton}"
-                                              Command="{Binding FollowUserCommand}" />
+                                              Command="{Binding FollowCommand}" />
             <bar:BindableApplicationBarButton Text="Unfollow" IconUri="/Images/appbar.user.minus.png"
-                                              IsEnabled="{Binding ShowUnFollowAppButton}"
-                                              Command="{Binding UnFollowUserCommand}" />
+                                              Command="{Binding UnFollowCommand}" />
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>
 </phone:PhoneApplicationPage>

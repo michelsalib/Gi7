@@ -16,8 +16,8 @@ namespace Gi7.Views
 {
     public class UserViewModel : ViewModelBase
     {
-        private bool _showFollowButton;
-        private bool? _following;
+        private bool _showAppBar;
+        private bool? _isFollowing;
         private EventsRequest _eventsRequest;
         private FollowersRequest _followersRequest;
         private FollowingsRequest _followingsRequest;
@@ -25,8 +25,8 @@ namespace Gi7.Views
         private User _user;
         private String _username;
 
-        public RelayCommand FollowUserCommand { get; private set; }
-        public RelayCommand UnFollowUserCommand { get; private set; }
+        public RelayCommand FollowCommand { get; private set; }
+        public RelayCommand UnFollowCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
@@ -35,22 +35,22 @@ namespace Gi7.Views
         {
             Username = user;
             EventsRequest = new EventsRequest(Username);
-            ShowFollowButton = false;
+            ShowAppBar = false;
 
-            FollowUserCommand = new RelayCommand(() =>
+            FollowCommand = new RelayCommand(() =>
             {
                 githubService.Load(new UserFollowingRequest(Username, UserFollowingRequest.Type.FOLLOW), r =>
                 {
-                    Following = true;
+                    IsFollowing = true;
                 });
-            }, () => Following.HasValue && !Following.Value);
-            UnFollowUserCommand = new RelayCommand(() =>
+            }, () => IsFollowing.HasValue && !IsFollowing.Value);
+            UnFollowCommand = new RelayCommand(() =>
             {
                 githubService.Load(new UserFollowingRequest(Username, UserFollowingRequest.Type.UNFOLLOW), r =>
                 {
-                    Following = false;
+                    IsFollowing = false;
                 });
-            }, () => Following.HasValue && Following.Value);
+            }, () => IsFollowing.HasValue && IsFollowing.Value);
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
                 if (r != null)
@@ -64,7 +64,7 @@ namespace Gi7.Views
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
                 var header = ((PivotItem)args.AddedItems[0]).Header as String;
-                ShowFollowButton = false;
+                ShowAppBar = false;
                 switch (header)
                 {
                     case "Feed":
@@ -95,41 +95,41 @@ namespace Gi7.Views
                         if (User == null)
                         {
                             User = githubService.Load(new UserRequest(Username), u => User = u);
-                            Following = githubService.Load(new UserFollowingRequest(Username), r => {
-                                Following = r;
+                            IsFollowing = githubService.Load(new UserFollowingRequest(Username), r => {
+                                IsFollowing = r;
                             });
                         }
-                        ShowFollowButton = true;
+                        ShowAppBar = true;
                         break;
                 }
             });
         }
 
-        public bool? Following
+        public bool? IsFollowing
         {
-            get { return _following; }
+            get { return _isFollowing; }
             set
             {
-                if (value != _following)
+                if (value != _isFollowing)
                 {
-                    _following = value;
-                    RaisePropertyChanged("Following");
-                    FollowUserCommand.RaiseCanExecuteChanged();
-                    UnFollowUserCommand.RaiseCanExecuteChanged();
+                    _isFollowing = value;
+                    RaisePropertyChanged("IsFollowing");
+                    FollowCommand.RaiseCanExecuteChanged();
+                    UnFollowCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        public bool ShowFollowButton
+        public bool ShowAppBar
         {
         	
-            get { return _showFollowButton; }
+            get { return _showAppBar; }
             set
             {
-                if (value != _showFollowButton)
+                if (value != _showAppBar)
                 {
-                    _showFollowButton = value;
-                    RaisePropertyChanged("ShowFollowButton");
+                    _showAppBar = value;
+                    RaisePropertyChanged("ShowAppBar");
                 }
             }
         }

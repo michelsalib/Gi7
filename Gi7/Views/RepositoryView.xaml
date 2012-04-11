@@ -9,7 +9,9 @@
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-                            xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+                            xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
+                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar" 
+                            mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
@@ -215,4 +217,12 @@
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar IsVisible="{Binding ShowFollowButton}">
+            <bar:BindableApplicationBarButton Text="Watch" IconUri="/Images/appbar.favs.addto.rest.png"
+                                              Command="{Binding WatchCommand}" />
+            <bar:BindableApplicationBarButton Text="Unwatch" IconUri="/Images/appbar.favs.rmfrom.rest.png"
+                                              Command="{Binding UnWatchCommand}" />
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
 </phone:PhoneApplicationPage>

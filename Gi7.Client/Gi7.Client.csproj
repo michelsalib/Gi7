@@ -116,6 +116,7 @@
     <Compile Include="Request\Base\SuccessEventArgs.cs" />
     <Compile Include="Request\Base\PaginatedRequest.cs" />
     <Compile Include="Request\Base\SingleRequest.cs" />
+    <Compile Include="Request\Repository\List.cs" />
     <Compile Include="Request\Repository\ListBranches.cs" />
     <Compile Include="Request\Repository\ListCollaborators.cs" />
     <Compile Include="Request\Commit\ListComments.cs" />

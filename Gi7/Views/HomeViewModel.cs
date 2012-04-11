@@ -24,15 +24,20 @@ namespace Gi7.Views
     public class HomeViewModel : ViewModelBase
     {
         private readonly GithubService _githubService;
-        private ObservableCollection<FeaturedRepo> _featuredRepos;
         private ListReceived _eventsRequest;
         private UserRequest.ListFollowers _followersRequest;
         private UserRequest.ListFollowings _followingsRequest;
-        private bool _isLoggedIn;
         private ObservableCollection<Repository> _ownedRepos;
-        private ObservableCollection<Repository> _repos;
-        private User _user;
         private ObservableCollection<Repository> _watchedRepos;
+        private ObservableCollection<FeaturedRepo> _featuredRepos;
+        private User _user;
+        private bool _isLoggedIn;
+
+        public RelayCommand<Event> EventSelectedCommand { get; private set; }
+        public RelayCommand<User> UserSelectedCommand { get; private set; }
+        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
+        public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -126,36 +131,28 @@ namespace Gi7.Views
             }
         }
 
-        public IEnumerable<Repository> OwnedRepos
+        public ObservableCollection<Repository> OwnedRepos
         {
             get { return _ownedRepos; }
-        }
-
-        public IEnumerable<Repository> WatchedRepos
-        {
-            get { return _watchedRepos; }
-        }
-
-        public ObservableCollection<Repository> Repos
-        {
-            get { return _repos; }
             set
             {
-                if (_repos != value)
+                if (_ownedRepos != value)
                 {
-                    _repos = value;
-                    _repos.CollectionChanged += (sender, args) =>
-                    {
-                        var repositories = sender as IEnumerable<Repository>;
-                        if (repositories != null && repositories.Any())
-                        {
-                            foreach (Repository repository in repositories)
-                                repository.CurrentUser = _githubService.Username;
-                            _ownedRepos = new ObservableCollection<Repository>(repositories.Where(r => r.IsFrom(_githubService.Username)));
-                            _watchedRepos = new ObservableCollection<Repository>(repositories.Except(_ownedRepos));
-                        }
-                    };
-                    RaisePropertyChanged("Repos");
+                    _ownedRepos = value;
+                    RaisePropertyChanged("OwnedRepos");
+                }
+            }
+        }
+
+        public ObservableCollection<Repository> WatchedRepos
+        {
+            get { return _watchedRepos; }
+            set
+            {
+                if (_watchedRepos != value)
+                {
+                    _watchedRepos = value;
+                    RaisePropertyChanged("WatchedRepos");
                 }
             }
         }
@@ -199,11 +196,6 @@ namespace Gi7.Views
             }
         }
 
-        public RelayCommand<Event> EventSelectedCommand { get; private set; }
-        public RelayCommand<User> UserSelectedCommand { get; private set; }
-        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
-        public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
-        public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
 
         private void _loadPanel(string header)
         {
@@ -216,14 +208,13 @@ namespace Gi7.Views
                     }
                     break;
                 case "Repos":
-                    if (Repos == null)
+                    if (OwnedRepos == null)
                     {
-                        Repos = _githubService.Load(new ListWatched(_githubService.Username));
-                        Repos.CollectionChanged += (sender, args) =>
+                        OwnedRepos = _githubService.Load(new List());
+                        _githubService.Load(new ListWatched(_githubService.Username), result =>
                         {
-                            RaisePropertyChanged("WatchedRepos");
-                            RaisePropertyChanged("OwnedRepos");
-                        };
+                            WatchedRepos = new ObservableCollection<Repository>(result.Where(repo => !repo.Owner.Login.Equals(_githubService.Username, StringComparison.InvariantCultureIgnoreCase)));
+                        });
                     }
                     break;
                 case "Follower":
@@ -259,7 +250,8 @@ namespace Gi7.Views
             IsLoggedIn = false;
             User = null;
             EventsRequest = null;
-            Repos = null;
+            OwnedRepos = null;
+            WatchedRepos = null;
             FollowersRequest = null;
             FollowingsRequest = null;
         }

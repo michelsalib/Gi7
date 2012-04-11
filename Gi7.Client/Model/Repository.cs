@@ -77,11 +77,6 @@ namespace Gi7.Client.Model
             get { return String.Format(CurrentUser != null && CurrentUser.Equals(Owner.Login, StringComparison.InvariantCultureIgnoreCase) ? "{1}" : "{0}/{1}", Owner.Login, Name); }
         }
 
-        public bool IsFrom(string name)
-        {
-            return Owner.Login.Equals(name, StringComparison.InvariantCultureIgnoreCase);
-        }
-
         public override string ToString()
         {
             return Fullname;

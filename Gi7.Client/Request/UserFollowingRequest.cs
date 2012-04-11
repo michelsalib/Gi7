@@ -7,28 +7,9 @@ using System.Net;
 
 namespace Gi7.Client.Request
 {
-    public class UserFollowingRequest : ViewModelBase, IRequest<bool?>
+    public class UserFollowingRequest : SingleRequest<bool?>
     {
-        public event EventHandler Success;
-        public event EventHandler ConnectionError;
-        public event EventHandler Unauthorized;
-        public event EventHandler<LoadingEventArgs> Loading;
-        public event EventHandler<NewResultEventArgs<bool?>> NewResult;
-
         private Type _type;
-        private bool? _result;
-
-        public string Uri { get; protected set; }
-
-        public bool? Result
-        {
-            get { return _result; }
-            set
-            {
-                _result = value;
-                RaisePropertyChanged("Result");
-            }
-        }
 
         public UserFollowingRequest(string username, Type type = Type.READ)
         {
@@ -36,7 +17,7 @@ namespace Gi7.Client.Request
             _type = type;
         }
 
-        public virtual bool? Execute(RestClient client, Action<bool?> callback = null)
+        public override void Execute(RestClient client, Action<bool?> callback = null)
         {
             var request = new RestRequest(Uri);
 
@@ -53,58 +34,38 @@ namespace Gi7.Client.Request
                     break;
             }
 
-            if (Loading != null)
-            {
-                Loading(this, new LoadingEventArgs(true));
-            }
+            RaiseLoading(true);
 
             client.ExecuteAsync(request, r =>
             {
-                if (Loading != null)
-                {
-                    Loading(this, new LoadingEventArgs(false));
-                }
+                RaiseLoading(false);
 
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    if (Unauthorized != null)
-                        Unauthorized(this, new EventArgs());
+                    RaiseUnauthorized();
                 }
                 else if (r.StatusCode == HttpStatusCode.NoContent)
                 {
-                    if (Success != null)
-                        Success(this, new EventArgs());
+                    RaiseSuccess(true);
 
-                    newResult(true);
-                    callback(true);
+                    if (callback != null)
+                    {
+                        callback(true);
+                    }
                 }
                 else if (r.StatusCode == HttpStatusCode.NotFound && _type == Type.READ)
                 {
-                    if (Success != null)
-                        Success(this, new EventArgs());
-
-                    newResult(false);
-                    callback(false);
+                    RaiseSuccess(false);
+                    if (callback != null)
+                    {
+                        callback(false);
+                    }
                 }
                 else
                 {
-                    if (ConnectionError != null)
-                        ConnectionError(this, new EventArgs());
+                    RaiseConnectionError();
                 }
             });
-
-            return null;
-        }
-
-        protected void newResult(bool? result)
-        {
-            if (NewResult != null)
-            {
-                NewResult(this, new NewResultEventArgs<bool?>()
-                {
-                    NewResult = result,
-                });
-            }
         }
 
         public enum Type { READ, FOLLOW, UNFOLLOW };

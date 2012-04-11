@@ -8,68 +8,50 @@ namespace Gi7.Client.Request.Base
     public abstract class SingleRequest<TResult> : ViewModelBase, IRequest<TResult>
         where TResult : new()
     {
-        public event EventHandler Success;
         public event EventHandler ConnectionError;
         public event EventHandler Unauthorized;
         public event EventHandler<LoadingEventArgs> Loading;
-        public event EventHandler<NewResultEventArgs<TResult>> NewResult;
+        public event EventHandler<SuccessEventArgs<TResult>> Success;
 
         private TResult _result;
 
-        public string Uri { get; protected set; }
+        public virtual string Uri { get; protected set; }
 
         public TResult Result
         {
             get { return _result; }
-            set
+            protected set
             {
                 _result = value;
                 RaisePropertyChanged("Result");
             }
         }
 
-        public virtual TResult Execute(RestClient client, Action<TResult> callback = null)
+        public virtual void Execute(RestClient client, Action<TResult> callback = null)
         {
             var request = new RestRequest(Uri);
 
             preRequest(client, request);
 
-            if (Loading != null)
-            {
-                Loading(this, new LoadingEventArgs(true));
-            }
+            RaiseLoading(true);
 
             client.ExecuteAsync<TResult>(request, r =>
             {
-                if (Loading != null)
-                {
-                    Loading(this, new LoadingEventArgs(false));
-                }
+                RaiseLoading(false);
 
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    if (Unauthorized != null)
-                        Unauthorized(this, new EventArgs());
+                    RaiseUnauthorized();
                 }
                 else if (r.ResponseStatus == ResponseStatus.Error)
                 {
-                    if (ConnectionError != null)
-                        ConnectionError(this, new EventArgs());
+                    RaiseConnectionError();
                 }
                 else
                 {
-                    if (Success != null)
-                        Success(this, new EventArgs());
-
                     Result = r.Data;
 
-                    if (NewResult != null)
-                    {
-                        NewResult(this, new NewResultEventArgs<TResult>()
-                        {
-                            NewResult = r.Data,
-                        });
-                    }
+                    RaiseSuccess(r.Data);
 
                     if (callback != null)
                     {
@@ -77,13 +59,46 @@ namespace Gi7.Client.Request.Base
                     }
                 }
             });
-
-            return Result;
         }
 
         protected virtual void preRequest(RestClient client, RestRequest request)
         {
 
+        }
+
+        protected void RaiseLoading(bool isLoading)
+        {
+            if (Loading != null)
+            {
+                Loading(this, new LoadingEventArgs(isLoading));
+            }
+        }
+
+        protected void RaiseUnauthorized()
+        {
+            if (Unauthorized != null)
+            {
+                Unauthorized(this, new EventArgs());
+            }
+        }
+
+        protected void RaiseConnectionError()
+        {
+            if (ConnectionError != null)
+            {
+                ConnectionError(this, new EventArgs());
+            }
+        }
+
+        protected void RaiseSuccess(TResult result)
+        {
+            if (Success != null)
+            {
+                Success(this, new SuccessEventArgs<TResult>()
+                {
+                    NewResult = result,
+                });
+            }
         }
     }
 }

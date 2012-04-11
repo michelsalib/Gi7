@@ -8,48 +8,40 @@ using System.Net;
 
 namespace Gi7.Client.Request.Base
 {
-    public abstract class PaginatedRequest<TResult> : ViewModelBase, IPaginatedRequest<TResult>
+    public abstract class PaginatedRequest<TResult> : SingleRequest<ObservableCollection<TResult>>, IPaginatedRequest<TResult>
         where TResult : class, new()
     {
-        public event EventHandler Success;
-        public event EventHandler ConnectionError;
-        public event EventHandler Unauthorized;
-        public event EventHandler<LoadingEventArgs> Loading;
-        public event EventHandler<NewResultEventArgs<ObservableCollection<TResult>>> NewResult;
         private ObservableCollection<TResult> _result = new ObservableCollection<TResult>();
         protected string _uri;
+        private int _page = 1;
+        private bool _hasMoreItems = true;
 
-        public PaginatedRequest()
+        public bool HasMoreItems
         {
-            Page = 1;
-            HasMoreItems = true;
+            get { return _hasMoreItems ; }
+            set { _hasMoreItems = value; }
         }
+        
+        public int Page
+        {
+            get { return _page; }
+            set { _page = value; }
+        }
+        
 
-        public int Page { get; set; }
-
-        public bool HasMoreItems { get; set; }
-
-        public virtual string Uri
+        public override string Uri
         {
             get { return String.Format("{0}?page={1}", _uri, Page); }
             protected set { _uri = value; }
         }
 
-        public ObservableCollection<TResult> Result
+        public override void Execute(RestClient client, Action<ObservableCollection<TResult>> callback = null)
         {
-            get { return _result; }
-            set
+            if (Result == null)
             {
-                if (value != _result)
-                {
-                    _result = value;
-                    RaisePropertyChanged("Result");
-                }
+                Result = new ObservableCollection<TResult>();
             }
-        }
 
-        public virtual ObservableCollection<TResult> Execute(RestClient client, Action<ObservableCollection<TResult>> callback = null)
-        {
             var request = new RestRequest(Uri);
 
             preRequest(client, request);
@@ -58,6 +50,11 @@ namespace Gi7.Client.Request.Base
 
             client.ExecuteAsync<List<TResult>>(request, r =>
             {
+                if (Result == null)
+                {
+                    Result = new ObservableCollection<TResult>();
+                }
+
                 RaiseLoading(false);
 
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
@@ -70,8 +67,6 @@ namespace Gi7.Client.Request.Base
                 }
                 else
                 {
-                    RaiseSuccess();
-
                     Page++;
 
                     if (r.Data.Count < 30)
@@ -81,7 +76,7 @@ namespace Gi7.Client.Request.Base
 
                     Result.AddRange(r.Data);
 
-                    RaiseNewResult(new ObservableCollection<TResult>(r.Data));
+                    RaiseSuccess(new ObservableCollection<TResult>(r.Data));
 
                     if (callback != null)
                     {
@@ -89,56 +84,7 @@ namespace Gi7.Client.Request.Base
                     }
                 }
             });
-
-            return Result;
         }
 
-        protected virtual void preRequest(RestClient client, RestRequest request)
-        {
-
-        }
-
-        protected void RaiseLoading(bool isLoading)
-        {
-            if (Loading != null)
-            {
-                Loading(this, new LoadingEventArgs(isLoading));
-            }
-        }
-
-        protected void RaiseUnauthorized()
-        {
-            if (Unauthorized != null)
-            {
-                Unauthorized(this, new EventArgs());
-            }
-        }
-
-        protected void RaiseConnectionError()
-        {
-            if (ConnectionError != null)
-            {
-                ConnectionError(this, new EventArgs());
-            }
-        }
-
-        protected void RaiseSuccess()
-        {
-            if (Success != null)
-            {
-                Success(this, new EventArgs());
-            }
-        }
-
-        protected void RaiseNewResult(ObservableCollection<TResult> result)
-        {
-            if (NewResult != null)
-            {
-                NewResult(this, new NewResultEventArgs<ObservableCollection<TResult>>()
-                {
-                    NewResult = result,
-                });
-            }
-        }
     }
 }

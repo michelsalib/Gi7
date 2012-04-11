@@ -113,7 +113,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\Base\IPaginatedRequest.cs" />
     <Compile Include="Request\Base\IRequest.cs" />
-    <Compile Include="Request\Base\NewResultEventArgs.cs" />
+    <Compile Include="Request\Base\SuccessEventArgs.cs" />
     <Compile Include="Request\Base\PaginatedRequest.cs" />
     <Compile Include="Request\Base\SingleRequest.cs" />
     <Compile Include="Request\BranchesRequest.cs" />

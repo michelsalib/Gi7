@@ -36,8 +36,13 @@ namespace Gi7.Client.Request
             Uri = String.Format("/repos/{0}/{1}/commits", username, repo);
         }
 
-        public override ObservableCollection<PushGroup> Execute(RestClient client, Action<ObservableCollection<PushGroup>> callback = null)
+        public override void Execute(RestClient client, Action<ObservableCollection<PushGroup>> callback = null)
         {
+            if (Result == null)
+            {
+                Result = new ObservableCollection<PushGroup>();
+            }
+
             var request = new RestRequest(Uri);
 
             preRequest(client, request);
@@ -46,6 +51,11 @@ namespace Gi7.Client.Request
 
             client.ExecuteAsync<List<Push>>(request, r =>
             {
+                if (Result == null)
+                {
+                    Result = new ObservableCollection<PushGroup>();
+                }
+
                 RaiseLoading(false);
 
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
@@ -58,8 +68,6 @@ namespace Gi7.Client.Request
                 }
                 else
                 {
-                    RaiseSuccess();
-
                     Page++;
 
                     if (r.Data.Count < 30)
@@ -84,7 +92,7 @@ namespace Gi7.Client.Request
                         existingGroup.AddRange(group);
                     }
 
-                    RaiseNewResult(pushGroupResult);
+                    RaiseSuccess(pushGroupResult);
 
                     if (callback != null)
                     {
@@ -92,8 +100,6 @@ namespace Gi7.Client.Request
                     }
                 }
             });
-
-            return Result;
         }
     }
 }

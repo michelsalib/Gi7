@@ -16,10 +16,9 @@ namespace Gi7.Client
         public String Username { get; private set; }
 
         public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
+        public event EventHandler<LoadingEventArgs> Loading;
         public event EventHandler ConnectionError;
         public event EventHandler Unauthorized;
-        public event EventHandler Success;
-        public event EventHandler<LoadingEventArgs> Loading;
 
         public bool IsAuthenticated
         {
@@ -124,11 +123,6 @@ namespace Gi7.Client
                 Logout();
                 if (Unauthorized != null)
                     Unauthorized(this, new EventArgs());
-            };
-            request.Success += (s, e) =>
-            {
-                if (Success != null)
-                    Success(this, new EventArgs());
             };
             request.Loading += (s, e) =>
             {

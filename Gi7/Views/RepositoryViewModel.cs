@@ -32,7 +32,7 @@ namespace Gi7.Views
             if (BranchesRequest == null)
             {
                 BranchesRequest = new BranchesRequest(user, repo);
-                BranchesRequest.NewResult += (s, e) =>
+                BranchesRequest.Success += (s, e) =>
                 {
                     Branch = e.NewResult.FirstOrDefault(b => b.Name == "master");
                 };

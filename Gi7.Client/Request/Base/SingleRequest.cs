@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Net;
 using GalaSoft.MvvmLight;
 using RestSharp;
-using System.Net;
 
 namespace Gi7.Client.Request.Base
 {

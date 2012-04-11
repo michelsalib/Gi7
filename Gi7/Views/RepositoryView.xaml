@@ -218,7 +218,7 @@
         </controls:Pivot>
     </Grid>
     <bar:Bindable.ApplicationBar>
-        <bar:BindableApplicationBar IsVisible="{Binding ShowFollowButton}">
+        <bar:BindableApplicationBar IsVisible="{Binding ShowAppBar}">
             <bar:BindableApplicationBarButton Text="Watch" IconUri="/Images/appbar.favs.addto.rest.png"
                                               Command="{Binding WatchCommand}" />
             <bar:BindableApplicationBarButton Text="Unwatch" IconUri="/Images/appbar.favs.rmfrom.rest.png"

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Net;
 using Gi7.Client.Model;
 using Gi7.Client.Model.Extra;
 using Gi7.Client.Request.Base;
 using Gi7.Client.Utils;
-using System.Collections.ObjectModel;
 using RestSharp;
-using System.Net;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Commit
 {
-    public class CommitsRequest : PaginatedRequest<PushGroup>
+    public class List : PaginatedRequest<PushGroup>
     {
         private readonly string branch;
 
@@ -30,7 +29,7 @@ namespace Gi7.Client.Request
             protected set { _uri = value; }
         }
 
-        public CommitsRequest(string username, string repo, string branch)
+        public List(string username, string repo, string branch)
         {
             this.branch = branch;
             Uri = String.Format("/repos/{0}/{1}/commits", username, repo);

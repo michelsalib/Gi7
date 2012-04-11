@@ -8,9 +8,13 @@ using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
 using Gi7.Client.Request;
+using Gi7.Client.Request.Repository;
+using Gi7.Client.Request.User;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
+using UserRequest = Gi7.Client.Request.User;
+using Gi7.Client.Request.Event;
 
 namespace Gi7.Views
 {
@@ -18,9 +22,9 @@ namespace Gi7.Views
     {
         private bool _showAppBar;
         private bool? _isFollowing;
-        private EventsRequest _eventsRequest;
-        private FollowersRequest _followersRequest;
-        private FollowingsRequest _followingsRequest;
+        private ListForUser _eventsRequest;
+        private ListFollowers _followersRequest;
+        private ListFollowings _followingsRequest;
         private ObservableCollection<Repository> _repos;
         private User _user;
         private String _username;
@@ -34,19 +38,19 @@ namespace Gi7.Views
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
             Username = user;
-            EventsRequest = new EventsRequest(Username);
+            EventsRequest = new ListForUser(Username);
             ShowAppBar = false;
 
             FollowCommand = new RelayCommand(() =>
             {
-                githubService.Load(new UserFollowingRequest(Username, UserFollowingRequest.Type.FOLLOW), r =>
+                githubService.Load(new Follow(Username, Follow.Type.FOLLOW), r =>
                 {
                     IsFollowing = true;
                 });
             }, () => IsFollowing.HasValue && !IsFollowing.Value);
             UnFollowCommand = new RelayCommand(() =>
             {
-                githubService.Load(new UserFollowingRequest(Username, UserFollowingRequest.Type.UNFOLLOW), r =>
+                githubService.Load(new Follow(Username, Follow.Type.UNFOLLOW), r =>
                 {
                     IsFollowing = false;
                 });
@@ -69,12 +73,12 @@ namespace Gi7.Views
                 {
                     case "Feed":
                         if (EventsRequest == null)
-                            EventsRequest = new EventsRequest(Username);
+                            EventsRequest = new ListForUser(Username);
                         break;
                     case "Repos":
                         if (Repos == null)
                         {
-                            Repos = githubService.Load(new WatchedRepoRequest(Username));
+                            Repos = githubService.Load(new ListWatched(Username));
                             Repos.CollectionChanged += (sender, e) =>
                             {
                                 RaisePropertyChanged("WatchedRepos");
@@ -84,18 +88,18 @@ namespace Gi7.Views
                         break;
                     case "Follower":
                         if (FollowersRequest == null)
-                            FollowersRequest = new FollowersRequest(Username);
+                            FollowersRequest = new ListFollowers(Username);
                         break;
                     case "Following":
                         if (FollowingsRequest == null)
-                            FollowingsRequest = new FollowingsRequest(Username);
+                            FollowingsRequest = new ListFollowings(Username);
                         break;
                     case "Profile":
                     case "Details":
                         if (User == null)
                         {
-                            User = githubService.Load(new UserRequest(Username), u => User = u);
-                            IsFollowing = githubService.Load(new UserFollowingRequest(Username), r => {
+                            User = githubService.Load(new UserRequest.Get(Username), u => User = u);
+                            IsFollowing = githubService.Load(new Follow(Username), r => {
                                 IsFollowing = r;
                             });
                         }
@@ -162,7 +166,7 @@ namespace Gi7.Views
             }
         }
 
-        public EventsRequest EventsRequest
+        public ListForUser EventsRequest
         {
             get { return _eventsRequest; }
             set
@@ -208,7 +212,7 @@ namespace Gi7.Views
             }
         }
 
-        public FollowingsRequest FollowingsRequest
+        public ListFollowings FollowingsRequest
         {
             get { return _followingsRequest; }
             set
@@ -221,7 +225,7 @@ namespace Gi7.Views
             }
         }
 
-        public FollowersRequest FollowersRequest
+        public ListFollowers FollowersRequest
         {
             get { return _followersRequest; }
             set

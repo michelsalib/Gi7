@@ -2,11 +2,11 @@
 using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Issue
 {
-    public class IssueCommentsRequest : PaginatedRequest<Comment>
+    public class ListComments : PaginatedRequest<Comment>
     {
-        public IssueCommentsRequest(string username, string repo, string number)
+        public ListComments(string username, string repo, string number)
         {
             Uri = String.Format("/repos/{0}/{1}/issues/{2}/comments", username, repo, number);
         }

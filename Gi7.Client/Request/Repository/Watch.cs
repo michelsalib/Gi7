@@ -1,17 +1,15 @@
 using System;
-using Gi7.Client.Model;
-using Gi7.Client.Request.Base;
-using GalaSoft.MvvmLight;
-using RestSharp;
 using System.Net;
+using Gi7.Client.Request.Base;
+using RestSharp;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Repository
 {
-    public class RepositoryWatchRequest : SingleRequest<bool?>
+    public class Watch : SingleRequest<bool?>
     {
         private Type _type;
 
-        public RepositoryWatchRequest(string username, string reponame, Type type = Type.READ)
+        public Watch(string username, string reponame, Type type = Type.READ)
         {
             Uri = String.Format("/user/watched/{0}/{1}", username, reponame);
             _type = type;

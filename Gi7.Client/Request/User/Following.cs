@@ -1,17 +1,15 @@
 using System;
-using Gi7.Client.Model;
-using Gi7.Client.Request.Base;
-using GalaSoft.MvvmLight;
-using RestSharp;
 using System.Net;
+using Gi7.Client.Request.Base;
+using RestSharp;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.User
 {
-    public class UserFollowingRequest : SingleRequest<bool?>
+    public class Follow : SingleRequest<bool?>
     {
         private Type _type;
 
-        public UserFollowingRequest(string username, Type type = Type.READ)
+        public Follow(string username, Type type = Type.READ)
         {
             Uri = String.Format("/user/following/{0}", username);
             _type = type;

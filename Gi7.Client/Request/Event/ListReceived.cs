@@ -3,11 +3,11 @@ using Gi7.Client.Model.Event;
 using Gi7.Client.Request.Base;
 using Gi7.Client.Utils;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Event
 {
-    public class ReceivedEventsRequest : PaginatedRequest<Event>
+    public class ListReceived : PaginatedRequest<Model.Event.Event>
     {
-        public ReceivedEventsRequest(String username)
+        public ListReceived(String username)
         {
             Uri = String.Format("/users/{0}/received_events", username);
         }

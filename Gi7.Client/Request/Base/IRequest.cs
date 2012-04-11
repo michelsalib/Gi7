@@ -1,6 +1,6 @@
 ﻿using System;
-using RestSharp;
 using System.ComponentModel;
+using RestSharp;
 
 namespace Gi7.Client.Request.Base
 {

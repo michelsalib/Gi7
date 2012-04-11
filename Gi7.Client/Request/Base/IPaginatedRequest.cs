@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System;
-using RestSharp;
+﻿using System.Collections.ObjectModel;
 
 namespace Gi7.Client.Request.Base
 {

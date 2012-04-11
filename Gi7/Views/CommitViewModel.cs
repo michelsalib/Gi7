@@ -3,17 +3,17 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
-using Gi7.Client.Request;
-using Microsoft.Phone.Controls;
 using Gi7.Client.Model;
-using Gi7.Service.Navigation;
+using Gi7.Client.Request.Commit;
 using Gi7.Service;
+using Gi7.Service.Navigation;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
     public class CommitViewModel : ViewModelBase
     {
-        private CommitCommentsRequest _commentsRequest;
+        private ListComments _commentsRequest;
         private Push _commit;
         private GithubService _githubService;
         private String _repoName;
@@ -24,7 +24,7 @@ namespace Gi7.Views
 
             RepoName = String.Format("{0}/{1}", username, repo);
 
-            Commit = githubService.Load(new CommitRequest(username, repo, sha), p => Commit = p);
+            Commit = githubService.Load(new Get(username, repo, sha), p => Commit = p);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
@@ -33,7 +33,7 @@ namespace Gi7.Views
                 {
                 case "Comments":
                     if (CommentsRequest == null)
-                        CommentsRequest = new CommitCommentsRequest(username, repo, sha);
+                        CommentsRequest = new ListComments(username, repo, sha);
                     break;
                 default:
                     break;
@@ -84,7 +84,7 @@ namespace Gi7.Views
             }
         }
 
-        public CommitCommentsRequest CommentsRequest
+        public ListComments CommentsRequest
         {
             get { return _commentsRequest; }
             set

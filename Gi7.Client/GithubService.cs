@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
-using System.Linq;
 using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 using RestSharp;

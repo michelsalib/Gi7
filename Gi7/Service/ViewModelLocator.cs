@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using Gi7.Client;
 using Gi7.Controls;
 using Gi7.Resources.DesignData;
 using Gi7.Service.Navigation;
-using Gi7.Views;
 using Gi7.Utils;
-using System.Windows;
+using Gi7.Views;
 
 namespace Gi7.Service
 {

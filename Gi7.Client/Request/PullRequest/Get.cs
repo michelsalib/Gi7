@@ -2,11 +2,11 @@
 using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.PullRequest
 {
-    public class PullRequestRequest : SingleRequest<PullRequest>
+    public class Get : SingleRequest<Model.PullRequest>
     {
-        public PullRequestRequest(string username, string repo, string number)
+        public Get(string username, string repo, string number)
         {
             Uri = String.Format("/repos/{0}/{1}/pulls/{2}", username, repo, number);
         }

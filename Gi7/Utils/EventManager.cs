@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Gi7.Client.Model.Event;
-using System;
 using Gi7.Service;
 
 namespace Gi7.Utils

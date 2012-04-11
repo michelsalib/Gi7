@@ -1,7 +1,6 @@
 ﻿using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using System.Windows.Controls;
 
 // using AgFx;
 

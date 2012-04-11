@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
+using System.Net;
 using Gi7.Client.Utils;
 using RestSharp;
-using System.Net;
 
 namespace Gi7.Client.Request.Base
 {

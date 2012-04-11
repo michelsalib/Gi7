@@ -4,16 +4,16 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request;
-using Microsoft.Phone.Controls;
-using Gi7.Service.Navigation;
+using Gi7.Client.Request.Issue;
 using Gi7.Service;
+using Gi7.Service.Navigation;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
     public class IssueViewModel : ViewModelBase
     {
-        private IssueCommentsRequest _commentsRequest;
+        private ListComments _commentsRequest;
         private Issue _issue;
         private String _issueName;
         private String _repoName;
@@ -23,7 +23,7 @@ namespace Gi7.Views
             RepoName = String.Format("{0}/{1}", username, repo);
             IssueName = "Issue #" + number;
 
-            Issue = githubService.Load(new IssueRequest(username, repo, number), i => Issue = i);
+            Issue = githubService.Load(new Get(username, repo, number), i => Issue = i);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
@@ -32,7 +32,7 @@ namespace Gi7.Views
                 {
                 case "Comments":
                     if (CommentsRequest == null)
-                        CommentsRequest = new IssueCommentsRequest(username, repo, number);
+                        CommentsRequest = new ListComments(username, repo, number);
                     break;
                 default:
                     break;
@@ -84,7 +84,7 @@ namespace Gi7.Views
             }
         }
 
-        public IssueCommentsRequest CommentsRequest
+        public ListComments CommentsRequest
         {
             get { return _commentsRequest; }
             set

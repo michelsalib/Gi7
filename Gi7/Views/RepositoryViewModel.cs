@@ -3,12 +3,17 @@ using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Gi7.Client;
 using Gi7.Client.Model;
 using Gi7.Client.Request;
+using Gi7.Client.Request.Repository;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
-using Gi7.Client;
+using CommitRequest = Gi7.Client.Request.Commit;
+using IssueRequest = Gi7.Client.Request.Issue;
+using RepositoryRequest = Gi7.Client.Request.Repository;
+using PullRequestRequest = Gi7.Client.Request.PullRequest;
 
 namespace Gi7.Views
 {
@@ -17,12 +22,12 @@ namespace Gi7.Views
         private bool _showAppBar;
         private bool? _isWatching;
         private Branch _branch;
-        private BranchesRequest _branchesRequest;
-        private CollaboratorRequest _collaboratorRequest;
-        private WatchersRequest _watchersRequest;
-        private CommitsRequest _commitsRequest;
-        private IssuesRequest _issuesRequest;
-        private PullRequestsRequest _pullRequestsRequest;
+        private RepositoryRequest.ListBranches _branchesRequest;
+        private RepositoryRequest.ListCollaborators _collaboratorRequest;
+        private RepositoryRequest.ListWatchers _watchersRequest;
+        private CommitRequest.List _commitsRequest;
+        private IssueRequest.List _issuesRequest;
+        private PullRequestRequest.List _pullRequestsRequest;
         private Repository _repository;
 
         public RelayCommand OwnerCommand { get; private set; }
@@ -37,10 +42,10 @@ namespace Gi7.Views
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
-            ShowAppBar = false;
-            
-            Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
-            IsWatching = githubService.Load(new RepositoryWatchRequest(user, repo), r =>
+            ShowAppBar = true;
+
+            Repository = githubService.Load(new RepositoryRequest.Get(user, repo), r => Repository = r);
+            IsWatching = githubService.Load(new Watch(user, repo), r =>
             {
                 IsWatching = r;
             });
@@ -49,7 +54,7 @@ namespace Gi7.Views
 
             if (BranchesRequest == null)
             {
-                BranchesRequest = new BranchesRequest(user, repo);
+                BranchesRequest = new RepositoryRequest.ListBranches(user, repo);
                 BranchesRequest.Success += (s, e) =>
                 {
                     Branch = e.NewResult.FirstOrDefault(b => b.Name == "master");
@@ -66,7 +71,7 @@ namespace Gi7.Views
 
             WatchCommand = new RelayCommand(() =>
             {
-                githubService.Load(new RepositoryWatchRequest(user, repo, RepositoryWatchRequest.Type.WATCH), r =>
+                githubService.Load(new Watch(user, repo, Watch.Type.WATCH), r =>
                 {
                     IsWatching = true;
                 });
@@ -74,7 +79,7 @@ namespace Gi7.Views
 
             UnWatchCommand = new RelayCommand(() =>
             {
-                githubService.Load(new RepositoryWatchRequest(user, repo, RepositoryWatchRequest.Type.UNWATCH), r =>
+                githubService.Load(new Watch(user, repo, Watch.Type.UNWATCH), r =>
                 {
                     IsWatching = false;
                 });
@@ -88,26 +93,26 @@ namespace Gi7.Views
                 {
                     case "Commits":
                         if (CommitsRequest == null)
-                            CommitsRequest = new CommitsRequest(user, repo, Branch ? Branch.Name : "master");
+                            CommitsRequest = new CommitRequest.List(user, repo, Branch ? Branch.Name : "master");
                         break;
                     case "Pull requests":
                         if (PullRequestsRequest == null)
-                            PullRequestsRequest = new PullRequestsRequest(user, repo);
+                            PullRequestsRequest = new PullRequestRequest.List(user, repo);
                         break;
                     case "Issues":
                         if (IssuesRequest == null)
-                            IssuesRequest = new IssuesRequest(user, repo);
+                            IssuesRequest = new IssueRequest.List(user, repo);
                         break;
                     case "Collaborators":
                         if (CollaboratorRequest == null)
-                            CollaboratorRequest = new CollaboratorRequest(user, repo);
+                            CollaboratorRequest = new RepositoryRequest.ListCollaborators(user, repo);
                         break;
                     case "Watchers":
                         if (WatchersRequest == null)
-                            WatchersRequest = new WatchersRequest(user, repo);
+                            WatchersRequest = new RepositoryRequest.ListWatchers(user, repo);
                         break;
                     case "Details":
-                        ShowAppBar = false;
+                        ShowAppBar = true;
                         break;
                 }
             });
@@ -174,7 +179,7 @@ namespace Gi7.Views
             }
         }
 
-        public CommitsRequest CommitsRequest
+        public CommitRequest.List CommitsRequest
         {
             get { return _commitsRequest; }
             set
@@ -187,7 +192,7 @@ namespace Gi7.Views
             }
         }
 
-        public BranchesRequest BranchesRequest
+        public RepositoryRequest.ListBranches BranchesRequest
         {
             get { return _branchesRequest; }
             set
@@ -200,7 +205,7 @@ namespace Gi7.Views
             }
         }
 
-        public CollaboratorRequest CollaboratorRequest
+        public RepositoryRequest.ListCollaborators CollaboratorRequest
         {
             get { return _collaboratorRequest; }
             set
@@ -213,7 +218,7 @@ namespace Gi7.Views
             }
         }
 
-        public WatchersRequest WatchersRequest
+        public RepositoryRequest.ListWatchers WatchersRequest
         {
             get { return _watchersRequest; }
             set
@@ -226,7 +231,7 @@ namespace Gi7.Views
             }
         }
 
-        public PullRequestsRequest PullRequestsRequest
+        public PullRequestRequest.List PullRequestsRequest
         {
             get { return _pullRequestsRequest; }
             set
@@ -239,7 +244,7 @@ namespace Gi7.Views
             }
         }
 
-        public IssuesRequest IssuesRequest
+        public IssueRequest.List IssuesRequest
         {
             get { return _issuesRequest; }
             set

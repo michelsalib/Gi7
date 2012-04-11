@@ -11,10 +11,13 @@ using Gi7.Client.Model;
 using Gi7.Client.Model.Event;
 using Gi7.Client.Model.Extra;
 using Gi7.Client.Request;
+using Gi7.Client.Request.Event;
+using Gi7.Client.Request.Repository;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
 using Microsoft.Phone.Controls;
+using UserRequest = Gi7.Client.Request.User;
 
 namespace Gi7.Views
 {
@@ -22,9 +25,9 @@ namespace Gi7.Views
     {
         private readonly GithubService _githubService;
         private ObservableCollection<FeaturedRepo> _featuredRepos;
-        private ReceivedEventsRequest _eventsRequest;
-        private FollowersRequest _followersRequest;
-        private FollowingsRequest _followingsRequest;
+        private ListReceived _eventsRequest;
+        private UserRequest.ListFollowers _followersRequest;
+        private UserRequest.ListFollowings _followingsRequest;
         private bool _isLoggedIn;
         private ObservableCollection<Repository> _ownedRepos;
         private ObservableCollection<Repository> _repos;
@@ -110,7 +113,7 @@ namespace Gi7.Views
             }
         }
 
-        public ReceivedEventsRequest EventsRequest
+        public ListReceived EventsRequest
         {
             get { return _eventsRequest; }
             set
@@ -157,7 +160,7 @@ namespace Gi7.Views
             }
         }
 
-        public FollowingsRequest FollowingsRequest
+        public UserRequest.ListFollowings FollowingsRequest
         {
             get { return _followingsRequest; }
             set
@@ -170,7 +173,7 @@ namespace Gi7.Views
             }
         }
 
-        public FollowersRequest FollowersRequest
+        public UserRequest.ListFollowers FollowersRequest
         {
             get { return _followersRequest; }
             set
@@ -209,13 +212,13 @@ namespace Gi7.Views
                 case "News Feed":
                     if (EventsRequest == null)
                     {
-                        EventsRequest = new ReceivedEventsRequest(_githubService.Username);
+                        EventsRequest = new ListReceived(_githubService.Username);
                     }
                     break;
                 case "Repos":
                     if (Repos == null)
                     {
-                        Repos = _githubService.Load(new WatchedRepoRequest(_githubService.Username));
+                        Repos = _githubService.Load(new ListWatched(_githubService.Username));
                         Repos.CollectionChanged += (sender, args) =>
                         {
                             RaisePropertyChanged("WatchedRepos");
@@ -225,15 +228,15 @@ namespace Gi7.Views
                     break;
                 case "Follower":
                     if (FollowersRequest == null)
-                        FollowersRequest = new FollowersRequest(_githubService.Username);
+                        FollowersRequest = new UserRequest.ListFollowers(_githubService.Username);
                     break;
                 case "Following":
                     if (FollowingsRequest == null)
-                        FollowingsRequest = new FollowingsRequest(_githubService.Username);
+                        FollowingsRequest = new UserRequest.ListFollowings(_githubService.Username);
                     break;
                 case "Profile":
                     if (User == null)
-                        User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                        User = _githubService.Load(new UserRequest.Get(_githubService.Username), u => User = u);
                     break;
                 case "Explore":
                     if (FeaturedRepos == null)

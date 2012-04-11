@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Gi7.Client.Model;
 using Gi7.Client.Model.Event;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Deserializers;
-using Newtonsoft.Json;
 
 namespace Gi7.Client.Utils
 {

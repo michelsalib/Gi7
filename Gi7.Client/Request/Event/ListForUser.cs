@@ -4,11 +4,11 @@ using Gi7.Client.Request.Base;
 using Gi7.Client.Utils;
 using RestSharp;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Event
 {
-    public class EventsRequest : PaginatedRequest<Event>
+    public class ListForUser : PaginatedRequest<Model.Event.Event>
     {
-        public EventsRequest(String username)
+        public ListForUser(String username)
         {
             Uri = String.Format("/users/{0}/events", username);
         }

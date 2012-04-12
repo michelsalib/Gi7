@@ -14,6 +14,7 @@ using CommitRequest = Gi7.Client.Request.Commit;
 using IssueRequest = Gi7.Client.Request.Issue;
 using RepositoryRequest = Gi7.Client.Request.Repository;
 using PullRequestRequest = Gi7.Client.Request.PullRequest;
+using Microsoft.Phone.Tasks;
 
 namespace Gi7.Views
 {
@@ -30,6 +31,7 @@ namespace Gi7.Views
         private PullRequestRequest.List _pullRequestsRequest;
         private Repository _repository;
 
+        public RelayCommand ShareCommand { get; private set; }
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand WatchCommand { get; private set; }
         public RelayCommand UnWatchCommand { get; private set; }
@@ -50,16 +52,23 @@ namespace Gi7.Views
                 IsWatching = r;
             });
 
+            ShareCommand = new RelayCommand(() =>
+            {
+                new ShareLinkTask()
+                {
+                    LinkUri = new Uri(Repository.HtmlUrl),
+                    Title = Repository.Fullname + " is on Github.",
+                    Message = "I found the sources on Github, you might want to see it.",
+                }.Show();
+            }, () => Repository != null);
+
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
 
-            if (BranchesRequest == null)
+            BranchesRequest = new RepositoryRequest.ListBranches(user, repo);
+            BranchesRequest.Success += (s, e) =>
             {
-                BranchesRequest = new RepositoryRequest.ListBranches(user, repo);
-                BranchesRequest.Success += (s, e) =>
-                {
-                    Branch = e.NewResult.FirstOrDefault(b => b.Name == "master");
-                };
-            }
+                Branch = e.NewResult.FirstOrDefault(b => b.Name == "master");
+            };
 
             BranchChangedCommand = new RelayCommand<ListPicker>(e =>
             {
@@ -175,6 +184,7 @@ namespace Gi7.Views
                 {
                     _repository = value;
                     RaisePropertyChanged("Repository");
+                    ShareCommand.RaiseCanExecuteChanged();
                 }
             }
         }

@@ -15,6 +15,7 @@ using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
 using UserRequest = Gi7.Client.Request.User;
 using Gi7.Client.Request.Event;
+using Microsoft.Phone.Tasks;
 
 namespace Gi7.Views
 {
@@ -29,6 +30,7 @@ namespace Gi7.Views
         private User _user;
         private String _username;
 
+        public RelayCommand ShareCommand { get; private set; }
         public RelayCommand FollowCommand { get; private set; }
         public RelayCommand UnFollowCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
@@ -41,6 +43,15 @@ namespace Gi7.Views
             EventsRequest = new ListForUser(Username);
             ShowAppBar = false;
 
+            ShareCommand = new RelayCommand(() =>
+            {
+                new ShareLinkTask()
+                {
+                    LinkUri = new Uri(User.HtmlUrl),
+                    Title = User.Name + " is on Github.",
+                    Message = "I found his profile on Github, you might want to see it.",
+                }.Show();
+            }, () => User != null);
             FollowCommand = new RelayCommand(() =>
             {
                 githubService.Load(new Follow(Username, Follow.Type.FOLLOW), r =>
@@ -162,6 +173,7 @@ namespace Gi7.Views
                 {
                     _user = value;
                     RaisePropertyChanged("User");
+                    ShareCommand.RaiseCanExecuteChanged();
                 }
             }
         }

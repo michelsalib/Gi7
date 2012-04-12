@@ -9,7 +9,9 @@
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox" 
+                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
@@ -67,4 +69,12 @@
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar Mode="Minimized" IsVisible="{Binding ShowAppBar}">
+            <bar:BindableApplicationBar.MenuItems>
+                <bar:BindableApplicationBarMenuItem Text="Share"
+                                                    Command="{Binding ShareCommand}"/>
+            </bar:BindableApplicationBar.MenuItems>
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
 </phone:PhoneApplicationPage>

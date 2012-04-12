@@ -12,47 +12,43 @@
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=AboutViewModel, Source={StaticResource ViewModelLocator}}">
 
-  <!--LayoutRoot is the root grid where all page content is placed-->
-  <Grid x:Name="LayoutRoot" Background="Transparent">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-      <TextBlock x:Name="ApplicationTitle" Text="Gi7" Style="{StaticResource PhoneTextNormalStyle}" />
-      <TextBlock x:Name="PageTitle" Text="About" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
-    </StackPanel>
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="Gi7" Style="{StaticResource PhoneTextNormalStyle}" />
+            <TextBlock x:Name="PageTitle" Text="About" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
+        </StackPanel>
 
-    <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition />
-        <RowDefinition />
-        <RowDefinition />
-      </Grid.RowDefinitions>
-      <TextBlock Grid.Row="0" TextWrapping="Wrap">
-        This app is brought to you by Michel Salib. Its source code is free and hosted on Github. Feel free to follow and contribute to the repo.
-      </TextBlock>
-      <Button Grid.Row="1" HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
+        <!--ContentPanel - place additional content here-->
+        <StackPanel Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">
+            <TextBlock TextWrapping="Wrap">
+                This app is brought to you by Michel Salib. Its source code is free and hosted on Github. Feel free to follow and contribute to the repo.
+            </TextBlock>
+            <Button HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
               CommandParameter="{Binding Michelsalib}" Padding="0" BorderThickness="0">
-        <StackPanel Orientation="Horizontal">
-          <Image Source="{Binding Michelsalib.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
-          <TextBlock Text="{Binding Michelsalib.Login}" Margin="10,0,0,0" />
-        </StackPanel>
-      </Button>
-      <Button Grid.Row="2" HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Michelsalib.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
+                    <TextBlock Text="{Binding Michelsalib.Login}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
               CommandParameter="{Binding AlbertoMonteiro}" Padding="0" BorderThickness="0">
-        <StackPanel Orientation="Horizontal">
-          <Image Source="{Binding AlbertoMonteiro.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
-          <TextBlock Text="{Binding AlbertoMonteiro.Login}" Margin="10,0,0,0" />
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding AlbertoMonteiro.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
+                    <TextBlock Text="{Binding AlbertoMonteiro.Login}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Left" Command="{Binding RepoSelectedCommand}"
+                    CommandParameter="{Binding Gi7}" Padding="0" BorderThickness="0" Content="{Binding Gi7.Fullname}" />
+            <Button HorizontalAlignment="Left" Command="{Binding ShareCommand}"
+                    Padding="0" BorderThickness="0" Content="Share" />
         </StackPanel>
-      </Button>
-      <Button Grid.Row="3" HorizontalAlignment="Left" Command="{Binding RepoSelectedCommand}"
-              CommandParameter="{Binding Gi7}" Padding="0" BorderThickness="0" Content="{Binding Gi7.Fullname}" />
     </Grid>
-  </Grid>
 
 </phone:PhoneApplicationPage>

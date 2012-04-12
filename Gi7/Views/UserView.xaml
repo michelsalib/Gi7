@@ -65,6 +65,10 @@
                                               Command="{Binding FollowCommand}" />
             <bar:BindableApplicationBarButton Text="Unfollow" IconUri="/Images/appbar.user.minus.png"
                                               Command="{Binding UnFollowCommand}" />
+            <bar:BindableApplicationBar.MenuItems>
+                <bar:BindableApplicationBarMenuItem Text="Share"
+                                                    Command="{Binding ShareCommand}"/>
+            </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>
 </phone:PhoneApplicationPage>

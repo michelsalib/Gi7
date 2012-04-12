@@ -31,6 +31,8 @@ namespace Gi7.Views
         private PullRequestRequest.List _pullRequestsRequest;
         private Repository _repository;
 
+        public RelayCommand ShareDownloadCommand { get; private set; }
+        public RelayCommand DownloadCommand { get; private set; }
         public RelayCommand ShareCommand { get; private set; }
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand WatchCommand { get; private set; }
@@ -52,13 +54,31 @@ namespace Gi7.Views
                 IsWatching = r;
             });
 
+            DownloadCommand = new RelayCommand(() =>
+            {
+                new WebBrowserTask()
+                {
+                    Uri = new Uri(Repository.HtmlUrl + "/zipball/" + Branch.Name),
+                }.Show();
+            }, () => Repository != null && Branch != null);
+
+            ShareDownloadCommand = new RelayCommand(() =>
+            {
+                new ShareLinkTask()
+                {
+                    LinkUri = new Uri(Repository.HtmlUrl + "/zipball/" + Branch.Name),
+                    Title = Repository.Fullname + " sources are on Github.",
+                    Message = "I found this sources on Github, you might want to get it.",
+                }.Show();
+            }, () => Repository != null && Branch != null);
+
             ShareCommand = new RelayCommand(() =>
             {
                 new ShareLinkTask()
                 {
                     LinkUri = new Uri(Repository.HtmlUrl),
                     Title = Repository.Fullname + " is on Github.",
-                    Message = "I found the sources on Github, you might want to see it.",
+                    Message = "I found this repository on Github, you might want to see it.",
                 }.Show();
             }, () => Repository != null);
 
@@ -185,6 +205,8 @@ namespace Gi7.Views
                     _repository = value;
                     RaisePropertyChanged("Repository");
                     ShareCommand.RaiseCanExecuteChanged();
+                    ShareDownloadCommand.RaiseCanExecuteChanged();
+                    DownloadCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -276,6 +298,8 @@ namespace Gi7.Views
                 {
                     _branch = value;
                     RaisePropertyChanged("Branch");
+                    ShareDownloadCommand.RaiseCanExecuteChanged();
+                    DownloadCommand.RaiseCanExecuteChanged();
                 }
             }
         }

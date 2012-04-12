@@ -109,6 +109,7 @@
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\EmptyConverter.cs" />
     <Compile Include="Utils\Converters\EventConverter.cs" />
     <Compile Include="Utils\Converters\GravatarSizeConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />

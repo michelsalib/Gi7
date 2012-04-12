@@ -27,70 +27,76 @@
             </Interactivity:Interaction.Triggers>
             <!--Pivot item one-->
             <controls:PivotItem Header="Details">
-                <StackPanel>
-                    <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap" />
-                    <HyperlinkButton Content="Website" HorizontalAlignment="Right"
-                           NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="60" />
-                            <RowDefinition Height="60" />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Column="0" Grid.Row="0">
-                            <TextBlock Text="Watchers" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                <ScrollViewer>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap" />
+                        <HyperlinkButton Content="Website" HorizontalAlignment="Right" Visibility="{Binding Repository.Homepage, Converter={StaticResource EmptyConverter}}"
+                                         NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Column="0" Grid.Row="0">
+                                <TextBlock Text="Watchers" FontSize="42" />
+                                <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="0">
+                                <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                                <TextBlock Text="Forks" FontSize="42" />
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.Row="1">
+                                <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" />
+                                <TextBlock Text="Issues" FontSize="42" />
+                            </Grid>
                         </Grid>
-                        <Grid Grid.Column="1" Grid.Row="0">
-                            <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
-                            <TextBlock Text="Forks" FontSize="42" />
+                        <Grid>
+                            <TextBlock Text="Owner" VerticalAlignment="Center" FontSize="42.667" />
+                            <Button HorizontalAlignment="Right" Padding="0" BorderThickness="0" Command="{Binding OwnerCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Repository.Owner.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
+                                    <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
-                        <Grid Grid.Column="0" Grid.Row="1">
-                            <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" />
-                            <TextBlock Text="Issues" FontSize="42" />
-                        </Grid>
-                    </Grid>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Owner" Grid.Row="0" VerticalAlignment="Center" FontSize="42.667" />
-                        <Button Grid.Row="0" HorizontalAlignment="Right" Padding="0" BorderThickness="0" Command="{Binding OwnerCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Repository.Owner.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=34}" Width="34" Height="34" />
-                                <TextBlock Text="{Binding Repository.Owner.Login}" Margin="10,0,0,0" />
-                            </StackPanel>
-                        </Button>
-                        <TextBlock Text="This is a fork" Grid.Row="1" VerticalAlignment="Center"
+                        <TextBlock Text="This is a fork" VerticalAlignment="Center"
                                    Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" FontSize="42.667" />
-                        <paginated:BranchesListPicker x:Name="BranchesList" Grid.Row="2" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0" ExpansionMode="FullScreenOnly"
-                                                      Request="{Binding BranchesRequest}" SelectedItem="{Binding Branch, Mode=TwoWay}" >
-                            <Interactivity:Interaction.Triggers>
-                                <Interactivity:EventTrigger EventName="SelectionChanged">
-                                    <Interactivity:InvokeCommandAction Command="{Binding BranchChangedCommand}"
-                                                                       CommandParameter="{Binding ElementName=BranchesList, Path=.}" />
-                                </Interactivity:EventTrigger>
-                            </Interactivity:Interaction.Triggers>
-                            <paginated:BranchesListPicker.FullModeItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" FontSize="42.667"></TextBlock>
-                                </DataTemplate>
-                            </paginated:BranchesListPicker.FullModeItemTemplate>
-                            <paginated:BranchesListPicker.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}"></TextBlock>
-                                </DataTemplate>
-                            </paginated:BranchesListPicker.ItemTemplate>
-                        </paginated:BranchesListPicker>
-                    </Grid>
-                    <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}"
-                           TargetName="_blank" HorizontalAlignment="Right" FontSize="32" />
-                </StackPanel>
+                                                                                                <paginated:BranchesListPicker x:Name="BranchesList" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0" ExpansionMode="FullScreenOnly"
+                                                    Request="{Binding BranchesRequest}" SelectedItem="{Binding Branch, Mode=TwoWay}" >
+                        <Interactivity:Interaction.Triggers>
+                            <Interactivity:EventTrigger EventName="SelectionChanged">
+                                <Interactivity:InvokeCommandAction Command="{Binding BranchChangedCommand}"
+                                                                    CommandParameter="{Binding ElementName=BranchesList, Path=.}" />
+                            </Interactivity:EventTrigger>
+                        </Interactivity:Interaction.Triggers>
+                        <paginated:BranchesListPicker.FullModeItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" FontSize="42.667"></TextBlock>
+                            </DataTemplate>
+                        </paginated:BranchesListPicker.FullModeItemTemplate>
+                        <paginated:BranchesListPicker.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </DataTemplate>
+                        </paginated:BranchesListPicker.ItemTemplate>
+                    </paginated:BranchesListPicker>
+                        <TextBlock Text="Download" VerticalAlignment="Center" FontSize="42.667" />
+                        <Button Content="Get a Zip" Tap="OpenContextMenu" >
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu>
+                                    <toolkit:MenuItem Header="Download" Command="{Binding DownloadCommand}" />
+                                    <toolkit:MenuItem Header="Share" Command="{Binding ShareDownloadCommand}" />
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+                        </Button>
+                        <HyperlinkButton Content="See on github" NavigateUri="{Binding Path=Repository.HtmlUrl}"
+                               TargetName="_blank" HorizontalAlignment="Right" FontSize="32" />
+                    </StackPanel>
+                </ScrollViewer>
             </controls:PivotItem>
             <!--Pivot item two-->
             <controls:PivotItem Header="Commits">

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using GestureEventArgs = System.Windows.Input.GestureEventArgs;
+using System.Windows;
 
 namespace Gi7.Views
 {
@@ -32,6 +33,12 @@ namespace Gi7.Views
                 }
                 selectedItem = currSelectedItem;
             }
+        }
+
+        private void OpenContextMenu(object sender, GestureEventArgs e)
+        {
+            ContextMenu contextMenu = ContextMenuService.GetContextMenu((DependencyObject)sender);
+            contextMenu.IsOpen = true;
         }
     }
 }

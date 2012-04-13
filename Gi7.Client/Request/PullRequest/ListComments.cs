@@ -4,7 +4,7 @@ using Gi7.Client.Request.Base;
 
 namespace Gi7.Client.Request.PullRequest
 {
-    public class ListComments : PaginatedRequest<Comment>
+    public class ListComments : PaginatedRequest<Model.Comment>
     {
         public ListComments(string username, string repo, string number)
         {

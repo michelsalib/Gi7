@@ -1,4 +1,6 @@
 ﻿using Gi7.Client.Model;
+using System.Collections.Generic;
+using System;
 
 namespace Gi7.Resources.DesignData
 {
@@ -19,8 +21,118 @@ namespace Gi7.Resources.DesignData
                 Commits = 8,
                 State = "Open"
             };
+
+
+            CommentsRequest = new StubPaginatedRequest<Comment>()
+            {
+                Result = new List<Comment>()
+                {
+                    new Comment()
+                    {
+                        Body = "My comment is nice ! My comment is nice ! My comment is nice ! My comment is nice ! My comment is nice ! My comment is nice ! My comment is nice ! My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    },
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    }
+                }
+            };
         }
 
         public PullRequest PullRequest { get; set; }
+
+        public StubPaginatedRequest<Comment> CommentsRequest { get; set; }
     }
 }

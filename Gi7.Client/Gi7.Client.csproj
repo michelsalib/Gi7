@@ -117,6 +117,7 @@
     <Compile Include="Request\Base\PaginatedRequest.cs" />
     <Compile Include="Request\Base\SingleRequest.cs" />
     <Compile Include="Request\Issue\Comment.cs" />
+    <Compile Include="Request\PullRequest\Comment.cs" />
     <Compile Include="Request\Repository\List.cs" />
     <Compile Include="Request\Repository\ListBranches.cs" />
     <Compile Include="Request\Repository\ListCollaborators.cs" />

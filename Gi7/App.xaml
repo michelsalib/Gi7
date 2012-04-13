@@ -25,6 +25,7 @@
             <converters:GravatarSizeConverter x:Key="GravatarSizeConverter" />
             <converters:EventConverter x:Key="EventConverter" />
             <converters:EmptyConverter x:Key="EmptyConverter" />
+            <converters:BoolToModeConverter x:Key="BoolToModeConverter" />
             <toolkit:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
             <service:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
 

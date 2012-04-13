@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request.Commit;
+using CommitRequest = Gi7.Client.Request.Commit;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
@@ -14,21 +14,27 @@ namespace Gi7.Views
 {
     public class CommitViewModel : ViewModelBase
     {
-        private bool _showAppBar;
-        private ListComments _commentsRequest;
+        private bool _minimizeAppBar;
+        private bool _canComment;
+        private CommitRequest.ListComments _commentsRequest;
         private Push _commit;
         private GithubService _githubService;
         private String _repoName;
+        private String _comment;
 
         public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand CommentCommand { get; private set; }
         public RelayCommand RepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
 
         public CommitViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string sha)
         {
+            CanComment = false;
+            MinimizeAppBar = true;
             GithubService = githubService;
             RepoName = String.Format("{0}/{1}", username, repo);
-            ShowAppBar = true;
+
+            Commit = githubService.Load(new CommitRequest.Get(username, repo, sha), p => Commit = p);
 
             ShareCommand = new RelayCommand(() =>
             {
@@ -40,20 +46,30 @@ namespace Gi7.Views
                 }.Show();
             });
 
-            Commit = githubService.Load(new Get(username, repo, sha), p => Commit = p);
+            CommentCommand = new RelayCommand(() =>
+            {
+                githubService.Load(new CommitRequest.Comment(username, repo, sha, Comment), r =>
+                {
+                    Comment = null;
+                    CommentsRequest = new CommitRequest.ListComments(username, repo, sha);
+                });
+            }, () => _canComment && Comment != null && Comment.Trim().Length > 0);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
-                ShowAppBar = false;
+                MinimizeAppBar = true;
+                CanComment = false;
                 var header = (args.AddedItems[0] as PivotItem).Header as String;
                 switch (header)
                 {
                     case "Comments":
+                        MinimizeAppBar = false;
+                        CanComment = true;
                         if (CommentsRequest == null)
-                            CommentsRequest = new ListComments(username, repo, sha);
+                            CommentsRequest = new CommitRequest.ListComments(username, repo, sha);
                         break;
                     case "Commit":
-                        ShowAppBar = true;
+                        CanComment = false;
                         break;
                 }
             });
@@ -102,7 +118,7 @@ namespace Gi7.Views
             }
         }
 
-        public ListComments CommentsRequest
+        public CommitRequest.ListComments CommentsRequest
         {
             get { return _commentsRequest; }
             set
@@ -115,16 +131,43 @@ namespace Gi7.Views
             }
         }
 
-        public bool ShowAppBar
+        public String Comment
         {
-
-            get { return _showAppBar; }
+            get { return _comment; }
             set
             {
-                if (value != _showAppBar)
+                if (_comment != value)
                 {
-                    _showAppBar = value;
-                    RaisePropertyChanged("ShowAppBar");
+                    _comment = value;
+                    RaisePropertyChanged("Comment");
+                    CommentCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public bool MinimizeAppBar
+        {
+            get { return _minimizeAppBar; }
+            set
+            {
+                if (value != _minimizeAppBar)
+                {
+                    _minimizeAppBar = value;
+                    RaisePropertyChanged("MinimizeAppBar");
+                }
+            }
+        }
+
+        public bool CanComment
+        {
+            get { return _canComment; }
+            set
+            {
+                if (value != _canComment)
+                {
+                    _canComment = value;
+                    RaisePropertyChanged("CanComment");
+                    CommentCommand.RaiseCanExecuteChanged();
                 }
             }
         }

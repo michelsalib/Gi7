@@ -13,7 +13,7 @@
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar" 
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=CommitViewModel, Source={StaticResource ViewModelLocator}}">
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -73,27 +73,35 @@
                 </ScrollViewer>
             </controls:PivotItem>
             <controls:PivotItem Header="Comments">
-                <paginated:CommentListBox Request="{Binding CommentsRequest}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Width="440">
-                                <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
-                                       HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
-                                           VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-                                           HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                                <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                           Margin="80,25,0,0" TextWrapping="Wrap" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </paginated:CommentListBox>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="460"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <paginated:CommentListBox Grid.Row="0" Request="{Binding CommentsRequest}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="440">
+                                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
+                                           HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
+                                               HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                                    <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                               Margin="80,25,0,0" TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </paginated:CommentListBox>
+                    <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp" Grid.Row="1" MaxHeight="210" />
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
     <bar:Bindable.ApplicationBar>
-        <bar:BindableApplicationBar Mode="Minimized" IsVisible="{Binding ShowAppBar}">
+        <bar:BindableApplicationBar Mode="{Binding MinimizeAppBar, Converter={StaticResource BoolToModeConverter}}">
+            <bar:BindableApplicationBarButton Visibility="Collapsed" Text="Comment" IconUri="/Images/appbar.mess.png" Command="{Binding CommentCommand}"/>
             <bar:BindableApplicationBar.MenuItems>
                 <bar:BindableApplicationBarMenuItem Text="Share"
                                                     Command="{Binding ShareCommand}"/>

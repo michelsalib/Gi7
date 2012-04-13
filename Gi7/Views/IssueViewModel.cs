@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request.Issue;
+using IssueRequest = Gi7.Client.Request.Issue;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
@@ -14,23 +14,24 @@ namespace Gi7.Views
 {
     public class IssueViewModel : ViewModelBase
     {
-        private bool _showAppBar;
-        private ListComments _commentsRequest;
+        private IssueRequest.ListComments _commentsRequest;
         private Issue _issue;
         private String _issueName;
         private String _repoName;
+        private String _comment;
 
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand RepoSelectedCommand { get; private set; }
         public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand CommentCommand { get; private set; }
 
         public IssueViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
             RepoName = String.Format("{0}/{1}", username, repo);
             IssueName = "Issue #" + number;
-            ShowAppBar = true;
 
-            Issue = githubService.Load(new Get(username, repo, number), i => Issue = i);
+            Issue = githubService.Load(new IssueRequest.Get(username, repo, number), i => Issue = i);
+            CommentsRequest = new IssueRequest.ListComments(username, repo, number);
 
             ShareCommand = new RelayCommand(() =>
             {
@@ -42,26 +43,19 @@ namespace Gi7.Views
                 }.Show();
             }, () => Issue != null);
 
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                ShowAppBar = false;
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
-                switch (header)
-                {
-                    case "Comments":
-                        if (CommentsRequest == null)
-                            CommentsRequest = new ListComments(username, repo, number);
-                        break;
-                    default: // main pivot
-                        ShowAppBar = true;
-                        break;
-                }
-            });
-
             RepoSelectedCommand = new RelayCommand(() =>
             {
                 navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, username, repo));
             });
+
+            CommentCommand = new RelayCommand(() =>
+            {
+                githubService.Load(new IssueRequest.Comment(username, repo, number, Comment), r =>
+                {
+                    Comment = null;
+                    CommentsRequest = new IssueRequest.ListComments(username, repo, number);
+                });
+            }, () => Comment != null && Comment.Trim().Length > 0);
         }
 
         public String RepoName
@@ -104,7 +98,21 @@ namespace Gi7.Views
             }
         }
 
-        public ListComments CommentsRequest
+        public String Comment
+        {
+            get { return _comment; }
+            set
+            {
+                if (_comment != value)
+                {
+                    _comment = value;
+                    RaisePropertyChanged("Comment");
+                    CommentCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public IssueRequest.ListComments CommentsRequest
         {
             get { return _commentsRequest; }
             set
@@ -113,20 +121,6 @@ namespace Gi7.Views
                 {
                     _commentsRequest = value;
                     RaisePropertyChanged("CommentsRequest");
-                }
-            }
-        }
-
-        public bool ShowAppBar
-        {
-
-            get { return _showAppBar; }
-            set
-            {
-                if (value != _showAppBar)
-                {
-                    _showAppBar = value;
-                    RaisePropertyChanged("ShowAppBar");
                 }
             }
         }

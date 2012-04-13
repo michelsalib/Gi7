@@ -46,24 +46,29 @@ namespace Gi7.Resources.DesignData
                 }
             };
 
-            Comments = new ObservableCollection<Comment>();
-            Comments.Add(new Comment
+            CommentsRequest = new StubPaginatedRequest<Comment>()
             {
-                Body = "My comment is nice !",
-                User = new User
+                Result = new List<Comment>()
                 {
-                    Login = "michelsalib",
-                    AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
-                },
-                UpdatedAt = DateTime.Now,
-            });
+                    new Comment()
+                    {
+                        Body = "My comment is nice !",
+                        User = new User
+                        {
+                            Login = "michelsalib",
+                            AvatarUrl = "https://secure.gravatar.com/avatar/5c4663b12b9e6d8dc6dcdfbfb3dc1317",
+                        },
+                        UpdatedAt = DateTime.Now,
+                    }
+                }
+            };
         }
 
         public String RepoName { get; set; }
 
         public Push Commit { get; set; }
 
-        public ObservableCollection<Comment> Comments { get; set; }
+        public StubPaginatedRequest<Comment> CommentsRequest { get; set; }
 
         public String CommitText
         {

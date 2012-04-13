@@ -102,6 +102,7 @@
     <Compile Include="Resources\DesignData\IssueDataModel.cs" />
     <Compile Include="Resources\DesignData\ProfileRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\PullRequestDataModel.cs" />
+    <Compile Include="Resources\DesignData\StubPaginatedRequest.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
     <Compile Include="Service\LoadingEventArgs.cs" />
@@ -241,6 +242,7 @@
     <Resource Include="Images\fork.png" />
     <Content Include="Images\appbar.favs.addto.rest.png" />
     <Content Include="Images\appbar.favs.rmfrom.rest.png" />
+    <Content Include="Images\appbar.mess.png" />
     <Content Include="Images\appbar.user.add.png" />
     <Content Include="Images\appbar.user.minus.png" />
     <Content Include="SplashScreenImage.jpg" />

@@ -7,7 +7,7 @@ This is a github app for windows phone 7 in stage of development.
 - Display news feeds
 - Display watched/owned repos
 - Display following/follower users
-- Display user profile, repos, issues, pull requests, commits
+- Display user profile, repos, issues, pull requests, commits, tree and files
 - Watch/Unwatch repo
 - Follow/Unfollow user
 - List and add comment to issue, pull request and commit
@@ -23,7 +23,7 @@ This is a github app for windows phone 7 in stage of development.
 ![](https://github.com/michelsalib/Gi7/raw/master/Screens/User/Feed.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/User/Details.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/User/Followings.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/User/Followers.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/User/Repos.png) 
 
 ### Repos
-![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Repo.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Commits.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Issues.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/PullRequests.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Watchers.png) 
+![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Repo.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Tree.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/File.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Commits.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Issues.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/PullRequests.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Repo/Watchers.png) 
 
 ### Commit
 ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Commit/Details.png) ![](https://github.com/michelsalib/Gi7/raw/master/Screens/Commit/Comments.png) 

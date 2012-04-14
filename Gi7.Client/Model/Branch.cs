@@ -3,6 +3,7 @@
     public class Branch : BoolModel
     {
         public string Name { get; set; }
-        public BranchCommit Commit { get; set; }
+
+        public Commit Commit { get; set; }
     }
 }

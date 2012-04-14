@@ -14,7 +14,9 @@ using CommitRequest = Gi7.Client.Request.Commit;
 using IssueRequest = Gi7.Client.Request.Issue;
 using RepositoryRequest = Gi7.Client.Request.Repository;
 using PullRequestRequest = Gi7.Client.Request.PullRequest;
+using TreeRequest = Gi7.Client.Request.Tree;
 using Microsoft.Phone.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Gi7.Views
 {
@@ -22,8 +24,9 @@ namespace Gi7.Views
     {
         private bool _showAppBar;
         private bool? _isWatching;
+        private GitTree _tree;
         private Branch _branch;
-        private RepositoryRequest.ListBranches _branchesRequest;
+        private ObservableCollection<Branch> _branches;
         private RepositoryRequest.ListCollaborators _collaboratorRequest;
         private RepositoryRequest.ListWatchers _watchersRequest;
         private CommitRequest.List _commitsRequest;
@@ -37,8 +40,8 @@ namespace Gi7.Views
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand WatchCommand { get; private set; }
         public RelayCommand UnWatchCommand { get; private set; }
+        public RelayCommand<Gi7.Client.Model.Object> ObjectSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-        public RelayCommand<ListPicker> BranchChangedCommand { get; private set; }
         public RelayCommand<User> UserCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
         public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
@@ -52,6 +55,31 @@ namespace Gi7.Views
             IsWatching = githubService.Load(new Watch(user, repo), r =>
             {
                 IsWatching = r;
+            });
+
+            Branches = githubService.Load(new RepositoryRequest.ListBranches(user, repo), b =>
+            {
+                Branches = b;
+                Branch = b.FirstOrDefault(br => br.Name == "master");
+            });
+
+            PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "Branch")
+                {
+                    CommitsRequest = null;
+                    Tree = githubService.Load(new TreeRequest.Get(user, repo, Branch.Commit.Sha), t => Tree = t);
+                }
+            };
+
+            ObjectSelectedCommand = new RelayCommand<Client.Model.Object>(o =>
+            {
+                if (o.Type == "blob") {
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path));
+                }
+                else { //tree
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.TreeUrl, user, repo, o.Sha, o.Path));
+                }
             });
 
             DownloadCommand = new RelayCommand(() =>
@@ -83,20 +111,6 @@ namespace Gi7.Views
             }, () => Repository != null);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
-
-            BranchesRequest = new RepositoryRequest.ListBranches(user, repo);
-            BranchesRequest.Success += (s, e) =>
-            {
-                Branch = e.NewResult.FirstOrDefault(b => b.Name == "master");
-            };
-
-            BranchChangedCommand = new RelayCommand<ListPicker>(e =>
-            {
-                if (e != null)
-                {
-                    CommitsRequest = null;
-                }
-            });
 
             WatchCommand = new RelayCommand(() =>
             {
@@ -224,15 +238,15 @@ namespace Gi7.Views
             }
         }
 
-        public RepositoryRequest.ListBranches BranchesRequest
+        public ObservableCollection<Branch> Branches
         {
-            get { return _branchesRequest; }
+            get { return _branches; }
             set
             {
-                if (_branchesRequest != value)
+                if (_branches != value)
                 {
-                    _branchesRequest = value;
-                    RaisePropertyChanged("BranchesRequest");
+                    _branches = value;
+                    RaisePropertyChanged("Branches");
                 }
             }
         }
@@ -289,6 +303,19 @@ namespace Gi7.Views
             }
         }
 
+        public GitTree Tree
+        {
+            get { return _tree; }
+            set
+            {
+                if (_tree != value)
+                {
+                    _tree = value;
+                    RaisePropertyChanged("Tree");
+                }
+            }
+        }
+
         public Branch Branch
         {
             get { return _branch; }
@@ -298,6 +325,7 @@ namespace Gi7.Views
                 {
                     _branch = value;
                     RaisePropertyChanged("Branch");
+                    
                     ShareDownloadCommand.RaiseCanExecuteChanged();
                     DownloadCommand.RaiseCanExecuteChanged();
                 }

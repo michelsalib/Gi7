@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
              mc:Ignorable="d" FontFamily="{StaticResource PhoneFontFamilyNormal}"
              FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480"
-             d:DesignWidth="380" d:DataContext="{Binding Path=ProfileViewModel, Source={StaticResource ViewModelLocator}}">
+             d:DesignWidth="380">
 
   <ScrollViewer>
     <StackPanel Orientation="Vertical">

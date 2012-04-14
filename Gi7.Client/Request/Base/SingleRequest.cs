@@ -49,16 +49,23 @@ namespace Gi7.Client.Request.Base
                 }
                 else
                 {
-                    Result = r.Data;
+                    var data = getData(r);
 
-                    RaiseSuccess(r.Data);
+                    Result = data;
+
+                    RaiseSuccess(data);
 
                     if (callback != null)
                     {
-                        callback(r.Data);
+                        callback(data);
                     }
                 }
             });
+        }
+
+        protected virtual TResult getData(RestResponse<TResult> response)
+        {
+            return response.Data;
         }
 
         protected virtual void preRequest(RestClient client, RestRequest request)

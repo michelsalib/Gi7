@@ -5,7 +5,8 @@
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:utils="clr-namespace:Gi7.Utils"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:templates="clr-namespace:Gi7.Controls"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
@@ -65,25 +66,14 @@
                         </Grid>
                         <TextBlock Text="This is a fork" VerticalAlignment="Center"
                                    Visibility="{Binding Path=Repository.Parent, Converter={StaticResource NullToVisibilityConverter}}" FontSize="42.667" />
-                                                                                                <paginated:BranchesListPicker x:Name="BranchesList" FullModeHeader="Branches" Header="Branches" CacheMode="BitmapCache" Margin="0" ExpansionMode="FullScreenOnly"
-                                                    Request="{Binding BranchesRequest}" SelectedItem="{Binding Branch, Mode=TwoWay}" >
-                        <Interactivity:Interaction.Triggers>
-                            <Interactivity:EventTrigger EventName="SelectionChanged">
-                                <Interactivity:InvokeCommandAction Command="{Binding BranchChangedCommand}"
-                                                                    CommandParameter="{Binding ElementName=BranchesList, Path=.}" />
-                            </Interactivity:EventTrigger>
-                        </Interactivity:Interaction.Triggers>
-                        <paginated:BranchesListPicker.FullModeItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" FontSize="42.667"></TextBlock>
-                            </DataTemplate>
-                        </paginated:BranchesListPicker.FullModeItemTemplate>
-                        <paginated:BranchesListPicker.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}"></TextBlock>
-                            </DataTemplate>
-                        </paginated:BranchesListPicker.ItemTemplate>
-                    </paginated:BranchesListPicker>
+                        <toolkit:ListPicker FullModeHeader="Branches" Header="Branches" ExpansionMode="ExpansionAllowed"
+                                            SelectedItem="{Binding Branch, Mode=TwoWay}" ItemsSource="{Binding Branches}">
+                            <toolkit:ListPicker.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </toolkit:ListPicker.ItemTemplate>
+                        </toolkit:ListPicker>
                         <TextBlock Text="Download" VerticalAlignment="Center" FontSize="42.667" />
                         <Button Content="Get a Zip" Tap="OpenContextMenu" >
                             <toolkit:ContextMenuService.ContextMenu>
@@ -98,7 +88,9 @@
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
-            <!--Pivot item two-->
+            <controls:PivotItem Header="Tree">
+                <templates:TreePanel />
+            </controls:PivotItem>
             <controls:PivotItem Header="Commits">
                 <paginated:CommitListBox Request="{Binding CommitsRequest}" x:Name="CommitsList"
                                  VerticalAlignment="Top">

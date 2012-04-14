@@ -18,6 +18,8 @@ namespace Gi7.Service
         public const string CommitUrl = "/Views/CommitView.xaml?user={0}&repo={1}&sha={2}";
         public const string PullRequestUrl = "/Views/PullRequestView.xaml?user={0}&repo={1}&number={2}";
         public const string IssueUrl = "/Views/IssueView.xaml?user={0}&repo={1}&number={2}";
+        public const string TreeUrl = "/Views/TreeView.xaml?user={0}&repo={1}&sha={2}&path={3}";
+        public const string BlobUrl = "/Views/BlobView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string AboutUrl = "/Views/AboutView.xaml";
 
         static ViewModelLocator()
@@ -67,17 +69,6 @@ namespace Gi7.Service
             }
         }
 
-        public Object ProfileViewModel
-        {
-            get
-            {
-                if (ViewModelBase.IsInDesignModeStatic)
-                    return new ProfileRequestDataModel();
-                else
-                    return new HomeViewModel(GithubService, NavigationService);
-            }
-        }
-
         public Object RepositoryViewModel
         {
             get
@@ -108,6 +99,28 @@ namespace Gi7.Service
                     return new CommitDataModel();
                 else
                     return new CommitViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"));
+            }
+        }
+
+        public Object TreeViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                    return new TreeDataModel();
+                else
+                    return new TreeViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"), NavigationService.GetParameter("path"));
+            }
+        }
+
+        public Object BlobViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                    return new BlobDataModel();
+                else
+                    return new BlobViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"), NavigationService.GetParameter("sha"), NavigationService.GetParameter("path"));
             }
         }
 

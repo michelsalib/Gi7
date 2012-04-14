@@ -88,24 +88,26 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PaginatedListBox\BranchesListPicker.cs" />
+    <Compile Include="Controls\TreePanel.xaml.cs">
+      <DependentUpon>TreePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PaginatedListBox\CommentListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\CommitListBox.cs" />
-    <Compile Include="Controls\PaginatedListBox\PaginatedListPicker.cs" />
     <Compile Include="Controls\PaginatedListBox\UserListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\EventListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\IssueListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PaginatedListBox.cs" />
     <Compile Include="Controls\PaginatedListBox\PullRequestListBox.cs" />
     <Compile Include="Resources\DesignData\AboutDataModel.cs" />
+    <Compile Include="Resources\DesignData\BlobDataModel.cs" />
     <Compile Include="Resources\DesignData\CommitDataModel.cs" />
     <Compile Include="Resources\DesignData\IssueDataModel.cs" />
     <Compile Include="Resources\DesignData\ProfileRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\PullRequestDataModel.cs" />
     <Compile Include="Resources\DesignData\StubPaginatedRequest.cs" />
+    <Compile Include="Resources\DesignData\TreeDataModel.cs" />
     <Compile Include="Resources\DesignData\UserDataModel.cs" />
     <Compile Include="Resources\DesignData\RepositoryDataModel.cs" />
-    <Compile Include="Service\LoadingEventArgs.cs" />
     <Compile Include="Service\Navigation\INavigationService.cs" />
     <Compile Include="Service\Navigation\NavigationService.cs" />
     <Compile Include="Service\ViewModelLocator.cs" />
@@ -127,6 +129,13 @@
       <DependentUpon>CommitView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CommitViewModel.cs" />
+    <Compile Include="Views\BlobView.xaml.cs">
+      <DependentUpon>BlobView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlobViewModel.cs" />
+    <Compile Include="Views\TreeView.xaml.cs">
+      <DependentUpon>TreeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PullRequestView.xaml.cs">
       <DependentUpon>PullRequestView.xaml</DependentUpon>
     </Compile>
@@ -135,6 +144,7 @@
       <DependentUpon>IssueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IssueViewModel.cs" />
+    <Compile Include="Views\TreeViewModel.cs" />
     <Compile Include="Views\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
@@ -167,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\TreePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\UserTemplate.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +192,14 @@
     <Page Include="Views\CommitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BlobView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PullRequestView.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Gi7.Client.Model;
+using System.Collections.Generic;
 
 namespace Gi7.Resources.DesignData
 {
@@ -27,6 +28,21 @@ namespace Gi7.Resources.DesignData
                 {
                     Owner = user,
                     Name = "symfnoy"
+                }
+            };
+
+            Tree = new GitTree()
+            {
+                Tree = new List<Gi7.Client.Model.Object>()
+                {
+                    new Gi7.Client.Model.Object() {
+                        Path = "readme.md",
+                        Type = "blob",
+                    },
+                    new Gi7.Client.Model.Object() {
+                        Path = "dir",
+                        Type = "tree",
+                    },
                 }
             };
 
@@ -78,5 +94,7 @@ namespace Gi7.Resources.DesignData
         public ObservableCollection<PullRequest> PullRequests { get; set; }
 
         public ObservableCollection<Issue> Issues { get; set; }
+
+        public GitTree Tree { get; set; }
     }
 }

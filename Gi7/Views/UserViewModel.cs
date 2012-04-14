@@ -7,15 +7,14 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request;
+using Gi7.Client.Request.Event;
 using Gi7.Client.Request.Repository;
 using Gi7.Client.Request.User;
 using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
-using UserRequest = Gi7.Client.Request.User;
-using Gi7.Client.Request.Event;
 using Microsoft.Phone.Tasks;
+using UserRequest = Gi7.Client.Request.User;
 
 namespace Gi7.Views
 {

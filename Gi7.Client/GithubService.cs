@@ -46,7 +46,7 @@ namespace Gi7.Client
             }
             else
             {
-                Username = "";
+                Username = null;
             }
         }
 
@@ -77,8 +77,8 @@ namespace Gi7.Client
         /// </summary>
         public void Logout()
         {
-            Username = "";
-            _password = "";
+            Username = null;
+            _password = null;
 
             IsolatedStorageSettings.ApplicationSettings.Remove("username");
             IsolatedStorageSettings.ApplicationSettings.Remove("password");
@@ -103,7 +103,10 @@ namespace Gi7.Client
         {
             var client = new RestClient("https://api.github.com");
 
-            client.Authenticator = new HttpBasicAuthenticator(Username, _password);
+            if (Username != null && _password != null)
+            {
+                client.Authenticator = new HttpBasicAuthenticator(Username, _password);
+            }
 
             return client;
         }

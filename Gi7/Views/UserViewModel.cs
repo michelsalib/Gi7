@@ -109,9 +109,13 @@ namespace Gi7.Views
                         if (User == null)
                         {
                             User = githubService.Load(new UserRequest.Get(Username), u => User = u);
-                            IsFollowing = githubService.Load(new Follow(Username), r => {
-                                IsFollowing = r;
-                            });
+                            if (githubService.IsAuthenticated)
+                            {
+                                IsFollowing = githubService.Load(new Follow(Username), r =>
+                                {
+                                    IsFollowing = r;
+                                });
+                            }
                         }
                         ShowAppBar = true;
                         break;

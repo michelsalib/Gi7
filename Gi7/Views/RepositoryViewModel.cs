@@ -52,10 +52,14 @@ namespace Gi7.Views
             ShowAppBar = true;
 
             Repository = githubService.Load(new RepositoryRequest.Get(user, repo), r => Repository = r);
-            IsWatching = githubService.Load(new Watch(user, repo), r =>
+
+            if (githubService.IsAuthenticated)
             {
-                IsWatching = r;
-            });
+                IsWatching = githubService.Load(new Watch(user, repo), r =>
+                {
+                    IsWatching = r;
+                });
+            }
 
             Branches = githubService.Load(new RepositoryRequest.ListBranches(user, repo), b =>
             {

@@ -53,7 +53,7 @@ namespace Gi7.Views
                     Comment = null;
                     CommentsRequest = new PullRequestRequest.ListComments(username, repo, number);
                 });
-            }, () => _canComment && Comment != null && Comment.Trim().Length > 0);
+            }, () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {

@@ -55,7 +55,7 @@ namespace Gi7.Views
                     Comment = null;
                     CommentsRequest = new IssueRequest.ListComments(username, repo, number);
                 });
-            }, () => Comment != null && Comment.Trim().Length > 0);
+            }, () => githubService.IsAuthenticated && Comment != null && Comment.Trim().Length > 0);
         }
 
         public String RepoName

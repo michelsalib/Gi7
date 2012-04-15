@@ -61,7 +61,6 @@
         </Setter>
       </Style>
     </ResourceDictionary>
-    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
   </Application.Resources>
   <Application.ApplicationLifetimeObjects>
     <!--Required object that handles lifetime events for the application-->

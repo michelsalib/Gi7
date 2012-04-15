@@ -51,6 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLight.3.1.1\lib\sl4-windowsphone71\GalaSoft.MvvmLight.WP71.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.3\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -69,6 +72,9 @@
     <Reference Include="mscorlib.extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="System.Xml.XPath, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\System.Xml.XPath.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticatedEventArgs.cs" />
@@ -85,6 +91,7 @@
     <Compile Include="Model\Event\PushEvent.cs" />
     <Compile Include="Model\Event\TeamAddEvent.cs" />
     <Compile Include="Model\Event\WatchEvent.cs" />
+    <Compile Include="Model\Extra\SearchResult.cs" />
     <Compile Include="Model\Gist.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Commit.cs" />
@@ -127,6 +134,7 @@
     <Compile Include="Request\Commit\Get.cs" />
     <Compile Include="Request\Commit\List.cs" />
     <Compile Include="Request\Repository\Watch.cs" />
+    <Compile Include="Request\Search.cs" />
     <Compile Include="Request\Tree\Blob.cs" />
     <Compile Include="Request\Tree\Get.cs" />
     <Compile Include="Request\User\Following.cs" />

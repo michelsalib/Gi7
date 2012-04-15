@@ -30,14 +30,19 @@ namespace Gi7.Views
         private ObservableCollection<Repository> _ownedRepos;
         private ObservableCollection<Repository> _watchedRepos;
         private ObservableCollection<FeaturedRepo> _featuredRepos;
+        private ObservableCollection<SearchResult> _searchResults;
         private User _user;
+        private String _search;
         private bool _isLoggedIn;
 
+        public RelayCommand LogoutCommand { get; private set; }
+        public RelayCommand AboutCommand { get; private set; }
         public RelayCommand<Event> EventSelectedCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
         public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
+        public RelayCommand<SearchResult> ResultSelectedCommand { get; private set; }
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -64,7 +69,21 @@ namespace Gi7.Views
                 if (user != null)
                     navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, user.Login));
             });
+            ResultSelectedCommand = new RelayCommand<SearchResult>(r =>
+            {
+                if (r.Type == "user")
+                {
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, r.Name));
+                }
+                else // repo
+                {
+                    var repoData = r.Name.Split('/');
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.RepositoryUrl, repoData[0].Trim(), repoData[1].Trim()));
+                }
+            });
             PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => { _loadPanel((args.AddedItems[0] as PanoramaItem).Header as String); });
+            AboutCommand = new RelayCommand(() => navigationService.NavigateTo(ViewModelLocator.AboutUrl));
+            LogoutCommand = new RelayCommand(() => githubService.Logout(), () => IsLoggedIn);
 
             // init
             if (_githubService.IsAuthenticated)
@@ -81,9 +100,14 @@ namespace Gi7.Views
                     _logout();
             };
 
-            // listening to view events
-            Messenger.Default.Register<bool>(this, "logout", b => githubService.Logout());
-            Messenger.Default.Register<bool>(this, "about", b => navigationService.NavigateTo(ViewModelLocator.AboutUrl));
+            // listenning to the search box
+            PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "Search")
+                {
+                    SearchResults = githubService.Load(new Search(Search), r => SearchResults = r);
+                }
+            };
         }
 
         public bool IsLoggedIn
@@ -96,6 +120,7 @@ namespace Gi7.Views
                     _isLoggedIn = value;
                     RaisePropertyChanged("IsLoggedIn");
                     RaisePropertyChanged("IsLoggedOut");
+                    LogoutCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -196,6 +221,31 @@ namespace Gi7.Views
             }
         }
 
+        public ObservableCollection<SearchResult> SearchResults
+        {
+            get { return _searchResults; }
+            set
+            {
+                if (_searchResults != value)
+                {
+                    _searchResults = value;
+                    RaisePropertyChanged("SearchResults");
+                }
+            }
+        }
+
+        public String Search
+        {
+            get { return _search; }
+            set
+            {
+                if (_search != value)
+                {
+                    _search = value;
+                    RaisePropertyChanged("Search");
+                }
+            }
+        }
 
         private void _loadPanel(string header)
         {

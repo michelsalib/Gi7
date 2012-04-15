@@ -1,6 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
+using System.Windows.Input;
 
 namespace Gi7.Views
 {
@@ -11,14 +12,12 @@ namespace Gi7.Views
             InitializeComponent();
         }
 
-        private void Logout(object sender, EventArgs e)
+        private void KeyUp(object sender, KeyEventArgs e)
         {
-            Messenger.Default.Send(true, "logout");
-        }
-
-        private void About(object sender, EventArgs e)
-        {
-            Messenger.Default.Send(true, "about");
+            if (e.Key == Key.Enter)
+            {
+                this.Focus();
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 Bin
 obj
 *.suo
+*.user
 /_ReSharper.Gi7/
-/*.sln.DotSettings.user
 packages/*
 !packages/repositories.config

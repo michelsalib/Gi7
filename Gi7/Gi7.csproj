@@ -266,7 +266,6 @@
     <Content Include="Images\appbar.mess.png" />
     <Content Include="Images\appbar.user.add.png" />
     <Content Include="Images\appbar.user.minus.png" />
-    <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -12,7 +12,7 @@ namespace Gi7.Views
             InitializeComponent();
         }
 
-        private void KeyUp(object sender, KeyEventArgs e)
+        private void EnterPressed(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {

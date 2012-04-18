@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -9,11 +10,15 @@ using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
+using Gi7.Utils.ViewModels;
 
 namespace Gi7.Views
 {
     public class CommitViewModel : ViewModelBase
     {
+        private ObservableCollection<CommitFile> _files;
         private bool _minimizeAppBar;
         private bool _canComment;
         private CommitRequest.ListComments _commentsRequest;
@@ -34,7 +39,43 @@ namespace Gi7.Views
             GithubService = githubService;
             RepoName = String.Format("{0}/{1}", username, repo);
 
-            Commit = githubService.Load(new CommitRequest.Get(username, repo, sha), p => Commit = p);
+            Commit = githubService.Load(new CommitRequest.Get(username, repo, sha), p =>
+            {
+                Commit = p;
+
+                var files = new ObservableCollection<CommitFile>();
+                foreach (var file in p.Files)
+                {
+                    var lines = new ObservableCollection<CommitLine>();
+                    foreach (var line in file.Patch.Split('\n'))
+                    {
+                        Color color = Colors.White;
+                        switch (line.FirstOrDefault())
+                        {
+                            case '+':
+                                color = Colors.Green;
+                                break;
+                            case '-':
+                                color = Colors.Red;
+                                break;
+                        }
+
+                        lines.Add(new CommitLine
+                        {
+                            Line = line,
+                            Color = new SolidColorBrush(color),
+                        });
+                    }
+
+                    files.Add(new CommitFile
+                    {
+                        Lines = lines,
+                        File = file,
+                    });
+                }
+
+                Files = files;
+            });
 
             ShareCommand = new RelayCommand(() =>
             {
@@ -168,6 +209,19 @@ namespace Gi7.Views
                     _canComment = value;
                     RaisePropertyChanged("CanComment");
                     CommentCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<CommitFile> Files
+        {
+            get { return _files; }
+            set
+            {
+                if (value != _files)
+                {
+                    _files = value;
+                    RaisePropertyChanged("Files");
                 }
             }
         }

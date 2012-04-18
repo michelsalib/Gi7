@@ -69,7 +69,7 @@
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="Search">
                 <StackPanel Orientation="Vertical">
-                    <TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="KeyUp" />
+                    <TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="EnterPressed" />
                     <ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResults}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

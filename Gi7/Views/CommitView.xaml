@@ -47,25 +47,35 @@
                                        Margin="80,25,0,0" TextWrapping="Wrap" />
                         </Grid>
                         <TextBlock Text="{Binding Commit.Commit.Message}" TextWrapping="Wrap" />
-                        <ListBox ItemsSource="{Binding Commit.Files}"
-                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListBox ItemsSource="{Binding Files}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Margin="0,10,0,0">
-                                        <RichTextBox>
-                                            <Paragraph>
-                                                <Run Text="{Binding Filename}" FontWeight="Bold" />
-                                            </Paragraph>
-                                            <Paragraph>
-                                                <Run Text="{Binding Status}" />
-                                                <Run Text=" with " />
-                                                <Run Text="{Binding Additions}" FontWeight="Bold" Foreground="Green" />
-                                                <Run Text=" addition(s) and " />
-                                                <Run Text="{Binding Deletions}" FontWeight="Bold" Foreground="Red" />
-                                                <Run Text=" deletion(s)" />
-                                            </Paragraph>
-                                        </RichTextBox>
-                                    </StackPanel>
+                                    <toolkit:ExpanderView>
+                                        <toolkit:ExpanderView.Header>
+                                             <TextBlock Text="{Binding File.Filename}" FontWeight="Bold" />
+                                        </toolkit:ExpanderView.Header>
+                                        <toolkit:ExpanderView.Expander>
+                                            <RichTextBox>
+                                                <Paragraph>
+                                                    <Run Text="{Binding File.Status}" />
+                                                    <Run Text=" with " />
+                                                    <Run Text="{Binding File.Additions}" FontWeight="Bold" Foreground="Green" />
+                                                    <Run Text=" addition(s) and " />
+                                                    <Run Text="{Binding File.Deletions}" FontWeight="Bold" Foreground="Red" />
+                                                    <Run Text=" deletion(s)" />
+                                                </Paragraph>
+                                            </RichTextBox>
+                                        </toolkit:ExpanderView.Expander>
+                                        <toolkit:ExpanderView.Items>
+                                            <ListBox ItemsSource="{Binding Lines}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Line}" Foreground="{Binding Color}" />
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </toolkit:ExpanderView.Items>
+                                    </toolkit:ExpanderView>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

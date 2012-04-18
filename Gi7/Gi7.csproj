@@ -120,7 +120,8 @@
     <Compile Include="Utils\Converters\TextTrimConverter.cs" />
     <Compile Include="Utils\EventManager.cs" />
     <Compile Include="Utils\GlobalLoading.cs" />
-    <Compile Include="Utils\Messages\PanelMessage.cs" />
+    <Compile Include="Utils\ViewModels\CommitFile.cs" />
+    <Compile Include="Utils\ViewModels\CommitLine.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -278,6 +279,7 @@
       <Name>Gi7.Client</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

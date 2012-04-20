@@ -47,23 +47,37 @@ namespace Gi7.Views
                 foreach (var file in p.Files)
                 {
                     var lines = new ObservableCollection<CommitLine>();
-                    foreach (var line in file.Patch.Split('\n'))
+                    if (file.Patch != null)
                     {
-                        Color color = Colors.White;
-                        switch (line.FirstOrDefault())
+                        foreach (var line in file.Patch.Split('\n'))
                         {
-                            case '+':
-                                color = Colors.Green;
-                                break;
-                            case '-':
-                                color = Colors.Red;
-                                break;
-                        }
+                            Color color = Colors.White;
+                            switch (line.FirstOrDefault())
+                            {
+                                case '+':
+                                    color = Color.FromArgb(255, 49, 154, 49);
+                                    break;
+                                case '-':
+                                    color = Color.FromArgb(255, 230, 20, 0);
+                                    break;
+                                case '@':
+                                    color = Color.FromArgb(255, 25, 162, 222);
+                                    break;
+                            }
 
+                            lines.Add(new CommitLine
+                            {
+                                Line = line,
+                                Color = new SolidColorBrush(color),
+                            });
+                        }
+                    }
+                    else
+                    {
                         lines.Add(new CommitLine
                         {
-                            Line = line,
-                            Color = new SolidColorBrush(color),
+                            Line = "Binary file not shown",
+                            Color = new SolidColorBrush(Colors.Gray),
                         });
                     }
 

@@ -50,7 +50,7 @@
                         <ListBox ItemsSource="{Binding Files}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <toolkit:ExpanderView>
+                                    <toolkit:ExpanderView IsExpanded="True">
                                         <toolkit:ExpanderView.Header>
                                              <TextBlock Text="{Binding File.Filename}" FontWeight="Bold" />
                                         </toolkit:ExpanderView.Header>
@@ -70,7 +70,7 @@
                                             <ListBox ItemsSource="{Binding Lines}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Line}" Foreground="{Binding Color}" />
+                                                        <TextBlock Text="{Binding Line}" Foreground="{Binding Color}"/>
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
                                             </ListBox>

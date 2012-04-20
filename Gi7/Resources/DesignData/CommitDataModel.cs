@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gi7.Client.Model;
+using Gi7.Utils.ViewModels;
+using System.Windows.Media;
 
 namespace Gi7.Resources.DesignData
 {
@@ -32,17 +34,34 @@ namespace Gi7.Resources.DesignData
                     Deletions = 352,
                     Total = 820
                 },
-                Files = new List<File>
+            };
+
+
+            Files = new ObservableCollection<CommitFile>
+            {
+                new CommitFile
                 {
-                    new File
-                    {
-                        Status = "modified",
-                        Patch = "--- a/Gi7/Views/UserView.xaml\n+++ b/Gi7/Views/UserView.xaml\n@@ -9,6 +9,8 @@\n     xmlns:d=\"http://schemas.microsoft.com/expression/blend/2008\"\n     xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" \n     xmlns:utils=\"clr-namespace:Gi7.Utils\"\n+    xmlns:Interactivity=\"clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity\"\n+    xmlns:Command=\"clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71\"\n     mc:Ignorable=\"d\" d:DesignWidth=\"480\" d:DesignHeight=\"768\"\n     FontFamily=\"{StaticResource PhoneFontFamilyNormal}\"\n     FontSize=\"{StaticResource PhoneFontSizeNormal}\"\n@@ -21,7 +23,13 @@\n     <!--LayoutRoot is the root grid where all page content is placed-->\n     <Grid x:Name=\"LayoutRoot\" Background=\"Transparent\">\n         <!--Pivot Control-->\n-        <controls:Pivot Title=\"{Binding User}\">\n+        <controls:Pivot Title=\"{Binding Username}\">\n+            <Interactivity:Interaction.Triggers>\n+                <Interactivity:EventTrigger EventName=\"SelectionChanged\">\n+                    <Command:EventToCommand Command=\"{Binding PivotChangedCommand}\" PassEventArgsToCommand=\"True\" />\n+                </Interactivity:EventTrigger>\n+            </Interactivity:Interaction.Triggers>\n+            \n             <!--Pivot item one-->\n             <controls:PivotItem Header=\"Details\">\n                 <localControls:UserPanel />",
-                        Additions = 9,
-                        Filename = "Gi7/Views/UserView.xaml",
-                        Deletions = 1,
-                        Changes = 10
-                    }
+                    File = new File() {
+                        Filename = "Fie.cs",
+                    },
+                    Lines = new ObservableCollection<CommitLine> {
+                        new CommitLine() {
+                            Color = new SolidColorBrush(Colors.Blue),
+                            Line = "@@ line description",
+                        },
+                        new CommitLine() {
+                            Color = new SolidColorBrush(Colors.Green),
+                            Line = "+ new line",
+                        },
+                        new CommitLine() {
+                            Color = new SolidColorBrush(Colors.Red),
+                            Line = "- old line",
+                        },
+                        new CommitLine() {
+                            Color = new SolidColorBrush(Colors.White),
+                            Line = "single line",
+                        }
+                    },
                 }
             };
 
@@ -67,6 +86,8 @@ namespace Gi7.Resources.DesignData
         public String RepoName { get; set; }
 
         public Push Commit { get; set; }
+
+        public ObservableCollection<CommitFile> Files {get;set;}
 
         public StubPaginatedRequest<Comment> CommentsRequest { get; set; }
 

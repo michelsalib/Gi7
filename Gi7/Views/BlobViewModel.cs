@@ -7,6 +7,9 @@ using Gi7.Client.Model;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Service;
 using System.Collections.Generic;
+using Gi7.Utils.ContentDetector;
+using System.IO;
+using System.Linq;
 
 namespace Gi7.Views
 {
@@ -25,7 +28,14 @@ namespace Gi7.Views
 
             githubService.Load(new TreeRequest.Blob(username, repo, sha), b => {
                 byte[] encodedDataAsBytes = System.Convert.FromBase64String(b.Content);
-                TextFile = System.Text.UTF8Encoding.UTF8.GetString(encodedDataAsBytes, 0, encodedDataAsBytes.Length).Split('\n');
+                String content = System.Text.UTF8Encoding.UTF8.GetString(encodedDataAsBytes, 0, encodedDataAsBytes.Length);
+                TextFile = content.Split('\n');
+
+                var type = new ContentGuesser().GuessType(path, encodedDataAsBytes);
+                if (type != null)
+                {
+                    Console.Out.WriteLine(type.SignatureName);
+                }
             });
         }
 

@@ -1,0 +1,107 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+
+namespace Gi7.Utils.ContentDetector {
+
+    public class HeaderSignature
+    {
+        public static HeaderSignature[] StockSignatures =
+            new HeaderSignature[]
+            {
+                new HeaderSignature() { Signature = @"FFD8FFFE00", SignatureName = "JPG Graphic File", FileExtensions = new string[] { @".JPEG", @".JPE", @".JPG" } },
+                new HeaderSignature() { Signature = @"FFD8FFE000", SignatureName = "JPG Graphic File", FileExtensions = new string[] { @".JPEG", @".JPE", @".JPG" } },
+                new HeaderSignature() { Signature = @"474946383961", SignatureName = "GIF 89A", FileExtensions = new string[] { @".gif" } },
+                new HeaderSignature() { Signature = @"474946383761", SignatureName = "GIF 87A", FileExtensions = new string[] { @".gif" } },
+                new HeaderSignature() { Signature = @"424D", SignatureName = "Windows Bitmap", FileExtensions = new string[] { @".bmp" } },
+                new HeaderSignature() { Signature = @"4D5A", SignatureName = "Executable File", FileExtensions = new string[] { @".exe", @".com", @".386", @".ax", @".acm", @".sys", @".dll", @".drv", @".flt", @".fon", @".ocx", @".scr", @".lrc", @".vxd", @".cpl", @".x32" } },
+                new HeaderSignature() { Signature = @"504B0304", SignatureName = "Zip Compressed", FileExtensions = new string[] { @".zip" } },
+                new HeaderSignature() { Signature = @"3A42617365", SignatureName = "", FileExtensions = new string[] { @".cnt" } },
+                new HeaderSignature() { Signature = @"D0CF11E0A1B11AE1", SignatureName = "MS Compound Document v1 or Lotus Approach APR file", FileExtensions = new string[] { @".doc", @".xls", @".xlt", @".ppt", @".apr" } },
+                new HeaderSignature() { Signature = @"0100000058000000", SignatureName = "", FileExtensions = new string[] { @".emf" } },
+                new HeaderSignature() { Signature = @"03000000C466C456", SignatureName = "", FileExtensions = new string[] { @".evt" } },
+                new HeaderSignature() { Signature = @"3F5F0300", SignatureName = "Windows Help File", FileExtensions = new string[] { @".gid", @".hlp", @".lhp" } },
+                new HeaderSignature() { Signature = @"1F8B08", SignatureName = "GZ Compressed File", FileExtensions = new string[] { @".gz" } },
+                new HeaderSignature() { Signature = @"28546869732066696C65", SignatureName = "", FileExtensions = new string[] { @".hqx" } },
+                new HeaderSignature() { Signature = @"0000010000", SignatureName = "Icon File", FileExtensions = new string[] { @".ico" } },
+                new HeaderSignature() { Signature = @"4C000000011402", SignatureName = "Windows Link File", FileExtensions = new string[] { @".lnk" } },
+                new HeaderSignature() { Signature = @"25504446", SignatureName = "Adobe PDF File", FileExtensions = new string[] { @".pdf" } },
+                new HeaderSignature() { Signature = @"5245474544495434", SignatureName = "", FileExtensions = new string[] { @".reg" } },
+                new HeaderSignature() { Signature = @"7B5C727466", SignatureName = "Rich Text Format File", FileExtensions = new string[] { @".rtf" } },
+                new HeaderSignature() { Signature = @"lh", SignatureName = "Lz compression file", FileExtensions = new string[] { @".lzh" } },
+                new HeaderSignature() { Signature = @"25215053", SignatureName = "Adobe EPS File", FileExtensions = new string[] { @".eps" } },
+                new HeaderSignature() { Signature = @"2112", SignatureName = "AIN Archive File", FileExtensions = new string[] { @".ain" } },
+                new HeaderSignature() { Signature = @"1A02", SignatureName = "ARC/PKPAK Compressed 1", FileExtensions = new string[] { @".arc" } },
+                new HeaderSignature() { Signature = @"1A03", SignatureName = "ARC/PKPAK Compressed 2", FileExtensions = new string[] { @".arc" } },
+                new HeaderSignature() { Signature = @"1A04", SignatureName = "ARC/PKPAK Compressed 3", FileExtensions = new string[] { @".arc" } },
+                new HeaderSignature() { Signature = @"1A08", SignatureName = "ARC/PKPAK Compressed 4", FileExtensions = new string[] { @".arc" } },
+                new HeaderSignature() { Signature = @"1A09", SignatureName = "ARC/PKPAK Compressed 5", FileExtensions = new string[] { @".arc" } },
+                new HeaderSignature() { Signature = @"60EA", SignatureName = "ARJ Compressed", FileExtensions = new string[] { @".arj" } },
+                new HeaderSignature() { Signature = @"41564920", SignatureName = "Audio Video Interleave (AVI)", FileExtensions = new string[] { @".avi" } },
+                new HeaderSignature() { Signature = @"425A68", SignatureName = "Bzip Archive", FileExtensions = new string[] { @".bz", @".bz2" } },
+                new HeaderSignature() { Signature = @"49536328", SignatureName = "Cabinet File", FileExtensions = new string[] { @".cab" } },
+                new HeaderSignature() { Signature = @"4C01", SignatureName = "Compiled Object Module", FileExtensions = new string[] { @".obj" } },
+                new HeaderSignature() { Signature = @"303730373037", SignatureName = "CPIO Archive File", FileExtensions = new string[] { @".tar", @".cpio" } },
+                new HeaderSignature() { Signature = @"4352555348", SignatureName = "CRUSH Archive File", FileExtensions = new string[] { @".cru", @".crush" } },
+                new HeaderSignature() { Signature = @"3ADE68B1", SignatureName = "DCX Graphic File", FileExtensions = new string[] { @".dcx" } },
+                new HeaderSignature() { Signature = @"1F8B", SignatureName = "Gzip Archive File", FileExtensions = new string[] { @".gz", @".tar", @".tgz" } },
+                new HeaderSignature() { Signature = @"91334846", SignatureName = "HAP Archive File", FileExtensions = new string[] { @".hap" } },
+                new HeaderSignature() { Signature = @"3C68746D6C3E", SignatureName = "HyperText Markup Language 1", FileExtensions = new string[] { @".htm", @".html" } },
+                new HeaderSignature() { Signature = @"3C48544D4C3E", SignatureName = "HyperText Markup Language 2", FileExtensions = new string[] { @".htm", @".html" } },
+                new HeaderSignature() { Signature = @"3C21444F4354", SignatureName = "HyperText Markup Language 3", FileExtensions = new string[] { @".htm", @".html" } },
+                new HeaderSignature() { Signature = @"100", SignatureName = "ICON File", FileExtensions = new string[] { @".ico" } },
+                new HeaderSignature() { Signature = @"5F27A889", SignatureName = "JAR Archive File", FileExtensions = new string[] { @".jar" } },
+                new HeaderSignature() { Signature = @"2D6C68352D", SignatureName = "LHA Compressed", FileExtensions = new string[] { @".lha" } },
+                new HeaderSignature() { Signature = @"20006040600", SignatureName = "Lotus 123 v1 Worksheet", FileExtensions = new string[] { @".wk1", @".wks" } },
+                new HeaderSignature() { Signature = @"00001A0007800100", SignatureName = "Lotus 123 v3 FMT file", FileExtensions = new string[] { @".fm3" } },
+                new HeaderSignature() { Signature = @"00001A0000100400", SignatureName = "Lotus 123 v3 Worksheet", FileExtensions = new string[] { @".wk3" } },
+                new HeaderSignature() { Signature = @"20006800200", SignatureName = "Lotus 123 v4 FMT file", FileExtensions = new string[] { @".fmt" } },
+                new HeaderSignature() { Signature = @"00001A0002100400", SignatureName = "Lotus 123 v5", FileExtensions = new string[] { @".wk4" } },
+                new HeaderSignature() { Signature = @"5B7665725D", SignatureName = "Lotus Ami Pro", FileExtensions = new string[] { @".ami" } },
+                new HeaderSignature() { Signature = @"300000041505052", SignatureName = "Lotus Approach ADX file", FileExtensions = new string[] { @".adx" } },
+                new HeaderSignature() { Signature = @"1A0000030000", SignatureName = "Lotus Notes Database/Template", FileExtensions = new string[] { @".nsf", @".ntf" } },
+                new HeaderSignature() { Signature = @"4D47582069747064", SignatureName = "Micrografix Designer 4", FileExtensions = new string[] { @".ds4" } },
+                new HeaderSignature() { Signature = @"4D534346", SignatureName = "Microsoft CAB File Format", FileExtensions = new string[] { @".cab" } },
+                new HeaderSignature() { Signature = @"4D546864", SignatureName = "Midi Audio File", FileExtensions = new string[] { @".mid" } },
+                new HeaderSignature() { Signature = @"000001B3", SignatureName = "MPEG Movie", FileExtensions = new string[] { @".mpg", @".mpeg" } },
+                new HeaderSignature() { Signature = @"0902060000001000B9045C00", SignatureName = "MS Excel v2", FileExtensions = new string[] { @".xls" } },
+                new HeaderSignature() { Signature = @"0904060000001000F6055C00", SignatureName = "MS Excel v4", FileExtensions = new string[] { @".xls" } },
+                new HeaderSignature() { Signature = @"7FFE340A", SignatureName = "MS Word", FileExtensions = new string[] { @".doc" } },
+                new HeaderSignature() { Signature = @"1234567890FF", SignatureName = "MS Word 6.0", FileExtensions = new string[] { @".doc" } },
+                new HeaderSignature() { Signature = @"31BE000000AB0000", SignatureName = "MS Word for DOS 6.0", FileExtensions = new string[] { @".doc" } },
+                new HeaderSignature() { Signature = @"1A00000300001100", SignatureName = "Notes Database", FileExtensions = new string[] { @".nsf" } },
+                new HeaderSignature() { Signature = @"7E424B00", SignatureName = "PaintShop Pro Image File", FileExtensions = new string[] { @".psp" } },
+                new HeaderSignature() { Signature = @"504B0304", SignatureName = "PKZIP Compressed", FileExtensions = new string[] { @".zip" } },
+                new HeaderSignature() { Signature = @"89504E470D0A", SignatureName = "PNG Image File", FileExtensions = new string[] { @".png" } },
+                new HeaderSignature() { Signature = @"6D646174", SignatureName = "QuickTime Movie", FileExtensions = new string[] { @".mov" } },
+                new HeaderSignature() { Signature = @"6D646174", SignatureName = "Quicktime Movie File", FileExtensions = new string[] { @".qt" } },
+                new HeaderSignature() { Signature = @"52617221", SignatureName = "RAR Archive File", FileExtensions = new string[] { @".rar" } },
+                new HeaderSignature() { Signature = @"2E7261FD", SignatureName = "Real Audio File", FileExtensions = new string[] { @".ra", @".ram" } },
+                new HeaderSignature() { Signature = @"EDABEEDB", SignatureName = "RPM Archive File", FileExtensions = new string[] { @".rpm" } },
+                new HeaderSignature() { Signature = @"2E736E64", SignatureName = "SoundMachine Audio File", FileExtensions = new string[] { @".au" } },
+                new HeaderSignature() { Signature = @"53495421", SignatureName = "Stuffit v1 Archive File", FileExtensions = new string[] { @".sit" } },
+                new HeaderSignature() { Signature = @"53747566664974", SignatureName = "Stuffit v5 Archive File", FileExtensions = new string[] { @".sit" } },
+                new HeaderSignature() { Signature = @"1F9D", SignatureName = "TAR Compressed Archive File", FileExtensions = new string[] { @".z" } },
+                new HeaderSignature() { Signature = @"49492A", SignatureName = "TIFF (Intel)", FileExtensions = new string[] { @".tif", @".tiff" } },
+                new HeaderSignature() { Signature = @"4D4D2A", SignatureName = "TIFF (Motorola)", FileExtensions = new string[] { @".tif", @".tiff" } },
+                new HeaderSignature() { Signature = @"554641", SignatureName = "UFA Archive File", FileExtensions = new string[] { @".ufa" } },
+                new HeaderSignature() { Signature = @"57415645666D74", SignatureName = "Wave Files", FileExtensions = new string[] { @".wav" } },
+                new HeaderSignature() { Signature = @"D7CDC69A", SignatureName = "Windows Meta File", FileExtensions = new string[] { @".wmf" } },
+                new HeaderSignature() { Signature = @"4C000000", SignatureName = "Windows Shortcut (Link File)", FileExtensions = new string[] { @".lnk" } },
+                new HeaderSignature() { Signature = @"504B3030504B0304", SignatureName = "WINZIP Compressed", FileExtensions = new string[] { @".zip" } },
+                new HeaderSignature() { Signature = @"FF575047", SignatureName = "WordPerfect Graphics", FileExtensions = new string[] { @".wpg" } },
+                new HeaderSignature() { Signature = @"FF575043", SignatureName = "WordPerfect v5 or v6", FileExtensions = new string[] { @".wp" } },
+                new HeaderSignature() { Signature = @"3C3F786D6C", SignatureName = "XML Document", FileExtensions = new string[] { @".xml" } },
+                new HeaderSignature() { Signature = @"FFFE3C0052004F004F0054005300540055004200", SignatureName = "XML Document (ROOTSTUB)", FileExtensions = new string[] { @".xml" } },
+                new HeaderSignature() { Signature = @"3C21454E54495459", SignatureName = "XML DTD", FileExtensions = new string[] { @".dtd" } },
+                new HeaderSignature() { Signature = @"5A4F4F20", SignatureName = "ZOO Archive File", FileExtensions = new string[] { @".zoo" } },
+                new HeaderSignature() { Signature = @"01766F72626973", SignatureName = "Ogg Vorbis", FileExtensions = new string[] { @".ogg" } },
+            };
+
+        public string SignatureName {get;set;}
+
+        public string[] FileExtensions {get;set;}
+
+        public string Signature { get; set; }
+    }
+}

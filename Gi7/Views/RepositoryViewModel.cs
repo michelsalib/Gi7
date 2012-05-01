@@ -40,7 +40,7 @@ namespace Gi7.Views
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand WatchCommand { get; private set; }
         public RelayCommand UnWatchCommand { get; private set; }
-        public RelayCommand<Gi7.Client.Model.Object> ObjectSelectedCommand { get; private set; }
+        public RelayCommand<Gi7.Client.Model.GitHubFile> ObjectSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
         public RelayCommand<User> UserCommand { get; private set; }
         public RelayCommand<Push> CommitSelectedCommand { get; private set; }
@@ -76,7 +76,7 @@ namespace Gi7.Views
                 }
             };
 
-            ObjectSelectedCommand = new RelayCommand<Client.Model.Object>(o =>
+            ObjectSelectedCommand = new RelayCommand<Client.Model.GitHubFile>(o =>
             {
                 if (o.Type == "blob") {
                     navigationService.NavigateTo(String.Format(ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path));

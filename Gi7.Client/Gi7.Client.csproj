@@ -110,7 +110,7 @@
     <Compile Include="Model\Extra\PushGroup.cs" />
     <Compile Include="Model\File.cs" />
     <Compile Include="Model\Issue.cs" />
-    <Compile Include="Model\Object.cs" />
+    <Compile Include="Model\GitHubFile.cs" />
     <Compile Include="Model\PullRequest.cs" />
     <Compile Include="Model\Push.cs" />
     <Compile Include="Model\PushStats.cs" />

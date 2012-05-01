@@ -13,6 +13,7 @@
             <converters:EventConverter x:Key="EventConverter" />
             <converters:EmptyConverter x:Key="EmptyConverter" />
             <converters:BoolToModeConverter x:Key="BoolToModeConverter" />
+            <converters:PathToImageConverter x:Key="PathToImageConverter" />
             <toolkit:RelativeTimeConverter x:Key="RelativeTimeConverter" />
             <service:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
             <Style TargetType="ScrollViewer">

@@ -15,7 +15,7 @@ namespace Gi7.Views
         private String _repoName;
         private GitTree _tree;
 
-        public RelayCommand<Gi7.Client.Model.Object> ObjectSelectedCommand { get; private set; }
+        public RelayCommand<Gi7.Client.Model.GitHubFile> ObjectSelectedCommand { get; private set; }
 
         public TreeViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string sha, string path)
         {
@@ -24,7 +24,7 @@ namespace Gi7.Views
 
             Tree = githubService.Load(new TreeRequest.Get(username, repo, sha), t => Tree = t);
 
-            ObjectSelectedCommand = new RelayCommand<Client.Model.Object>(o =>
+            ObjectSelectedCommand = new RelayCommand<Client.Model.GitHubFile>(o =>
             {
                 if (o.Type == "blob")
                 {

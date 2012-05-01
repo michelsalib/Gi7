@@ -33,13 +33,13 @@ namespace Gi7.Resources.DesignData
 
             Tree = new GitTree()
             {
-                Tree = new List<Gi7.Client.Model.Object>()
+                Tree = new List<Gi7.Client.Model.GitHubFile>()
                 {
-                    new Gi7.Client.Model.Object() {
+                    new Gi7.Client.Model.GitHubFile() {
                         Path = "readme.md",
                         Type = "blob",
                     },
-                    new Gi7.Client.Model.Object() {
+                    new Gi7.Client.Model.GitHubFile() {
                         Path = "dir",
                         Type = "tree",
                     },

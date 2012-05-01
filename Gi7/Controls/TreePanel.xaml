@@ -10,7 +10,10 @@
     <ListBox x:Name="Objects" ItemsSource="{Binding Tree.Tree}">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <TextBlock Text="{Binding Path}" TextWrapping="Wrap" FontSize="36" />
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding ., Converter={StaticResource PathToImageConverter}}" Width="24" Margin="0,0,10,0" />
+                    <TextBlock Text="{Binding Path}" TextWrapping="Wrap" FontSize="36" />
+                </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>
         <Interactivity:Interaction.Triggers>

@@ -8,6 +8,6 @@ namespace Gi7.Client.Model
     {
         public String Sha { get; set; }
         public String Url { get; set; }
-        public List<Object> Tree { get; set; }
+        public List<GitHubFile> Tree { get; set; }
     }
 }

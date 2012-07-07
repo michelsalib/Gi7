@@ -28,7 +28,7 @@ namespace Gi7.Utils
             return String.Format(ViewModelLocator.RepositoryUrl, e.Repo.Owner.Login, e.Repo.Name); 
         }
 
-        public String GetDescription(Event e)
+        public String GetTitle(Event e)
         {
             if (e is CommitCommentEvent)
             {
@@ -72,6 +72,48 @@ namespace Gi7.Utils
             }
 
             return "did a non supported action at";
+        }
+
+        public string GetDescription(Event e)
+        {
+            if (e is CommitCommentEvent)
+            {
+                return ((CommitCommentEvent)e).Comment.Body;
+            }
+            else if (e is CreateEvent)
+            {
+                return null;
+            }
+            else if (e is DeleteEvent)
+            {
+                return null;
+            }
+            else if (e is FollowEvent)
+            {
+                return ((FollowEvent)e).Target.Name;
+            }
+            else if (e is ForkEvent)
+            {
+                return null;
+            }
+            else if (e is IssueCommentEvent)
+            {
+                return ((IssueCommentEvent)e).Comment.Body;
+            }
+            else if (e is IssuesEvent)
+            {
+                return ((IssuesEvent)e).Issue.Title;
+            }
+            else if (e is PullRequestEvent)
+            {
+                return ((PullRequestEvent)e).PullRequest.Title;
+            }
+            else if (e is PushEvent)
+            {
+                return null;
+            }
+
+            return null;
         }
 
         public String GetImage(Event e)

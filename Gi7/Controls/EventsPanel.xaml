@@ -12,19 +12,17 @@
         <local:EventListBox.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Image Source="{Binding Path=Actor.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75" HorizontalAlignment="Left"
-                 VerticalAlignment="Top" />
-                    <Image Source="{Binding Converter={StaticResource EventConverter}, ConverterParameter=image}" Width="16" Height="16" HorizontalAlignment="Left"
-                 VerticalAlignment="Top" Margin="70,0,0,0" />
+                    <Image Source="{Binding Path=Actor.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Image Source="{Binding Converter={StaticResource EventConverter}, ConverterParameter=image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />
                     <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                         <Paragraph>
                             <Run Text="{Binding Actor.Login}" FontWeight="Bold" />
-                            <Run Text="{Binding Converter={StaticResource EventConverter}, ConverterParameter=description}" />
+                            <Run Text="{Binding Converter={StaticResource EventConverter}, ConverterParameter=title}" />
                             <Run Text="{Binding Repo.Fullname}" />
+                            <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                         </Paragraph>
                         <Paragraph>
-                            <Run Text="{Binding Path=CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-                                 Foreground="#CCC" FontStyle="Italic" />
+                            <Run Text="{Binding Converter={StaticResource EventConverter}, ConverterParameter=description}" Foreground="#CCC" FontSize="16" />
                         </Paragraph>
                     </RichTextBox>
                 </Grid>
@@ -32,8 +30,7 @@
         </local:EventListBox.ItemTemplate>
         <Interactivity:Interaction.Triggers>
             <Interactivity:EventTrigger EventName="Tap">
-                <Command:EventToCommand Command="{Binding EventSelectedCommand}"
-                                    CommandParameter="{Binding ElementName=EventsList, Path=SelectedItem}" />
+                <Command:EventToCommand Command="{Binding EventSelectedCommand}" CommandParameter="{Binding ElementName=EventsList, Path=SelectedItem}" />
             </Interactivity:EventTrigger>
         </Interactivity:Interaction.Triggers>
     </local:EventListBox>

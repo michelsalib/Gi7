@@ -224,6 +224,8 @@
             <bar:BindableApplicationBar.MenuItems>
                 <bar:BindableApplicationBarMenuItem Text="Share"
                                                     Command="{Binding ShareCommand}"/>
+                <bar:BindableApplicationBarMenuItem Text="New issue"
+                                                    Command="{Binding NewIssueCommand}"/>
             </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>

@@ -117,8 +117,8 @@ namespace Gi7.Views
 
             NewIssueCommand = new RelayCommand(() =>
             {
-                throw new NotImplementedException("new issues cannot be created at this time");
-            }, ()=>true);
+                navigationService.NavigateTo(String.Format(ViewModelLocator.CreateIssueUrl, user, repo));
+            }, () => githubService.IsAuthenticated);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
 

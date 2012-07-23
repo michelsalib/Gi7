@@ -21,7 +21,7 @@ namespace Gi7.Service
         public const string TreeUrl = "/Views/TreeView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string BlobUrl = "/Views/BlobView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string AboutUrl = "/Views/AboutView.xaml";
-        public const string CreateIssueUrl = "/Views/CreateIssueView.xml?user={0}&repo={1}";
+        public const string CreateIssueUrl = "/Views/CreateIssueView.xaml?user={0}&repo={1}";
 
         static ViewModelLocator()
         {
@@ -78,6 +78,17 @@ namespace Gi7.Service
                     return new RepositoryDataModel();
                 else
                     return new RepositoryViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"));
+            }
+        }
+
+        public Object CreateIssueViewModel
+        {
+            get
+            {
+                if (ViewModelBase.IsInDesignModeStatic)
+                    return null;
+                else
+                    return new CreateIssueViewModel(GithubService, NavigationService, NavigationService.GetParameter("user"), NavigationService.GetParameter("repo"));
             }
         }
 

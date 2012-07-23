@@ -14,43 +14,62 @@ namespace Gi7.Views
 {
     public class CreateIssueViewModel : ViewModelBase
     {
-        public RelayCommand ShareCommand { get; private set; }
-        public RelayCommand<User> UserSelectedCommand { get; private set; }
-        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
-        public RelayCommand<Repository> CreateIssueCommand {get; private set;}
+        private String title;
+        public String Title
+        {
+            get { return title; }
+            set
+            {
+                if (title != value)
+                {
+                    title = value;
+                    RaisePropertyChanged("Title");
+                    CreateIssueCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        private String body;
+        public String Body
+        {
+            get { return body; }
+            set
+            {
+                if (body != value)
+                {
+                    body = value;
+                    RaisePropertyChanged("Body");
+                    CreateIssueCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        private String repoName;
+        public String RepoName
+        {
+            get { return repoName; }
+            set
+            {
+                if (repoName != value)
+                {
+                    repoName = value;
+                    RaisePropertyChanged("RepoName");
+                }
+            }
+        }
+
+        public RelayCommand CreateIssueCommand { get; private set; }
 
         public CreateIssueViewModel(GithubService githubService, INavigationService navigationService, string user, string repo)
         {
-            //Michelsalib = githubService.Load(new UserRequest.Get("michelsalib"), u => Michelsalib = u);
-            //AlbertoMonteiro = githubService.Load(new UserRequest.Get("albertomonteiro"), u => AlbertoMonteiro = u);
-            //Gi7 = githubService.Load(new Get("michelsalib", "Gi7"), r => Gi7 = r);
+            RepoName = String.Format("{0}/{1}", user, repo);
 
-            //RepoSelectedCommand = new RelayCommand<Repository>(r =>
-            //{
-            //    if (r != null)
-            //        navigationService.NavigateTo(String.Format(ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
-            //});
-            //UserSelectedCommand = new RelayCommand<User>(user =>
-            //{
-            //    if (user != null)
-            //        navigationService.NavigateTo(string.Format(ViewModelLocator.UserUrl, user.Login));
-            //});
-            //ShareCommand = new RelayCommand(() =>
-            //{
-            //    new ShareLinkTask()
-            //    {
-            //        LinkUri = new Uri("http://www.windowsphone.com/en-US/apps/2bdbe5da-a20a-42f5-8b08-cda2fbf9046f"),
-            //        Title = "Check this Github app for Windows Phone 7",
-            //        Message = "I found this app that you might like. Check it ou on the Marketplace, it is free!",
-            //    }.Show();
-            //});
-
-            CreateIssueCommand = new RelayCommand<Repository>((repo) => {
-                githubService.Load( //... I'm stuck. What do I write here? Are those parameters even right? And where did I get them?
+            CreateIssueCommand = new RelayCommand(() => {
+                githubService.Load(new Create(user, repo, Title, Body), issue =>
+                {
+                    navigationService.GoBack();
                 });
-            }, () => IsWatching.HasValue && !IsWatching.Value);
-        }        
-
-
+            }, () => !String.IsNullOrWhiteSpace(Title) && !String.IsNullOrWhiteSpace(Body));
+        }
     }
 }

@@ -10,7 +10,7 @@
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
                             mc:Ignorable="d" shell:SystemTray.IsVisible="True"
                             toolkit:TiltEffect.IsTiltEnabled="True"
-                            DataContext="{Binding Path=AboutViewModel, Source={StaticResource ViewModelLocator}}" d:DesignHeight="768" d:DesignWidth="480">
+                            DataContext="{Binding Path=CreateIssueViewModel, Source={StaticResource ViewModelLocator}}" d:DesignHeight="768" d:DesignWidth="480">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -22,19 +22,18 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="Gi7" Style="{StaticResource PhoneTextNormalStyle}" />
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" Style="{StaticResource PhoneTextNormalStyle}" />
             <TextBlock x:Name="PageTitle" Text="New Issue" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <StackPanel Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">
-            <TextBlock TextWrapping="Wrap">You are creating a new issue. Use your phone's back key to cancel.</TextBlock>
-            <TextBox Text="Title" Margin="0,0,-8,-1" d:LayoutOverrides="Height" Name="TitleTextBox" />
-            <TextBox Text="Message" Margin="0,0,-8,-1" d:LayoutOverrides="Height" Name="MessageTextBox" />
-
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2">
-                <Button x:Name="SubmitButton" Content="Submit new issue" Margin="0,0,-8,2" d:LayoutOverrides="Height" />
-            </StackPanel>
+            <TextBlock Text="Title" Margin="9, 0"/>
+            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp"/>
+            <TextBlock Text="Body" Margin="9, 0"/>
+            <TextBox AcceptsReturn="True" Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp" />
+            
+            <Button Content="Submit new issue" HorizontalAlignment="Right" Command="{Binding CreateIssueCommand}"/>
         </StackPanel>
     </Grid>
 

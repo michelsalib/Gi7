@@ -21,6 +21,7 @@ namespace Gi7.Service
         public const string TreeUrl = "/Views/TreeView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string BlobUrl = "/Views/BlobView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string AboutUrl = "/Views/AboutView.xaml";
+        public const string CreateIssueUrl = "/Views/CreateIssueView.xml?user={0}&repo={1}";
 
         static ViewModelLocator()
         {

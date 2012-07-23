@@ -137,6 +137,10 @@
       <DependentUpon>BlobView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BlobViewModel.cs" />
+    <Compile Include="Views\CreateIssueView.xaml.cs">
+      <DependentUpon>CreateIssueView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateIssueViewModel.cs" />
     <Compile Include="Views\TreeView.xaml.cs">
       <DependentUpon>TreeView.xaml</DependentUpon>
     </Compile>
@@ -198,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BlobView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateIssueView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

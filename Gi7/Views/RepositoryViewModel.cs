@@ -37,6 +37,7 @@ namespace Gi7.Views
         public RelayCommand ShareDownloadCommand { get; private set; }
         public RelayCommand DownloadCommand { get; private set; }
         public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand NewIssueCommand { get; private set; }
         public RelayCommand OwnerCommand { get; private set; }
         public RelayCommand WatchCommand { get; private set; }
         public RelayCommand UnWatchCommand { get; private set; }
@@ -114,6 +115,11 @@ namespace Gi7.Views
                 }.Show();
             }, () => Repository != null);
 
+            NewIssueCommand = new RelayCommand(() =>
+            {
+                navigationService.NavigateTo(String.Format(ViewModelLocator.CreateIssueUrl, user, repo));
+            }, () => githubService.IsAuthenticated);
+
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
 
             WatchCommand = new RelayCommand(() =>
@@ -149,6 +155,7 @@ namespace Gi7.Views
                     case "Issues":
                         if (IssuesRequest == null)
                             IssuesRequest = new IssueRequest.List(user, repo);
+                        ShowAppBar = true;
                         break;
                     case "Collaborators":
                         if (CollaboratorRequest == null)

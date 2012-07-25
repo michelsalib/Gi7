@@ -217,13 +217,14 @@
     </Grid>
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar IsVisible="{Binding ShowAppBar}">
+            <bar:BindableApplicationBarButton Text="New issue" IconUri="/Images/appbar.new.rest.png"
+                                              Command="{Binding NewIssueCommand}" />
             <bar:BindableApplicationBarButton Text="Watch" IconUri="/Images/appbar.favs.addto.rest.png"
                                               Command="{Binding WatchCommand}" />
             <bar:BindableApplicationBarButton Text="Unwatch" IconUri="/Images/appbar.favs.rmfrom.rest.png"
                                               Command="{Binding UnWatchCommand}" />
             <bar:BindableApplicationBar.MenuItems>
-                <bar:BindableApplicationBarMenuItem Text="Share"
-                                                    Command="{Binding ShareCommand}"/>
+                <bar:BindableApplicationBarMenuItem Text="Share" Command="{Binding ShareCommand}"/>
             </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>

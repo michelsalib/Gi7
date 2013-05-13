@@ -36,14 +36,14 @@
         <ScrollViewer Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">
             <StackPanel>
                 <TextBlock Text="{Binding Issue.Title}" FontWeight="Bold" TextWrapping="Wrap" FontSize="36" />
-                <Grid>
+                <Grid Margin="0,0,0,10">
                     <Image Source="{Binding Issue.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                             HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <TextBlock Text="{Binding Issue.User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                     <TextBlock Text="{Binding Issue.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
                     <TextBlock Text="{Binding Issue.Body}" TextWrapping="Wrap" Margin="80, 25, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 </Grid>
-                <TextBlock Text="Comments" />
+                <TextBlock Text="Comments" Margin="0,15,0,10" />
                 <paginated:CommentListBox ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                           Request="{Binding CommentsRequest}" ItemsSource="{Binding CommentsRequest.Result}">
                     <ListBox.ItemTemplate>

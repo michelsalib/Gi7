@@ -11,7 +11,7 @@
     <local:EventListBox Request="{Binding EventsRequest}" x:Name="EventsList">
         <local:EventListBox.ItemTemplate>
             <DataTemplate>
-                <Grid>
+                <Grid  Margin="0,0,0,10">
                     <Image Source="{Binding Path=Actor.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <Image Source="{Binding Converter={StaticResource EventConverter}, ConverterParameter=image}" Width="16" Height="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0" />
                     <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">

@@ -48,7 +48,7 @@
                                           Request="{Binding CommentsRequest}" ItemsSource="{Binding CommentsRequest.Result}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="440">
+                            <Grid Width="440" Margin="0,0,0,20">
                                 <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                                         HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"

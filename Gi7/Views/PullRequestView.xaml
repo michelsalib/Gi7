@@ -39,7 +39,7 @@
             <controls:PivotItem Header="{Binding PullRequestName}">
                 <ScrollViewer Grid.Row="1">
                     <StackPanel>
-                        <Grid>
+                        <Grid Margin="0,0,0,10">
                             <Image Source="{Binding PullRequest.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
                             <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"

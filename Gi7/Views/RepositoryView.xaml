@@ -34,16 +34,26 @@
                         <HyperlinkButton Content="Website" HorizontalAlignment="Right" Visibility="{Binding Repository.Homepage, Converter={StaticResource EmptyConverter}}"
                                          NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
                         <Grid>
-                            <TextBlock Text="Watchers" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" Margin="0,0,10,0" />
-                        </Grid>
-                        <Grid>
-                            <TextBlock Text="Forks" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" Margin="0,0,10,0" />
-                        </Grid>
-                        <Grid>
-                            <TextBlock Text="Issues" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" Margin="0,0,10,0" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Column="0" Grid.Row="0">
+                                <TextBlock Text="Watchers" FontSize="42" />
+                                <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="0">
+                                <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" />
+                                <TextBlock Text="Forks" FontSize="42" />
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.Row="1">
+                                <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" />
+                                <TextBlock Text="Issues" FontSize="42" />
+                            </Grid>
                         </Grid>
                         <Grid>
                             <TextBlock Text="Owner" VerticalAlignment="Center" FontSize="42.667" />
@@ -86,8 +96,8 @@
                                  VerticalAlignment="Top">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel d:DesignWidth="480" Margin="0,0,0,20">
-                                <Border Background="{StaticResource PhoneAccentBrush}" Height="40" Padding="5" Margin="0,0,0,10">
+                            <StackPanel d:DesignWidth="480">
+                                <Border Background="{StaticResource PhoneAccentBrush}" Height="50" Padding="3" Margin="0,20,0,10">
                                     <TextBlock Text="{Binding Path=Date, StringFormat='\{0:D\}'}" FontWeight="Bold" Foreground="White" />
                                 </Border>
                                 <ListBox ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -95,14 +105,22 @@
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid Width="450" MaxHeight="80" Background="Transparent" Margin="0,0,0,10">
-                                                <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
-                                                <TextBlock Text="{Binding Path=Author.Login}" HorizontalAlignment="Left"
-                                                    VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" Margin="0,0,10,0"
-                                                    HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
-                                                <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}"
-                                                    Margin="80,25,0,0" TextWrapping="Wrap" TextOptions.TextHintingMode="Animated"  TextTrimming="WordEllipsis" />
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=80}" Height="80" Grid.RowSpan="2"
+                                                       Margin="0,0,5,0" VerticalAlignment="Top" />
+                                                <TextBlock Text="{Binding Path=Author.Login}" Grid.Column="1"
+                                                           d:LayoutOverrides="Height" Grid.Row="1" FontWeight="Bold" VerticalAlignment="Bottom" />
+                                                <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" FontStyle="Italic" Foreground="Gray"
+                                                           Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1" TextAlignment="Right" FontSize="18.667" VerticalAlignment="Bottom" />
+                                                <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" Grid.Column="1"
+                                                           TextOptions.TextHintingMode="Animated" TextTrimming="WordEllipsis" />
                                                 <Interactivity:Interaction.Triggers>
                                                     <Interactivity:EventTrigger EventName="Tap">
                                                         <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
@@ -127,24 +145,13 @@
                     </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="450" Margin="0,0,0,30">
-                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" Margin="0,0,0,0" />
+                            <StackPanel Width="450">
+                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85" />
                                 <StackPanel Orientation="Horizontal">
-                                    <Grid Width="450" Background="Transparent" Margin="0,10,0,0">
-                                        <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                            HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
-                                        <TextBlock Text="{Binding Path=User.Login}" HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding Path=UpdatedAt}" Margin="0,0,10,0"
-                                            HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
-                                        <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85"
-                                            Margin="80,25,0,0" TextOptions.TextHintingMode="Animated" />
-                                        <Interactivity:Interaction.Triggers>
-                                            <Interactivity:EventTrigger EventName="Tap">
-                                                <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
-                                            </Interactivity:EventTrigger>
-                                        </Interactivity:Interaction.Triggers>
-                                    </Grid>
+                                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
+                                    <TextBlock Text="{Binding Path=User.Login}" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
@@ -161,31 +168,25 @@
                     </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="450" Margin="0,0,0,30">
-                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
-                                <StackPanel Orientation="Horizontal" Height="80">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="90" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <Image Grid.Column="0" Grid.RowSpan="3" Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                            HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
-                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=User.Login}" HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" FontWeight="Bold" />
-                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=UpdatedAt}" HorizontalAlignment="Left"
-                                            FontStyle="Italic" Foreground="Gray" />
-                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Comments}" Width="20" HorizontalAlignment="Left" TextAlignment="Left" />
-                                        <TextBlock Grid.Column="1" Grid.Row="2" Text=" comments" TextAlignment="Left" Margin="25,0,0,0" />
-                                    </Grid>
-                                </StackPanel>
-                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" />
-                            </StackPanel>
+                            <RichTextBox Width="450">
+                                <Paragraph>
+                                    <Run Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" />
+                                </Paragraph>
+                                <Paragraph>
+                                    <Run Text="{Binding Path=Body}" />
+                                </Paragraph>
+                                <Paragraph TextAlignment="Right">
+                                    <Run Text="{Binding Path=Comments}" />
+                                    <Run Text=" comments" />
+                                </Paragraph>
+                                <Paragraph>
+                                    <InlineUIContainer>
+                                        <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=25}" Width="25" Height="25" />
+                                    </InlineUIContainer>
+                                    <Run Text="{Binding Path=User.Login}" FontWeight="Bold" />
+                                    <Run Text="{Binding Path=UpdatedAt}" Foreground="Gray" FontStyle="Italic" />
+                                </Paragraph>
+                            </RichTextBox>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </paginated:IssueListBox>

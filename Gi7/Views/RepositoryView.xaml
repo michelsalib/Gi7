@@ -86,7 +86,7 @@
                                  VerticalAlignment="Top">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel d:DesignWidth="480" Margin="0,0,0,20">
+                            <StackPanel d:DesignWidth="450" Margin="0,0,0,20">
                                 <Border Background="{StaticResource PhoneAccentBrush}" Height="40" Padding="5" Margin="0,0,0,10">
                                     <TextBlock Text="{Binding Path=Date, StringFormat='\{0:D\}'}" FontWeight="Bold" Foreground="White" />
                                 </Border>
@@ -99,7 +99,7 @@
                                                     HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                                                 <TextBlock Text="{Binding Path=Author.Login}" HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding Path=Commit.Author.Date, StringFormat='\{0:MM/dd/yyyy hh:mm\}'}" Margin="0,0,10,0"
+                                                <TextBlock Text="{Binding Path=Commit.Author.Date}" Margin="0,0,20,0"
                                                     HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
                                                 <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}"
                                                     Margin="80,25,0,0" TextWrapping="Wrap" TextOptions.TextHintingMode="Animated"  TextTrimming="WordEllipsis" />
@@ -135,7 +135,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                                         <TextBlock Text="{Binding Path=User.Login}" HorizontalAlignment="Left"
                                             VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding Path=UpdatedAt}" Margin="0,0,10,0"
+                                        <TextBlock Text="{Binding Path=UpdatedAt}" Margin="0,0,20,0"
                                             HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
                                         <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85"
                                             Margin="80,25,0,0" TextOptions.TextHintingMode="Animated" />

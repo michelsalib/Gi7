@@ -19,9 +19,9 @@ namespace Gi7.Client.Utils
 
         public string Namespace { get; set; }
 
-        public T Deserialize<T>(RestResponse response) where T : new()
+        public T Deserialize<T>(IRestResponse response)
         {
-            var result = new T();
+            var result = Activator.CreateInstance<T>();
             var repos = result as List<FeaturedRepo>;
 
             if (repos == null)

@@ -55,13 +55,13 @@
     <Reference Include="BindableApplicationBar">
       <HintPath>..\packages\BindableApplicationBar.1.0.0\lib\sl4-windowsphone71\BindableApplicationBar.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WP71, Version=3.0.0.19987, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="GalaSoft.MvvmLight.Extras.WP71, Version=4.1.27.22669, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MvvmLight.3.1.1\lib\sl4-windowsphone71\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WP71, Version=3.0.0.19988, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="GalaSoft.MvvmLight.WP71, Version=4.1.27.22669, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MvvmLight.3.1.1\lib\sl4-windowsphone71\GalaSoft.MvvmLight.WP71.dll</HintPath>
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\GalaSoft.MvvmLight.WP71.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
@@ -70,14 +70,15 @@
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Dependencies\MVVMLightToolkit\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLight.3.1.1\lib\sl4-windowsphone71\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
@@ -125,42 +126,45 @@
     <Compile Include="Utils\GlobalLoading.cs" />
     <Compile Include="Utils\ViewModels\CommitFile.cs" />
     <Compile Include="Utils\ViewModels\CommitLine.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\BlobViewModel.cs" />
+    <Compile Include="ViewModel\CommitViewModel.cs" />
+    <Compile Include="ViewModel\CreateIssueViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\IssueViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PullRequestViewModel.cs" />
+    <Compile Include="ViewModel\RepositoryViewModel.cs" />
+    <Compile Include="ViewModel\TreeViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AboutViewModel.cs" />
     <Compile Include="Views\CommitView.xaml.cs">
       <DependentUpon>CommitView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CommitViewModel.cs" />
     <Compile Include="Views\BlobView.xaml.cs">
       <DependentUpon>BlobView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BlobViewModel.cs" />
     <Compile Include="Views\CreateIssueView.xaml.cs">
       <DependentUpon>CreateIssueView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreateIssueViewModel.cs" />
     <Compile Include="Views\TreeView.xaml.cs">
       <DependentUpon>TreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PullRequestView.xaml.cs">
       <DependentUpon>PullRequestView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PullRequestViewModel.cs" />
     <Compile Include="Views\IssueView.xaml.cs">
       <DependentUpon>IssueView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IssueViewModel.cs" />
-    <Compile Include="Views\TreeViewModel.cs" />
     <Compile Include="Views\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\RepositoryPanel.xaml.cs">
       <DependentUpon>RepositoryPanel.xaml</DependentUpon>
@@ -178,7 +182,6 @@
     <Compile Include="Views\RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RepositoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -268,6 +271,7 @@
     <Content Include="Images\cs.png" />
     <Content Include="Images\folder.png" />
     <Content Include="Images\XAML_file.png" />
+    <Content Include="MVVMLight.Nuget.Readme.txt" />
     <Resource Include="Images\comment.png" />
     <Resource Include="Images\create.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,24 +1,17 @@
-﻿using System;
+using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request;
 using Gi7.Client.Request.Repository;
-using Gi7.Service;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
-using CommitRequest = Gi7.Client.Request.Commit;
-using IssueRequest = Gi7.Client.Request.Issue;
-using RepositoryRequest = Gi7.Client.Request.Repository;
-using PullRequestRequest = Gi7.Client.Request.PullRequest;
-using TreeRequest = Gi7.Client.Request.Tree;
 using Microsoft.Phone.Tasks;
-using System.Collections.ObjectModel;
 
-namespace Gi7.Views
+namespace Gi7.ViewModel
 {
     public class RepositoryViewModel : ViewModelBase
     {
@@ -27,11 +20,11 @@ namespace Gi7.Views
         private GitTree _tree;
         private Branch _branch;
         private ObservableCollection<Branch> _branches;
-        private RepositoryRequest.ListCollaborators _collaboratorRequest;
-        private RepositoryRequest.ListWatchers _watchersRequest;
-        private CommitRequest.List _commitsRequest;
-        private IssueRequest.List _issuesRequest;
-        private PullRequestRequest.List _pullRequestsRequest;
+        private Client.Request.Repository.ListCollaborators _collaboratorRequest;
+        private Client.Request.Repository.ListWatchers _watchersRequest;
+        private Client.Request.Commit.List _commitsRequest;
+        private Client.Request.Issue.List _issuesRequest;
+        private Client.Request.PullRequest.List _pullRequestsRequest;
         private Repository _repository;
 
         public RelayCommand ShareDownloadCommand { get; private set; }
@@ -52,7 +45,7 @@ namespace Gi7.Views
         {
             ShowAppBar = true;
 
-            Repository = githubService.Load(new RepositoryRequest.Get(user, repo), r => Repository = r);
+            Repository = githubService.Load(new Client.Request.Repository.Get(user, repo), r => Repository = r);
 
             if (githubService.IsAuthenticated)
             {
@@ -62,7 +55,7 @@ namespace Gi7.Views
                 });
             }
 
-            Branches = githubService.Load(new RepositoryRequest.ListBranches(user, repo), b =>
+            Branches = githubService.Load(new Client.Request.Repository.ListBranches(user, repo), b =>
             {
                 Branches = b;
                 Branch = b.FirstOrDefault(br => br.Name == "master");
@@ -73,17 +66,17 @@ namespace Gi7.Views
                 if (e.PropertyName == "Branch")
                 {
                     CommitsRequest = null;
-                    Tree = githubService.Load(new TreeRequest.Get(user, repo, Branch.Commit.Sha), t => Tree = t);
+                    Tree = githubService.Load(new Client.Request.Tree.Get(user, repo, Branch.Commit.Sha), t => Tree = t);
                 }
             };
 
             ObjectSelectedCommand = new RelayCommand<Client.Model.GitHubFile>(o =>
             {
                 if (o.Type == "blob") {
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path));
+                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path));
                 }
                 else { //tree
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.TreeUrl, user, repo, o.Sha, o.Path));
+                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.TreeUrl, user, repo, o.Sha, o.Path));
                 }
             });
 
@@ -117,10 +110,10 @@ namespace Gi7.Views
 
             NewIssueCommand = new RelayCommand(() =>
             {
-                navigationService.NavigateTo(String.Format(ViewModelLocator.CreateIssueUrl, user, repo));
+                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.CreateIssueUrl, user, repo));
             }, () => githubService.IsAuthenticated);
 
-            OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, Repository.Owner.Login)));
+            OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.UserUrl, Repository.Owner.Login)));
 
             WatchCommand = new RelayCommand(() =>
             {
@@ -146,24 +139,24 @@ namespace Gi7.Views
                 {
                     case "Commits":
                         if (CommitsRequest == null)
-                            CommitsRequest = new CommitRequest.List(user, repo, Branch ? Branch.Name : "master");
+                            CommitsRequest = new Client.Request.Commit.List(user, repo, Branch ? Branch.Name : "master");
                         break;
                     case "Pull requests":
                         if (PullRequestsRequest == null)
-                            PullRequestsRequest = new PullRequestRequest.List(user, repo);
+                            PullRequestsRequest = new Client.Request.PullRequest.List(user, repo);
                         break;
                     case "Issues":
                         if (IssuesRequest == null)
-                            IssuesRequest = new IssueRequest.List(user, repo);
+                            IssuesRequest = new Client.Request.Issue.List(user, repo);
                         ShowAppBar = true;
                         break;
                     case "Collaborators":
                         if (CollaboratorRequest == null)
-                            CollaboratorRequest = new RepositoryRequest.ListCollaborators(user, repo);
+                            CollaboratorRequest = new Client.Request.Repository.ListCollaborators(user, repo);
                         break;
                     case "Watchers":
                         if (WatchersRequest == null)
-                            WatchersRequest = new RepositoryRequest.ListWatchers(user, repo);
+                            WatchersRequest = new Client.Request.Repository.ListWatchers(user, repo);
                         break;
                     case "Details":
                         ShowAppBar = true;
@@ -173,22 +166,22 @@ namespace Gi7.Views
             CommitSelectedCommand = new RelayCommand<Push>(push =>
             {
                 if (push)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
+                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
             });
             PullRequestSelectedCommand = new RelayCommand<PullRequest>(pullRequest =>
             {
                 if (pullRequest)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.PullRequestUrl, Repository.Owner.Login, Repository.Name, pullRequest.Number));
+                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.PullRequestUrl, Repository.Owner.Login, Repository.Name, pullRequest.Number));
             });
             IssueSelectedCommand = new RelayCommand<Issue>(issue =>
             {
                 if (issue)
                 {
-                    string destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.IssueUrl : ViewModelLocator.PullRequestUrl;
+                    string destination = issue.PullRequest.HtmlUrl == null ? Service.ViewModelLocator.IssueUrl : Service.ViewModelLocator.PullRequestUrl;
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
-            UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(ViewModelLocator.UserUrl, collaborator.Login)));
+            UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.UserUrl, collaborator.Login)));
         }
 
         public bool? IsWatching
@@ -236,7 +229,7 @@ namespace Gi7.Views
             }
         }
 
-        public CommitRequest.List CommitsRequest
+        public Client.Request.Commit.List CommitsRequest
         {
             get { return _commitsRequest; }
             set
@@ -262,7 +255,7 @@ namespace Gi7.Views
             }
         }
 
-        public RepositoryRequest.ListCollaborators CollaboratorRequest
+        public Client.Request.Repository.ListCollaborators CollaboratorRequest
         {
             get { return _collaboratorRequest; }
             set
@@ -275,7 +268,7 @@ namespace Gi7.Views
             }
         }
 
-        public RepositoryRequest.ListWatchers WatchersRequest
+        public Client.Request.Repository.ListWatchers WatchersRequest
         {
             get { return _watchersRequest; }
             set
@@ -288,7 +281,7 @@ namespace Gi7.Views
             }
         }
 
-        public PullRequestRequest.List PullRequestsRequest
+        public Client.Request.PullRequest.List PullRequestsRequest
         {
             get { return _pullRequestsRequest; }
             set
@@ -301,7 +294,7 @@ namespace Gi7.Views
             }
         }
 
-        public IssueRequest.List IssuesRequest
+        public Client.Request.Issue.List IssuesRequest
         {
             get { return _issuesRequest; }
             set

@@ -6,6 +6,7 @@ using Gi7.Controls;
 using Gi7.Resources.DesignData;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
+using Gi7.ViewModel;
 using Gi7.Views;
 
 namespace Gi7.Service

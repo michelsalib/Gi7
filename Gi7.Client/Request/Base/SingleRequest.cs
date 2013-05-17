@@ -49,7 +49,7 @@ namespace Gi7.Client.Request.Base
                 }
                 else
                 {
-                    var data = getData(r);
+                    var data = GetData(r);
 
                     Result = data;
 
@@ -63,7 +63,7 @@ namespace Gi7.Client.Request.Base
             });
         }
 
-        protected virtual TResult getData(RestResponse<TResult> response)
+        protected virtual TResult GetData(IRestResponse<TResult> response)
         {
             return response.Data;
         }

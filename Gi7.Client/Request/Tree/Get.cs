@@ -13,7 +13,7 @@ namespace Gi7.Client.Request.Tree
             Uri = String.Format("/repos/{0}/{1}/git/trees/{2}", username, repo, sha);
         }
 
-        protected override Model.GitTree getData(RestResponse<Model.GitTree> response)
+        protected override Model.GitTree GetData(IRestResponse<Model.GitTree> response)
         {
             var data = response.Data;
 

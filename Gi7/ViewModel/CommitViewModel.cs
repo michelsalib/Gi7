@@ -6,6 +6,7 @@ using System.Windows.Media;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
+using Gi7.Client.Request.Commit;
 using Gi7.Client.Model;
 using Gi7.Service.Navigation;
 using Gi7.Utils.ViewModels;
@@ -16,10 +17,9 @@ namespace Gi7.ViewModel
 {
     public class CommitViewModel : ViewModelBase
     {
-        private ObservableCollection<CommitFile> _files;
         private bool _minimizeAppBar;
         private bool _canComment;
-        private Client.Request.Commit.ListComments _commentsRequest;
+        private ListComments _commentsRequest;
         private Push _commit;
         private GithubService _githubService;
         private String _repoName;
@@ -38,7 +38,7 @@ namespace Gi7.ViewModel
             RepoName = String.Format("{0}/{1}", username, repo);
             Files = new ObservableCollection<CommitFile>();
 
-            Commit = githubService.Load(new Client.Request.Commit.Get(username, repo, sha), p =>
+            Commit = githubService.Load(new Get(username, repo, sha), p =>
             {
                 Commit = p;
 
@@ -76,39 +76,48 @@ namespace Gi7.ViewModel
 
             });
 
-            ShareCommand = new RelayCommand(() => new ShareLinkTask()
+            ShareCommand = new RelayCommand(() => new ShareLinkTask
             {
                 LinkUri = new Uri("https://github.com" + RepoName + "/commit/" + sha),
                 Title = "Commit on" + RepoName + " is on Github.",
                 Message = "I found this commit on Github, you might want to see it.",
             }.Show());
 
-            CommentCommand = new RelayCommand(() => githubService.Load(new Client.Request.Commit.Comment(username, repo, sha, Comment), r =>
-            {
-                Comment = null;
-                CommentsRequest = new Client.Request.Commit.ListComments(username, repo, sha);
-            }), () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
+            CommentCommand = new RelayCommand(() => githubService.Load(new Client.Request.Commit.Comment(username, repo, sha, Comment), r => OnComment(username, repo, sha)), UserCanComment);
 
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                MinimizeAppBar = true;
-                CanComment = false;
-                var header = (args.AddedItems[0] as PivotItem).Header as String;
-                switch (header)
-                {
-                    case "Comments":
-                        MinimizeAppBar = false;
-                        CanComment = true;
-                        if (CommentsRequest == null)
-                            CommentsRequest = new Client.Request.Commit.ListComments(username, repo, sha);
-                        break;
-                    case "Commit":
-                        CanComment = false;
-                        break;
-                }
-            });
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => OnPivotChangedCommand(username, repo, sha, args));
 
             RepoSelectedCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)));
+        }
+
+        private void OnComment(string username, string repo, string sha)
+        {
+            Comment = null;
+            CommentsRequest = new ListComments(username, repo, sha);
+        }
+
+        private bool UserCanComment()
+        {
+            return GithubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0;
+        }
+
+        private void OnPivotChangedCommand(string username, string repo, string sha, SelectionChangedEventArgs args)
+        {
+            MinimizeAppBar = true;
+            CanComment = false;
+            var header = (args.AddedItems[0] as PivotItem).Header as String;
+            switch (header)
+            {
+            case "Comments":
+                MinimizeAppBar = false;
+                CanComment = true;
+                if (CommentsRequest == null)
+                    CommentsRequest = new ListComments(username, repo, sha);
+                break;
+            case "Commit":
+                CanComment = false;
+                break;
+            }
         }
 
         public String RepoName
@@ -130,8 +139,7 @@ namespace Gi7.ViewModel
             {
                 if (Commit != null && Commit.Stats != null)
                     return String.Format("Showing {0} changed files with {1} additions and {2} deletions.", Commit.Files.Count, Commit.Stats.Additions, Commit.Stats.Deletions);
-                else
-                    return "";
+                return "";
             }
         }
 
@@ -149,7 +157,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.Commit.ListComments CommentsRequest
+        public ListComments CommentsRequest
         {
             get { return _commentsRequest; }
             set

@@ -36,12 +36,12 @@ namespace Gi7.ViewModel
             MinimizeAppBar = true;
             GithubService = githubService;
             RepoName = String.Format("{0}/{1}", username, repo);
+            Files = new ObservableCollection<CommitFile>();
 
             Commit = githubService.Load(new Client.Request.Commit.Get(username, repo, sha), p =>
             {
                 Commit = p;
 
-                var files = new ObservableCollection<CommitFile>();
                 foreach (var file in p.Files)
                 {
                     var lines = new ObservableCollection<CommitLine>();
@@ -49,7 +49,7 @@ namespace Gi7.ViewModel
                     {
                         foreach (var line in file.Patch.Split('\n'))
                         {
-                            Color color = Colors.White;
+                            var color = Colors.White;
                             switch (line.FirstOrDefault())
                             {
                                 case '+':
@@ -63,50 +63,31 @@ namespace Gi7.ViewModel
                                     break;
                             }
 
-                            lines.Add(new CommitLine
-                            {
-                                Line = line,
-                                Color = new SolidColorBrush(color),
-                            });
+                            lines.Add(new CommitLine { Line = line, Color = new SolidColorBrush(color) });
                         }
                     }
                     else
                     {
-                        lines.Add(new CommitLine
-                        {
-                            Line = "Binary file not shown",
-                            Color = new SolidColorBrush(Colors.Gray),
-                        });
+                        lines.Add(new CommitLine { Line = "Binary file not shown", Color = new SolidColorBrush(Colors.Gray) });
                     }
 
-                    files.Add(new CommitFile
-                    {
-                        Lines = lines,
-                        File = file,
-                    });
+                    Files.Add(new CommitFile { Lines = lines, File = file, });
                 }
 
-                Files = files;
             });
 
-            ShareCommand = new RelayCommand(() =>
+            ShareCommand = new RelayCommand(() => new ShareLinkTask()
             {
-                new ShareLinkTask()
-                {
-                    LinkUri = new Uri("https://github.com" + RepoName + "/commit/" + sha),
-                    Title = "Commit on" + RepoName + " is on Github.",
-                    Message = "I found this commit on Github, you might want to see it.",
-                }.Show();
-            });
+                LinkUri = new Uri("https://github.com" + RepoName + "/commit/" + sha),
+                Title = "Commit on" + RepoName + " is on Github.",
+                Message = "I found this commit on Github, you might want to see it.",
+            }.Show());
 
-            CommentCommand = new RelayCommand(() =>
+            CommentCommand = new RelayCommand(() => githubService.Load(new Client.Request.Commit.Comment(username, repo, sha, Comment), r =>
             {
-                githubService.Load(new Client.Request.Commit.Comment(username, repo, sha, Comment), r =>
-                {
-                    Comment = null;
-                    CommentsRequest = new Client.Request.Commit.ListComments(username, repo, sha);
-                });
-            }, () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
+                Comment = null;
+                CommentsRequest = new Client.Request.Commit.ListComments(username, repo, sha);
+            }), () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
@@ -127,10 +108,7 @@ namespace Gi7.ViewModel
                 }
             });
 
-            RepoSelectedCommand = new RelayCommand(() =>
-            {
-                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo));
-            });
+            RepoSelectedCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)));
         }
 
         public String RepoName
@@ -225,18 +203,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public ObservableCollection<CommitFile> Files
-        {
-            get { return _files; }
-            set
-            {
-                if (value != _files)
-                {
-                    _files = value;
-                    RaisePropertyChanged("Files");
-                }
-            }
-        }
+        public ObservableCollection<CommitFile> Files { get; set; }
 
         public GithubService GithubService
         {

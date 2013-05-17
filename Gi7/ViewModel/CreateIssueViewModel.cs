@@ -1,16 +1,11 @@
-﻿using System;
+using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
-using Gi7.Client.Model;
-using Gi7.Client.Request.Repository;
-using Gi7.Service;
-using Gi7.Service.Navigation;
-using UserRequest = Gi7.Client.Request.User;
-using Microsoft.Phone.Tasks;
 using Gi7.Client.Request.Issue;
+using Gi7.Service.Navigation;
 
-namespace Gi7.Views
+namespace Gi7.ViewModel
 {
     public class CreateIssueViewModel : ViewModelBase
     {

@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Application x:Class="Gi7.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:templates="clr-namespace:Gi7.Controls" xmlns:service="clr-namespace:Gi7.Service" xmlns:utils="clr-namespace:Gi7.Utils" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:converters="clr-namespace:Gi7.Utils.Converters" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d">
+<Application xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:templates="clr-namespace:Gi7.Controls" xmlns:service="clr-namespace:Gi7.Service" xmlns:utils="clr-namespace:Gi7.Utils" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:converters="clr-namespace:Gi7.Utils.Converters" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="Gi7.App" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:Gi7.ViewModel" mc:Ignorable="d">
     <!--Application Resources-->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Controls/UserTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-            <converters:TextTrimConverter x:Key="TextTrimConverter" />
-            <converters:GravatarSizeConverter x:Key="GravatarSizeConverter" />
-            <converters:EventConverter x:Key="EventConverter" />
-            <converters:EmptyConverter x:Key="EmptyConverter" />
-            <converters:BoolToModeConverter x:Key="BoolToModeConverter" />
-            <converters:PathToImageConverter x:Key="PathToImageConverter" />
-            <toolkit:RelativeTimeConverter x:Key="RelativeTimeConverter" />
-            <service:ViewModelLocator x:Key="ViewModelLocator" d:IsDataSource="True" />
+            <converters:NullToVisibilityConverter p11:Key="NullToVisibilityConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:BoolToVisibilityConverter p11:Key="BoolToVisibilityConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:TextTrimConverter p11:Key="TextTrimConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:GravatarSizeConverter p11:Key="GravatarSizeConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:EventConverter p11:Key="EventConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:EmptyConverter p11:Key="EmptyConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:BoolToModeConverter p11:Key="BoolToModeConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <converters:PathToImageConverter p11:Key="PathToImageConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <toolkit:RelativeTimeConverter p11:Key="RelativeTimeConverter" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
+            <service:ViewModelLocator p11:Key="ViewModelLocator" p12:IsDataSource="True" xmlns:p12="http://schemas.microsoft.com/expression/blend/2008" xmlns:p11="http://schemas.microsoft.com/winfx/2006/xaml" />
             <Style TargetType="ScrollViewer">
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
@@ -28,40 +28,40 @@
                         <ControlTemplate TargetType="ScrollViewer">
                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                                 <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="ScrollStates">
+                                    <VisualStateGroup p17:Name="ScrollStates" xmlns:p17="http://schemas.microsoft.com/winfx/2006/xaml">
                                         <VisualStateGroup.Transitions>
                                             <VisualTransition GeneratedDuration="00:00:00.5" />
                                         </VisualStateGroup.Transitions>
-                                        <VisualState x:Name="Scrolling">
+                                        <VisualState p17:Name="Scrolling">
                                             <Storyboard>
                                                 <DoubleAnimation Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
                                                 <DoubleAnimation Storyboard.TargetName="HorizontalScrollBar" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
                                             </Storyboard>
                                         </VisualState>
-                                        <VisualState x:Name="NotScrolling" />
+                                        <VisualState p17:Name="NotScrolling" />
                                     </VisualStateGroup>
-                                    <VisualStateGroup x:Name="VerticalCompression">
-                                        <VisualState x:Name="NoVerticalCompression" />
-                                        <VisualState x:Name="CompressionTop" />
-                                        <VisualState x:Name="CompressionBottom" />
+                                    <VisualStateGroup p17:Name="VerticalCompression" xmlns:p17="http://schemas.microsoft.com/winfx/2006/xaml">
+                                        <VisualState p17:Name="NoVerticalCompression" />
+                                        <VisualState p17:Name="CompressionTop" />
+                                        <VisualState p17:Name="CompressionBottom" />
                                     </VisualStateGroup>
-                                    <VisualStateGroup x:Name="HorizontalCompression">
-                                        <VisualState x:Name="NoHorizontalCompression" />
-                                        <VisualState x:Name="CompressionLeft" />
-                                        <VisualState x:Name="CompressionRight" />
+                                    <VisualStateGroup p17:Name="HorizontalCompression" xmlns:p17="http://schemas.microsoft.com/winfx/2006/xaml">
+                                        <VisualState p17:Name="NoHorizontalCompression" />
+                                        <VisualState p17:Name="CompressionLeft" />
+                                        <VisualState p17:Name="CompressionRight" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Grid Margin="{TemplateBinding Padding}">
-                                    <ScrollContentPresenter x:Name="ScrollContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
-                                    <ScrollBar x:Name="VerticalScrollBar" IsHitTestVisible="False" Height="Auto" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{TemplateBinding VerticalOffset}" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" />
-                                    <ScrollBar x:Name="HorizontalScrollBar" IsHitTestVisible="False" Width="Auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{TemplateBinding HorizontalOffset}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" />
+                                    <ScrollContentPresenter p17:Name="ScrollContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" xmlns:p17="http://schemas.microsoft.com/winfx/2006/xaml" />
+                                    <ScrollBar p17:Name="VerticalScrollBar" IsHitTestVisible="False" Height="Auto" Width="5" HorizontalAlignment="Right" VerticalAlignment="Stretch" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{TemplateBinding VerticalOffset}" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" xmlns:p17="http://schemas.microsoft.com/winfx/2006/xaml" />
+                                    <ScrollBar p17:Name="HorizontalScrollBar" IsHitTestVisible="False" Width="Auto" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" IsTabStop="False" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{TemplateBinding HorizontalOffset}" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" xmlns:p17="http://schemas.microsoft.com/winfx/2006/xaml" />
                                 </Grid>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
-        </ResourceDictionary>
+        <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" /></ResourceDictionary>
     </Application.Resources>
     <Application.ApplicationLifetimeObjects>
         <!--Required object that handles lifetime events for the application-->

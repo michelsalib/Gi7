@@ -36,17 +36,17 @@
             <controls:PivotItem Header="Commit">
                 <ScrollViewer Grid.Row="1">
                     <StackPanel>
-                        <Grid>
-                            <Image Source="{Binding Commit.Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Grid Margin="0,0,0,10">
+                            <Image Source="{Binding Commit.Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
+                                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                             <TextBlock Text="{Binding Commit.Author.Login}" HorizontalAlignment="Left"
                                        VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Commit.Commit.Author.Date}" HorizontalAlignment="Right"
+                            <TextBlock Text="{Binding Commit.Commit.Author.Date}" HorizontalAlignment="Right" Margin="0,0,20,0"
                                        VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
                             <TextBlock Text="{Binding CommitText}" HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Margin="80,25,0,0" TextWrapping="Wrap" />
                         </Grid>
-                        <TextBlock Text="{Binding Commit.Commit.Message}" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding Commit.Commit.Message}" TextWrapping="Wrap" Margin="0,0,0,20" />
                         <ListBox ItemsSource="{Binding Files}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>

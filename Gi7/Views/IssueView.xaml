@@ -37,7 +37,7 @@
             <StackPanel>
                 <TextBlock Text="{Binding Issue.Title}" FontWeight="Bold" TextWrapping="Wrap" FontSize="36" />
                 <Grid Margin="0,0,0,10">
-                    <Image Source="{Binding Issue.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
+                    <Image Source="{Binding Issue.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
                             HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <TextBlock Text="{Binding Issue.User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                     <TextBlock Text="{Binding Issue.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
@@ -48,8 +48,8 @@
                                           Request="{Binding CommentsRequest}" ItemsSource="{Binding CommentsRequest.Result}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Width="440">
-                                <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
+                            <Grid Width="440" Margin="0,0,0,20">
+                                <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
                                         HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
                                             VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />

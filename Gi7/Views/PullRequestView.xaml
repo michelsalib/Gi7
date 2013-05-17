@@ -40,13 +40,13 @@
                 <ScrollViewer Grid.Row="1">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
-                            <Image Source="{Binding PullRequest.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <Image Source="{Binding PullRequest.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
+                                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                             <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
                                        VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                             <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right"
-                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                            <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap">
+                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray"  Margin="0,0,20,0" />
+                            <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,25,0,0" TextWrapping="Wrap">
                                 <Paragraph>
                                     <Run Text="{Binding PullRequest.State}" />
                                     <Run Text=" with " />
@@ -59,7 +59,7 @@
                                 </Paragraph>
                             </RichTextBox>
                         </Grid>
-                        <TextBlock Text="{Binding PullRequest.Body}" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding PullRequest.Body}" TextWrapping="Wrap" Margin="0,0,0,10" />
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
@@ -74,7 +74,7 @@
                                               ItemsSource="{Binding CommentsRequest.Result}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Width="440">
+                                <Grid Width="440" Margin="0,0,0,20">
                                     <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
                                            HorizontalAlignment="Left" VerticalAlignment="Top" />
                                     <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"

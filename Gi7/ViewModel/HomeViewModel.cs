@@ -1,7 +1,3 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
@@ -11,9 +7,14 @@ using Gi7.Client.Model.Extra;
 using Gi7.Client.Request;
 using Gi7.Client.Request.Event;
 using Gi7.Client.Request.Repository;
+using Gi7.Client.Request.User;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
 using Microsoft.Phone.Controls;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace Gi7.ViewModel
 {
@@ -21,12 +22,8 @@ namespace Gi7.ViewModel
     {
         private readonly GithubService _githubService;
         private ListReceived _eventsRequest;
-        private Client.Request.User.ListFollowers _followersRequest;
-        private Client.Request.User.ListFollowings _followingsRequest;
-        private ObservableCollection<Repository> _ownedRepos;
-        private ObservableCollection<Repository> _watchedRepos;
-        private ObservableCollection<FeaturedRepo> _featuredRepos;
-        private ObservableCollection<SearchResult> _searchResults;
+        private ListFollowers _followersRequest;
+        private ListFollowings _followingsRequest;
         private User _user;
         private String _search;
         private bool _isLoggedIn;
@@ -77,23 +74,23 @@ namespace Gi7.ViewModel
                     navigationService.NavigateTo(string.Format(Service.ViewModelLocator.RepositoryUrl, repoData[0].Trim(), repoData[1].Trim()));
                 }
             });
-            PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => { _loadPanel((args.AddedItems[0] as PanoramaItem).Header as String); });
+            PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => { LoadPanel((args.AddedItems[0] as PanoramaItem).Header as String); });
             AboutCommand = new RelayCommand(() => navigationService.NavigateTo(Service.ViewModelLocator.AboutUrl));
             LogoutCommand = new RelayCommand(() => githubService.Logout(), () => IsLoggedIn);
 
             // init
             if (_githubService.IsAuthenticated)
-                _login();
+                Login();
             else
-                _logout();
+                Logout();
 
             // listenning to the github service
             githubService.IsAuthenticatedChanged += (s, e) =>
             {
                 if (e.IsAuthenticated)
-                    _login();
+                    Login();
                 else
-                    _logout();
+                    Logout();
             };
 
             // listenning to the search box
@@ -152,33 +149,11 @@ namespace Gi7.ViewModel
             }
         }
 
-        public ObservableCollection<Repository> OwnedRepos
-        {
-            get { return _ownedRepos; }
-            set
-            {
-                if (_ownedRepos != value)
-                {
-                    _ownedRepos = value;
-                    RaisePropertyChanged("OwnedRepos");
-                }
-            }
-        }
+        public ObservableCollection<Repository> OwnedRepos{ get; set; }
 
-        public ObservableCollection<Repository> WatchedRepos
-        {
-            get { return _watchedRepos; }
-            set
-            {
-                if (_watchedRepos != value)
-                {
-                    _watchedRepos = value;
-                    RaisePropertyChanged("WatchedRepos");
-                }
-            }
-        }
+        public ObservableCollection<Repository> WatchedRepos { get; set; }
 
-        public Client.Request.User.ListFollowings FollowingsRequest
+        public ListFollowings FollowingsRequest
         {
             get { return _followingsRequest; }
             set
@@ -191,7 +166,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.User.ListFollowers FollowersRequest
+        public ListFollowers FollowersRequest
         {
             get { return _followersRequest; }
             set
@@ -206,28 +181,14 @@ namespace Gi7.ViewModel
 
         public ObservableCollection<FeaturedRepo> FeaturedRepos
         {
-            get { return _featuredRepos; }
-            set
-            {
-                if (_featuredRepos != value)
-                {
-                    _featuredRepos = value;
-                    RaisePropertyChanged("FeaturedRepos");
-                }
-            }
+            get;
+            set;
         }
 
         public ObservableCollection<SearchResult> SearchResults
         {
-            get { return _searchResults; }
-            set
-            {
-                if (_searchResults != value)
-                {
-                    _searchResults = value;
-                    RaisePropertyChanged("SearchResults");
-                }
-            }
+            get;
+            set;
         }
 
         public String Search
@@ -243,7 +204,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        private void _loadPanel(string header)
+        private void LoadPanel(string header)
         {
             switch (header)
             {
@@ -265,11 +226,11 @@ namespace Gi7.ViewModel
                     break;
                 case "Follower":
                     if (FollowersRequest == null)
-                        FollowersRequest = new Client.Request.User.ListFollowers(_githubService.Username);
+                        FollowersRequest = new ListFollowers(_githubService.Username);
                     break;
                 case "Following":
                     if (FollowingsRequest == null)
-                        FollowingsRequest = new Client.Request.User.ListFollowings(_githubService.Username);
+                        FollowingsRequest = new ListFollowings(_githubService.Username);
                     break;
                 case "Profile":
                     if (User == null)
@@ -279,19 +240,17 @@ namespace Gi7.ViewModel
                     if (FeaturedRepos == null)
                         FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
                     break;
-                default:
-                    break;
             }
         }
 
-        private void _login()
+        private void Login()
         {
             IsLoggedIn = true;
 
-            _loadPanel("News Feed");
+            LoadPanel("News Feed");
         }
 
-        private void _logout()
+        private void Logout()
         {
             IsLoggedIn = false;
             User = null;

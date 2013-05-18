@@ -6,71 +6,67 @@
              FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480"
              d:DesignWidth="380">
 
-  <ScrollViewer>
-    <StackPanel Orientation="Vertical">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto" MinWidth="150" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Image Source="{Binding Path=User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=150}" Grid.RowSpan="4" />
-        <Grid Grid.Column="1">
-          <TextBlock Text="Login:" d:LayoutOverrides="Height" VerticalAlignment="Center" Margin="5,0,0,0" />
-          <TextBlock Text="{Binding User.Login}" FontSize="21.333" Grid.Column="1" TextAlignment="Right"
-                     VerticalAlignment="Center" Margin="0,0,5,0" />
-        </Grid>
-        <Grid Grid.Row="1" Grid.Column="1">
-          <TextBlock Text="Name:" Grid.Column="1" d:LayoutOverrides="Height" Grid.Row="1"
-                     VerticalAlignment="Center" Margin="5,0,0,0" />
-          <TextBlock Text="{Binding User.Name}" FontSize="21.333" Grid.Column="1" Grid.Row="1"
-                     d:LayoutOverrides="Height" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" />
-        </Grid>
-        <Grid Grid.Row="2" Grid.Column="1">
-          <TextBlock Text="Location:" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"
-                     Margin="5,0,0,0" />
-          <TextBlock Text="{Binding User.Location}" FontSize="21.333" Grid.Column="1" Grid.Row="1" TextAlignment="Right"
-                     VerticalAlignment="Center" Margin="0,0,5,0" />
-        </Grid>
-        <Grid Grid.Row="3" Grid.Column="1">
-          <TextBlock Text="Web" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="5,0,0,0" />
-          <HyperlinkButton Content="Blog" NavigateUri="{Binding User.Blog}" TargetName="_blank"
-                           Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" FontSize="21.333" VerticalAlignment="Center" Margin="0,0,-7,0" />
-        </Grid>
-      </Grid>
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding User.PublicRepos}" FontSize="24" Foreground="Gray" Grid.Column="0"
-                   Grid.Row="0" TextAlignment="Right" Margin="0,0,5,0" />
-        <TextBlock Text="Public repos" Grid.Column="0" Grid.Row="0" FontSize="24" />
-
-        <TextBlock Text="{Binding User.TotalPrivateRepos}" FontSize="24" Foreground="Gray" Grid.Column="1"
-                   Grid.Row="0" TextAlignment="Right" Margin="0,0,5,0" />
-        <TextBlock Text="Private repos" Grid.Column="1" Grid.Row="0" FontSize="24" />
-
-        <TextBlock Text="{Binding User.Followers}" FontSize="24" Foreground="Gray" Grid.Column="0" Grid.Row="1"
-                   TextAlignment="Right" Margin="0,0,5,0" />
-        <TextBlock Text="Followers" Grid.Column="0" Grid.Row="1" FontSize="24" />
-
-        <TextBlock Text="{Binding User.Following}" FontSize="24" Foreground="Gray" Grid.Column="1" Grid.Row="1"
-                   TextAlignment="Right" Margin="0,0,5,0" />
-        <TextBlock Text="Following" Grid.Column="1" Grid.Row="1" FontSize="24" />
-      </Grid>
-      <HyperlinkButton Content="See on github" NavigateUri="{Binding User.HtmlUrl}" TargetName="_blank"
-                       HorizontalAlignment="Right" />
-    </StackPanel>
-  </ScrollViewer>
+    <ListBox x:Name="ProfileListBox" Margin="12,0,12,0">
+        <ListBoxItem>
+            <StackPanel Margin="10,0,0,7" Width="432" Height="150">
+                <Image Source="{Binding Path=User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=150}"
+                        VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" Height="150"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem>
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Login" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.Login}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem Visibility="{Binding User.Name, Converter={StaticResource EmptyConverter}}">
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Name" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.Name}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem Visibility="{Binding User.Location, Converter={StaticResource EmptyConverter}}">
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Location" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.Location}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem Visibility="{Binding User.Blog, Converter={StaticResource EmptyConverter}}">
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Web" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <HyperlinkButton Content="Blog" NavigateUri="{Binding User.Blog}" TargetName="_blank" />
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem>
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Public repos" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.PublicRepos}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem>
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Private repos" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.TotalPrivateRepos}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem>
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Followers" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.Followers}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem>
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                <TextBlock Text="Following" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                <TextBlock Text="{Binding User.Following}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneAccentBrush}"/>
+            </StackPanel>
+        </ListBoxItem>
+        <ListBoxItem>
+            <StackPanel Margin="0,0,0,7" Width="432" Height="78">
+                 <HyperlinkButton Content="See on github" NavigateUri="{Binding User.HtmlUrl}" TargetName="_blank"
+                                  HorizontalAlignment="Left" FontSize="35" />
+            </StackPanel>
+        </ListBoxItem>
+    </ListBox>
 </UserControl>

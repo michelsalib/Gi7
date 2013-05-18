@@ -29,7 +29,7 @@
             <!--Pivot item one-->
             <controls:PivotItem Header="Details">
                 <ScrollViewer>
-                    <StackPanel>
+                    <StackPanel Margin="12,0,12,0">
                         <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap" />
                         <HyperlinkButton Content="Website" HorizontalAlignment="Right" Visibility="{Binding Repository.Homepage, Converter={StaticResource EmptyConverter}}"
                                          NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
@@ -86,29 +86,34 @@
                                  VerticalAlignment="Top">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel d:DesignWidth="450" Margin="0,0,0,20">
-                                <Border Background="{StaticResource PhoneAccentBrush}" Height="40" Padding="5" Margin="0,0,0,10">
+                            <StackPanel Margin="12,0,12,30">
+                                <Border Background="{StaticResource PhoneAccentBrush}" Height="40" Padding="5" Margin="0,0,0,0">
                                     <TextBlock Text="{Binding Path=Date, StringFormat='\{0:D\}'}" FontWeight="Bold" Foreground="White" />
                                 </Border>
                                 <ListBox ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <Grid Width="450" MaxHeight="80" Background="Transparent" Margin="0,0,0,10">
-                                                <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                                    HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
-                                                <TextBlock Text="{Binding Path=Author.Login}" HorizontalAlignment="Left"
-                                                    VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                                <TextBlock Text="{Binding Path=Commit.Author.Date}" Margin="0,0,20,0"
-                                                    HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
-                                                <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}"
-                                                    Margin="80,25,0,0" TextWrapping="Wrap" TextOptions.TextHintingMode="Animated"  TextTrimming="WordEllipsis" />
+                                            <StackPanel Margin="0,0,0,0" Height="85" Background="Transparent">
+                                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" Margin="0,0,0,0" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Grid Width="432" Background="Transparent" Margin="0,10,0,0">
+                                                        <Image Source="{Binding Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
+                                                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
+                                                        <TextBlock Text="{Binding Path=Author.Login}" HorizontalAlignment="Left"
+                                                                VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                                                        <TextBlock Text="{Binding Path=Commit.Author.Date}" Margin="0,0,5,0"
+                                                                HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
+                                                        <TextBlock Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85"
+                                                                Margin="80,25,0,0" TextOptions.TextHintingMode="Animated" />
+                                                    </Grid>
+                                                </StackPanel>
                                                 <Interactivity:Interaction.Triggers>
                                                     <Interactivity:EventTrigger EventName="Tap">
                                                         <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
                                                     </Interactivity:EventTrigger>
                                                 </Interactivity:Interaction.Triggers>
-                                            </Grid>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
@@ -127,15 +132,15 @@
                     </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="450" Margin="0,0,0,30">
+                            <StackPanel Margin="12,0,12,30">
                                 <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" Margin="0,0,0,0" />
                                 <StackPanel Orientation="Horizontal">
-                                    <Grid Width="450" Background="Transparent" Margin="0,10,0,0">
+                                    <Grid Width="432" Background="Transparent" Margin="0,10,0,0">
                                         <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
                                             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                                         <TextBlock Text="{Binding Path=User.Login}" HorizontalAlignment="Left"
                                             VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding Path=UpdatedAt}" Margin="0,0,20,0"
+                                        <TextBlock Text="{Binding Path=UpdatedAt}" Margin="0,0,5,0"
                                             HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
                                         <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85"
                                             Margin="80,25,0,0" TextOptions.TextHintingMode="Animated" />
@@ -156,7 +161,7 @@
                     </Interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="450" Margin="0,0,0,30">
+                            <StackPanel Margin="12,0,12,30">
                                 <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="26" TextWrapping="Wrap" />
                                 <StackPanel Orientation="Horizontal" Height="80">
                                     <Grid>

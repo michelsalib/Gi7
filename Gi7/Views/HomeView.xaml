@@ -26,19 +26,19 @@
             <controls:Panorama.Title>
                 <TextBlock Text="Gi7" FontSize="100" Margin="0,50,0,0" />
             </controls:Panorama.Title>
-            <controls:PanoramaItem Header="Login"
+            <controls:PanoramaItem Header="login"
                              Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:LoginPanel />
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="News Feed"
+            <controls:PanoramaItem Header="news feed"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:EventsPanel />
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Repos"
+            <controls:PanoramaItem Header="repositories"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:RepositoryPanel />
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Following"
+            <controls:PanoramaItem Header="following"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
                            ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
@@ -50,7 +50,7 @@
                     </Interactivity:Interaction.Triggers>
                 </lists:UserListBox>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Follower"
+            <controls:PanoramaItem Header="follower"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
                            ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
@@ -62,11 +62,11 @@
                     </Interactivity:Interaction.Triggers>
                 </lists:UserListBox>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Profile"
+            <controls:PanoramaItem Header="profile"
                              Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:ProfilePanel />
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Search">
+            <controls:PanoramaItem Header="search">
                 <StackPanel Orientation="Vertical">
                     <TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="EnterPressed" />
                     <ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResults}">
@@ -85,7 +85,7 @@
                     </ListBox>
                 </StackPanel>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="Explore">
+            <controls:PanoramaItem Header="explore">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Featured Repos" FontSize="30" />

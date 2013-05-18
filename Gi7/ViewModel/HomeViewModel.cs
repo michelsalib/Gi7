@@ -232,11 +232,11 @@ namespace Gi7.ViewModel
         {
             switch (header)
             {
-                case "News Feed":
+                case "news feed":
                     if (EventsRequest == null)
                         EventsRequest = new ListReceived(_githubService.Username);
                     break;
-                case "Repos":
+                case "repositories":
                     if (!OwnedRepos.Any())
                         _githubService.Load(new List(), repositories =>
                         {
@@ -250,19 +250,19 @@ namespace Gi7.ViewModel
                                 WatchedRepos.Add(repository);
                         });
                     break;
-                case "Follower":
+                case "follower":
                     if (FollowersRequest == null)
                         FollowersRequest = new ListFollowers(_githubService.Username);
                     break;
-                case "Following":
+                case "following":
                     if (FollowingsRequest == null)
                         FollowingsRequest = new ListFollowings(_githubService.Username);
                     break;
-                case "Profile":
+                case "profile":
                     if (User == null)
                         User = _githubService.Load(new Client.Request.User.Get(_githubService.Username), u => User = u);
                     break;
-                case "Explore":
+                case "explore":
                     if (FeaturedRepos == null)
                         FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
                     break;
@@ -273,7 +273,7 @@ namespace Gi7.ViewModel
         {
             IsLoggedIn = true;
 
-            LoadPanel("News Feed");
+            LoadPanel("news feed");
         }
 
         private void Logout()

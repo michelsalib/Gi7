@@ -7,32 +7,32 @@
              FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480" d:DesignWidth="480">
 
-  <ScrollViewer>
-    <StackPanel Orientation="Vertical">
-      <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical"  Margin="12,0,12,0">
+            <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
                 <TextBlock Text="Watched Repos" FontSize="48" Foreground="{StaticResource PhoneAccentBrush}" />
-      </Border>
-      <ListBox x:Name="WatchedRepos" ItemsSource="{Binding WatchedRepos}"
+            </Border>
+            <ListBox x:Name="WatchedRepos" ItemsSource="{Binding WatchedRepos}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled" FontSize="26.667" Margin="0,8">
-        <Interactivity:Interaction.Triggers>
-          <Interactivity:EventTrigger EventName="Tap">
-            <Command:EventToCommand Command="{Binding RepoSelectedCommand}"
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="Tap">
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}"
                                     CommandParameter="{Binding SelectedItem, ElementName=WatchedRepos}" />
-          </Interactivity:EventTrigger>
-        </Interactivity:Interaction.Triggers>
-      </ListBox>
-      <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </ListBox>
+            <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
                 <TextBlock Text="Owned Repos" FontSize="48" Foreground="{StaticResource PhoneAccentBrush}" Margin="0,20,0,0"/>
-      </Border>
-      <ListBox x:Name="OwnedRepos" ItemsSource="{Binding OwnedRepos}"
+            </Border>
+            <ListBox x:Name="OwnedRepos" ItemsSource="{Binding OwnedRepos}"
                ScrollViewer.VerticalScrollBarVisibility="Disabled" FontSize="26.667" Margin="0,8">
-        <Interactivity:Interaction.Triggers>
-          <Interactivity:EventTrigger EventName="Tap">
-            <Command:EventToCommand Command="{Binding RepoSelectedCommand}"
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="Tap">
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}"
                                     CommandParameter="{Binding SelectedItem, ElementName=OwnedRepos}" />
-          </Interactivity:EventTrigger>
-        </Interactivity:Interaction.Triggers>
-      </ListBox>
-    </StackPanel>
-  </ScrollViewer>
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </ListBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

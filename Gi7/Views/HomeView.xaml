@@ -88,10 +88,10 @@
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="Explore">
                 <ScrollViewer>
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Margin="12,0,12,0">
                         <TextBlock Text="Featured Repos" FontSize="30" />
                         <ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}"
-                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">

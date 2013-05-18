@@ -33,8 +33,8 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <ScrollViewer Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">
-            <StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalAlignment="Top">
+            <StackPanel Margin="12,0,12,0">
                 <TextBlock Text="{Binding Issue.Title}" FontWeight="Bold" TextWrapping="Wrap" FontSize="36" />
                 <Grid Margin="0,0,0,10">
                     <Image Source="{Binding Issue.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"

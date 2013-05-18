@@ -7,6 +7,6 @@
         <toolkit:HubTile Title="{Binding Login}" Message="{Binding Login}" Source="{Binding AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=175}" Margin="3" FontSize="13.333" />
     </DataTemplate>
     <ItemsPanelTemplate x:Key="UserTemplateFormat">
-        <toolkit:WrapPanel Orientation="Horizontal" />
+        <toolkit:WrapPanel Orientation="Horizontal" Margin="12,0,12,0" />
     </ItemsPanelTemplate>
 </ResourceDictionary>

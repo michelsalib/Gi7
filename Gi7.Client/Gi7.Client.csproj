@@ -159,6 +159,7 @@
     <Compile Include="Utils\EventDeserializer.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
+    <Compile Include="Utils\UserDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

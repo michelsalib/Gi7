@@ -106,9 +106,9 @@ namespace Gi7.Utils
             }
             else if (e is PullRequestEvent)
             {
-                return ((PullRequestEvent)e).PullRequest.Title;
-            }
-            else if (e is PushEvent)
+                var pullRequest = ((PullRequestEvent) e).PullRequest;
+                if (pullRequest != null) return pullRequest.Title;
+            } else if (e is PushEvent)
             {
                 return null;
             }

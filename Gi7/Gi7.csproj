@@ -117,6 +117,7 @@
     <Compile Include="Utils\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\BoolToModeConverter.cs" />
     <Compile Include="Utils\Converters\EmptyConverter.cs" />
+    <Compile Include="Utils\Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="Utils\Converters\EventConverter.cs" />
     <Compile Include="Utils\Converters\GravatarSizeConverter.cs" />
     <Compile Include="Utils\Converters\NullToVisibilityConverter.cs" />
@@ -268,8 +269,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\appbar.new.rest.png" />
+    <Content Include="Images\company.png" />
     <Content Include="Images\cs.png" />
     <Content Include="Images\folder.png" />
+    <Content Include="Images\link.png" />
+    <Content Include="Images\location.png" />
+    <Content Include="Images\mail.png" />
+    <Content Include="Images\time.png" />
     <Content Include="Images\XAML_file.png" />
     <Content Include="MVVMLight.Nuget.Readme.txt" />
     <Resource Include="Images\comment.png" />

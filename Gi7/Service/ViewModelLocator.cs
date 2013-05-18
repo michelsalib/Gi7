@@ -1,13 +1,12 @@
-﻿using System;
-using System.Windows;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using Gi7.Client;
 using Gi7.Controls;
 using Gi7.Resources.DesignData;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
 using Gi7.ViewModel;
-using Gi7.Views;
+using System;
+using System.Windows;
 
 namespace Gi7.Service
 {
@@ -39,14 +38,8 @@ namespace Gi7.Service
                 {
                     GlobalLoading.Instance.IsLoading = e.IsLoading;
                 };
-                GithubService.ConnectionError += (s, e) =>
-                {
-                    MessageBox.Show("Server unreachable.", "Gi7", MessageBoxButton.OK);
-                };
-                GithubService.Unauthorized += (s, e) =>
-                {
-                    MessageBox.Show("Wrong credentials.", "Gi7", MessageBoxButton.OK);
-                };
+                GithubService.ConnectionError += (s, e) => MessageBox.Show("Server unreachable.", "Gi7", MessageBoxButton.OK);
+                GithubService.Unauthorized += (s, e) => MessageBox.Show("Wrong credentials.", "Gi7", MessageBoxButton.OK);
                 GithubService.Init();
             }
         }
@@ -60,14 +53,10 @@ namespace Gi7.Service
             get { return new LoginPanelViewModel(GithubService); }
         }
 
-        public Object HomeViewModel
+        public HomeViewModel HomeViewModel
         {
-            get
-            {
-                if (ViewModelBase.IsInDesignModeStatic)
-                    return null;
-                else
-                    return new HomeViewModel(GithubService, NavigationService);
+            get {
+                return new HomeViewModel(GithubService, NavigationService);
             }
         }
 

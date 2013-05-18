@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
@@ -42,40 +43,13 @@ namespace Gi7.ViewModel
             _githubService = githubService;
 
             // commands
-            FeaturedRepoSelectedCommand = new RelayCommand<FeaturedRepo>(r =>
-            {
-                if (r != null)
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.User, r.Repo));
-            });
-            RepoSelectedCommand = new RelayCommand<Repository>(r =>
-            {
-                if (r != null)
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
-            });
-            EventSelectedCommand = new RelayCommand<Event>(e =>
-            {
-                if (e != null)
-                    navigationService.NavigateTo(new EventManager().GetDestination(e));
-            });
-            UserSelectedCommand = new RelayCommand<User>(user =>
-            {
-                if (user != null)
-                    navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, user.Login));
-            });
-            ResultSelectedCommand = new RelayCommand<SearchResult>(r =>
-            {
-                if (r.Type == "user")
-                {
-                    navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, r.Name));
-                }
-                else // repo
-                {
-                    var repoData = r.Name.Split('/');
-                    navigationService.NavigateTo(string.Format(Service.ViewModelLocator.RepositoryUrl, repoData[0].Trim(), repoData[1].Trim()));
-                }
-            });
-            PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => { LoadPanel((args.AddedItems[0] as PanoramaItem).Header as String); });
-            AboutCommand = new RelayCommand(() => navigationService.NavigateTo(Service.ViewModelLocator.AboutUrl));
+            FeaturedRepoSelectedCommand = new RelayCommand<FeaturedRepo>(r => OnFeaturedRepoSelected(navigationService, r));
+            RepoSelectedCommand = new RelayCommand<Repository>(r => OnRepoSelected(navigationService, r));
+            EventSelectedCommand = new RelayCommand<Event>(e => OnEventSelected(navigationService, e));
+            UserSelectedCommand = new RelayCommand<User>(user => OnUserSelected(navigationService, user));
+            ResultSelectedCommand = new RelayCommand<SearchResult>(r => OnResultSelected(navigationService, r));
+            PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(OnPanoramaChanged);
+            AboutCommand = new RelayCommand(() => OnAbout(navigationService));
             LogoutCommand = new RelayCommand(() => githubService.Logout(), () => IsLoggedIn);
 
             // init
@@ -85,22 +59,72 @@ namespace Gi7.ViewModel
                 Logout();
 
             // listenning to the github service
-            githubService.IsAuthenticatedChanged += (s, e) =>
-            {
-                if (e.IsAuthenticated)
-                    Login();
-                else
-                    Logout();
-            };
+            githubService.IsAuthenticatedChanged += (s, e) => OnIsAuthenticatedChanged(e);
 
             // listenning to the search box
-            PropertyChanged += (s, e) =>
+            PropertyChanged += (s, e) => OnPropertyChanged(githubService, e);
+
+            WatchedRepos = new ObservableCollection<Repository>();
+            OwnedRepos = new ObservableCollection<Repository>();
+        }
+
+        private void OnPropertyChanged(GithubService githubService, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Search")
+                SearchResults = githubService.Load(new Search(Search), r => SearchResults = r);
+        }
+
+        private void OnIsAuthenticatedChanged(AuthenticatedEventArgs e)
+        {
+            if (e.IsAuthenticated)
+                Login();
+            else
+                Logout();
+        }
+
+        private static void OnAbout(INavigationService navigationService)
+        {
+            navigationService.NavigateTo(Service.ViewModelLocator.AboutUrl);
+        }
+
+        private void OnPanoramaChanged(SelectionChangedEventArgs args)
+        {
+            LoadPanel((args.AddedItems[0] as PanoramaItem).Header as String);
+        }
+
+        private static void OnResultSelected(INavigationService navigationService, SearchResult r)
+        {
+            if (r.Type == "user")
+                navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, r.Name));
+            else // repo
             {
-                if (e.PropertyName == "Search")
-                {
-                    SearchResults = githubService.Load(new Search(Search), r => SearchResults = r);
-                }
-            };
+                var repoData = r.Name.Split('/');
+                navigationService.NavigateTo(string.Format(Service.ViewModelLocator.RepositoryUrl, repoData[0].Trim(), repoData[1].Trim()));
+            }
+        }
+
+        private static void OnUserSelected(INavigationService navigationService, User user)
+        {
+            if (user != null)
+                navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, user.Login));
+        }
+
+        private static void OnEventSelected(INavigationService navigationService, Event e)
+        {
+            if (e != null)
+                navigationService.NavigateTo(new EventManager().GetDestination(e));
+        }
+
+        private static void OnRepoSelected(INavigationService navigationService, Repository r)
+        {
+            if (r != null)
+                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+        }
+
+        private static void OnFeaturedRepoSelected(INavigationService navigationService, FeaturedRepo r)
+        {
+            if (r != null)
+                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.User, r.Repo));
         }
 
         public bool IsLoggedIn
@@ -149,7 +173,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public ObservableCollection<Repository> OwnedRepos{ get; set; }
+        public ObservableCollection<Repository> OwnedRepos { get; set; }
 
         public ObservableCollection<Repository> WatchedRepos { get; set; }
 
@@ -210,19 +234,21 @@ namespace Gi7.ViewModel
             {
                 case "News Feed":
                     if (EventsRequest == null)
-                    {
                         EventsRequest = new ListReceived(_githubService.Username);
-                    }
                     break;
                 case "Repos":
-                    if (OwnedRepos == null)
-                    {
-                        OwnedRepos = _githubService.Load(new List());
+                    if (!OwnedRepos.Any())
+                        _githubService.Load(new List(), repositories =>
+                        {
+                            foreach (var repository in repositories)
+                                OwnedRepos.Add(repository);
+                        });
+                    if (!WatchedRepos.Any())
                         _githubService.Load(new ListWatched(_githubService.Username), result =>
                         {
-                            WatchedRepos = new ObservableCollection<Repository>(result.Where(repo => !repo.Owner.Login.Equals(_githubService.Username, StringComparison.InvariantCultureIgnoreCase)));
+                            foreach (var repository in result.Where(repo => !repo.Owner.Login.Equals(_githubService.Username, StringComparison.InvariantCultureIgnoreCase)))
+                                WatchedRepos.Add(repository);
                         });
-                    }
                     break;
                 case "Follower":
                     if (FollowersRequest == null)

@@ -5,15 +5,13 @@ using System.Windows.Data;
 
 namespace Gi7.Utils.Converters
 {
-    public class BoolToVisibilityConverter : IValueConverter
+    public class EmptyStringToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var b = value as bool?;
-
-            return (b.HasValue && b.Value) ? Visibility.Visible : Visibility.Collapsed;
+            return string.IsNullOrWhiteSpace(value as string) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

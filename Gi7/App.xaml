@@ -89,6 +89,10 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="StrechListBoxItem" TargetType="ListBoxItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            </Style>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         </ResourceDictionary>
     </Application.Resources>

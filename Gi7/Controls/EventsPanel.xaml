@@ -1,32 +1,31 @@
 ﻿<UserControl x:Class="Gi7.Controls.EventsPanel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
              xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
              xmlns:local="clr-namespace:Gi7.Controls.PaginatedListBox" mc:Ignorable="d"
              FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480" d:DesignWidth="480">
 
-    <local:EventListBox Request="{Binding EventsRequest}" x:Name="EventsList">
+    <local:EventListBox Request="{Binding EventsRequest}" x:Name="EventsList" ItemContainerStyle="{StaticResource StrechListBoxItem}">
         <local:EventListBox.ItemTemplate>
             <DataTemplate>
                 <Grid  Margin="0,0,0,20">
                     <Image Source="{Binding Path=Actor.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
-                    <Border Background="{StaticResource PhoneAccentBrush}" Height="20" Width="20" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,8,0,0">
-                        <Image Source="{Binding Converter={StaticResource EventConverter}, ConverterParameter=image}" Width="16" Height="16" OpacityMask="{x:Null}" />
-                    </Border>
                     <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                         <Paragraph>
                             <Run Text="{Binding Actor.Login}" FontWeight="Bold" />
                             <Run Text="{Binding Converter={StaticResource EventConverter}, ConverterParameter=title}" />
                             <Run Text="{Binding Repo.Fullname}" Foreground="{StaticResource PhoneAccentBrush}" />
+                        </Paragraph>
+                        <Paragraph>
                             <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                         </Paragraph>
                         <Paragraph>
                             <Run Text="{Binding Converter={StaticResource EventConverter}, ConverterParameter=description}" Foreground="#CCC" FontSize="16" />
                         </Paragraph>
                     </RichTextBox>
+                    <Image Source="{Binding Converter={StaticResource EventConverter}, ConverterParameter=image}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
                 </Grid>
             </DataTemplate>
         </local:EventListBox.ItemTemplate>

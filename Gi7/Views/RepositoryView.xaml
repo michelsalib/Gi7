@@ -74,6 +74,11 @@
                                     <TextBlock Text="{Binding Name}" />
                                 </DataTemplate>
                             </toolkit:ListPicker.ItemTemplate>
+                            <toolkit:ListPicker.FullModeItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" FontSize="30" Padding="0,8" />
+                                </DataTemplate>
+                            </toolkit:ListPicker.FullModeItemTemplate>
                         </toolkit:ListPicker>
                         <TextBlock Text="Download" VerticalAlignment="Center" FontSize="42.667" />
                         <Button Content="Get a Zip" Tap="OpenContextMenu" >

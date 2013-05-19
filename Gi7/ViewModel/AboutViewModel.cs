@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request.Repository;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Tasks;
 
@@ -15,15 +15,11 @@ namespace Gi7.ViewModel
         private User _albertomonteiro;
         private User _michelsalib;
 
-        public RelayCommand ShareCommand { get; private set; }
-        public RelayCommand<User> UserSelectedCommand { get; private set; }
-        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
-
         public AboutViewModel(GithubService githubService, INavigationService navigationService)
         {
-            Michelsalib = githubService.Load(new Client.Request.User.Get("michelsalib"), u => Michelsalib = u);
-            AlbertoMonteiro = githubService.Load(new Client.Request.User.Get("albertomonteiro"), u => AlbertoMonteiro = u);
-            Gi7 = githubService.Load(new Get("michelsalib", "Gi7"), r => Gi7 = r);
+            Michelsalib = githubService.Load(new UserRequest("michelsalib"), u => Michelsalib = u);
+            AlbertoMonteiro = githubService.Load(new UserRequest("albertomonteiro"), u => AlbertoMonteiro = u);
+            Gi7 = githubService.Load(new RepositoryRequest("michelsalib", "Gi7"), r => Gi7 = r);
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
@@ -37,7 +33,7 @@ namespace Gi7.ViewModel
             });
             ShareCommand = new RelayCommand(() =>
             {
-                new ShareLinkTask()
+                new ShareLinkTask
                 {
                     LinkUri = new Uri("http://www.windowsphone.com/en-US/apps/2bdbe5da-a20a-42f5-8b08-cda2fbf9046f"),
                     Title = "Check this Github app for Windows Phone 7",
@@ -45,6 +41,10 @@ namespace Gi7.ViewModel
                 }.Show();
             });
         }
+
+        public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand<User> UserSelectedCommand { get; private set; }
+        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
 
         public User Michelsalib
         {

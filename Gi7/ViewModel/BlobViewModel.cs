@@ -5,9 +5,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Gi7.Utils.ContentDetector;
-using Blob = Gi7.Client.Request.Tree.Blob;
 
 namespace Gi7.ViewModel
 {
@@ -22,13 +22,13 @@ namespace Gi7.ViewModel
             Path = path;
             RepoName = String.Format("{0}/{1}", username, repo);
 
-            githubService.Load(new Blob(username, repo, sha), b =>
+            githubService.Load(new BlobRequest(username, repo, sha), b =>
             {
-                byte[] encodedDataAsBytes = Convert.FromBase64String(b.Content);
-                String content = Encoding.UTF8.GetString(encodedDataAsBytes, 0, encodedDataAsBytes.Length);
+                var encodedDataAsBytes = Convert.FromBase64String(b.Content);
+                var content = Encoding.UTF8.GetString(encodedDataAsBytes, 0, encodedDataAsBytes.Length);
                 TextFile = content.Split('\n');
 
-                HeaderSignature type = new ContentGuesser().GuessType(path, encodedDataAsBytes);
+                var type = new ContentGuesser().GuessType(path, encodedDataAsBytes);
                 if (type != null)
                     Console.Out.WriteLine(type.SignatureName);
             });

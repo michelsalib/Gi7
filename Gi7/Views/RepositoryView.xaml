@@ -11,23 +11,34 @@
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
-                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar" 
+                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            xmlns:gi7="clr-namespace:Gi7"
                             mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
+                            shell:SystemTray.IsVisible="True" 
+                            shell:SystemTray.Opacity="0"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=RepositoryViewModel, Source={StaticResource ViewModelLocator}}">
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <gi7:Header></gi7:Header>
+            <TextBlock Text="{Binding Repository.Fullname}" Margin="0,20,10,0" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+        </Grid>
         <!--Pivot Control-->
-        <controls:Pivot Title="{Binding Repository.Fullname}" x:Name="Pivot" Tap="Pivot_Tap">
+        <controls:Pivot Grid.Row="1" x:Name="Pivot" Tap="Pivot_Tap">
             <Interactivity:Interaction.Triggers>
                 <Interactivity:EventTrigger EventName="SelectionChanged">
                     <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
                 </Interactivity:EventTrigger>
             </Interactivity:Interaction.Triggers>
             <!--Pivot item one-->
-            <controls:PivotItem Header="Details">
+            <controls:PivotItem Header="details">
                 <ScrollViewer>
                     <StackPanel>
                         <TextBlock Text="{Binding Repository.Description}" TextWrapping="Wrap" />
@@ -78,10 +89,10 @@
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
-            <controls:PivotItem Header="Tree">
+            <controls:PivotItem Header="tree">
                 <templates:TreePanel />
             </controls:PivotItem>
-            <controls:PivotItem Header="Commits">
+            <controls:PivotItem Header="commits">
                 <paginated:CommitListBox Request="{Binding CommitsRequest}" x:Name="CommitsList"
                                  VerticalAlignment="Top">
                     <ListBox.ItemTemplate>
@@ -117,7 +128,7 @@
                     </ListBox.ItemTemplate>
                 </paginated:CommitListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="Pull requests">
+            <controls:PivotItem Header="pull requests">
                 <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" x:Name="PullRequestsList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
@@ -146,7 +157,7 @@
                     </ListBox.ItemTemplate>
                 </paginated:PullRequestListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="Issues">
+            <controls:PivotItem Header="issues">
                 <paginated:IssueListBox Request="{Binding IssuesRequest}" x:Name="IssuesList">
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger EventName="Tap">
@@ -185,7 +196,7 @@
                     </ListBox.ItemTemplate>
                 </paginated:IssueListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="Collaborators">
+            <controls:PivotItem Header="collaborators">
                 <paginated:UserListBox Request="{Binding CollaboratorRequest}" x:Name="CollaboratorList"
                                        ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
                     <Interactivity:Interaction.Triggers>
@@ -196,7 +207,7 @@
                     </Interactivity:Interaction.Triggers>
                 </paginated:UserListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="Watchers">
+            <controls:PivotItem Header="watchers">
                 <paginated:UserListBox Request="{Binding WatchersRequest}" x:Name="WatcherList"
                                        ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
                     <Interactivity:Interaction.Triggers>

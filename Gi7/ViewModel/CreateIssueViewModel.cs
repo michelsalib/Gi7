@@ -2,14 +2,24 @@ using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
-using Gi7.Client.Request.Issue;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 
 namespace Gi7.ViewModel
 {
     public class CreateIssueViewModel : ViewModelBase
     {
+        private String body;
+        private String repoName;
         private String title;
+
+        public CreateIssueViewModel(GithubService githubService, INavigationService navigationService, string user, string repo)
+        {
+            RepoName = String.Format("{0}/{1}", user, repo);
+
+            CreateIssueCommand = new RelayCommand(() => { githubService.Load(new CreateIssueRequest(user, repo, Title, Body), issue => { navigationService.GoBack(); }); }, () => !String.IsNullOrWhiteSpace(Title) && !String.IsNullOrWhiteSpace(Body));
+        }
+
         public String Title
         {
             get { return title; }
@@ -24,7 +34,6 @@ namespace Gi7.ViewModel
             }
         }
 
-        private String body;
         public String Body
         {
             get { return body; }
@@ -39,7 +48,6 @@ namespace Gi7.ViewModel
             }
         }
 
-        private String repoName;
         public String RepoName
         {
             get { return repoName; }
@@ -54,17 +62,5 @@ namespace Gi7.ViewModel
         }
 
         public RelayCommand CreateIssueCommand { get; private set; }
-
-        public CreateIssueViewModel(GithubService githubService, INavigationService navigationService, string user, string repo)
-        {
-            RepoName = String.Format("{0}/{1}", user, repo);
-
-            CreateIssueCommand = new RelayCommand(() => {
-                githubService.Load(new Create(user, repo, Title, Body), issue =>
-                {
-                    navigationService.GoBack();
-                });
-            }, () => !String.IsNullOrWhiteSpace(Title) && !String.IsNullOrWhiteSpace(Body));
-        }
     }
 }

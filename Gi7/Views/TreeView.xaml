@@ -6,10 +6,12 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            xmlns:template="clr-namespace:Gi7.Controls"
+                            xmlns:template="clr-namespace:Gi7.Controls" xmlns:gi7="clr-namespace:Gi7"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480" shell:SystemTray.IsVisible="True"
+                            mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480" 
+                            shell:SystemTray.IsVisible="True"
+                            shell:SystemTray.Opacity="0"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=TreeViewModel, Source={StaticResource ViewModelLocator}}">
 
@@ -19,12 +21,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" Style="{StaticResource PhoneTextNormalStyle}" />
-            <TextBlock x:Name="PageTitle" Text="{Binding Path}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
-        </StackPanel>
+        <Grid>
+            <gi7:Header Grid.Row="0"></gi7:Header>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,20,20,0"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path}" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,40,20,0"/>
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
         <StackPanel Grid.Row="1" Margin="12,0,12,0">

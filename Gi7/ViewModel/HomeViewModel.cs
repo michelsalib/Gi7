@@ -1,4 +1,8 @@
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
@@ -6,37 +10,22 @@ using Gi7.Client.Model;
 using Gi7.Client.Model.Event;
 using Gi7.Client.Model.Extra;
 using Gi7.Client.Request;
-using Gi7.Client.Request.Event;
-using Gi7.Client.Request.Repository;
-using Gi7.Client.Request.User;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
 using Microsoft.Phone.Controls;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Controls;
 
 namespace Gi7.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
         private readonly GithubService _githubService;
-        private ListReceived _eventsRequest;
-        private ListFollowers _followersRequest;
-        private ListFollowings _followingsRequest;
-        private User _user;
-        private String _search;
+        private UserReceivedEventsRequest _eventsRequest;
+        private UserFollowingRequest _followingsRequest;
         private bool _isLoggedIn;
-
-        public RelayCommand LogoutCommand { get; private set; }
-        public RelayCommand AboutCommand { get; private set; }
-        public RelayCommand<Event> EventSelectedCommand { get; private set; }
-        public RelayCommand<User> UserSelectedCommand { get; private set; }
-        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
-        public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
-        public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
-        public RelayCommand<SearchResult> ResultSelectedCommand { get; private set; }
+        private String _search;
+        private User _user;
+        private UserFollowersRequest followersRequestRequest;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -68,10 +57,112 @@ namespace Gi7.ViewModel
             OwnedRepos = new ObservableCollection<Repository>();
         }
 
+        public RelayCommand LogoutCommand { get; private set; }
+        public RelayCommand AboutCommand { get; private set; }
+        public RelayCommand<Event> EventSelectedCommand { get; private set; }
+        public RelayCommand<User> UserSelectedCommand { get; private set; }
+        public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
+        public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
+        public RelayCommand<SearchResult> ResultSelectedCommand { get; private set; }
+
+        public bool IsLoggedIn
+        {
+            get { return _isLoggedIn; }
+            set
+            {
+                if (_isLoggedIn != value)
+                {
+                    _isLoggedIn = value;
+                    RaisePropertyChanged("IsLoggedIn");
+                    RaisePropertyChanged("IsLoggedOut");
+                    LogoutCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public bool IsLoggedOut
+        {
+            get { return !IsLoggedIn; }
+        }
+
+        public User User
+        {
+            get { return _user; }
+            set
+            {
+                if (_user != value)
+                {
+                    _user = value;
+                    RaisePropertyChanged("User");
+                }
+            }
+        }
+
+        public UserReceivedEventsRequest EventsRequest
+        {
+            get { return _eventsRequest; }
+            set
+            {
+                if (_eventsRequest != value)
+                {
+                    _eventsRequest = value;
+                    RaisePropertyChanged("EventsRequest");
+                }
+            }
+        }
+
+        public ObservableCollection<Repository> OwnedRepos { get; set; }
+
+        public ObservableCollection<Repository> WatchedRepos { get; set; }
+
+        public UserFollowingRequest FollowingsRequest
+        {
+            get { return _followingsRequest; }
+            set
+            {
+                if (_followingsRequest != value)
+                {
+                    _followingsRequest = value;
+                    RaisePropertyChanged("FollowingsRequest");
+                }
+            }
+        }
+
+        public UserFollowersRequest FollowersRequestRequest
+        {
+            get { return followersRequestRequest; }
+            set
+            {
+                if (followersRequestRequest != value)
+                {
+                    followersRequestRequest = value;
+                    RaisePropertyChanged("FollowersRequest");
+                }
+            }
+        }
+
+        public ObservableCollection<FeaturedRepo> FeaturedRepos { get; set; }
+
+        public ObservableCollection<SearchResult> SearchResults { get; set; }
+
+        public String Search
+        {
+            get { return _search; }
+            set
+            {
+                if (_search != value)
+                {
+                    _search = value;
+                    RaisePropertyChanged("Search");
+                }
+            }
+        }
+
         private void OnPropertyChanged(GithubService githubService, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Search")
-                SearchResults = githubService.Load(new Search(Search), r => SearchResults = r);
+                SearchResults = githubService.Load(new SearchRequest(Search), r => SearchResults = r);
         }
 
         private void OnIsAuthenticatedChanged(AuthenticatedEventArgs e)
@@ -127,145 +218,44 @@ namespace Gi7.ViewModel
                 navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.User, r.Repo));
         }
 
-        public bool IsLoggedIn
-        {
-            get { return _isLoggedIn; }
-            set
-            {
-                if (_isLoggedIn != value)
-                {
-                    _isLoggedIn = value;
-                    RaisePropertyChanged("IsLoggedIn");
-                    RaisePropertyChanged("IsLoggedOut");
-                    LogoutCommand.RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        public bool IsLoggedOut
-        {
-            get { return !IsLoggedIn; }
-        }
-
-        public User User
-        {
-            get { return _user; }
-            set
-            {
-                if (_user != value)
-                {
-                    _user = value;
-                    RaisePropertyChanged("User");
-                }
-            }
-        }
-
-        public ListReceived EventsRequest
-        {
-            get { return _eventsRequest; }
-            set
-            {
-                if (_eventsRequest != value)
-                {
-                    _eventsRequest = value;
-                    RaisePropertyChanged("EventsRequest");
-                }
-            }
-        }
-
-        public ObservableCollection<Repository> OwnedRepos { get; set; }
-
-        public ObservableCollection<Repository> WatchedRepos { get; set; }
-
-        public ListFollowings FollowingsRequest
-        {
-            get { return _followingsRequest; }
-            set
-            {
-                if (_followingsRequest != value)
-                {
-                    _followingsRequest = value;
-                    RaisePropertyChanged("FollowingsRequest");
-                }
-            }
-        }
-
-        public ListFollowers FollowersRequest
-        {
-            get { return _followersRequest; }
-            set
-            {
-                if (_followersRequest != value)
-                {
-                    _followersRequest = value;
-                    RaisePropertyChanged("FollowersRequest");
-                }
-            }
-        }
-
-        public ObservableCollection<FeaturedRepo> FeaturedRepos
-        {
-            get;
-            set;
-        }
-
-        public ObservableCollection<SearchResult> SearchResults
-        {
-            get;
-            set;
-        }
-
-        public String Search
-        {
-            get { return _search; }
-            set
-            {
-                if (_search != value)
-                {
-                    _search = value;
-                    RaisePropertyChanged("Search");
-                }
-            }
-        }
-
         private void LoadPanel(string header)
         {
             switch (header)
             {
-                case "news feed":
-                    if (EventsRequest == null)
-                        EventsRequest = new ListReceived(_githubService.Username);
-                    break;
-                case "repositories":
-                    if (!OwnedRepos.Any())
-                        _githubService.Load(new List(), repositories =>
-                        {
-                            foreach (var repository in repositories)
-                                OwnedRepos.Add(repository);
-                        });
-                    if (!WatchedRepos.Any())
-                        _githubService.Load(new ListWatched(_githubService.Username), result =>
-                        {
-                            foreach (var repository in result.Where(repo => !repo.Owner.Login.Equals(_githubService.Username, StringComparison.InvariantCultureIgnoreCase)))
-                                WatchedRepos.Add(repository);
-                        });
-                    break;
-                case "follower":
-                    if (FollowersRequest == null)
-                        FollowersRequest = new ListFollowers(_githubService.Username);
-                    break;
-                case "following":
-                    if (FollowingsRequest == null)
-                        FollowingsRequest = new ListFollowings(_githubService.Username);
-                    break;
-                case "profile":
-                    if (User == null)
-                        User = _githubService.Load(new Client.Request.User.Get(_githubService.Username), u => User = u);
-                    break;
-                case "explore":
-                    if (FeaturedRepos == null)
-                        FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
-                    break;
+            case "news feed":
+                if (EventsRequest == null)
+                    EventsRequest = new UserReceivedEventsRequest(_githubService.Username);
+                break;
+            case "repositories":
+                if (!OwnedRepos.Any())
+                    _githubService.Load(new RepositoriesRequest(), repositories =>
+                    {
+                        foreach (var repository in repositories)
+                            OwnedRepos.Add(repository);
+                    });
+                if (!WatchedRepos.Any())
+                    _githubService.Load(new RepositoriesWatchedRequest(_githubService.Username), result =>
+                    {
+                        foreach (var repository in result.Where(repo => !repo.Owner.Login.Equals(_githubService.Username, StringComparison.InvariantCultureIgnoreCase)))
+                            WatchedRepos.Add(repository);
+                    });
+                break;
+            case "follower":
+                if (FollowersRequestRequest == null)
+                    FollowersRequestRequest = new UserFollowersRequest(_githubService.Username);
+                break;
+            case "following":
+                if (FollowingsRequest == null)
+                    FollowingsRequest = new UserFollowingRequest(_githubService.Username);
+                break;
+            case "profile":
+                if (User == null)
+                    User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                break;
+            case "explore":
+                if (FeaturedRepos == null)
+                    FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
+                break;
             }
         }
 
@@ -283,7 +273,7 @@ namespace Gi7.ViewModel
             EventsRequest = null;
             OwnedRepos = null;
             WatchedRepos = null;
-            FollowersRequest = null;
+            FollowersRequestRequest = null;
             FollowingsRequest = null;
         }
     }

@@ -8,12 +8,11 @@ namespace Gi7.Client.Request.Base
     public abstract class SingleRequest<TResult> : ViewModelBase, IRequest<TResult>
         where TResult : new()
     {
+        private TResult _result;
         public event EventHandler ConnectionError;
         public event EventHandler Unauthorized;
         public event EventHandler<LoadingEventArgs> Loading;
         public event EventHandler<SuccessEventArgs<TResult>> Success;
-
-        private TResult _result;
 
         public virtual string Uri { get; protected set; }
 
@@ -40,13 +39,9 @@ namespace Gi7.Client.Request.Base
                 RaiseLoading(false);
 
                 if (r.StatusCode == HttpStatusCode.Unauthorized)
-                {
                     RaiseUnauthorized();
-                }
                 else if (r.ResponseStatus == ResponseStatus.Error)
-                {
                     RaiseConnectionError();
-                }
                 else
                 {
                     var data = GetData(r);
@@ -56,9 +51,7 @@ namespace Gi7.Client.Request.Base
                     RaiseSuccess(data);
 
                     if (callback != null)
-                    {
                         callback(data);
-                    }
                 }
             });
         }
@@ -68,44 +61,33 @@ namespace Gi7.Client.Request.Base
             return response.Data;
         }
 
-        protected virtual void preRequest(RestClient client, RestRequest request)
-        {
-
-        }
+        protected virtual void preRequest(RestClient client, RestRequest request) {}
 
         protected void RaiseLoading(bool isLoading)
         {
             if (Loading != null)
-            {
                 Loading(this, new LoadingEventArgs(isLoading));
-            }
         }
 
         protected void RaiseUnauthorized()
         {
             if (Unauthorized != null)
-            {
                 Unauthorized(this, new EventArgs());
-            }
         }
 
         protected void RaiseConnectionError()
         {
             if (ConnectionError != null)
-            {
                 ConnectionError(this, new EventArgs());
-            }
         }
 
         protected void RaiseSuccess(TResult result)
         {
             if (Success != null)
-            {
-                Success(this, new SuccessEventArgs<TResult>()
+                Success(this, new SuccessEventArgs<TResult>
                 {
                     NewResult = result,
                 });
-            }
         }
     }
 }

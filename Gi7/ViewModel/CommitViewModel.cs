@@ -6,8 +6,8 @@ using System.Windows.Media;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
-using Gi7.Client.Request.Commit;
 using Gi7.Client.Model;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Gi7.Utils.ViewModels;
 using Microsoft.Phone.Controls;
@@ -17,18 +17,13 @@ namespace Gi7.ViewModel
 {
     public class CommitViewModel : ViewModelBase
     {
-        private bool _minimizeAppBar;
         private bool _canComment;
-        private ListComments _commentsRequest;
+        private String _comment;
         private Push _commit;
         private GithubService _githubService;
+        private bool _minimizeAppBar;
         private String _repoName;
-        private String _comment;
-
-        public RelayCommand ShareCommand { get; private set; }
-        public RelayCommand CommentCommand { get; private set; }
-        public RelayCommand RepoSelectedCommand { get; private set; }
-        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        private CommitCommentsRequest commentsRequestRequest;
 
         public CommitViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string sha)
         {
@@ -38,7 +33,7 @@ namespace Gi7.ViewModel
             RepoName = String.Format("{0}/{1}", username, repo);
             Files = new ObservableCollection<CommitFile>();
 
-            Commit = githubService.Load(new Get(username, repo, sha), p =>
+            Commit = githubService.Load(new CommitRequest(username, repo, sha), p =>
             {
                 Commit = p;
 
@@ -46,34 +41,29 @@ namespace Gi7.ViewModel
                 {
                     var lines = new ObservableCollection<CommitLine>();
                     if (file.Patch != null)
-                    {
                         foreach (var line in file.Patch.Split('\n'))
                         {
                             var color = Colors.White;
                             switch (line.FirstOrDefault())
                             {
-                                case '+':
-                                    color = Color.FromArgb(255, 49, 154, 49);
-                                    break;
-                                case '-':
-                                    color = Color.FromArgb(255, 230, 20, 0);
-                                    break;
-                                case '@':
-                                    color = Color.FromArgb(255, 25, 162, 222);
-                                    break;
+                            case '+':
+                                color = Color.FromArgb(255, 49, 154, 49);
+                                break;
+                            case '-':
+                                color = Color.FromArgb(255, 230, 20, 0);
+                                break;
+                            case '@':
+                                color = Color.FromArgb(255, 25, 162, 222);
+                                break;
                             }
 
-                            lines.Add(new CommitLine { Line = line, Color = new SolidColorBrush(color) });
+                            lines.Add(new CommitLine {Line = line, Color = new SolidColorBrush(color)});
                         }
-                    }
                     else
-                    {
-                        lines.Add(new CommitLine { Line = "Binary file not shown", Color = new SolidColorBrush(Colors.Gray) });
-                    }
+                        lines.Add(new CommitLine {Line = "Binary file not shown", Color = new SolidColorBrush(Colors.Gray)});
 
-                    Files.Add(new CommitFile { Lines = lines, File = file, });
+                    Files.Add(new CommitFile {Lines = lines, File = file,});
                 }
-
             });
 
             ShareCommand = new RelayCommand(() => new ShareLinkTask
@@ -83,42 +73,17 @@ namespace Gi7.ViewModel
                 Message = "I found this commit on Github, you might want to see it.",
             }.Show());
 
-            CommentCommand = new RelayCommand(() => githubService.Load(new Client.Request.Commit.Comment(username, repo, sha, Comment), r => OnComment(username, repo, sha)), UserCanComment);
+            CommentCommand = new RelayCommand(() => githubService.Load(new CommentCommitRequest(username, repo, sha, Comment), r => OnComment(username, repo, sha)), UserCanComment);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => OnPivotChangedCommand(username, repo, sha, args));
 
             RepoSelectedCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)));
         }
 
-        private void OnComment(string username, string repo, string sha)
-        {
-            Comment = null;
-            CommentsRequest = new ListComments(username, repo, sha);
-        }
-
-        private bool UserCanComment()
-        {
-            return GithubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0;
-        }
-
-        private void OnPivotChangedCommand(string username, string repo, string sha, SelectionChangedEventArgs args)
-        {
-            MinimizeAppBar = true;
-            CanComment = false;
-            var header = (args.AddedItems[0] as PivotItem).Header as String;
-            switch (header)
-            {
-            case "Comments":
-                MinimizeAppBar = false;
-                CanComment = true;
-                if (CommentsRequest == null)
-                    CommentsRequest = new ListComments(username, repo, sha);
-                break;
-            case "Commit":
-                CanComment = false;
-                break;
-            }
-        }
+        public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand CommentCommand { get; private set; }
+        public RelayCommand RepoSelectedCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
 
         public String RepoName
         {
@@ -157,14 +122,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public ListComments CommentsRequest
+        public CommitCommentsRequest CommentsRequestRequest
         {
-            get { return _commentsRequest; }
+            get { return commentsRequestRequest; }
             set
             {
-                if (_commentsRequest != value)
+                if (commentsRequestRequest != value)
                 {
-                    _commentsRequest = value;
+                    commentsRequestRequest = value;
                     RaisePropertyChanged("CommentsRequest");
                 }
             }
@@ -223,6 +188,36 @@ namespace Gi7.ViewModel
                     _githubService = value;
                     RaisePropertyChanged("GithubService");
                 }
+            }
+        }
+
+        private void OnComment(string username, string repo, string sha)
+        {
+            Comment = null;
+            CommentsRequestRequest = new CommitCommentsRequest(username, repo, sha);
+        }
+
+        private bool UserCanComment()
+        {
+            return GithubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0;
+        }
+
+        private void OnPivotChangedCommand(string username, string repo, string sha, SelectionChangedEventArgs args)
+        {
+            MinimizeAppBar = true;
+            CanComment = false;
+            var header = (args.AddedItems[0] as PivotItem).Header as String;
+            switch (header)
+            {
+            case "Comments":
+                MinimizeAppBar = false;
+                CanComment = true;
+                if (CommentsRequestRequest == null)
+                    CommentsRequestRequest = new CommitCommentsRequest(username, repo, sha);
+                break;
+            case "Commit":
+                CanComment = false;
+                break;
             }
         }
     }

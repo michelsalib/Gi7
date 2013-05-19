@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage x:Class="Gi7.Views.HomeView"
+﻿<phone:PhoneApplicationPage
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -11,120 +11,13 @@
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            xmlns:localControls="clr-namespace:Gi7.Controls" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+                            xmlns:localControls="clr-namespace:Gi7.Controls" xmlns:Gi7="clr-namespace:Gi7" x:Class="Gi7.Views.HomeView"
+                            mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
                             shell:SystemTray.IsVisible="True" shell:SystemTray.Opacity="0"
                             toolkit:TiltEffect.IsTiltEnabled="True"
-                            DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}">
-    <Grid x:Name="LayoutRoot" Background="#FF0F0F10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Border VerticalAlignment="Top">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF0F0F10" Offset="1"/>
-                    <GradientStop Color="#FF49484B"/>
-                </LinearGradientBrush>
-            </Border.Background>
-            <Grid>
-        		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="48" FontWeight="Bold" Text="Gi7" Margin="60,20,0,0"/>
-        		<Image Source="/Images/github.png" Width="60" Height="60" HorizontalAlignment="Left" Margin="0,20,0,0"/>
-        	</Grid>
-        </Border>
-        <controls:Panorama x:Name="Panorama" VerticalAlignment="Bottom" Grid.Row="1" Background="#FF0F0F10">
-            <Interactivity:Interaction.Triggers>
-                <Interactivity:EventTrigger EventName="SelectionChanged">
-                    <Command:EventToCommand Command="{Binding PanoramaChangedCommand}" PassEventArgsToCommand="True" />
-                </Interactivity:EventTrigger>
-            </Interactivity:Interaction.Triggers>
-            <controls:PanoramaItem Header="login"
-                             Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}" Background="#FF0F0F10">
-                <localControls:LoginPanel />
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="news feed"
-                             Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:EventsPanel />
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="repositories"
-                             Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:RepositoryPanel />
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="following"
-                             Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
-                           ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding UserSelectedCommand}"
-                                      CommandParameter="{Binding ElementName=FollowingList, Path=SelectedItem}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
-                </lists:UserListBox>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="follower"
-                             Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
-                           ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding UserSelectedCommand}"
-                                      CommandParameter="{Binding ElementName=FollowerList, Path=SelectedItem}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
-                </lists:UserListBox>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="profile"
-                             Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:ProfilePanel />
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="search">
-                <StackPanel Orientation="Vertical">
-                    <TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="EnterPressed" />
-                    <ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResults}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock FontSize="26" Text="{Binding Name}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <Interactivity:Interaction.Triggers>
-                            <Interactivity:EventTrigger EventName="Tap">
-                                <Command:EventToCommand Command="{Binding ResultSelectedCommand}" CommandParameter="{Binding ElementName=SearchResults, Path=SelectedItem}" />
-                            </Interactivity:EventTrigger>
-                        </Interactivity:Interaction.Triggers>
-                    </ListBox>
-                </StackPanel>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="explore">
-                <ScrollViewer>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Featured Repos" FontSize="30" />
-                        <ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}"
-                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock FontSize="26" Text="{Binding Fullname}" TextWrapping="Wrap" />
-                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                            <Interactivity:Interaction.Triggers>
-                                <Interactivity:EventTrigger EventName="Tap">
-                                    <Command:EventToCommand Command="{Binding FeaturedRepoSelectedCommand}"
-                                          CommandParameter="{Binding ElementName=FeaturedRepos, Path=SelectedItem}" />
-                                </Interactivity:EventTrigger>
-                            </Interactivity:Interaction.Triggers>
-                        </ListBox>
-                    </StackPanel>
-                </ScrollViewer>
-            </controls:PanoramaItem>
-        </controls:Panorama>
-    </Grid>
+                            DataContext="{Binding HomeViewModel, Source={StaticResource ViewModelLocator}}">
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar Mode="Minimized">
             <bar:BindableApplicationBar.MenuItems>
@@ -133,4 +26,101 @@
             </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>
+	<Grid x:Name="LayoutRoot" Background="#FF0F0F10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Gi7:Header/>
+		<controls:Panorama x:Name="Panorama" VerticalAlignment="Bottom" Grid.Row="1" Background="#FF0F0F10">
+			<Interactivity:Interaction.Triggers>
+				<Interactivity:EventTrigger EventName="SelectionChanged">
+					<Command:EventToCommand Command="{Binding PanoramaChangedCommand}" PassEventArgsToCommand="True" />
+				</Interactivity:EventTrigger>
+			</Interactivity:Interaction.Triggers>
+			<controls:PanoramaItem Header="login"
+				Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}" Background="#FF0F0F10">
+				<localControls:LoginPanel />
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="news feed"
+				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+				<localControls:EventsPanel />
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="repositories"
+				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+				<localControls:RepositoryPanel />
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="following"
+				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+				<lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
+					ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+					<Interactivity:Interaction.Triggers>
+						<Interactivity:EventTrigger EventName="Tap">
+							<Command:EventToCommand Command="{Binding UserSelectedCommand}"
+								CommandParameter="{Binding SelectedItem, ElementName=FollowingList}" />
+						</Interactivity:EventTrigger>
+					</Interactivity:Interaction.Triggers>
+				</lists:UserListBox>
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="follower"
+				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+				<lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequestRequest}"
+					ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+					<Interactivity:Interaction.Triggers>
+						<Interactivity:EventTrigger EventName="Tap">
+							<Command:EventToCommand Command="{Binding UserSelectedCommand}"
+								CommandParameter="{Binding SelectedItem, ElementName=FollowerList}" />
+						</Interactivity:EventTrigger>
+					</Interactivity:Interaction.Triggers>
+				</lists:UserListBox>
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="profile"
+				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+				<localControls:ProfilePanel />
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="search">
+				<StackPanel Orientation="Vertical">
+					<TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="EnterPressed" />
+					<ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResults}">
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Vertical">
+									<TextBlock FontSize="26" Text="{Binding Name}" />
+								</StackPanel>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+						<Interactivity:Interaction.Triggers>
+							<Interactivity:EventTrigger EventName="Tap">
+								<Command:EventToCommand Command="{Binding ResultSelectedCommand}" CommandParameter="{Binding SelectedItem, ElementName=SearchResults}" />
+							</Interactivity:EventTrigger>
+						</Interactivity:Interaction.Triggers>
+					</ListBox>
+				</StackPanel>
+			</controls:PanoramaItem>
+			<controls:PanoramaItem Header="explore">
+				<ScrollViewer>
+					<StackPanel Orientation="Vertical">
+						<TextBlock Text="Featured Repos" FontSize="30" />
+						<ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}"
+							ScrollViewer.VerticalScrollBarVisibility="Disabled">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Vertical">
+										<TextBlock FontSize="26" Text="{Binding Fullname}" TextWrapping="Wrap" />
+										<TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+							<Interactivity:Interaction.Triggers>
+								<Interactivity:EventTrigger EventName="Tap">
+									<Command:EventToCommand Command="{Binding FeaturedRepoSelectedCommand}"
+										CommandParameter="{Binding SelectedItem, ElementName=FeaturedRepos}" />
+								</Interactivity:EventTrigger>
+							</Interactivity:Interaction.Triggers>
+						</ListBox>
+					</StackPanel>
+				</ScrollViewer>
+			</controls:PanoramaItem>
+		</controls:Panorama>
+	</Grid>
 </phone:PhoneApplicationPage>

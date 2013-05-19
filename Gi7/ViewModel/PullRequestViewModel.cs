@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
@@ -12,18 +13,13 @@ namespace Gi7.ViewModel
 {
     public class PullRequestViewModel : ViewModelBase
     {
-        private Client.Request.PullRequest.ListComments _commentsRequest;
-        private PullRequest _pullRequest;
-        private String _repoName;
-        private bool _minimizeAppBar;
         private bool _canComment;
-        private String _pullRequestName;
         private String _comment;
-
-        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-        public RelayCommand RepoSelectedCommand { get; private set; }
-        public RelayCommand CommentCommand { get; private set; }
-        public RelayCommand ShareCommand { get; private set; }
+        private bool _minimizeAppBar;
+        private PullRequest _pullRequest;
+        private String _pullRequestName;
+        private String _repoName;
+        private PullRequestCommentsRequest commentsRequestRequest;
 
         public PullRequestViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
@@ -32,11 +28,11 @@ namespace Gi7.ViewModel
             RepoName = String.Format("{0}/{1}", username, repo);
             PullRequestName = "Pull Request #" + number;
 
-            PullRequest = githubService.Load(new Client.Request.PullRequest.Get(username, repo, number), pr => PullRequest = pr);
+            PullRequest = githubService.Load(new PullRequestRequest(username, repo, number), pr => PullRequest = pr);
 
             ShareCommand = new RelayCommand(() =>
             {
-                new ShareLinkTask()
+                new ShareLinkTask
                 {
                     LinkUri = new Uri(PullRequest.HtmlUrl),
                     Title = "Pull Request on" + RepoName + " is on Github: " + PullRequest.Title,
@@ -46,10 +42,10 @@ namespace Gi7.ViewModel
 
             CommentCommand = new RelayCommand(() =>
             {
-                githubService.Load(new Client.Request.PullRequest.Comment(username, repo, number, Comment), r =>
+                githubService.Load(new CreatePullRequestCommentsRequest(username, repo, number, Comment), r =>
                 {
                     Comment = null;
-                    CommentsRequest = new Client.Request.PullRequest.ListComments(username, repo, number);
+                    CommentsRequestRequest = new PullRequestCommentsRequest(username, repo, number);
                 });
             }, () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
 
@@ -60,23 +56,25 @@ namespace Gi7.ViewModel
                 var header = (args.AddedItems[0] as PivotItem).Header as String;
                 switch (header)
                 {
-                    case "Comments":
-                        MinimizeAppBar = false;
-                        CanComment = true;
-                        if (CommentsRequest == null)
-                            CommentsRequest = new Client.Request.PullRequest.ListComments(username, repo, number);
-                        break;
-                    default: // main pivot
-                        CanComment = false;
-                        break;
+                case "Comments":
+                    MinimizeAppBar = false;
+                    CanComment = true;
+                    if (CommentsRequestRequest == null)
+                        CommentsRequestRequest = new PullRequestCommentsRequest(username, repo, number);
+                    break;
+                default: // main pivot
+                    CanComment = false;
+                    break;
                 }
             });
 
-            RepoSelectedCommand = new RelayCommand(() =>
-            {
-                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo));
-            });
+            RepoSelectedCommand = new RelayCommand(() => { navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)); });
         }
+
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand RepoSelectedCommand { get; private set; }
+        public RelayCommand CommentCommand { get; private set; }
+        public RelayCommand ShareCommand { get; private set; }
 
         public String RepoName
         {
@@ -105,14 +103,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.PullRequest.ListComments CommentsRequest
+        public PullRequestCommentsRequest CommentsRequestRequest
         {
-            get { return _commentsRequest; }
+            get { return commentsRequestRequest; }
             set
             {
-                if (_commentsRequest != value)
+                if (commentsRequestRequest != value)
                 {
-                    _commentsRequest = value;
+                    commentsRequestRequest = value;
                     RaisePropertyChanged("CommentsRequest");
                 }
             }

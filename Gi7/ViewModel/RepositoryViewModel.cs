@@ -6,7 +6,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
-using Gi7.Client.Request.Repository;
+using Gi7.Client.Request;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
@@ -15,47 +16,28 @@ namespace Gi7.ViewModel
 {
     public class RepositoryViewModel : ViewModelBase
     {
-        private bool _showAppBar;
-        private bool? _isWatching;
-        private GitTree _tree;
         private Branch _branch;
         private ObservableCollection<Branch> _branches;
-        private Client.Request.Repository.ListCollaborators _collaboratorRequest;
-        private Client.Request.Repository.ListWatchers _watchersRequest;
-        private Client.Request.Commit.List _commitsRequest;
-        private Client.Request.Issue.List _issuesRequest;
-        private Client.Request.PullRequest.List _pullRequestsRequest;
+        private CommitListRequest _commitsRequest;
+        private bool? _isWatching;
+        private IssueListRequest _issuesRequest;
+        private PullRequestListRequest _pullRequestsRequest;
         private Repository _repository;
-
-        public RelayCommand ShareDownloadCommand { get; private set; }
-        public RelayCommand DownloadCommand { get; private set; }
-        public RelayCommand ShareCommand { get; private set; }
-        public RelayCommand NewIssueCommand { get; private set; }
-        public RelayCommand OwnerCommand { get; private set; }
-        public RelayCommand WatchCommand { get; private set; }
-        public RelayCommand UnWatchCommand { get; private set; }
-        public RelayCommand<Gi7.Client.Model.GitHubFile> ObjectSelectedCommand { get; private set; }
-        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-        public RelayCommand<User> UserCommand { get; private set; }
-        public RelayCommand<Push> CommitSelectedCommand { get; private set; }
-        public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
-        public RelayCommand<Issue> IssueSelectedCommand { get; private set; }
+        private bool _showAppBar;
+        private GitTree _tree;
+        private RepositoryCollaboratorsRequest collaboratorRequestRequest;
+        private RepositoryWatchersRequest watchersRequestRequest;
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
             ShowAppBar = true;
 
-            Repository = githubService.Load(new Client.Request.Repository.Get(user, repo), r => Repository = r);
+            Repository = githubService.Load(new RepositoryRequest(user, repo), r => Repository = r);
 
             if (githubService.IsAuthenticated)
-            {
-                IsWatching = githubService.Load(new Watch(user, repo), r =>
-                {
-                    IsWatching = r;
-                });
-            }
+                IsWatching = githubService.Load(new WatchRepositoryRequest(user, repo), r => { IsWatching = r; });
 
-            Branches = githubService.Load(new Client.Request.Repository.ListBranches(user, repo), b =>
+            Branches = githubService.Load(new RepositoryBranchesRequest(user, repo), b =>
             {
                 Branches = b;
                 Branch = b.FirstOrDefault(br => br.Name == "master");
@@ -66,103 +48,42 @@ namespace Gi7.ViewModel
                 if (e.PropertyName == "Branch")
                 {
                     CommitsRequest = null;
-                    Tree = githubService.Load(new Client.Request.Tree.Get(user, repo, Branch.Commit.Sha), t => Tree = t);
+                    Tree = githubService.Load(new TreeRequest(user, repo, Branch.Commit.Sha), t => Tree = t);
                 }
             };
 
-            ObjectSelectedCommand = new RelayCommand<Client.Model.GitHubFile>(o =>
-            {
-                if (o.Type == "blob") {
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path));
-                }
-                else { //tree
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.TreeUrl, user, repo, o.Sha, o.Path));
-                }
-            });
+            ObjectSelectedCommand = new RelayCommand<GitHubFile>(o => navigationService.NavigateTo(o.Type == "blob"
+                                                                                                       ? String.Format(Service.ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path)
+                                                                                                       : String.Format(Service.ViewModelLocator.TreeUrl, user, repo, o.Sha, o.Path)));
 
-            DownloadCommand = new RelayCommand(() =>
+            DownloadCommand = new RelayCommand(() => new WebBrowserTask
             {
-                new WebBrowserTask()
-                {
-                    Uri = new Uri(Repository.HtmlUrl + "/zipball/" + Branch.Name),
-                }.Show();
-            }, () => Repository != null && Branch != null);
+                Uri = new Uri(Repository.HtmlUrl + "/zipball/" + Branch.Name),
+            }.Show(), () => Repository != null && Branch != null);
 
-            ShareDownloadCommand = new RelayCommand(() =>
+            ShareDownloadCommand = new RelayCommand(() => new ShareLinkTask
             {
-                new ShareLinkTask()
-                {
-                    LinkUri = new Uri(Repository.HtmlUrl + "/zipball/" + Branch.Name),
-                    Title = Repository.Fullname + " sources are on Github.",
-                    Message = "I found this sources on Github, you might want to get it.",
-                }.Show();
-            }, () => Repository != null && Branch != null);
+                LinkUri = new Uri(Repository.HtmlUrl + "/zipball/" + Branch.Name),
+                Title = Repository.Fullname + " sources are on Github.",
+                Message = "I found this sources on Github, you might want to get it.",
+            }.Show(), () => Repository != null && Branch != null);
 
-            ShareCommand = new RelayCommand(() =>
+            ShareCommand = new RelayCommand(() => new ShareLinkTask
             {
-                new ShareLinkTask()
-                {
-                    LinkUri = new Uri(Repository.HtmlUrl),
-                    Title = Repository.Fullname + " is on Github.",
-                    Message = "I found this repository on Github, you might want to see it.",
-                }.Show();
-            }, () => Repository != null);
+                LinkUri = new Uri(Repository.HtmlUrl),
+                Title = Repository.Fullname + " is on Github.",
+                Message = "I found this repository on Github, you might want to see it.",
+            }.Show(), () => Repository != null);
 
-            NewIssueCommand = new RelayCommand(() =>
-            {
-                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.CreateIssueUrl, user, repo));
-            }, () => githubService.IsAuthenticated);
+            NewIssueCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.CreateIssueUrl, user, repo)), () => githubService.IsAuthenticated);
 
             OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.UserUrl, Repository.Owner.Login)));
 
-            WatchCommand = new RelayCommand(() =>
-            {
-                githubService.Load(new Watch(user, repo, Watch.Type.WATCH), r =>
-                {
-                    IsWatching = true;
-                });
-            }, () => IsWatching.HasValue && !IsWatching.Value);
+            WatchCommand = new RelayCommand(() => githubService.Load(new WatchRepositoryRequest(user, repo, WatchRepositoryRequest.Type.WATCH), r => { IsWatching = true; }), () => IsWatching.HasValue && !IsWatching.Value);
 
-            UnWatchCommand = new RelayCommand(() =>
-            {
-                githubService.Load(new Watch(user, repo, Watch.Type.UNWATCH), r =>
-                {
-                    IsWatching = false;
-                });
-            }, () => IsWatching.HasValue && IsWatching.Value);
+            UnWatchCommand = new RelayCommand(() => githubService.Load(new WatchRepositoryRequest(user, repo, WatchRepositoryRequest.Type.UNWATCH), r => { IsWatching = false; }), () => IsWatching.HasValue && IsWatching.Value);
 
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                var header = ((PivotItem)args.AddedItems[0]).Header as String;
-                ShowAppBar = false;
-                switch (header)
-                {
-                    case "Commits":
-                        if (CommitsRequest == null)
-                            CommitsRequest = new Client.Request.Commit.List(user, repo, Branch ? Branch.Name : "master");
-                        break;
-                    case "Pull requests":
-                        if (PullRequestsRequest == null)
-                            PullRequestsRequest = new Client.Request.PullRequest.List(user, repo);
-                        break;
-                    case "Issues":
-                        if (IssuesRequest == null)
-                            IssuesRequest = new Client.Request.Issue.List(user, repo);
-                        ShowAppBar = true;
-                        break;
-                    case "Collaborators":
-                        if (CollaboratorRequest == null)
-                            CollaboratorRequest = new Client.Request.Repository.ListCollaborators(user, repo);
-                        break;
-                    case "Watchers":
-                        if (WatchersRequest == null)
-                            WatchersRequest = new Client.Request.Repository.ListWatchers(user, repo);
-                        break;
-                    case "Details":
-                        ShowAppBar = true;
-                        break;
-                }
-            });
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => OnPivotChanged(user, repo, args));
             CommitSelectedCommand = new RelayCommand<Push>(push =>
             {
                 if (push)
@@ -177,12 +98,26 @@ namespace Gi7.ViewModel
             {
                 if (issue)
                 {
-                    string destination = issue.PullRequest.HtmlUrl == null ? Service.ViewModelLocator.IssueUrl : Service.ViewModelLocator.PullRequestUrl;
+                    var destination = issue.PullRequest.HtmlUrl == null ? Service.ViewModelLocator.IssueUrl : Service.ViewModelLocator.PullRequestUrl;
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
             UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.UserUrl, collaborator.Login)));
         }
+
+        public RelayCommand ShareDownloadCommand { get; private set; }
+        public RelayCommand DownloadCommand { get; private set; }
+        public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand NewIssueCommand { get; private set; }
+        public RelayCommand OwnerCommand { get; private set; }
+        public RelayCommand WatchCommand { get; private set; }
+        public RelayCommand UnWatchCommand { get; private set; }
+        public RelayCommand<GitHubFile> ObjectSelectedCommand { get; private set; }
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand<User> UserCommand { get; private set; }
+        public RelayCommand<Push> CommitSelectedCommand { get; private set; }
+        public RelayCommand<PullRequest> PullRequestSelectedCommand { get; private set; }
+        public RelayCommand<Issue> IssueSelectedCommand { get; private set; }
 
         public bool? IsWatching
         {
@@ -201,7 +136,6 @@ namespace Gi7.ViewModel
 
         public bool ShowAppBar
         {
-
             get { return _showAppBar; }
             set
             {
@@ -229,7 +163,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.Commit.List CommitsRequest
+        public CommitListRequest CommitsRequest
         {
             get { return _commitsRequest; }
             set
@@ -255,33 +189,33 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.Repository.ListCollaborators CollaboratorRequest
+        public RepositoryCollaboratorsRequest CollaboratorRequestRequest
         {
-            get { return _collaboratorRequest; }
+            get { return collaboratorRequestRequest; }
             set
             {
-                if (_collaboratorRequest != value)
+                if (collaboratorRequestRequest != value)
                 {
-                    _collaboratorRequest = value;
+                    collaboratorRequestRequest = value;
                     RaisePropertyChanged("CollaboratorRequest");
                 }
             }
         }
 
-        public Client.Request.Repository.ListWatchers WatchersRequest
+        public RepositoryWatchersRequest WatchersRequestRequest
         {
-            get { return _watchersRequest; }
+            get { return watchersRequestRequest; }
             set
             {
-                if (_watchersRequest != value)
+                if (watchersRequestRequest != value)
                 {
-                    _watchersRequest = value;
+                    watchersRequestRequest = value;
                     RaisePropertyChanged("WatchersRequest");
                 }
             }
         }
 
-        public Client.Request.PullRequest.List PullRequestsRequest
+        public PullRequestListRequest PullRequestsRequest
         {
             get { return _pullRequestsRequest; }
             set
@@ -294,7 +228,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.Issue.List IssuesRequest
+        public IssueListRequest IssuesRequest
         {
             get { return _issuesRequest; }
             set
@@ -329,10 +263,43 @@ namespace Gi7.ViewModel
                 {
                     _branch = value;
                     RaisePropertyChanged("Branch");
-                    
+
                     ShareDownloadCommand.RaiseCanExecuteChanged();
                     DownloadCommand.RaiseCanExecuteChanged();
                 }
+            }
+        }
+
+        private void OnPivotChanged(string user, string repo, SelectionChangedEventArgs args)
+        {
+            var header = ((PivotItem) args.AddedItems[0]).Header as String;
+            ShowAppBar = false;
+            switch (header)
+            {
+            case "commits":
+                if (CommitsRequest == null)
+                    CommitsRequest = new CommitListRequest(user, repo, Branch ? Branch.Name : "master");
+                break;
+            case "pull requests":
+                if (PullRequestsRequest == null)
+                    PullRequestsRequest = new PullRequestListRequest(user, repo);
+                break;
+            case "issues":
+                if (IssuesRequest == null)
+                    IssuesRequest = new IssueListRequest(user, repo);
+                ShowAppBar = true;
+                break;
+            case "collaborators":
+                if (CollaboratorRequestRequest == null)
+                    CollaboratorRequestRequest = new RepositoryCollaboratorsRequest(user, repo);
+                break;
+            case "watchers":
+                if (WatchersRequestRequest == null)
+                    WatchersRequestRequest = new RepositoryWatchersRequest(user, repo);
+                break;
+            case "details":
+                ShowAppBar = true;
+                break;
             }
         }
     }

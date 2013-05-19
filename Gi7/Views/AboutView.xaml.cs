@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Controls;
+﻿using Gi7.ViewModel;
+using Microsoft.Phone.Controls;
 
 namespace Gi7.Views
 {
@@ -7,6 +8,12 @@ namespace Gi7.Views
         public AboutView()
         {
             InitializeComponent();
+        }
+
+        private void OnShare(object sender, System.EventArgs e)
+        {
+            var aboutViewModel = (AboutViewModel) DataContext;
+            aboutViewModel.ShareCommand.Execute(null);
         }
     }
 }

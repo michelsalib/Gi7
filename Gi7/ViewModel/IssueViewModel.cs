@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
+using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Tasks;
 
@@ -11,28 +12,23 @@ namespace Gi7.ViewModel
 {
     public class IssueViewModel : ViewModelBase
     {
-        private Client.Request.Issue.ListComments _commentsRequest;
+        private String _comment;
         private Issue _issue;
         private String _issueName;
         private String _repoName;
-        private String _comment;
-
-        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
-        public RelayCommand RepoSelectedCommand { get; private set; }
-        public RelayCommand ShareCommand { get; private set; }
-        public RelayCommand CommentCommand { get; private set; }
+        private IssueCommentsRequest commentsRequestRequest;
 
         public IssueViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
             RepoName = String.Format("{0}/{1}", username, repo);
             IssueName = "Issue #" + number;
 
-            Issue = githubService.Load(new Client.Request.Issue.Get(username, repo, number), i => Issue = i);
-            CommentsRequest = new Client.Request.Issue.ListComments(username, repo, number);
+            Issue = githubService.Load(new IssueRequest(username, repo, number), i => Issue = i);
+            CommentsRequestRequest = new IssueCommentsRequest(username, repo, number);
 
             ShareCommand = new RelayCommand(() =>
             {
-                new ShareLinkTask()
+                new ShareLinkTask
                 {
                     LinkUri = new Uri(Issue.HtmlUrl),
                     Title = "Issue on" + RepoName + " is on Github: " + Issue.Title,
@@ -40,20 +36,22 @@ namespace Gi7.ViewModel
                 }.Show();
             }, () => Issue != null);
 
-            RepoSelectedCommand = new RelayCommand(() =>
-            {
-                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo));
-            });
+            RepoSelectedCommand = new RelayCommand(() => { navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)); });
 
             CommentCommand = new RelayCommand(() =>
             {
-                githubService.Load(new Client.Request.Issue.Comment(username, repo, number, Comment), r =>
+                githubService.Load(new IssueCommentRequest(username, repo, number, Comment), r =>
                 {
                     Comment = null;
-                    CommentsRequest = new Client.Request.Issue.ListComments(username, repo, number);
+                    CommentsRequestRequest = new IssueCommentsRequest(username, repo, number);
                 });
             }, () => githubService.IsAuthenticated && Comment != null && Comment.Trim().Length > 0);
         }
+
+        public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }
+        public RelayCommand RepoSelectedCommand { get; private set; }
+        public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand CommentCommand { get; private set; }
 
         public String RepoName
         {
@@ -109,14 +107,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public Client.Request.Issue.ListComments CommentsRequest
+        public IssueCommentsRequest CommentsRequestRequest
         {
-            get { return _commentsRequest; }
+            get { return commentsRequestRequest; }
             set
             {
-                if (_commentsRequest != value)
+                if (commentsRequestRequest != value)
                 {
-                    _commentsRequest = value;
+                    commentsRequestRequest = value;
                     RaisePropertyChanged("CommentsRequest");
                 }
             }

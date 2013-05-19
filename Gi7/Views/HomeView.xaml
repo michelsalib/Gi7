@@ -14,20 +14,34 @@
                             xmlns:localControls="clr-namespace:Gi7.Controls" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
+                            shell:SystemTray.IsVisible="True" shell:SystemTray.Opacity="0"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}">
-    <Grid x:Name="LayoutRoot">
-        <controls:Panorama x:Name="Panorama">
+    <Grid x:Name="LayoutRoot" Background="#FF0F0F10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border VerticalAlignment="Top">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF0F0F10" Offset="1"/>
+                    <GradientStop Color="#FF49484B"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+        		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="48" FontWeight="Bold" Text="Gi7" Margin="60,20,0,0"/>
+        		<Image Source="/Images/github.png" Width="60" Height="60" HorizontalAlignment="Left" Margin="0,20,0,0"/>
+        	</Grid>
+        </Border>
+        <controls:Panorama x:Name="Panorama" VerticalAlignment="Bottom" Grid.Row="1" Background="#FF0F0F10">
             <Interactivity:Interaction.Triggers>
                 <Interactivity:EventTrigger EventName="SelectionChanged">
                     <Command:EventToCommand Command="{Binding PanoramaChangedCommand}" PassEventArgsToCommand="True" />
                 </Interactivity:EventTrigger>
             </Interactivity:Interaction.Triggers>
-            <controls:Panorama.Title>
-                <TextBlock Text="Gi7" FontSize="100" Margin="0,50,0,0" />
-            </controls:Panorama.Title>
             <controls:PanoramaItem Header="login"
-                             Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}">
+                             Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}" Background="#FF0F0F10">
                 <localControls:LoginPanel />
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="news feed"

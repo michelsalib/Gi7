@@ -9,7 +9,7 @@
     <ScrollViewer Foreground="White">
         <Grid Background="#000000">
             <Grid.RowDefinitions>
-                <RowDefinition Height="240" />
+                <RowDefinition Height="200" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -23,9 +23,9 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Border BorderBrush="Gainsboro" Padding="5" Background="White" HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Width="240" Height="240">
+                    VerticalAlignment="Center" Width="200" Height="200">
                 <Image
-                    Source="{Binding User.AvatarUrl, ConverterParameter=210, Converter={StaticResource GravatarSizeConverter}}" />
+                    Source="{Binding User.AvatarUrl, ConverterParameter=180, Converter={StaticResource GravatarSizeConverter}}" />
             </Border>
             <TextBlock Grid.Row="1" Text="{Binding User.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Margin="0,0,5,0" Foreground="{StaticResource PhoneAccentBrush}" FontSize="40" />

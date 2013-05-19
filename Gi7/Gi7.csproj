@@ -273,6 +273,7 @@
     <Content Include="Images\company.png" />
     <Content Include="Images\cs.png" />
     <Content Include="Images\folder.png" />
+    <Content Include="Images\github.png" />
     <Content Include="Images\link.png" />
     <Content Include="Images\location.png" />
     <Content Include="Images\mail.png" />

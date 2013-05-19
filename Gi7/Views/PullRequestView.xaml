@@ -9,44 +9,56 @@
                             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox" 
+                            xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            xmlns:gi7="clr-namespace:Gi7"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                            FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-                            shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d"
+                            d:DesignHeight="696" d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True" 
+                            shell:SystemTray.Opacity="0"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=PullRequestViewModel, Source={StaticResource ViewModelLocator}}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-
-        <controls:Pivot>
-            <controls:Pivot.Title>
-                <TextBlock Text="{Binding RepoName}">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding RepoSelectedCommand}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
-                </TextBlock>
-            </controls:Pivot.Title>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid>
+            <gi7:Header></gi7:Header>
+            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Center"
+                       HorizontalAlignment="Right">
+                <Interactivity:Interaction.Triggers>
+                    <Interactivity:EventTrigger EventName="Tap">
+                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" />
+                    </Interactivity:EventTrigger>
+                </Interactivity:Interaction.Triggers>
+            </TextBlock>
+        </Grid>
+        <controls:Pivot Grid.Row="1">
             <Interactivity:Interaction.Triggers>
                 <Interactivity:EventTrigger EventName="SelectionChanged">
                     <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
                 </Interactivity:EventTrigger>
             </Interactivity:Interaction.Triggers>
-
             <controls:PivotItem Header="{Binding PullRequestName}">
                 <ScrollViewer Grid.Row="1">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
-                            <Image Source="{Binding PullRequest.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
+                            <Image
+                                Source="{Binding PullRequest.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}"
+                                Width="70" Height="70"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                             <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
                                        VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                             <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right"
-                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray"  Margin="0,0,20,0" />
-                            <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,25,0,0" TextWrapping="Wrap">
+                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" Margin="0,0,20,0" />
+                            <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,25,0,0"
+                                         TextWrapping="Wrap">
                                 <Paragraph>
                                     <Run Text="{Binding PullRequest.State}" />
                                     <Run Text=" with " />
@@ -63,30 +75,35 @@
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
-
-            <controls:PivotItem Header="Comments">
+            <controls:PivotItem Header="comments">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="460"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="460" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <paginated:CommentListBox Grid.Row="0" Request="{Binding CommentsRequest}"
                                               ItemsSource="{Binding CommentsRequest.Result}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Width="440" Margin="0,0,0,20">
-                                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
-                                           HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <Image
+                                        Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}"
+                                        Width="75" Height="75"
+                                        HorizontalAlignment="Left" VerticalAlignment="Top" />
                                     <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                                    <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-                                               HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                                    <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,25,0,0" TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic"
+                                        Foreground="Gray" />
+                                    <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                               Margin="80,25,0,0" TextWrapping="Wrap" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </paginated:CommentListBox>
-                    <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp" Grid.Row="1" MaxHeight="210" />
+                    <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                             KeyUp="CommentKeyUp" Grid.Row="1" MaxHeight="210" />
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
@@ -94,10 +111,11 @@
 
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar Mode="{Binding MinimizeAppBar, Converter={StaticResource BoolToModeConverter}}">
-            <bar:BindableApplicationBarButton Visibility="Collapsed" Text="Comment" IconUri="/Images/appbar.mess.png" Command="{Binding CommentCommand}"/>
+            <bar:BindableApplicationBarButton Visibility="Collapsed" Text="Comment" IconUri="/Images/appbar.mess.png"
+                                              Command="{Binding CommentCommand}" />
             <bar:BindableApplicationBar.MenuItems>
                 <bar:BindableApplicationBarMenuItem Text="Share"
-                                                    Command="{Binding ShareCommand}"/>
+                                                    Command="{Binding ShareCommand}" />
             </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>

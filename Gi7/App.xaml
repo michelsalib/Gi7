@@ -1,6 +1,5 @@
 ﻿<Application
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:service="clr-namespace:Gi7.Service"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:converters="clr-namespace:Gi7.Utils.Converters"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -25,7 +24,7 @@
             <converters:BoolToModeConverter x:Key="BoolToModeConverter" />
             <converters:PathToImageConverter x:Key="PathToImageConverter" />
             <toolkit:RelativeTimeConverter x:Key="RelativeTimeConverter" />
-            <service:ViewModelLocator x:Key="ViewModelLocator" />
+            <vm:ViewModelLocator x:Key="ViewModelLocator" />
             <Style TargetType="ScrollViewer">
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                 <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />

@@ -1,8 +1,4 @@
-﻿
-namespace Gi7.Resources.DesignData
+﻿namespace Gi7.Resources.DesignData
 {
-    public class TreeDataModel
-    {
-
-    }
+    public class TreeDataModel {}
 }

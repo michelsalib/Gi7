@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 using Gi7.Client.Model;
 using Gi7.Utils.ViewModels;
-using System.Windows.Media;
 
 namespace Gi7.Resources.DesignData
 {
@@ -36,28 +36,33 @@ namespace Gi7.Resources.DesignData
                 },
             };
 
-
             Files = new ObservableCollection<CommitFile>
             {
                 new CommitFile
                 {
-                    File = new File() {
+                    File = new File
+                    {
                         Filename = "Fie.cs",
                     },
-                    Lines = new ObservableCollection<CommitLine> {
-                        new CommitLine() {
+                    Lines = new ObservableCollection<CommitLine>
+                    {
+                        new CommitLine
+                        {
                             Color = new SolidColorBrush(Colors.Blue),
                             Line = "@@ line description",
                         },
-                        new CommitLine() {
+                        new CommitLine
+                        {
                             Color = new SolidColorBrush(Colors.Green),
                             Line = "+ new line",
                         },
-                        new CommitLine() {
+                        new CommitLine
+                        {
                             Color = new SolidColorBrush(Colors.Red),
                             Line = "- old line",
                         },
-                        new CommitLine() {
+                        new CommitLine
+                        {
                             Color = new SolidColorBrush(Colors.White),
                             Line = "single line",
                         }
@@ -65,11 +70,11 @@ namespace Gi7.Resources.DesignData
                 }
             };
 
-            CommentsRequest = new StubPaginatedRequest<Comment>()
+            CommentsRequest = new StubPaginatedRequest<Comment>
             {
-                Result = new List<Comment>()
+                Result = new List<Comment>
                 {
-                    new Comment()
+                    new Comment
                     {
                         Body = "My comment is nice !",
                         User = new User
@@ -87,7 +92,7 @@ namespace Gi7.Resources.DesignData
 
         public Push Commit { get; set; }
 
-        public ObservableCollection<CommitFile> Files {get;set;}
+        public ObservableCollection<CommitFile> Files { get; set; }
 
         public StubPaginatedRequest<Comment> CommentsRequest { get; set; }
 

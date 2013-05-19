@@ -23,31 +23,28 @@ namespace Gi7.ViewModel
 
         public PullRequestViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
-            CanComment = false;
-            MinimizeAppBar = true;
-            RepoName = String.Format("{0}/{1}", username, repo);
-            PullRequestName = "Pull Request #" + number;
+            if (!IsInDesignMode)
+            {
+                CanComment = false;
+                MinimizeAppBar = true;
+                RepoName = String.Format("{0}/{1}", username, repo);
+                PullRequestName = "Pull Request #" + number; 
+            }
 
             PullRequest = githubService.Load(new PullRequestRequest(username, repo, number), pr => PullRequest = pr);
 
-            ShareCommand = new RelayCommand(() =>
+            ShareCommand = new RelayCommand(() => new ShareLinkTask
             {
-                new ShareLinkTask
-                {
-                    LinkUri = new Uri(PullRequest.HtmlUrl),
-                    Title = "Pull Request on" + RepoName + " is on Github: " + PullRequest.Title,
-                    Message = "I found this pull request on Github, you might want to see it: " + PullRequest.Body,
-                }.Show();
-            }, () => PullRequest != null);
+                LinkUri = new Uri(PullRequest.HtmlUrl),
+                Title = "Pull Request on" + RepoName + " is on Github: " + PullRequest.Title,
+                Message = "I found this pull request on Github, you might want to see it: " + PullRequest.Body,
+            }.Show(), () => PullRequest != null);
 
-            CommentCommand = new RelayCommand(() =>
+            CommentCommand = new RelayCommand(() => githubService.Load(new CreatePullRequestCommentsRequest(username, repo, number, Comment), r =>
             {
-                githubService.Load(new CreatePullRequestCommentsRequest(username, repo, number, Comment), r =>
-                {
-                    Comment = null;
-                    CommentsRequestRequest = new PullRequestCommentsRequest(username, repo, number);
-                });
-            }, () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
+                Comment = null;
+                CommentsRequestRequest = new PullRequestCommentsRequest(username, repo, number);
+            }), () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {
@@ -68,7 +65,7 @@ namespace Gi7.ViewModel
                 }
             });
 
-            RepoSelectedCommand = new RelayCommand(() => { navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)); });
+            RepoSelectedCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, username, repo)));
         }
 
         public RelayCommand<SelectionChangedEventArgs> PivotChangedCommand { get; private set; }

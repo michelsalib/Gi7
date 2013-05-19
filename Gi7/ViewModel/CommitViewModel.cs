@@ -77,7 +77,7 @@ namespace Gi7.ViewModel
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => OnPivotChangedCommand(username, repo, sha, args));
 
-            RepoSelectedCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)));
+            RepoSelectedCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, username, repo)));
         }
 
         public RelayCommand ShareCommand { get; private set; }

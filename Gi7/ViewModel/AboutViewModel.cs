@@ -24,12 +24,12 @@ namespace Gi7.ViewModel
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
                 if (r != null)
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
             });
             UserSelectedCommand = new RelayCommand<User>(user =>
             {
                 if (user != null)
-                    navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, user.Login));
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, user.Login));
             });
             ShareCommand = new RelayCommand(() =>
             {

@@ -53,8 +53,8 @@ namespace Gi7.ViewModel
             };
 
             ObjectSelectedCommand = new RelayCommand<GitHubFile>(o => navigationService.NavigateTo(o.Type == "blob"
-                                                                                                       ? String.Format(Service.ViewModelLocator.BlobUrl, user, repo, o.Sha, o.Path)
-                                                                                                       : String.Format(Service.ViewModelLocator.TreeUrl, user, repo, o.Sha, o.Path)));
+                                                                                                       ? String.Format(ViewModelLocator.BLOB_URL, user, repo, o.Sha, o.Path)
+                                                                                                       : String.Format(ViewModelLocator.TREE_URL, user, repo, o.Sha, o.Path)));
 
             DownloadCommand = new RelayCommand(() => new WebBrowserTask
             {
@@ -75,9 +75,9 @@ namespace Gi7.ViewModel
                 Message = "I found this repository on Github, you might want to see it.",
             }.Show(), () => Repository != null);
 
-            NewIssueCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.CreateIssueUrl, user, repo)), () => githubService.IsAuthenticated);
+            NewIssueCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.CREATE_ISSUE_URL, user, repo)), () => githubService.IsAuthenticated);
 
-            OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.UserUrl, Repository.Owner.Login)));
+            OwnerCommand = new RelayCommand(() => navigationService.NavigateTo(String.Format(ViewModelLocator.USER_URL, Repository.Owner.Login)));
 
             WatchCommand = new RelayCommand(() => githubService.Load(new WatchRepositoryRequest(user, repo, WatchRepositoryRequest.Type.WATCH), r => { IsWatching = true; }), () => IsWatching.HasValue && !IsWatching.Value);
 
@@ -87,22 +87,22 @@ namespace Gi7.ViewModel
             CommitSelectedCommand = new RelayCommand<Push>(push =>
             {
                 if (push)
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.CommitUrl, Repository.Owner.Login, Repository.Name, push.Sha));
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.COMMIT_URL, Repository.Owner.Login, Repository.Name, push.Sha));
             });
             PullRequestSelectedCommand = new RelayCommand<PullRequest>(pullRequest =>
             {
                 if (pullRequest)
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.PullRequestUrl, Repository.Owner.Login, Repository.Name, pullRequest.Number));
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.PULL_REQUEST_URL, Repository.Owner.Login, Repository.Name, pullRequest.Number));
             });
             IssueSelectedCommand = new RelayCommand<Issue>(issue =>
             {
                 if (issue)
                 {
-                    var destination = issue.PullRequest.HtmlUrl == null ? Service.ViewModelLocator.IssueUrl : Service.ViewModelLocator.PullRequestUrl;
+                    var destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.ISSUE_URL : ViewModelLocator.PULL_REQUEST_URL;
                     navigationService.NavigateTo(String.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
                 }
             });
-            UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(Service.ViewModelLocator.UserUrl, collaborator.Login)));
+            UserCommand = new RelayCommand<User>(collaborator => navigationService.NavigateTo(String.Format(ViewModelLocator.USER_URL, collaborator.Login)));
         }
 
         public RelayCommand ShareDownloadCommand { get; private set; }

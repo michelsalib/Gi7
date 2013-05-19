@@ -36,7 +36,7 @@ namespace Gi7.ViewModel
                 }.Show();
             }, () => Issue != null);
 
-            RepoSelectedCommand = new RelayCommand(() => { navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, username, repo)); });
+            RepoSelectedCommand = new RelayCommand(() => { navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, username, repo)); });
 
             CommentCommand = new RelayCommand(() =>
             {

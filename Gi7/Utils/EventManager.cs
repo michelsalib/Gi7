@@ -1,6 +1,7 @@
 ﻿using System;
 using Gi7.Client.Model.Event;
 using Gi7.Service;
+using Gi7.ViewModel;
 
 namespace Gi7.Utils
 {
@@ -10,22 +11,22 @@ namespace Gi7.Utils
         {
             if (e is CommitCommentEvent)
             {
-                return String.Format(ViewModelLocator.CommitUrl, e.Repo.Owner.Login, e.Repo.Name, ((CommitCommentEvent)e).Comment.CommitId);
+                return String.Format(ViewModelLocator.COMMIT_URL, e.Repo.Owner.Login, e.Repo.Name, ((CommitCommentEvent)e).Comment.CommitId);
             }
             else if (e is PushEvent)
             {
-                return String.Format(ViewModelLocator.CommitUrl, e.Repo.Owner.Login, e.Repo.Name, ((PushEvent)e).Head);
+                return String.Format(ViewModelLocator.COMMIT_URL, e.Repo.Owner.Login, e.Repo.Name, ((PushEvent)e).Head);
             }
             else if (e is IssuesEvent)
             {
-                return String.Format(ViewModelLocator.IssueUrl, e.Repo.Owner.Login, e.Repo.Name, ((IssuesEvent)e).Issue.Number);
+                return String.Format(ViewModelLocator.ISSUE_URL, e.Repo.Owner.Login, e.Repo.Name, ((IssuesEvent)e).Issue.Number);
             }
             else if (e is IssueCommentEvent)
             {
-                return String.Format(ViewModelLocator.IssueUrl, e.Repo.Owner.Login, e.Repo.Name, ((IssueCommentEvent)e).Issue.Number);
+                return String.Format(ViewModelLocator.ISSUE_URL, e.Repo.Owner.Login, e.Repo.Name, ((IssueCommentEvent)e).Issue.Number);
             }
 
-            return String.Format(ViewModelLocator.RepositoryUrl, e.Repo.Owner.Login, e.Repo.Name); 
+            return String.Format(ViewModelLocator.REPOSITORY_URL, e.Repo.Owner.Login, e.Repo.Name); 
         }
 
         public String GetTitle(Event e)

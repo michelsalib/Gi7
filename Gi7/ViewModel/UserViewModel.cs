@@ -42,12 +42,12 @@ namespace Gi7.ViewModel
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
             {
                 if (r != null)
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
             });
             UserSelectedCommand = new RelayCommand<User>(u =>
             {
                 if (user != null)
-                    navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, u.Login));
+                    navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, u.Login));
             });
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
             {

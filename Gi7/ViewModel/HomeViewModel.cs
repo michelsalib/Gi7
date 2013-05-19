@@ -175,7 +175,7 @@ namespace Gi7.ViewModel
 
         private static void OnAbout(INavigationService navigationService)
         {
-            navigationService.NavigateTo(Service.ViewModelLocator.AboutUrl);
+            navigationService.NavigateTo(ViewModelLocator.ABOUT_URL);
         }
 
         private void OnPanoramaChanged(SelectionChangedEventArgs args)
@@ -186,18 +186,18 @@ namespace Gi7.ViewModel
         private static void OnResultSelected(INavigationService navigationService, SearchResult r)
         {
             if (r.Type == "user")
-                navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, r.Name));
+                navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, r.Name));
             else // repo
             {
                 var repoData = r.Name.Split('/');
-                navigationService.NavigateTo(string.Format(Service.ViewModelLocator.RepositoryUrl, repoData[0].Trim(), repoData[1].Trim()));
+                navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, repoData[0].Trim(), repoData[1].Trim()));
             }
         }
 
         private static void OnUserSelected(INavigationService navigationService, User user)
         {
             if (user != null)
-                navigationService.NavigateTo(string.Format(Service.ViewModelLocator.UserUrl, user.Login));
+                navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, user.Login));
         }
 
         private static void OnEventSelected(INavigationService navigationService, Event e)
@@ -209,13 +209,13 @@ namespace Gi7.ViewModel
         private static void OnRepoSelected(INavigationService navigationService, Repository r)
         {
             if (r != null)
-                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.Owner.Login, r.Name));
+                navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
         }
 
         private static void OnFeaturedRepoSelected(INavigationService navigationService, FeaturedRepo r)
         {
             if (r != null)
-                navigationService.NavigateTo(String.Format(Service.ViewModelLocator.RepositoryUrl, r.User, r.Repo));
+                navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.User, r.Repo));
         }
 
         private void LoadPanel(string header)

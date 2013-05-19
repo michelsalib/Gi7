@@ -24,10 +24,10 @@ namespace Gi7.ViewModel
             ObjectSelectedCommand = new RelayCommand<GitHubFile>(o =>
             {
                 if (o.Type == "blob")
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.BlobUrl, username, repo, o.Sha, o.Path));
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.BLOB_URL, username, repo, o.Sha, o.Path));
                 else
                     //tree
-                    navigationService.NavigateTo(String.Format(Service.ViewModelLocator.TreeUrl, username, repo, o.Sha, o.Path));
+                    navigationService.NavigateTo(String.Format(ViewModelLocator.TREE_URL, username, repo, o.Sha, o.Path));
             });
         }
 

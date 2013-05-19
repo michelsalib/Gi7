@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Gi7.Client.Model;
-using System.Collections.Generic;
 
 namespace Gi7.Resources.DesignData
 {
@@ -31,15 +31,17 @@ namespace Gi7.Resources.DesignData
                 }
             };
 
-            Tree = new GitTree()
+            Tree = new GitTree
             {
-                Tree = new List<Gi7.Client.Model.GitHubFile>()
+                Tree = new List<GitHubFile>
                 {
-                    new Gi7.Client.Model.GitHubFile() {
+                    new GitHubFile
+                    {
                         Path = "readme.md",
                         Type = "blob",
                     },
-                    new Gi7.Client.Model.GitHubFile() {
+                    new GitHubFile
+                    {
                         Path = "dir",
                         Type = "tree",
                     },

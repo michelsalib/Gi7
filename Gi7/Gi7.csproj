@@ -26,7 +26,7 @@
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -279,6 +279,15 @@
     <Content Include="Images\time.png" />
     <Content Include="Images\XAML_file.png" />
     <Content Include="MVVMLight.Nuget.Readme.txt" />
+    <BlendEmbeddedFont Include="Fonts\githubocticonsb759064ec3160f692bf07db3ee5dee4736178082.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
     <Resource Include="Images\comment.png" />
     <Resource Include="Images\create.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -320,4 +329,5 @@
     <PostBuildEvent>if $(ConfigurationName) == Release xcopy /y "$(TargetDir)Gi7.xap" "$(SolutionDir)"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\WindowsPhone\v8.0\Microsoft.Expression.Blend.WindowsPhone.targets" />
 </Project>

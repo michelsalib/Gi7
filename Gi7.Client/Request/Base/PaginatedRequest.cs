@@ -17,16 +17,16 @@ namespace Gi7.Client.Request.Base
 
         public bool HasMoreItems
         {
-            get { return _hasMoreItems ; }
+            get { return _hasMoreItems; }
             set { _hasMoreItems = value; }
         }
-        
+
         public int Page
         {
             get { return _page; }
             set { _page = value; }
         }
-        
+
 
         public override string Uri
         {
@@ -68,18 +68,18 @@ namespace Gi7.Client.Request.Base
                 {
                     Page++;
 
-                    if (r.Data.Count < 30)
+                    if (r.Data != null && r.Data.Count <= 30)
                     {
                         HasMoreItems = false;
-                    }
 
-                    Result.AddRange(r.Data);
+                        Result.AddRange(r.Data);
 
-                    RaiseSuccess(new ObservableCollection<TResult>(r.Data));
+                        RaiseSuccess(new ObservableCollection<TResult>(r.Data));
 
-                    if (callback != null)
-                    {
-                        callback(new ObservableCollection<TResult>(r.Data));
+                        if (callback != null)
+                        {
+                            callback(new ObservableCollection<TResult>(r.Data));
+                        }
                     }
                 }
             });

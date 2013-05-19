@@ -14,18 +14,18 @@ namespace Gi7.Client.Model
             };
         }
 
-        public String Url { get; set; }
+        public string Url { get; set; }
 
-        private String name;
-        public String Name
+        private string name;
+        public string Name
         {
             get { return name; }
             set
             {
                 if (value.Contains("/"))
                 {
-                    Owner.Login = new String(value.TakeWhile(c => c != '/').ToArray());
-                    name = new String(value.SkipWhile(c => c != '/').Skip(1).ToArray());
+                    Owner.Login = new string(value.TakeWhile(c => c != '/').ToArray());
+                    name = new string(value.SkipWhile(c => c != '/').Skip(1).ToArray());
                 }
                 else
                 {
@@ -35,46 +35,31 @@ namespace Gi7.Client.Model
         }
 
         public User Owner { get; set; }
-
         public User Organization { get; set; }
-
-        public String Description { get; set; }
-
+        public string Description { get; set; }
         public bool HasIssues { get; set; }
-
-        public String CloneUrl { get; set; }
-
+        public string CloneUrl { get; set; }
         public Repository Parent { get; set; }
-
         public Repository Source { get; set; }
-
         public int Watchers { get; set; }
-
-        public String GitUrl { get; set; }
-
+        public string GitUrl { get; set; }
         public bool HasWiki { get; set; }
-
-        public String Homepage { get; set; }
-
-        public String SvnUrl { get; set; }
-
-        public String MirrorUrl { get; set; }
-
+        public bool Fork { get; set; }
+        public bool IsFork { get { return !Fork; } }
+        public bool NotFork { get { return Fork; } }
+        public string Language { get; set; }
+        public string Homepage { get; set; }
+        public string SvnUrl { get; set; }
+        public string MirrorUrl { get; set; }
         public bool HasDownloads { get; set; }
-
         public int Forks { get; set; }
-
         public int OpenIssues { get; set; }
-
-        public String SshUrl { get; set; }
-
-        public String HtmlUrl { get; set; }
-
+        public string SshUrl { get; set; }
+        public string HtmlUrl { get; set; }
         public string CurrentUser { get; set; }
-
-        public String Fullname
+        public string Fullname
         {
-            get { return String.Format(CurrentUser != null && CurrentUser.Equals(Owner.Login, StringComparison.InvariantCultureIgnoreCase) ? "{1}" : "{0}/{1}", Owner.Login, Name); }
+            get { return string.Format(CurrentUser != null && CurrentUser.Equals(Owner.Login, StringComparison.InvariantCultureIgnoreCase) ? "{1}" : "{0}/{1}", Owner.Login, Name); }
         }
 
         public override string ToString()

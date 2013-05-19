@@ -9,5 +9,10 @@ namespace Gi7.Client.Request
         {
             Uri = "/user/repos";
         }
+
+        protected override void preRequest(RestSharp.RestClient client, RestSharp.RestRequest request)
+        {
+            request.Resource += "&sort=pushed";
+        }
     }
 }

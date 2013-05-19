@@ -7,7 +7,7 @@
              FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}">
     <ScrollViewer Foreground="White">
-        <Grid Background="#000000">
+        <Grid Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200" />
                 <RowDefinition Height="*" />

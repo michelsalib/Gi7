@@ -46,23 +46,23 @@ namespace Gi7.ViewModel
                             var color = Colors.White;
                             switch (line.FirstOrDefault())
                             {
-                            case '+':
-                                color = Color.FromArgb(255, 49, 154, 49);
-                                break;
-                            case '-':
-                                color = Color.FromArgb(255, 230, 20, 0);
-                                break;
-                            case '@':
-                                color = Color.FromArgb(255, 25, 162, 222);
-                                break;
+                                case '+':
+                                    color = Color.FromArgb(255, 49, 154, 49);
+                                    break;
+                                case '-':
+                                    color = Color.FromArgb(255, 230, 20, 0);
+                                    break;
+                                case '@':
+                                    color = Color.FromArgb(255, 25, 162, 222);
+                                    break;
                             }
 
-                            lines.Add(new CommitLine {Line = line, Color = new SolidColorBrush(color)});
+                            lines.Add(new CommitLine { Line = line, Color = new SolidColorBrush(color) });
                         }
                     else
-                        lines.Add(new CommitLine {Line = "Binary file not shown", Color = new SolidColorBrush(Colors.Gray)});
+                        lines.Add(new CommitLine { Line = "Binary file not shown", Color = new SolidColorBrush(Colors.Gray) });
 
-                    Files.Add(new CommitFile {Lines = lines, File = file,});
+                    Files.Add(new CommitFile { Lines = lines, File = file, });
                 }
             });
 
@@ -209,15 +209,15 @@ namespace Gi7.ViewModel
             var header = (args.AddedItems[0] as PivotItem).Header as String;
             switch (header)
             {
-            case "Comments":
-                MinimizeAppBar = false;
-                CanComment = true;
-                if (CommentsRequestRequest == null)
-                    CommentsRequestRequest = new CommitCommentsRequest(username, repo, sha);
-                break;
-            case "Commit":
-                CanComment = false;
-                break;
+                case "comments":
+                    MinimizeAppBar = false;
+                    CanComment = true;
+                    if (CommentsRequestRequest == null)
+                        CommentsRequestRequest = new CommitCommentsRequest(username, repo, sha);
+                    break;
+                case "commit":
+                    CanComment = false;
+                    break;
             }
         }
     }

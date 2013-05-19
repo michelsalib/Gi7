@@ -5,16 +5,15 @@
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-                            xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox" 
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            xmlns:gi7="clr-namespace:Gi7"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-                            shell:SystemTray.IsVisible="True" toolkit:TiltEffect.IsTiltEnabled="True"
+                            shell:SystemTray.IsVisible="True" shell:SystemTray.Opacity="0"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=IssueViewModel, Source={StaticResource ViewModelLocator}}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -27,10 +26,11 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding RepoName}" Style="{StaticResource PhoneTextNormalStyle}" />
-            <TextBlock Text="{Binding IssueName}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
-        </StackPanel>
+        <Grid>
+            <gi7:Header></gi7:Header>
+            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            <TextBlock Text="{Binding IssueName}" Margin="0,45,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" MaxWidth="325" TextTrimming="WordEllipsis"/>
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
         <ScrollViewer Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">

@@ -22,7 +22,7 @@ namespace Gi7.Resources.DesignData
                 },
                 Commit = new Commit
                 {
-                    Message = "-- general performance improvements\n  -- removed most of the sub view models\n  -- support late loading of the panorama/pivot items",
+                    Message = "-- general performance improvements\n-- removed most of the sub view models\n-- support late loading of the panorama/pivot items",
                     Author = new Committer
                     {
                         Date = DateTime.Now,

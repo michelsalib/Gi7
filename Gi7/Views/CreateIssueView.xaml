@@ -6,9 +6,12 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            xmlns:gi7="clr-namespace:Gi7"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
-                            mc:Ignorable="d" shell:SystemTray.IsVisible="True"
+                            mc:Ignorable="d" 
+                            shell:SystemTray.IsVisible="True"
+                            shell:SystemTray.Opacity="0"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=CreateIssueViewModel, Source={StaticResource ViewModelLocator}}" d:DesignHeight="768" d:DesignWidth="480">
 
@@ -16,25 +19,29 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" Style="{StaticResource PhoneTextNormalStyle}" />
-            <TextBlock x:Name="PageTitle" Text="New Issue" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
-        </StackPanel>
+        <Grid>
+            <gi7:Header></gi7:Header>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,10,0"  />
+            <TextBlock x:Name="PageTitle" Text="New Issue" Margin="0,50,10,0" HorizontalAlignment="Right" VerticalAlignment="Center"  />
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
-        <StackPanel Grid.Row="1" Margin="12,0,12,0" VerticalAlignment="Top">
+        <Grid Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <TextBlock Text="Title" Margin="9, 0"/>
-            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp"/>
-            <TextBlock Text="Body" Margin="9, 0"/>
-            <TextBox AcceptsReturn="True" Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp" />
-            
-            <Button Content="Submit new issue" HorizontalAlignment="Right" Command="{Binding CreateIssueCommand}"/>
-        </StackPanel>
+            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp" Grid.Row="1"/>
+            <TextBlock Text="Body" Margin="9, 0" Grid.Row="2"/>
+            <TextBox AcceptsReturn="True" Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp" Grid.Row="3" />
+            <Button Content="Submit new issue" HorizontalAlignment="Right" Command="{Binding CreateIssueCommand}" Grid.Row="5"/>
+        </Grid>
     </Grid>
 
 </phone:PhoneApplicationPage>

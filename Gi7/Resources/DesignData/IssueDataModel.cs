@@ -8,6 +8,8 @@ namespace Gi7.Resources.DesignData
     {
         public IssueDataModel()
         {
+            RepoName = "michelsalib/Gi7";
+            IssueName = "Issue #51";
             Issue = new Issue
             {
                 Body = "This is a very important issue, nothing works! This is a very important issue, nothing works! This is a very important issue, nothing works! This is a very important issue, nothing works! This is a very important issue, nothing works! This is a very important issue, nothing works!",
@@ -130,5 +132,9 @@ namespace Gi7.Resources.DesignData
         public Issue Issue { get; set; }
 
         public StubPaginatedRequest<Comment> CommentsRequest { get; set; }
+
+        public string RepoName { get; set; }
+
+        public string IssueName { get; set; }
     }
 }

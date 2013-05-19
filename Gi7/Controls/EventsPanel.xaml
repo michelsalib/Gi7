@@ -8,10 +8,10 @@
              FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480" d:DesignWidth="480">
 
-    <local:EventListBox Request="{Binding EventsRequest}" x:Name="EventsList" Margin="12,0,12,0">
+    <local:EventListBox Request="{Binding EventsRequest}" x:Name="EventsList">
         <local:EventListBox.ItemTemplate>
             <DataTemplate>
-                <Grid  Margin="0,0,0,20">
+                <Grid  Margin="12,0,12,20">
                     <Image Source="{Binding Path=Actor.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                     <Border Background="{StaticResource PhoneAccentBrush}" Height="20" Width="20" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,8,0,0">
                         <Image Source="{Binding Converter={StaticResource EventConverter}, ConverterParameter=image}" Width="16" Height="16" OpacityMask="{x:Null}" />

@@ -25,7 +25,7 @@ namespace Gi7.ViewModel
         private bool _isLoggedIn;
         private String _search;
         private User _user;
-        private UserFollowersRequest followersRequestRequest;
+        private UserFollowersRequest followersRequest;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -129,14 +129,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public UserFollowersRequest FollowersRequestRequest
+        public UserFollowersRequest FollowersRequest
         {
-            get { return followersRequestRequest; }
+            get { return followersRequest; }
             set
             {
-                if (followersRequestRequest != value)
+                if (followersRequest != value)
                 {
-                    followersRequestRequest = value;
+                    followersRequest = value;
                     RaisePropertyChanged("FollowersRequest");
                 }
             }
@@ -241,8 +241,8 @@ namespace Gi7.ViewModel
                     });
                 break;
             case "follower":
-                if (FollowersRequestRequest == null)
-                    FollowersRequestRequest = new UserFollowersRequest(_githubService.Username);
+                if (FollowersRequest == null)
+                    FollowersRequest = new UserFollowersRequest(_githubService.Username);
                 break;
             case "following":
                 if (FollowingsRequest == null)
@@ -273,7 +273,7 @@ namespace Gi7.ViewModel
             EventsRequest = null;
             OwnedRepos = null;
             WatchedRepos = null;
-            FollowersRequestRequest = null;
+            FollowersRequest = null;
             FollowingsRequest = null;
         }
     }

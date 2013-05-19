@@ -64,7 +64,7 @@
 			</controls:PanoramaItem>
 			<controls:PanoramaItem Header="follower"
 				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-				<lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequestRequest}"
+				<lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
 					ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
 					<Interactivity:Interaction.Triggers>
 						<Interactivity:EventTrigger EventName="Tap">

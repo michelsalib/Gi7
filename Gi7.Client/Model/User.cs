@@ -20,6 +20,7 @@ namespace Gi7.Client.Model
         public string Url { get; set; }
         public int Followers { get; set; }
         public int Following { get; set; }
+        [JsonProperty("public_repos")]
         public int PublicRepos { get; set; }
         public int TotalPrivateRepos { get; set; }
 

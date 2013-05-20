@@ -14,7 +14,7 @@
         <templates:NewsFeedTemplateSelector Content="{Binding}">
             <templates:NewsFeedTemplateSelector.CommitCommentEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -35,7 +35,7 @@
             </templates:NewsFeedTemplateSelector.CommitCommentEventTemplate>
             <templates:NewsFeedTemplateSelector.CreateEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -56,7 +56,7 @@
             </templates:NewsFeedTemplateSelector.CreateEventTemplate>
             <templates:NewsFeedTemplateSelector.DeleteEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -77,7 +77,7 @@
             </templates:NewsFeedTemplateSelector.DeleteEventTemplate>
             <templates:NewsFeedTemplateSelector.DownloadEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -98,7 +98,7 @@
             </templates:NewsFeedTemplateSelector.DownloadEventTemplate>
             <templates:NewsFeedTemplateSelector.FollowEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -119,7 +119,7 @@
             </templates:NewsFeedTemplateSelector.FollowEventTemplate>
             <templates:NewsFeedTemplateSelector.ForkApplyEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -140,7 +140,7 @@
             </templates:NewsFeedTemplateSelector.ForkApplyEventTemplate>
             <templates:NewsFeedTemplateSelector.ForkEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -161,7 +161,7 @@
             </templates:NewsFeedTemplateSelector.ForkEventTemplate>
             <templates:NewsFeedTemplateSelector.GistEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -182,7 +182,7 @@
             </templates:NewsFeedTemplateSelector.GistEventTemplate>
             <templates:NewsFeedTemplateSelector.IssueCommentEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -203,7 +203,7 @@
             </templates:NewsFeedTemplateSelector.IssueCommentEventTemplate>
             <templates:NewsFeedTemplateSelector.IssuesEventTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -224,7 +224,7 @@
             </templates:NewsFeedTemplateSelector.IssuesEventTemplate>
             <templates:NewsFeedTemplateSelector.MemberEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -245,7 +245,7 @@
             </templates:NewsFeedTemplateSelector.MemberEventTemplate>
             <templates:NewsFeedTemplateSelector.PublicEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -266,7 +266,7 @@
             </templates:NewsFeedTemplateSelector.PublicEventTemplate>
             <templates:NewsFeedTemplateSelector.PullRequestEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -287,7 +287,7 @@
             </templates:NewsFeedTemplateSelector.PullRequestEventTemplate>
             <templates:NewsFeedTemplateSelector.PushEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -308,7 +308,7 @@
             </templates:NewsFeedTemplateSelector.PushEventTemplate>
             <templates:NewsFeedTemplateSelector.TeamAddEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>
@@ -329,7 +329,7 @@
             </templates:NewsFeedTemplateSelector.TeamAddEventTemplate>
             <templates:NewsFeedTemplateSelector.WatchEventTemplate>
                 <DataTemplate>
-                    <Grid  Margin="0,0,0,20">
+                    <Grid Margin="12,0,12,0">
                         <Image Source="{Binding Actor.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
                         <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,0,0,0">
                             <Paragraph>

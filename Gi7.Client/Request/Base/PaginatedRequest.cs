@@ -61,7 +61,7 @@ namespace Gi7.Client.Request.Base
 
                     if (r.Data != null && r.Data.Count <= 30)
                     {
-                        HasMoreItems = false;
+                        HasMoreItems = r.Data.Count == 30;
 
                         Result.AddRange(r.Data);
 

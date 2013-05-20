@@ -7,7 +7,7 @@
     x:Class="Gi7.App"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="clr-namespace:Gi7.ViewModel" mc:Ignorable="d">
+    xmlns:vm="clr-namespace:Gi7.ViewModel" xmlns:local="clr-namespace:Gi7.Controls.Templates" mc:Ignorable="d">
     <!--Application Resources-->
     <Application.Resources>
         <ResourceDictionary>
@@ -92,6 +92,20 @@
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
             </Style>
+            <Style TargetType="Grid">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            </Style>
+            <Style TargetType="local:NewsFeedTemplateSelector">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local:NewsFeedTemplateSelector">
+                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+            </Style>
             <DataTemplate x:Key="RepositoryItemList">
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
@@ -123,7 +137,6 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
-
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         </ResourceDictionary>
     </Application.Resources>

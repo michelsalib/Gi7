@@ -44,9 +44,9 @@
             </controls:PivotItem>
             <controls:PivotItem Header="owned repos">
                 <lists:RepositoryListBox x:Name="OwnedRepos" 
-                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
-                             ItemTemplate="{StaticResource RepositoryItemList}"
-                             Request="{Binding RepositoriesRequest}">
+                                         ItemContainerStyle="{StaticResource StrechListBoxItem}"
+                                         ItemTemplate="{StaticResource RepositoryItemList}"
+                                         Request="{Binding RepositoriesRequest}">
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
                             <command:EventToCommand Command="{Binding RepoSelectedCommand}"
@@ -57,9 +57,9 @@
             </controls:PivotItem>
             <controls:PivotItem Header="watched reps">
                 <lists:RepositoryListBox x:Name="WatchedRepos" 
-                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
-                             ItemTemplate="{StaticResource RepositoryItemList}"
-                             Request="{Binding RepositoriesWatchedRequest}">
+                                         ItemContainerStyle="{StaticResource StrechListBoxItem}"
+                                         ItemTemplate="{StaticResource RepositoryItemList}"
+                                         Request="{Binding RepositoriesWatchedRequest}">
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
                             <command:EventToCommand Command="{Binding RepoSelectedCommand}"
@@ -71,7 +71,8 @@
             <controls:PivotItem Header="following">
                 <lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
                                    ItemTemplate="{StaticResource UserTemplate}"
-                                   ItemsPanel="{StaticResource UserTemplateFormat}">
+                                   ItemsPanel="{StaticResource UserTemplateFormat}"
+                                   Margin="12,0,12,0">
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
                             <command:EventToCommand Command="{Binding UserSelectedCommand}"
@@ -83,7 +84,8 @@
             <controls:PivotItem Header="follower">
                 <lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
                                    ItemTemplate="{StaticResource UserTemplate}"
-                                   ItemsPanel="{StaticResource UserTemplateFormat}">
+                                   ItemsPanel="{StaticResource UserTemplateFormat}"
+                                   Margin="12,0,12,0">
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
                             <command:EventToCommand Command="{Binding UserSelectedCommand}"

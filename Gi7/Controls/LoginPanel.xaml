@@ -6,11 +6,11 @@
              Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480" d:DesignWidth="480"
              DataContext="{Binding Path=LoginPanelViewModel, Source={StaticResource ViewModelLocator}}">
 
-  <StackPanel Orientation="Vertical">
-    <TextBlock Text="Email" />
-    <TextBox Text="{Binding Email, Mode=TwoWay}" />
-    <TextBlock Text="Password" />
-    <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
-    <Button Content="Login" Command="{Binding LoginCommand}" />
-  </StackPanel>
+    <StackPanel Orientation="Vertical" Margin="12,0,12,0">
+        <TextBlock Text="Email" />
+        <TextBox Text="{Binding Email, Mode=TwoWay}" />
+        <TextBlock Text="Password" />
+        <PasswordBox Password="{Binding Password, Mode=TwoWay}" />
+        <Button Content="Login" Command="{Binding LoginCommand}" />
+    </StackPanel>
 </UserControl>

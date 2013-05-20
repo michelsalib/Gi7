@@ -76,8 +76,11 @@
             </controls:PanoramaItem>
 			<controls:PanoramaItem Header="following"
 				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-				<lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
-					ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+				<lists:UserListBox x:Name="FollowingList"
+                                   Request="{Binding FollowingsRequest}"
+                                   ItemTemplate="{StaticResource UserTemplate}"
+                                   ItemsPanel="{StaticResource UserTemplateFormat}"
+                                   Margin="12,0,12,0">
 					<Interactivity:Interaction.Triggers>
 						<Interactivity:EventTrigger EventName="Tap">
 							<Command:EventToCommand Command="{Binding UserSelectedCommand}"
@@ -88,8 +91,11 @@
 			</controls:PanoramaItem>
 			<controls:PanoramaItem Header="follower"
 				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-				<lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
-					ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
+				<lists:UserListBox x:Name="FollowerList"
+                                   Request="{Binding FollowersRequest}"
+                                   ItemTemplate="{StaticResource UserTemplate}"
+                                   ItemsPanel="{StaticResource UserTemplateFormat}"
+                                   Margin="12,0,12,0">
 					<Interactivity:Interaction.Triggers>
 						<Interactivity:EventTrigger EventName="Tap">
 							<Command:EventToCommand Command="{Binding UserSelectedCommand}"
@@ -103,7 +109,7 @@
 				<localControls:ProfilePanel />
 			</controls:PanoramaItem>
 			<controls:PanoramaItem Header="search">
-				<StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" Margin="12,0,12,0">
 					<TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="EnterPressed" />
 					<ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResults}">
 						<ListBox.ItemTemplate>
@@ -123,7 +129,7 @@
 			</controls:PanoramaItem>
 			<controls:PanoramaItem Header="explore">
 				<ScrollViewer>
-					<StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Margin="12,0,12,0">
 						<TextBlock Text="Featured Repos" FontSize="30" />
 						<ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}"
 							ScrollViewer.VerticalScrollBarVisibility="Disabled">

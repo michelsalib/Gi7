@@ -10,6 +10,11 @@ namespace Gi7.Client.Request
             Uri = "/user/repos";
         }
 
+        public RepositoriesRequest(string userName)
+        {
+            Uri = string.Format("/users/{0}/repos", userName);
+        }
+
         protected override void preRequest(RestSharp.RestClient client, RestSharp.RestRequest request)
         {
             request.Resource += "&sort=pushed";

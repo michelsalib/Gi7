@@ -7,7 +7,9 @@
              FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480" d:DesignWidth="480">
 
-    <local:EventListBox Request="{Binding EventsRequest}" x:Name="EventsList" ItemContainerStyle="{StaticResource StrechListBoxItem}">
+    <local:EventListBox Request="{Binding EventsRequest}" 
+                        x:Name="EventsList" 
+                        ItemContainerStyle="{StaticResource StrechListBoxItem}">
         <local:EventListBox.ItemTemplate>
             <DataTemplate>
                 <Grid  Margin="0,0,0,20">

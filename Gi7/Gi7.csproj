@@ -90,6 +90,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PaginatedListBox\RepositoryListBox.cs" />
     <Compile Include="Controls\TreePanel.xaml.cs">
       <DependentUpon>TreePanel.xaml</DependentUpon>
     </Compile>

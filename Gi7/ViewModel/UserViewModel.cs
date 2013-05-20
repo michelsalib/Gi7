@@ -23,7 +23,9 @@ namespace Gi7.ViewModel
         private bool _showAppBar;
         private User _user;
         private String _username;
-        private UserFollowersRequest followersRequestRequest;
+        private UserFollowersRequest followersRequest;
+        private RepositoriesRequest repositoriesRequest;
+        private RepositoriesWatchedRequest repositoriesWatchedRequest;
 
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
@@ -39,57 +41,15 @@ namespace Gi7.ViewModel
             }.Show(), () => User != null);
             FollowCommand = new RelayCommand(() => githubService.Load(new FollowUserRequest(Username, FollowUserRequest.Type.FOLLOW), r => { IsFollowing = true; }), () => IsFollowing.HasValue && !IsFollowing.Value);
             UnFollowCommand = new RelayCommand(() => githubService.Load(new FollowUserRequest(Username, FollowUserRequest.Type.UNFOLLOW), r => { IsFollowing = false; }), () => IsFollowing.HasValue && IsFollowing.Value);
-            RepoSelectedCommand = new RelayCommand<Repository>(r =>
-            {
-                if (r != null)
-                    navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
-            });
-            UserSelectedCommand = new RelayCommand<User>(u =>
-            {
-                if (user != null)
-                    navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, u.Login));
-            });
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
-            {
-                var header = ((PivotItem) args.AddedItems[0]).Header as String;
-                ShowAppBar = false;
-                switch (header)
-                {
-                case "Feed":
-                    if (EventsRequest == null)
-                        EventsRequest = new UserEventsRequests(Username);
-                    break;
-                case "Repos":
-                    if (Repos == null)
-                    {
-                        Repos = githubService.Load(new RepositoriesWatchedRequest(Username));
-                        Repos.CollectionChanged += (sender, e) =>
-                        {
-                            RaisePropertyChanged("WatchedRepos");
-                            RaisePropertyChanged("OwnedRepos");
-                        };
-                    }
-                    break;
-                case "Follower":
-                    if (FollowersRequestRequest == null)
-                        FollowersRequestRequest = new UserFollowersRequest(Username);
-                    break;
-                case "Following":
-                    if (FollowingsRequest == null)
-                        FollowingsRequest = new UserFollowingRequest(Username);
-                    break;
-                case "Profile":
-                case "Details":
-                    if (User == null)
-                    {
-                        User = githubService.Load(new UserRequest(Username), u => User = u);
-                        if (githubService.IsAuthenticated)
-                            IsFollowing = githubService.Load(new FollowUserRequest(Username), r => { IsFollowing = r; });
-                    }
-                    ShowAppBar = true;
-                    break;
-                }
-            });
+            RepoSelectedCommand = new RelayCommand<Repository>(r => OnRepoSelected(navigationService, r));
+            UserSelectedCommand = new RelayCommand<User>(u => OnUserSelected(navigationService, user, u));
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => OnPivotChanged(githubService, args));
+        }
+
+        private static void OnRepoSelected(INavigationService navigationService, Repository r)
+        {
+            if (r != null)
+                navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
         }
 
         public RelayCommand ShareCommand { get; private set; }
@@ -215,16 +175,87 @@ namespace Gi7.ViewModel
             }
         }
 
-        public UserFollowersRequest FollowersRequestRequest
+        public UserFollowersRequest FollowersRequest
         {
-            get { return followersRequestRequest; }
+            get { return followersRequest; }
             set
             {
-                if (followersRequestRequest != value)
+                if (followersRequest != value)
                 {
-                    followersRequestRequest = value;
+                    followersRequest = value;
                     RaisePropertyChanged("FollowersRequest");
                 }
+            }
+        }
+
+        public RepositoriesRequest RepositoriesRequest
+        {
+            get { return repositoriesRequest; }
+            set
+            {
+                if (repositoriesRequest != value)
+                {
+                    repositoriesRequest = value;
+                    RaisePropertyChanged("RepositoriesRequest");
+                }
+            }
+        }
+
+        public RepositoriesWatchedRequest RepositoriesWatchedRequest
+        {
+            get { return repositoriesWatchedRequest; }
+            set
+            {
+                if (repositoriesWatchedRequest != value)
+                {
+                    repositoriesWatchedRequest = value;
+                    RaisePropertyChanged("RepositoriesWatchedRequest");
+                }
+            }
+        }
+
+        private static void OnUserSelected(INavigationService navigationService, string user, User u)
+        {
+            if (user != null)
+                navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, u.Login));
+        }
+
+        private void OnPivotChanged(GithubService githubService, SelectionChangedEventArgs args)
+        {
+            var header = ((PivotItem)args.AddedItems[0]).Header as String;
+            ShowAppBar = false;
+            switch (header)
+            {
+                case "feed":
+                    if (EventsRequest == null)
+                        EventsRequest = new UserEventsRequests(Username);
+                    break;
+                case "owned repos":
+                    if (RepositoriesRequest == null)
+                        RepositoriesRequest = new RepositoriesRequest(Username);
+                    break;
+                case "watched reps":
+                    if (RepositoriesWatchedRequest == null)
+                        RepositoriesWatchedRequest = new RepositoriesWatchedRequest(Username);
+                    break;
+                case "follower":
+                    if (FollowersRequest == null)
+                        FollowersRequest = new UserFollowersRequest(Username);
+                    break;
+                case "following":
+                    if (FollowingsRequest == null)
+                        FollowingsRequest = new UserFollowingRequest(Username);
+                    break;
+                case "profile":
+                case "details":
+                    if (User == null)
+                    {
+                        User = githubService.Load(new UserRequest(Username), u => User = u);
+                        if (githubService.IsAuthenticated)
+                            IsFollowing = githubService.Load(new FollowUserRequest(Username), r => { IsFollowing = r; });
+                    }
+                    ShowAppBar = true;
+                    break;
             }
         }
     }

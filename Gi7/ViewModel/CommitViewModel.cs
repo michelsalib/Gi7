@@ -23,7 +23,7 @@ namespace Gi7.ViewModel
         private GithubService _githubService;
         private bool _minimizeAppBar;
         private String _repoName;
-        private CommitCommentsRequest commentsRequestRequest;
+        private CommitCommentsRequest commentsRequest;
 
         public CommitViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string sha)
         {
@@ -122,14 +122,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public CommitCommentsRequest CommentsRequestRequest
+        public CommitCommentsRequest CommentsRequest
         {
-            get { return commentsRequestRequest; }
+            get { return commentsRequest; }
             set
             {
-                if (commentsRequestRequest != value)
+                if (commentsRequest != value)
                 {
-                    commentsRequestRequest = value;
+                    commentsRequest = value;
                     RaisePropertyChanged("CommentsRequest");
                 }
             }
@@ -194,7 +194,7 @@ namespace Gi7.ViewModel
         private void OnComment(string username, string repo, string sha)
         {
             Comment = null;
-            CommentsRequestRequest = new CommitCommentsRequest(username, repo, sha);
+            CommentsRequest = new CommitCommentsRequest(username, repo, sha);
         }
 
         private bool UserCanComment()
@@ -212,8 +212,8 @@ namespace Gi7.ViewModel
                 case "comments":
                     MinimizeAppBar = false;
                     CanComment = true;
-                    if (CommentsRequestRequest == null)
-                        CommentsRequestRequest = new CommitCommentsRequest(username, repo, sha);
+                    if (CommentsRequest == null)
+                        CommentsRequest = new CommitCommentsRequest(username, repo, sha);
                     break;
                 case "commit":
                     CanComment = false;

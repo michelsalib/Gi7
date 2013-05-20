@@ -1,7 +1,5 @@
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -9,7 +7,6 @@ using Gi7.Client;
 using Gi7.Client.Model;
 using Gi7.Client.Model.Event;
 using Gi7.Client.Model.Extra;
-using Gi7.Client.Request;
 using Gi7.Client.Request;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
@@ -23,9 +20,11 @@ namespace Gi7.ViewModel
         private UserReceivedEventsRequest _eventsRequest;
         private UserFollowingRequest _followingsRequest;
         private bool _isLoggedIn;
-        private String _search;
+        private string _search;
         private User _user;
         private UserFollowersRequest followersRequest;
+        private RepositoriesRequest ownedRepositoriesRequest;
+        private RepositoriesWatchedRequest watchedRepositoriesRequest;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -39,7 +38,7 @@ namespace Gi7.ViewModel
             ResultSelectedCommand = new RelayCommand<SearchResult>(r => OnResultSelected(navigationService, r));
             PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(OnPanoramaChanged);
             AboutCommand = new RelayCommand(() => OnAbout(navigationService));
-            LogoutCommand = new RelayCommand(() => githubService.Logout(), () => IsLoggedIn);
+            LogoutCommand = new RelayCommand(githubService.Logout, () => IsLoggedIn);
 
             // init
             if (_githubService.IsAuthenticated)
@@ -146,7 +145,7 @@ namespace Gi7.ViewModel
 
         public ObservableCollection<SearchResult> SearchResults { get; set; }
 
-        public String Search
+        public string Search
         {
             get { return _search; }
             set
@@ -180,7 +179,7 @@ namespace Gi7.ViewModel
 
         private void OnPanoramaChanged(SelectionChangedEventArgs args)
         {
-            LoadPanel((args.AddedItems[0] as PanoramaItem).Header as String);
+            LoadPanel((args.AddedItems[0] as PanoramaItem).Header as string);
         }
 
         private static void OnResultSelected(INavigationService navigationService, SearchResult r)
@@ -209,53 +208,47 @@ namespace Gi7.ViewModel
         private static void OnRepoSelected(INavigationService navigationService, Repository r)
         {
             if (r != null)
-                navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
+                navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
         }
 
         private static void OnFeaturedRepoSelected(INavigationService navigationService, FeaturedRepo r)
         {
             if (r != null)
-                navigationService.NavigateTo(String.Format(ViewModelLocator.REPOSITORY_URL, r.User, r.Repo));
+                navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, r.User, r.Repo));
         }
 
         private void LoadPanel(string header)
         {
             switch (header)
             {
-            case "news feed":
-                if (EventsRequest == null)
-                    EventsRequest = new UserReceivedEventsRequest(_githubService.Username);
+                case "news feed":
+                    if (EventsRequest == null)
+                        EventsRequest = new UserReceivedEventsRequest(_githubService.Username);
+                    break;
+                case "owned repos":
+                    if (OwnedRepositoriesRequest == null)
+                        OwnedRepositoriesRequest = new RepositoriesRequest();
+                    break;
+                case "watched reps":
+                if (WatchedRepositoriesRequest == null)
+                    WatchedRepositoriesRequest = new RepositoriesWatchedRequest(_githubService.Username);
                 break;
-            case "repositories":
-                if (!OwnedRepos.Any())
-                    _githubService.Load(new RepositoriesRequest(), repositories =>
-                    {
-                        foreach (var repository in repositories)
-                            OwnedRepos.Add(repository);
-                    });
-                if (!WatchedRepos.Any())
-                    _githubService.Load(new RepositoriesWatchedRequest(_githubService.Username), result =>
-                    {
-                        foreach (var repository in result.Where(repo => !repo.Owner.Login.Equals(_githubService.Username, StringComparison.InvariantCultureIgnoreCase)))
-                            WatchedRepos.Add(repository);
-                    });
-                break;
-            case "follower":
-                if (FollowersRequest == null)
-                    FollowersRequest = new UserFollowersRequest(_githubService.Username);
-                break;
-            case "following":
-                if (FollowingsRequest == null)
-                    FollowingsRequest = new UserFollowingRequest(_githubService.Username);
-                break;
-            case "profile":
-                if (User == null)
-                    User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
-                break;
-            case "explore":
-                if (FeaturedRepos == null)
-                    FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
-                break;
+                case "follower":
+                    if (FollowersRequest == null)
+                        FollowersRequest = new UserFollowersRequest(_githubService.Username);
+                    break;
+                case "following":
+                    if (FollowingsRequest == null)
+                        FollowingsRequest = new UserFollowingRequest(_githubService.Username);
+                    break;
+                case "profile":
+                    if (User == null)
+                        User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                    break;
+                case "explore":
+                    if (FeaturedRepos == null)
+                        FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
+                    break;
             }
         }
 
@@ -275,6 +268,32 @@ namespace Gi7.ViewModel
             WatchedRepos = null;
             FollowersRequest = null;
             FollowingsRequest = null;
+        }
+
+        public RepositoriesRequest OwnedRepositoriesRequest
+        {
+            get { return ownedRepositoriesRequest; }
+            set
+            {
+                if (ownedRepositoriesRequest != value)
+                {
+                    ownedRepositoriesRequest = value;
+                    RaisePropertyChanged("OwnedRepositoriesRequest");
+                }
+            }
+        }
+
+        public RepositoriesWatchedRequest WatchedRepositoriesRequest
+        {
+            get { return watchedRepositoriesRequest; }
+            set
+            {
+                if (watchedRepositoriesRequest != value)
+                {
+                    watchedRepositoriesRequest = value;
+                    RaisePropertyChanged("WatchedRepositoriesRequest");
+                }
+            }
         }
     }
 }

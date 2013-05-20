@@ -36,16 +36,39 @@
                     <command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
                 </interactivity:EventTrigger>
             </interactivity:Interaction.Triggers>
-            <controls:PivotItem Header="Feed">
+            <controls:PivotItem Header="feed">
                 <localControls:EventsPanel />
             </controls:PivotItem>
-            <controls:PivotItem Header="Details">
+            <controls:PivotItem Header="details">
                 <localControls:ProfilePanel />
             </controls:PivotItem>
-            <controls:PivotItem Header="Repos">
-                <localControls:RepositoryPanel />
+            <controls:PivotItem Header="owned repos">
+                <lists:RepositoryListBox x:Name="OwnedRepos" 
+                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
+                             ItemTemplate="{StaticResource RepositoryItemList}"
+                             Request="{Binding RepositoriesRequest}">
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="Tap">
+                            <command:EventToCommand Command="{Binding RepoSelectedCommand}"
+                                        CommandParameter="{Binding SelectedItem, ElementName=OwnedRepos}" />
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
+                </lists:RepositoryListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="Following">
+            <controls:PivotItem Header="watched reps">
+                <lists:RepositoryListBox x:Name="WatchedRepos" 
+                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
+                             ItemTemplate="{StaticResource RepositoryItemList}"
+                             Request="{Binding RepositoriesWatchedRequest}">
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="Tap">
+                            <command:EventToCommand Command="{Binding RepoSelectedCommand}"
+                                        CommandParameter="{Binding SelectedItem, ElementName=WatchedRepos}" />
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
+                </lists:RepositoryListBox>
+            </controls:PivotItem>
+            <controls:PivotItem Header="following">
                 <lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"
                                    ItemTemplate="{StaticResource UserTemplate}"
                                    ItemsPanel="{StaticResource UserTemplateFormat}">
@@ -57,7 +80,7 @@
                     </interactivity:Interaction.Triggers>
                 </lists:UserListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="Follower">
+            <controls:PivotItem Header="follower">
                 <lists:UserListBox x:Name="FollowerList" Request="{Binding FollowersRequest}"
                                    ItemTemplate="{StaticResource UserTemplate}"
                                    ItemsPanel="{StaticResource UserTemplateFormat}">

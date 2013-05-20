@@ -46,10 +46,34 @@
 				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
 				<localControls:EventsPanel />
 			</controls:PanoramaItem>
-			<controls:PanoramaItem Header="repositories"
+            <controls:PanoramaItem Header="owned repos" 
 				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-				<localControls:RepositoryPanel />
-			</controls:PanoramaItem>
+                <lists:RepositoryListBox x:Name="OwnedRepos" 
+                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
+                             ItemTemplate="{StaticResource RepositoryItemList}"
+                             Request="{Binding OwnedRepositoriesRequest}">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding RepoSelectedCommand}"
+                                        CommandParameter="{Binding SelectedItem, ElementName=OwnedRepos}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                </lists:RepositoryListBox>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem Header="watched reps"
+				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+                <lists:RepositoryListBox x:Name="WatchedRepos" 
+                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
+                             ItemTemplate="{StaticResource RepositoryItemList}"
+                             Request="{Binding WatchedRepositoriesRequest}">
+                    <Interactivity:Interaction.Triggers>
+                        <Interactivity:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding RepoSelectedCommand}"
+                                        CommandParameter="{Binding SelectedItem, ElementName=WatchedRepos}" />
+                        </Interactivity:EventTrigger>
+                    </Interactivity:Interaction.Triggers>
+                </lists:RepositoryListBox>
+            </controls:PanoramaItem>
 			<controls:PanoramaItem Header="following"
 				Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
 				<lists:UserListBox x:Name="FollowingList" Request="{Binding FollowingsRequest}"

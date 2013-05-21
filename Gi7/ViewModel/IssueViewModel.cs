@@ -16,7 +16,7 @@ namespace Gi7.ViewModel
         private Issue _issue;
         private String _issueName;
         private String _repoName;
-        private IssueCommentsRequest commentsRequestRequest;
+        private IssueCommentsRequest commentsRequest;
 
         public IssueViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
@@ -24,7 +24,7 @@ namespace Gi7.ViewModel
             IssueName = "Issue #" + number;
 
             Issue = githubService.Load(new IssueRequest(username, repo, number), i => Issue = i);
-            CommentsRequestRequest = new IssueCommentsRequest(username, repo, number);
+            CommentsRequest = new IssueCommentsRequest(username, repo, number);
 
             ShareCommand = new RelayCommand(() =>
             {
@@ -43,7 +43,7 @@ namespace Gi7.ViewModel
                 githubService.Load(new IssueCommentRequest(username, repo, number, Comment), r =>
                 {
                     Comment = null;
-                    CommentsRequestRequest = new IssueCommentsRequest(username, repo, number);
+                    CommentsRequest = new IssueCommentsRequest(username, repo, number);
                 });
             }, () => githubService.IsAuthenticated && Comment != null && Comment.Trim().Length > 0);
         }
@@ -107,14 +107,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public IssueCommentsRequest CommentsRequestRequest
+        public IssueCommentsRequest CommentsRequest
         {
-            get { return commentsRequestRequest; }
+            get { return commentsRequest; }
             set
             {
-                if (commentsRequestRequest != value)
+                if (commentsRequest != value)
                 {
-                    commentsRequestRequest = value;
+                    commentsRequest = value;
                     RaisePropertyChanged("CommentsRequest");
                 }
             }

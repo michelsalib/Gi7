@@ -19,7 +19,7 @@ namespace Gi7.ViewModel
         private PullRequest _pullRequest;
         private String _pullRequestName;
         private String _repoName;
-        private PullRequestCommentsRequest commentsRequestRequest;
+        private PullRequestCommentsRequest commentsRequest;
 
         public PullRequestViewModel(GithubService githubService, INavigationService navigationService, string username, string repo, string number)
         {
@@ -43,7 +43,7 @@ namespace Gi7.ViewModel
             CommentCommand = new RelayCommand(() => githubService.Load(new CreatePullRequestCommentsRequest(username, repo, number, Comment), r =>
             {
                 Comment = null;
-                CommentsRequestRequest = new PullRequestCommentsRequest(username, repo, number);
+                CommentsRequest = new PullRequestCommentsRequest(username, repo, number);
             }), () => githubService.IsAuthenticated && _canComment && Comment != null && Comment.Trim().Length > 0);
 
             PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args =>
@@ -56,8 +56,8 @@ namespace Gi7.ViewModel
                 case "Comments":
                     MinimizeAppBar = false;
                     CanComment = true;
-                    if (CommentsRequestRequest == null)
-                        CommentsRequestRequest = new PullRequestCommentsRequest(username, repo, number);
+                    if (CommentsRequest == null)
+                        CommentsRequest = new PullRequestCommentsRequest(username, repo, number);
                     break;
                 default: // main pivot
                     CanComment = false;
@@ -100,14 +100,14 @@ namespace Gi7.ViewModel
             }
         }
 
-        public PullRequestCommentsRequest CommentsRequestRequest
+        public PullRequestCommentsRequest CommentsRequest
         {
-            get { return commentsRequestRequest; }
+            get { return commentsRequest; }
             set
             {
-                if (commentsRequestRequest != value)
+                if (commentsRequest != value)
                 {
-                    commentsRequestRequest = value;
+                    commentsRequest = value;
                     RaisePropertyChanged("CommentsRequest");
                 }
             }

@@ -25,8 +25,8 @@ namespace Gi7.ViewModel
         private Repository _repository;
         private bool _showAppBar;
         private GitTree _tree;
-        private RepositoryCollaboratorsRequest collaboratorRequestRequest;
-        private RepositoryWatchersRequest watchersRequestRequest;
+        private RepositoryCollaboratorsRequest collaboratorRequest;
+        private RepositoryWatchersRequest watchersRequest;
 
         public RepositoryViewModel(GithubService githubService, INavigationService navigationService, String user, String repo)
         {
@@ -189,27 +189,27 @@ namespace Gi7.ViewModel
             }
         }
 
-        public RepositoryCollaboratorsRequest CollaboratorRequestRequest
+        public RepositoryCollaboratorsRequest CollaboratorRequest
         {
-            get { return collaboratorRequestRequest; }
+            get { return collaboratorRequest; }
             set
             {
-                if (collaboratorRequestRequest != value)
+                if (collaboratorRequest != value)
                 {
-                    collaboratorRequestRequest = value;
+                    collaboratorRequest = value;
                     RaisePropertyChanged("CollaboratorRequest");
                 }
             }
         }
 
-        public RepositoryWatchersRequest WatchersRequestRequest
+        public RepositoryWatchersRequest WatchersRequest
         {
-            get { return watchersRequestRequest; }
+            get { return watchersRequest; }
             set
             {
-                if (watchersRequestRequest != value)
+                if (watchersRequest != value)
                 {
-                    watchersRequestRequest = value;
+                    watchersRequest = value;
                     RaisePropertyChanged("WatchersRequest");
                 }
             }
@@ -290,12 +290,12 @@ namespace Gi7.ViewModel
                 ShowAppBar = true;
                 break;
             case "collaborators":
-                if (CollaboratorRequestRequest == null)
-                    CollaboratorRequestRequest = new RepositoryCollaboratorsRequest(user, repo);
+                if (CollaboratorRequest == null)
+                    CollaboratorRequest = new RepositoryCollaboratorsRequest(user, repo);
                 break;
             case "watchers":
-                if (WatchersRequestRequest == null)
-                    WatchersRequestRequest = new RepositoryWatchersRequest(user, repo);
+                if (WatchersRequest == null)
+                    WatchersRequest = new RepositoryWatchersRequest(user, repo);
                 break;
             case "details":
                 ShowAppBar = true;

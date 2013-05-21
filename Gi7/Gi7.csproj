@@ -289,6 +289,7 @@
     <Content Include="Images\link.png" />
     <Content Include="Images\location.png" />
     <Content Include="Images\mail.png" />
+    <Content Include="Images\appbar.pin.add.png" />
     <Content Include="Images\time.png" />
     <Content Include="Images\XAML_file.png" />
     <Content Include="MVVMLight.Nuget.Readme.txt" />

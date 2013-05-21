@@ -45,16 +45,23 @@
                         <HyperlinkButton Content="Website" HorizontalAlignment="Right" Visibility="{Binding Repository.Homepage, Converter={StaticResource EmptyConverter}}"
                                          NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
                         <Grid>
-                            <TextBlock Text="Watchers" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" Margin="0,0,10,0" />
-                        </Grid>
-                        <Grid>
-                            <TextBlock Text="Forks" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" Margin="0,0,10,0" />
-                        </Grid>
-                        <Grid>
-                            <TextBlock Text="Issues" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.OpenIssues}" TextAlignment="Right" FontSize="42" Foreground="Gray" Margin="0,0,10,0" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition  />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Vertical" Grid.Column="0">
+                                <TextBlock Text="{Binding Repository.Watchers}" HorizontalAlignment="Center" FontSize="40"/>
+                                <TextBlock Text="watchers" HorizontalAlignment="Center" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Repository.Forks}" HorizontalAlignment="Center" FontSize="40"/>
+                                <TextBlock Text="forks"  />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Repository.OpenIssues}" HorizontalAlignment="Center" FontSize="40"/>
+                                <TextBlock Text="issues" />
+                            </StackPanel>
                         </Grid>
                         <Grid>
                             <TextBlock Text="Owner" VerticalAlignment="Center" FontSize="42.667" />
@@ -233,6 +240,8 @@
                                               Command="{Binding WatchCommand}" />
             <bar:BindableApplicationBarButton Text="Unwatch" IconUri="/Images/appbar.favs.rmfrom.rest.png"
                                               Command="{Binding UnWatchCommand}" />
+            <bar:BindableApplicationBarButton Text="Pin" IconUri="/Images/appbar.pin.add.png"
+                                              Command="{Binding PinCommand}" />
             <bar:BindableApplicationBar.MenuItems>
                 <bar:BindableApplicationBarMenuItem Text="Share" Command="{Binding ShareCommand}"/>
             </bar:BindableApplicationBar.MenuItems>

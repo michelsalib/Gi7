@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
+using Gi7.ViewModel;
 using Microsoft.Phone.Controls;
 using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 using System.Windows;
@@ -39,6 +40,20 @@ namespace Gi7.Views
         {
             ContextMenu contextMenu = ContextMenuService.GetContextMenu((DependencyObject)sender);
             contextMenu.IsOpen = true;
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            var repositoryViewModel = (RepositoryViewModel) DataContext;
+            if (!repositoryViewModel.Loaded)
+            {
+                var url = e.Uri.ToString();
+                var query = url.Substring(url.IndexOf('?')+1);
+                var strings = query.Split('&');
+                var dictionary = strings.ToDictionary(s => s.Split('=')[0], s => s.Split('=')[1]);
+                repositoryViewModel.Load(dictionary["user"], dictionary["repo"]);
+            }
+            base.OnNavigatedTo(e);
         }
     }
 }

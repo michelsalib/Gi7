@@ -10,6 +10,8 @@
         <ListBox.ItemContainerStyle>
             <Style TargetType="ListBoxItem">
                 <Setter Property="Margin" Value="12,5,15,5" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
             </Style>
         </ListBox.ItemContainerStyle>
         <!--...-->
@@ -62,7 +64,7 @@
         </ListBoxItem>
         <ListBoxItem Height="1" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" />
         <ListBoxItem>
-            <Grid Width="400">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition  />
                     <ColumnDefinition />
@@ -87,4 +89,4 @@
                     TargetName="_blank" />
         </ListBoxItem>
     </ListBox>
-</UserControl>
+</UserControl>  

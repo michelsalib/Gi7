@@ -22,6 +22,7 @@ namespace Gi7.ViewModel
         private bool _isLoggedIn;
         private string _search;
         private User _user;
+        private SearchResult searchResult;
         private UserFollowersRequest followersRequest;
         private RepositoriesRequest ownedRepositoriesRequest;
         private RepositoriesWatchedRequest watchedRepositoriesRequest;
@@ -31,11 +32,10 @@ namespace Gi7.ViewModel
             _githubService = githubService;
 
             // commands
-            FeaturedRepoSelectedCommand = new RelayCommand<FeaturedRepo>(r => OnFeaturedRepoSelected(navigationService, r));
             RepoSelectedCommand = new RelayCommand<Repository>(r => OnRepoSelected(navigationService, r));
+            SearchedRepoSelectedCommand = new RelayCommand<SearchedRepository>(r => OnSearchedRepoSelected(navigationService, r));
             EventSelectedCommand = new RelayCommand<Event>(e => OnEventSelected(navigationService, e));
             UserSelectedCommand = new RelayCommand<User>(user => OnUserSelected(navigationService, user));
-            ResultSelectedCommand = new RelayCommand<SearchResult>(r => OnResultSelected(navigationService, r));
             PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(OnPanoramaChanged);
             AboutCommand = new RelayCommand(() => OnAbout(navigationService));
             LogoutCommand = new RelayCommand(githubService.Logout, () => IsLoggedIn);
@@ -61,9 +61,8 @@ namespace Gi7.ViewModel
         public RelayCommand<Event> EventSelectedCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }
-        public RelayCommand<FeaturedRepo> FeaturedRepoSelectedCommand { get; private set; }
+        public RelayCommand<SearchedRepository> SearchedRepoSelectedCommand { get; private set; }
         public RelayCommand<SelectionChangedEventArgs> PanoramaChangedCommand { get; private set; }
-        public RelayCommand<SearchResult> ResultSelectedCommand { get; private set; }
 
         public bool IsLoggedIn
         {
@@ -141,9 +140,18 @@ namespace Gi7.ViewModel
             }
         }
 
-        public ObservableCollection<FeaturedRepo> FeaturedRepos { get; set; }
-
-        public ObservableCollection<SearchResult> SearchResults { get; set; }
+        public SearchResult SearchResult
+        {
+            get { return searchResult; }
+            set
+            {
+                if (searchResult != value)
+                {
+                    searchResult = value;
+                    RaisePropertyChanged("SearchResult");
+                }
+            }
+        }
 
         public string Search
         {
@@ -161,7 +169,7 @@ namespace Gi7.ViewModel
         private void OnPropertyChanged(GithubService githubService, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Search")
-                SearchResults = githubService.Load(new SearchRequest(Search), r => SearchResults = r);
+                SearchResult = githubService.Load(new SearchRequest(Search), r => SearchResult = r);
         }
 
         private void OnIsAuthenticatedChanged(AuthenticatedEventArgs e)
@@ -182,17 +190,6 @@ namespace Gi7.ViewModel
             LoadPanel((args.AddedItems[0] as PanoramaItem).Header as string);
         }
 
-        private static void OnResultSelected(INavigationService navigationService, SearchResult r)
-        {
-            if (r.Type == "user")
-                navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, r.Name));
-            else // repo
-            {
-                var repoData = r.Name.Split('/');
-                navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, repoData[0].Trim(), repoData[1].Trim()));
-            }
-        }
-
         private static void OnUserSelected(INavigationService navigationService, User user)
         {
             if (user != null)
@@ -211,10 +208,10 @@ namespace Gi7.ViewModel
                 navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, r.Owner.Login, r.Name));
         }
 
-        private static void OnFeaturedRepoSelected(INavigationService navigationService, FeaturedRepo r)
+        private static void OnSearchedRepoSelected(INavigationService navigationService, SearchedRepository r)
         {
             if (r != null)
-                navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, r.User, r.Repo));
+                navigationService.NavigateTo(string.Format(ViewModelLocator.REPOSITORY_URL, r.Username, r.Name));
         }
 
         private void LoadPanel(string header)
@@ -244,10 +241,6 @@ namespace Gi7.ViewModel
                 case "profile":
                     if (User == null)
                         User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
-                    break;
-                case "explore":
-                    if (FeaturedRepos == null)
-                        FeaturedRepos = _githubService.Load(new FeaturedRepoRequest());
                     break;
             }
         }

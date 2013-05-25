@@ -1,9 +1,12 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace Gi7.Client.Model.Extra
 {
     public class SearchResult
     {
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public List<SearchedRepository> Repositories { get; set; }
     }
 }

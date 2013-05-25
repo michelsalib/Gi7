@@ -105,45 +105,21 @@
 			<controls:PanoramaItem Header="search">
 				<StackPanel Orientation="Vertical">
 					<TextBox Text="{Binding Search, Mode=TwoWay}" KeyUp="EnterPressed" />
-					<ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResults}">
+					<ListBox x:Name="SearchResults" ItemsSource="{Binding SearchResult.Repositories}">
 						<ListBox.ItemTemplate>
 							<DataTemplate>
 								<StackPanel Orientation="Vertical">
-									<TextBlock FontSize="26" Text="{Binding Name}" />
+									<TextBlock FontSize="26" Text="{Binding Fullname}" />
 								</StackPanel>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 						<Interactivity:Interaction.Triggers>
 							<Interactivity:EventTrigger EventName="Tap">
-								<Command:EventToCommand Command="{Binding ResultSelectedCommand}" CommandParameter="{Binding SelectedItem, ElementName=SearchResults}" />
+								<Command:EventToCommand Command="{Binding SearchedRepoSelectedCommand}" CommandParameter="{Binding SelectedItem, ElementName=SearchResults}" />
 							</Interactivity:EventTrigger>
 						</Interactivity:Interaction.Triggers>
 					</ListBox>
 				</StackPanel>
-			</controls:PanoramaItem>
-			<controls:PanoramaItem Header="explore">
-				<ScrollViewer>
-					<StackPanel Orientation="Vertical">
-						<TextBlock Text="Featured Repos" FontSize="30" />
-						<ListBox x:Name="FeaturedRepos" ItemsSource="{Binding FeaturedRepos}"
-							ScrollViewer.VerticalScrollBarVisibility="Disabled">
-							<ListBox.ItemTemplate>
-								<DataTemplate>
-									<StackPanel Orientation="Vertical">
-										<TextBlock FontSize="26" Text="{Binding Fullname}" TextWrapping="Wrap" />
-										<TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
-									</StackPanel>
-								</DataTemplate>
-							</ListBox.ItemTemplate>
-							<Interactivity:Interaction.Triggers>
-								<Interactivity:EventTrigger EventName="Tap">
-									<Command:EventToCommand Command="{Binding FeaturedRepoSelectedCommand}"
-										CommandParameter="{Binding SelectedItem, ElementName=FeaturedRepos}" />
-								</Interactivity:EventTrigger>
-							</Interactivity:Interaction.Triggers>
-						</ListBox>
-					</StackPanel>
-				</ScrollViewer>
 			</controls:PanoramaItem>
 		</controls:Panorama>
 	</Grid>

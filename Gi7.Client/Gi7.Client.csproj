@@ -93,6 +93,7 @@
     <Compile Include="Model\Event\PushEvent.cs" />
     <Compile Include="Model\Event\TeamAddEvent.cs" />
     <Compile Include="Model\Event\WatchEvent.cs" />
+    <Compile Include="Model\Extra\SearchedRepository.cs" />
     <Compile Include="Model\Extra\SearchResult.cs" />
     <Compile Include="Model\Gist.cs" />
     <Compile Include="Model\Comment.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Model\Event\ForkApplyEvent.cs" />
     <Compile Include="Model\Event\ForkEvent.cs" />
     <Compile Include="Model\Event\GistEvent.cs" />
-    <Compile Include="Model\Extra\FeaturedRepo.cs" />
     <Compile Include="Model\Extra\PushGroup.cs" />
     <Compile Include="Model\File.cs" />
     <Compile Include="Model\Issue.cs" />
@@ -144,7 +144,6 @@
     <Compile Include="Request\Repository\RepositoryWatchersRequest.cs" />
     <Compile Include="Request\Event\UserReceivedEventsRequest.cs" />
     <Compile Include="Request\Event\UserEventsRequests.cs" />
-    <Compile Include="Request\FeaturedRepoRequest.cs" />
     <Compile Include="Request\User\UserFollowersRequest.cs" />
     <Compile Include="Request\User\UserFollowingRequest.cs" />
     <Compile Include="Request\Issue\IssueCommentsRequest.cs" />
@@ -158,7 +157,6 @@
     <Compile Include="Request\Repository\RepositoriesWatchedRequest.cs" />
     <Compile Include="Utils\EventDeserializer.cs" />
     <Compile Include="Utils\Extensions.cs" />
-    <Compile Include="Utils\FeaturedRepoDeserializer.cs" />
     <Compile Include="Utils\UserDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>

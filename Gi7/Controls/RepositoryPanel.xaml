@@ -8,7 +8,7 @@
              FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
              Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="480" d:DesignWidth="480">
     <ScrollViewer>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="12,0,12,0">
             <Border BorderThickness="0,0,0,2" BorderBrush="Gainsboro">
                 <TextBlock Text="Watched Repos" FontSize="48" Foreground="{StaticResource PhoneAccentBrush}" />
             </Border>

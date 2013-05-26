@@ -8,6 +8,7 @@ using Gi7.Client.Model;
 using Gi7.Client.Model.Event;
 using Gi7.Client.Model.Extra;
 using Gi7.Client.Request;
+using Gi7.Client.Request.Organization;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
 using Microsoft.Phone.Controls;
@@ -30,6 +31,8 @@ namespace Gi7.ViewModel
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
             _githubService = githubService;
+
+            Organizations = new ObservableCollection<Organization>();
 
             // commands
             RepoSelectedCommand = new RelayCommand<Repository>(r => OnRepoSelected(navigationService, r));
@@ -240,10 +243,20 @@ namespace Gi7.ViewModel
                     break;
                 case "profile":
                     if (User == null)
-                        User = _githubService.Load(new UserRequest(_githubService.Username), u => User = u);
+                        User = _githubService.Load(new UserRequest(_githubService.Username), u =>
+                        {
+                            User = u;
+                            _githubService.Load(new UserOrganizationRequest(_githubService.Username), organizations =>
+                            {
+                                foreach (var organization in organizations)
+                                    Organizations.Add(organization);
+                            });
+                        });
                     break;
             }
         }
+
+        public ObservableCollection<Organization> Organizations { get; set; }
 
         private void Login()
         {

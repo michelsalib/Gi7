@@ -113,6 +113,7 @@
     <Compile Include="Model\File.cs" />
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\GitHubFile.cs" />
+    <Compile Include="Model\Organization.cs" />
     <Compile Include="Model\PullRequest.cs" />
     <Compile Include="Model\Push.cs" />
     <Compile Include="Model\PushStats.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Request\Commit\CommentCommitRequest.cs" />
     <Compile Include="Request\Issue\IssueCommentRequest.cs" />
     <Compile Include="Request\Issue\CreateIssueRequest.cs" />
+    <Compile Include="Request\Organization\UserOrganizationRequest.cs" />
     <Compile Include="Request\PullRequest\CreatePullRequestCommentsRequest.cs" />
     <Compile Include="Request\Repository\RepositoriesRequest.cs" />
     <Compile Include="Request\Repository\RepositoryBranchesRequest.cs" />

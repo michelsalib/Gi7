@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              mc:Ignorable="d"
              FontFamily="{StaticResource PhoneFontFamilyNormal}"
              FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -83,6 +84,23 @@
                     <TextBlock Text="following" />
                 </StackPanel>
             </Grid>
+        </ListBoxItem>
+        <ListBoxItem>
+            <ListBox ItemsSource="{Binding Organizations}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Image Source="{Binding Avatar}"></Image>
+                            <TextBlock Text="{Binding Login}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </ListBoxItem>
         <ListBoxItem HorizontalAlignment="Right">
             <HyperlinkButton Content="See on github" NavigateUri="{Binding User.HtmlUrl}" Grid.Row="11"

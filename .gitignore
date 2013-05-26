@@ -146,3 +146,6 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+# Sux Crap
+*.sln.ide/

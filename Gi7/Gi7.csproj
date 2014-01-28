@@ -399,7 +399,8 @@
   -->
   <ProjectExtensions />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release xcopy /y "$(TargetDir)Gi7.xap" "$(SolutionDir)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\WindowsPhone\v8.0\Microsoft.Expression.Blend.WindowsPhone.targets" />

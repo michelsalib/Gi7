@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-  <DefaultLanguage xmlns="" code="" />
+  <DefaultLanguage xmlns="" code="en" />
   <App xmlns="" ProductID="{1ddea9f1-f005-4bac-9f49-f5a416cc3dac}" Title="Gi7" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Gi7 author" Description="Sample description" Publisher="Gi7" PublisherID="{828fd8ed-e308-4e33-8353-c5c5e876eb7c}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>

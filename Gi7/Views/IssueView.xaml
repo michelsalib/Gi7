@@ -21,8 +21,8 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="39" />
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
@@ -46,24 +46,24 @@
                 <TextBlock Text="Comments" Margin="0,15,0,10" />
                 <paginated:CommentListBox ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                           Request="{Binding CommentsRequest}" ItemsSource="{Binding CommentsRequest.Result}">
-                    <ListBox.ItemTemplate>
+                    <paginated:CommentListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Width="440" Margin="0,0,0,20">
-                                <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                        HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <Image Source="{Binding User.AvatarUrl, ConverterParameter=70, Converter={StaticResource GravatarSizeConverter}}" Width="70" Height="70"
+                        			HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                        			VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                                 <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-                                            HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                        			HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
                                 <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                            Margin="80,25,0,0" TextWrapping="Wrap" />
+                        			Margin="80,25,0,0" TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
+                    </paginated:CommentListBox.ItemTemplate>
                 </paginated:CommentListBox>
             </StackPanel>
         </ScrollViewer>
-        <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp"  MaxHeight="210" />
+        <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp"  MaxHeight="210" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" />
     </Grid>
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar>

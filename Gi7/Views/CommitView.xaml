@@ -61,7 +61,7 @@
                                 <DataTemplate>
                                     <toolkit:ExpanderView>
                                         <toolkit:ExpanderView.Header>
-                                             <TextBlock Text="{Binding File.Filename}" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding File.Filename}" FontWeight="Bold" />
                                         </toolkit:ExpanderView.Header>
                                         <toolkit:ExpanderView.Expander>
                                             <RichTextBox>
@@ -94,8 +94,8 @@
             <controls:PivotItem Header="comments">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="460"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="443"/>
+                        <RowDefinition Height="Auto" MinHeight="89"/>
                     </Grid.RowDefinitions>
                     <paginated:CommentListBox Grid.Row="0" Request="{Binding CommentsRequest}">
                         <ListBox.ItemTemplate>
@@ -113,7 +113,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </paginated:CommentListBox>
-                    <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp" Grid.Row="1" MaxHeight="210" />
+                    <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp" Grid.Row="1" MaxHeight="210" VerticalAlignment="Top" />
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>

@@ -43,5 +43,5 @@ The small dependencies are already packaged into the solution.
 - You must have ![Visual Studio 2013](http://www.visualstudio.com/) and the ![Windows Phone 8.1 SDK](https://dev.windows.com/en-us/develop/download-phone-sdk) installed
 - It uses MVVM Light Toolkit for Windows Phone 7.1 (Beta)
 - It uses the RestSharp library
-- It uses the bindable application bar (http://bindableapplicationb.codeplex.com/)
+- It uses the ![BindableApplicationBar](http://bindableapplicationb.codeplex.com/)
 

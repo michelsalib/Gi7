@@ -1,4 +1,4 @@
-This is an unofficial GitHub app designed Windows Phone 7, and is currently still under development.
+This is an unofficial GitHub app designed Windows Phone 7, and is still under development.
 
 *Feel free to participate, comment, report bug or ask for new functionnalities.* Also I am not a very good UI designer, so any help is much apreciated.
 

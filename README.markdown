@@ -1,4 +1,4 @@
-This is a github app for windows phone 7 in stage of development.
+This is an unofficial GitHub app designed Windows Phone 7, and is currently still under development.
 
 *Feel free to participate, comment, report bug or ask for new functionnalities.* Also I am not a very good UI designer, so any help is much apreciated.
 
@@ -40,8 +40,8 @@ This is a github app for windows phone 7 in stage of development.
 ## Dependencies
 The small dependencies are already packaged into the solution.
 
-- You must have the mango beta release installed on your phone and the correponding development tools
-- It uses MVVM Light Toolkit for windows phone 7.1 (beta)
-- It uses RestSharp library
-- It uses bindable application bar (http://bindableapplicationb.codeplex.com/)
+- You must have ![Visual Studio 2013](http://www.visualstudio.com/) and the ![Windows Phone 8.1 SDK](https://dev.windows.com/en-us/develop/download-phone-sdk) installed
+- It uses MVVM Light Toolkit for Windows Phone 7.1 (Beta)
+- It uses the RestSharp library
+- It uses the bindable application bar (http://bindableapplicationb.codeplex.com/)
 

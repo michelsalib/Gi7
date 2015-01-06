@@ -103,7 +103,7 @@
             </ListBox>
         </ListBoxItem>
         <ListBoxItem HorizontalAlignment="Right">
-            <HyperlinkButton Content="See on github" NavigateUri="{Binding User.HtmlUrl}" Grid.Row="11"
+            <HyperlinkButton Content="See on GitHub" NavigateUri="{Binding User.HtmlUrl}" Grid.Row="11"
                     TargetName="_blank" />
         </ListBoxItem>
     </ListBox>

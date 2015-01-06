@@ -86,21 +86,26 @@
             </Grid>
         </ListBoxItem>
         <ListBoxItem>
-            <ListBox ItemsSource="{Binding Organizations}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <toolkit:WrapPanel/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Image Source="{Binding Avatar}"></Image>
-                            <TextBlock Text="{Binding Login}"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <Grid>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Organizations:"  />
+                    <ListBox ItemsSource="{Binding Organizations}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Image Source="{Binding Avatar}"></Image>
+                                        <TextBlock Text="{Binding Login}"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
         </ListBoxItem>
         <ListBoxItem HorizontalAlignment="Right">
             <HyperlinkButton Content="See on GitHub" NavigateUri="{Binding User.HtmlUrl}" Grid.Row="11"

@@ -24,11 +24,15 @@ namespace Gi7.Client.Model
         public int PublicRepos { get; set; }
         public int TotalPrivateRepos { get; set; }
 
+        [JsonProperty("avatar_url")]
         public string AvatarUrl
         {
             get { return _avatarUrl; }
             set
             {
+                // Used to determine if there is something with wrong with the link used to get the users avatar
+                //_avatarUrl = string.Format("https://avatars.githubusercontent.com/u/{0}", value); 
+
                 // trim GET parameters
                 _avatarUrl = new string(value.TakeWhile(c => c != '?').ToArray());
             }

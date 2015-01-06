@@ -2,12 +2,16 @@ This is an unofficial GitHub app designed Windows Phone 7, and is still under de
 
 ## Primary Developers
 ![michelsalib](https://github.com/michelsalib)
+
 ![AlbertoMonteiro](https://github.com/AlbertoMonteiro)
 
-## Contributors ()
+## Contributors
 ![Zeromax](https://github.com/Zeromax)
+
 ![NPadrutt](https://github.com/NPadrutt)
+
 ![jonnybest](https://github.com/jonnybest)
+
 ![RandomlyKnighted](https://github.com/RandomlyKnighted)
 
 

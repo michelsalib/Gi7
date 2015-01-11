@@ -2,18 +2,27 @@ This is an unofficial GitHub app designed Windows Phone 7, and is still under de
 
 ## Primary Developers
 ![michelsalib](https://github.com/michelsalib)
+
 ![AlbertoMonteiro](https://github.com/AlbertoMonteiro)
 
-## Contributors ()
+## Contributors
 ![Zeromax](https://github.com/Zeromax)
+
 ![NPadrutt](https://github.com/NPadrutt)
+
 ![jonnybest](https://github.com/jonnybest)
+
 ![RandomlyKnighted](https://github.com/RandomlyKnighted)
 
 
 *Feel free to participate, comment, report bug or ask for new functionnalities.* Also I am not a very good UI designer, so any help is much apreciated.
 
-## Features
+### Version 1.1
+- Changed login UI to match GitHub website
+- Changed organizations list in the profile view to vertical orientation
+
+
+### Version 1.0
 - Login into an existing account
 - Display news feeds
 - Display watched/owned repos

@@ -1,8 +1,28 @@
-This is a github app for windows phone 7 in stage of development.
+This is an unofficial GitHub app designed Windows Phone 7, and is still under development.
+
+## Primary Developers
+![michelsalib](https://github.com/michelsalib)
+
+![AlbertoMonteiro](https://github.com/AlbertoMonteiro)
+
+## Contributors
+![Zeromax](https://github.com/Zeromax)
+
+![NPadrutt](https://github.com/NPadrutt)
+
+![jonnybest](https://github.com/jonnybest)
+
+![RandomlyKnighted](https://github.com/RandomlyKnighted)
+
 
 *Feel free to participate, comment, report bug or ask for new functionnalities.* Also I am not a very good UI designer, so any help is much apreciated.
 
-## Features
+### Version 1.1
+- Changed login UI to match GitHub website
+- Changed organizations list in the profile view to vertical orientation
+
+
+### Version 1.0
 - Login into an existing account
 - Display news feeds
 - Display watched/owned repos
@@ -40,8 +60,8 @@ This is a github app for windows phone 7 in stage of development.
 ## Dependencies
 The small dependencies are already packaged into the solution.
 
-- You must have the mango beta release installed on your phone and the correponding development tools
-- It uses MVVM Light Toolkit for windows phone 7.1 (beta)
-- It uses RestSharp library
-- It uses bindable application bar (http://bindableapplicationb.codeplex.com/)
+- You must have ![Visual Studio 2013](http://www.visualstudio.com/) and the ![Windows Phone 8.1 SDK](https://dev.windows.com/en-us/develop/download-phone-sdk) installed
+- It uses MVVM Light Toolkit for Windows Phone 7.1 (Beta)
+- It uses the RestSharp library
+- It uses the ![BindableApplicationBar](http://bindableapplicationb.codeplex.com/)
 

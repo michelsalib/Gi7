@@ -14,6 +14,10 @@ namespace Gi7.ViewModel
         private Repository _Gi7;
         private User _albertomonteiro;
         private User _michelsalib;
+        private User _zeromax;
+        private User _npadrutt;
+        private User _jonnybest;
+        private User _randomlyknighted;
 
         public AboutViewModel(GithubService githubService, INavigationService navigationService)
         {

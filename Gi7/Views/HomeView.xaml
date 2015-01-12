@@ -60,7 +60,7 @@
                     </interactivity:Interaction.Triggers>
                 </lists:RepositoryListBox>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="watched reps"
+            <controls:PanoramaItem Header="watched repos"
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <lists:RepositoryListBox x:Name="WatchedRepos" 
                              ItemContainerStyle="{StaticResource StrechListBoxItem}"

@@ -7,7 +7,7 @@
              DataContext="{Binding Path=LoginPanelViewModel, Source={StaticResource ViewModelLocator}}">
 
     <StackPanel Orientation="Vertical" Margin="12,0,12,0">
-        <TextBlock Text="Email" />
+        <TextBlock Text="Username or Email" />
         <TextBox Text="{Binding Email, Mode=TwoWay}" InputScope="EmailUserName" />
         <TextBlock Text="Password" />
         <PasswordBox Password="{Binding Password, Mode=TwoWay}" />

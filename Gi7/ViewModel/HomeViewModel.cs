@@ -229,7 +229,7 @@ namespace Gi7.ViewModel
                     if (OwnedRepositoriesRequest == null)
                         OwnedRepositoriesRequest = new RepositoriesRequest();
                     break;
-                case "watched reps":
+                case "watched repos":
                 if (WatchedRepositoriesRequest == null)
                     WatchedRepositoriesRequest = new RepositoriesWatchedRequest(_githubService.Username);
                 break;

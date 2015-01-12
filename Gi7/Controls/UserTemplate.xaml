@@ -5,7 +5,7 @@
     xmlns:templates="clr-namespace:Gi7.Controls.Templates">
     <!-- Resource dictionary entries should be defined here. -->
     <DataTemplate x:Key="UserTemplate">
-        <toolkit:HubTile Source="{Binding AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=175}" Margin="3" Size="Small" />
+        <toolkit:HubTile Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=175}" Margin="3" Size="Small" />
     </DataTemplate>
     <ItemsPanelTemplate x:Key="UserTemplateFormat">
         <toolkit:WrapPanel Orientation="Horizontal" />

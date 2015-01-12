@@ -37,7 +37,7 @@
         <StackPanel Grid.Row="2" Margin="12,0,12,0" VerticalAlignment="Top" Height="278">
             <TextBlock TextWrapping="Wrap">
                 <Run
-                    Text="This app is brought to you by Michel Salib. Its source code is free and hosted on Github. Feel free to follow and contribute to the repo." />
+                    Text="This app is brought to you by Michel Salib. Its source code is free and hosted on GitHub. Feel free to follow and contribute to the repo." />
             </TextBlock>
             <Button Command="{Binding UserSelectedCommand}"
                     CommandParameter="{Binding Michelsalib}" Padding="0" BorderThickness="0" HorizontalAlignment="Left">

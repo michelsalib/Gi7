@@ -234,7 +234,7 @@ namespace Gi7.ViewModel
                     if (RepositoriesRequest == null)
                         RepositoriesRequest = new RepositoriesRequest(Username);
                     break;
-                case "watched reps":
+                case "watched repos":
                     if (RepositoriesWatchedRequest == null)
                         RepositoriesWatchedRequest = new RepositoriesWatchedRequest(Username);
                     break;

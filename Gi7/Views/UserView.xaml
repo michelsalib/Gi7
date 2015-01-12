@@ -55,7 +55,7 @@
                     </interactivity:Interaction.Triggers>
                 </lists:RepositoryListBox>
             </controls:PivotItem>
-            <controls:PivotItem Header="watched reps">
+            <controls:PivotItem Header="watched repos">
                 <lists:RepositoryListBox x:Name="WatchedRepos" 
                                          ItemContainerStyle="{StaticResource StrechListBoxItem}"
                                          ItemTemplate="{StaticResource RepositoryItemList}"

@@ -93,7 +93,7 @@ namespace Gi7
                 System.Diagnostics.Debugger.Break();
             }
 
-            MessageBox.Show(e.ToString() + e.ExceptionObject.Message);
+            MessageBox.Show(e + e.ExceptionObject.Message);
         }
 
         #region Phone application initialization

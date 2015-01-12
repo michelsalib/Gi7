@@ -8,6 +8,11 @@ namespace Gi7.Client.Request
 {
     public class UserRequest : SingleRequest<User>
     {
+        public UserRequest()
+        {
+            Uri = "/user";
+        }
+
         public UserRequest(string username)
         {
             Uri = String.Format("/users/{0}", username);

@@ -309,7 +309,9 @@ namespace Gi7.ViewModel
         {
             if (issue)
             {
-                var destination = issue.PullRequest.HtmlUrl == null ? ViewModelLocator.ISSUE_URL : ViewModelLocator.PULL_REQUEST_URL;
+                var destination = (issue.PullRequest == null || issue.PullRequest.HtmlUrl == null)
+                    ? ViewModelLocator.ISSUE_URL
+                    : ViewModelLocator.PULL_REQUEST_URL;
                 navigationService.NavigateTo(string.Format(destination, Repository.Owner.Login, Repository.Name, issue.Number));
             }
         }

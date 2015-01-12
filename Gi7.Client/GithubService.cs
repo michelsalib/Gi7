@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
 using Gi7.Client.Model;
+using Gi7.Client.Request;
 using Gi7.Client.Request.Base;
 using RestSharp;
 
@@ -42,7 +43,6 @@ namespace Gi7.Client
                 IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
             {
                 AuthenticateUser(username, password);
-                IsAuthenticated = true;
             }
             else
             {
@@ -60,9 +60,10 @@ namespace Gi7.Client
         {
             Username = username;
             _password = password;
-            var client = _createClient();
 
-            client.ExecuteAsync<User>(new RestRequest("/user"), r =>
+            var request = new UserRequest();
+
+            Load(request, r =>
             {
                 // set storage
                 IsolatedStorageSettings.ApplicationSettings["username"] = username;

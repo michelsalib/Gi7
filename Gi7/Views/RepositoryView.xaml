@@ -203,7 +203,7 @@
                                         <TextBlock Grid.Column="1" Grid.Row="2" Text=" comments" TextAlignment="Left" Margin="25,0,0,0" />
                                     </Grid>
                                 </StackPanel>
-                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" Height="60" TextTrimming="WordEllipsis"   />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

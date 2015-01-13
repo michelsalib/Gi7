@@ -1,8 +1,8 @@
 ﻿using System;
+using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 using Newtonsoft.Json;
 using RestSharp;
-using Issue = Gi7.Client.Model.Issue;
 
 namespace Gi7.Client.Request
 {

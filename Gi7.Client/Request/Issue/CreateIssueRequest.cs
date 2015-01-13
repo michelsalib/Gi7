@@ -1,12 +1,11 @@
 ﻿using System;
-using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Issue
 {
-    public class CreateIssueRequest : SingleRequest<Issue>
+    public class CreateIssueRequest : SingleRequest<Model.Issue>
     {
         private readonly AddData addData;
 

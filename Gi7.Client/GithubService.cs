@@ -3,6 +3,7 @@ using System.IO.IsolatedStorage;
 using Gi7.Client.Model;
 using Gi7.Client.Request;
 using Gi7.Client.Request.Base;
+using Octokit;
 using RestSharp;
 
 namespace Gi7.Client
@@ -12,6 +13,13 @@ namespace Gi7.Client
         private bool _isAuthenticated;
         private String _password;
         public String Username { get; private set; }
+
+        private Connection connection;
+
+        public ApiConnection GitConnection
+        {
+            get { return new ApiConnection(connection);}
+        }
 
         public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
         public event EventHandler<LoadingEventArgs> Loading;
@@ -68,6 +76,11 @@ namespace Gi7.Client
                 // set storage
                 IsolatedStorageSettings.ApplicationSettings["username"] = username;
                 IsolatedStorageSettings.ApplicationSettings["password"] = password;
+
+                connection = new Connection(new ProductHeaderValue("Gi7"))
+                {
+                    Credentials = new Credentials(username, password)
+                };
 
                 IsAuthenticated = true;
             });

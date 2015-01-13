@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Command;
 using Gi7.Client;
 using Gi7.Client.Model;
 using Gi7.Client.Request;
+using Gi7.Client.Request.Issue;
 using Gi7.Service.Navigation;
 using Microsoft.Phone.Tasks;
 

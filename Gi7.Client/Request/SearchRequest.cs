@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Net;
 using Gi7.Client.Model.Extra;
 using Gi7.Client.Request.Base;
-using HtmlAgilityPack;
-using RestSharp;
-using Gi7.Client.Model;
 
 namespace Gi7.Client.Request
 {

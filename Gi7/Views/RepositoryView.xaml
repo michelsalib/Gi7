@@ -8,8 +8,8 @@
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:templates="clr-namespace:Gi7.Controls"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                            xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
                             xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
                             xmlns:gi7="clr-namespace:Gi7"
@@ -32,11 +32,11 @@
         </Grid>
         <!--Pivot Control-->
         <controls:Pivot Grid.Row="1" x:Name="Pivot" Tap="Pivot_Tap">
-            <Interactivity:Interaction.Triggers>
-                <Interactivity:EventTrigger EventName="SelectionChanged">
-                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
-                </Interactivity:EventTrigger>
-            </Interactivity:Interaction.Triggers>
+            <interactivity:Interaction.Triggers>
+                <interactivity:EventTrigger EventName="SelectionChanged">
+                    <command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+                </interactivity:EventTrigger>
+            </interactivity:Interaction.Triggers>
             <!--Pivot item one-->
             <controls:PivotItem Header="details">
                 <ScrollViewer>
@@ -127,11 +127,11 @@
                                                            FontStyle="Italic" Foreground="Gray" />
                                                 <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}"
                                                            HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" TextOptions.TextHintingMode="Animated"  TextTrimming="WordEllipsis" />
-                                                <Interactivity:Interaction.Triggers>
-                                                    <Interactivity:EventTrigger EventName="Tap">
-                                                        <Command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
-                                                    </Interactivity:EventTrigger>
-                                                </Interactivity:Interaction.Triggers>
+                                                <interactivity:Interaction.Triggers>
+                                                    <interactivity:EventTrigger EventName="Tap">
+                                                        <command:EventToCommand Command="{Binding DataContext.CommitSelectedCommand, ElementName=CommitsList}" CommandParameter="{Binding}" />
+                                                    </interactivity:EventTrigger>
+                                                </interactivity:Interaction.Triggers>
                                             </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
@@ -143,12 +143,12 @@
             </controls:PivotItem>
             <controls:PivotItem Header="pull requests">
                 <paginated:PullRequestListBox Request="{Binding PullRequestsRequest}" x:Name="PullRequestsList">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding PullRequestSelectedCommand}"
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="Tap">
+                            <command:EventToCommand Command="{Binding PullRequestSelectedCommand}"
                                                     CommandParameter="{Binding ElementName=PullRequestsList, Path=SelectedItem}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Width="426" Margin="12,0,12,30">
@@ -172,12 +172,12 @@
             </controls:PivotItem>
             <controls:PivotItem Header="issues">
                 <paginated:IssueListBox Request="{Binding IssuesRequest}" x:Name="IssuesList">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding IssueSelectedCommand}"
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="Tap">
+                            <command:EventToCommand Command="{Binding IssueSelectedCommand}"
                                       CommandParameter="{Binding ElementName=IssuesList, Path=SelectedItem}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Width="426" Margin="12,0,12,30">
@@ -212,23 +212,23 @@
             <controls:PivotItem Header="collaborators">
                 <paginated:UserListBox Request="{Binding CollaboratorRequest}" x:Name="CollaboratorList"
                                        ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding UserCommand}"
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="Tap">
+                            <command:EventToCommand Command="{Binding UserCommand}"
                                                     CommandParameter="{Binding ElementName=CollaboratorList, Path=SelectedItem}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
                 </paginated:UserListBox>
             </controls:PivotItem>
             <controls:PivotItem Header="watchers">
                 <paginated:UserListBox Request="{Binding WatchersRequest}" x:Name="WatcherList"
                                        ItemTemplate="{StaticResource UserTemplate}" ItemsPanel="{StaticResource UserTemplateFormat}">
-                    <Interactivity:Interaction.Triggers>
-                        <Interactivity:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding UserCommand}"
+                    <interactivity:Interaction.Triggers>
+                        <interactivity:EventTrigger EventName="Tap">
+                            <command:EventToCommand Command="{Binding UserCommand}"
                                                     CommandParameter="{Binding ElementName=WatcherList, Path=SelectedItem}" />
-                        </Interactivity:EventTrigger>
-                    </Interactivity:Interaction.Triggers>
+                        </interactivity:EventTrigger>
+                    </interactivity:Interaction.Triggers>
                 </paginated:UserListBox>
             </controls:PivotItem>
         </controls:Pivot>

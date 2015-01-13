@@ -1,18 +1,18 @@
 This is an unofficial GitHub app designed for Windows Phone, and is still under development.
 
 ## Primary Developers
-![michelsalib](https://github.com/michelsalib)
+[michelsalib](https://github.com/michelsalib)
 
-![AlbertoMonteiro](https://github.com/AlbertoMonteiro)
+[AlbertoMonteiro](https://github.com/AlbertoMonteiro)
 
 ## Contributors
-![Zeromax](https://github.com/Zeromax)
+[Zeromax](https://github.com/Zeromax)
 
-![NPadrutt](https://github.com/NPadrutt)
+[NPadrutt](https://github.com/NPadrutt)
 
-![jonnybest](https://github.com/jonnybest)
+[jonnybest](https://github.com/jonnybest)
 
-![RandomlyKnighted](https://github.com/RandomlyKnighted)
+[RandomlyKnighted](https://github.com/RandomlyKnighted)
 
 
 *Feel free to participate, comment, report bug or ask for new functionnalities.* Also I am not a very good UI designer, so any help is much apreciated.

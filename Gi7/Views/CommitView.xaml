@@ -168,7 +168,7 @@
                              MaxHeight="210"
                              TextWrapping="Wrap"
                              InputScope="Text"
-                             VerticalAlignment="Bottom"
+                             VerticalAlignment="Top"
                              Height="72"
                              Margin="0" />
                 </Grid>

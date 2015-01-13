@@ -37,10 +37,24 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Title" Margin="9, 0"/>
-            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp" Grid.Row="1"/>
-            <TextBlock Text="Body" Margin="9, 0" Grid.Row="2"/>
-            <TextBox AcceptsReturn="True" Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="TextKeyUp" Grid.Row="3" />
-            <Button Content="Submit new issue" HorizontalAlignment="Right" Command="{Binding CreateIssueCommand}" Grid.Row="5"/>
+            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                     KeyUp="TextKeyUp"
+                     Grid.Row="1" 
+                     InputScope="Text"
+                     TextWrapping="Wrap" />
+            <TextBlock Text="Body"
+                       Margin="9, 0"
+                       Grid.Row="2" />
+            <TextBox AcceptsReturn="True"
+                     Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                     KeyUp="TextKeyUp"
+                     Grid.Row="3"
+                     TextWrapping="Wrap"
+                     InputScope="Text"/>
+            <Button Content="Submit new issue"
+                    HorizontalAlignment="Right"
+                    Command="{Binding CreateIssueCommand}"
+                    Grid.Row="5" />
         </Grid>
     </Grid>
 

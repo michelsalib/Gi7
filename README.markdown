@@ -1,4 +1,4 @@
-This is an unofficial GitHub app designed Windows Phone 7, and is still under development.
+This is an unofficial GitHub app designed for Windows Phone, and is still under development.
 
 ## Primary Developers
 ![michelsalib](https://github.com/michelsalib)

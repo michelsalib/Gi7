@@ -23,6 +23,10 @@ namespace Gi7.ViewModel
         {
             Michelsalib = githubService.Load(new UserRequest("michelsalib"), u => Michelsalib = u);
             AlbertoMonteiro = githubService.Load(new UserRequest("albertomonteiro"), u => AlbertoMonteiro = u);
+            Zeromax = githubService.Load(new UserRequest("Zeromax"), u => Zeromax = u);
+            NPadrutt = githubService.Load(new UserRequest("NPadrutt"), u => NPadrutt = u);
+            Jonnybest = githubService.Load(new UserRequest("jonnybest"), u => Jonnybest = u);
+            RandomlyKnighted = githubService.Load(new UserRequest("RandomlyKnighted"), u => RandomlyKnighted = u);
             Gi7 = githubService.Load(new RepositoryRequest("michelsalib", "Gi7"), r => Gi7 = r);
 
             RepoSelectedCommand = new RelayCommand<Repository>(r =>
@@ -72,6 +76,57 @@ namespace Gi7.ViewModel
                 {
                     _albertomonteiro = value;
                     RaisePropertyChanged("AlbertoMonteiro");
+                }
+            }
+        }
+
+        public User Zeromax
+        {
+            get { return _zeromax; }
+            set
+            {
+                if (_zeromax != value)
+                {
+                    _zeromax = value;
+                    RaisePropertyChanged("Zeromax");
+                }
+            }
+        }
+
+        public User NPadrutt
+        {
+            get { return _npadrutt; }
+            set
+            {
+                if (_npadrutt != value)
+                {
+                    _npadrutt = value;
+                    RaisePropertyChanged("NPadrutt");
+                }
+            }
+        }
+
+        public User Jonnybest
+        {
+            get { return _jonnybest; }
+            set
+            {
+                if (_jonnybest != value)
+                {
+                    _jonnybest = value;
+                    RaisePropertyChanged("Jonnybest");
+                }
+            }
+        }
+        public User RandomlyKnighted
+        {
+            get { return _randomlyknighted; }
+            set
+            {
+                if (_randomlyknighted != value)
+                {
+                    _randomlyknighted = value;
+                    RaisePropertyChanged("RandomlyKnighted");
                 }
             }
         }

@@ -34,7 +34,7 @@
         <!--TitlePanel contains the name of the application and page title-->
 
         <!--ContentPanel - place additional content here-->
-        <StackPanel Grid.Row="2" Margin="12,0,12,0" VerticalAlignment="Top" Height="278">
+        <StackPanel Grid.Row="2" Margin="12,0,12,162">
             <TextBlock TextWrapping="Wrap">
                 <Run
                     Text="This app is brought to you by Michel Salib. Its source code is free and hosted on GitHub. Feel free to follow and contribute to the repo." />
@@ -55,6 +55,42 @@
                         Source="{Binding AlbertoMonteiro.AvatarUrl, ConverterParameter=34, Converter={StaticResource GravatarSizeConverter}}"
                         Width="34" Height="34" />
                     <TextBlock Text="{Binding AlbertoMonteiro.Login}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
+                    CommandParameter="{Binding Zeromax}" Padding="0" BorderThickness="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Source="{Binding Zeromax.AvatarUrl, ConverterParameter=34, Converter={StaticResource GravatarSizeConverter}}"
+                        Width="34" Height="34" />
+                    <TextBlock Text="{Binding Zeromax.Login}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
+                    CommandParameter="{Binding NPadrutt}" Padding="0" BorderThickness="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Source="{Binding NPadrutt.AvatarUrl, ConverterParameter=34, Converter={StaticResource GravatarSizeConverter}}"
+                        Width="34" Height="34" />
+                    <TextBlock Text="{Binding NPadrutt.Login}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
+                    CommandParameter="{Binding Jonnybest}" Padding="0" BorderThickness="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Source="{Binding Jonnybest.AvatarUrl, ConverterParameter=34, Converter={StaticResource GravatarSizeConverter}}"
+                        Width="34" Height="34" />
+                    <TextBlock Text="{Binding Jonnybest.Login}" Margin="10,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button HorizontalAlignment="Left" Command="{Binding UserSelectedCommand}"
+                    CommandParameter="{Binding RandomlyKnighted}" Padding="0" BorderThickness="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Source="{Binding RandomlyKnighted.AvatarUrl, ConverterParameter=34, Converter={StaticResource GravatarSizeConverter}}"
+                        Width="34" Height="34" />
+                    <TextBlock Text="{Binding RandomlyKnighted.Login}" Margin="10,0,0,0" />
                 </StackPanel>
             </Button>
             <Button HorizontalAlignment="Left" Command="{Binding RepoSelectedCommand}"

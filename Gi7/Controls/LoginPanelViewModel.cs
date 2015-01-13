@@ -11,9 +11,17 @@ namespace Gi7.Controls
 
         private String _password;
 
+        private readonly GithubService _githubService;
+
         public LoginPanelViewModel(GithubService githubService)
         {
-            LoginCommand = new RelayCommand(() => { githubService.AuthenticateUser(Email, Password); });
+            _githubService = githubService;
+            LoginCommand = new RelayCommand(LogIn);
+        }
+
+        private void LogIn()
+        {
+            _githubService.AuthenticateUser(Email, Password);
         }
 
         public String Email
@@ -24,7 +32,7 @@ namespace Gi7.Controls
                 if (_email != value)
                 {
                     _email = value;
-                    RaisePropertyChanged("Email");
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -37,7 +45,7 @@ namespace Gi7.Controls
                 if (_password != value)
                 {
                     _password = value;
-                    RaisePropertyChanged("Password");
+                    RaisePropertyChanged();
                 }
             }
         }

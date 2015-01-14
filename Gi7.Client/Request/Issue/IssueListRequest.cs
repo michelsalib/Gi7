@@ -1,10 +1,9 @@
 ﻿using System;
-using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Issue
 {
-    public class IssueListRequest : PaginatedRequest<Issue>
+    public class IssueListRequest : PaginatedRequest<Model.Issue>
     {
         public IssueListRequest(string username, string repo)
         {

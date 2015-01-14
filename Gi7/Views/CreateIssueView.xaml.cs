@@ -1,9 +1,8 @@
-﻿using Microsoft.Phone.Controls;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Gi7.Views
 {
-    public partial class CreateIssueView : PhoneApplicationPage
+    public partial class CreateIssueView
     {
         public CreateIssueView()
         {

@@ -6,8 +6,8 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-                            xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                            xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:paginated="clr-namespace:Gi7.Controls.PaginatedListBox"
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
@@ -29,19 +29,19 @@
             <gi7:Header></gi7:Header>
             <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Center"
                        HorizontalAlignment="Right">
-                <Interactivity:Interaction.Triggers>
-                    <Interactivity:EventTrigger EventName="Tap">
-                        <Command:EventToCommand Command="{Binding RepoSelectedCommand}" />
-                    </Interactivity:EventTrigger>
-                </Interactivity:Interaction.Triggers>
+                <interactivity:Interaction.Triggers>
+                    <interactivity:EventTrigger EventName="Tap">
+                        <command:EventToCommand Command="{Binding RepoSelectedCommand}" />
+                    </interactivity:EventTrigger>
+                </interactivity:Interaction.Triggers>
             </TextBlock>
         </Grid>
         <controls:Pivot Grid.Row="1">
-            <Interactivity:Interaction.Triggers>
-                <Interactivity:EventTrigger EventName="SelectionChanged">
-                    <Command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
-                </Interactivity:EventTrigger>
-            </Interactivity:Interaction.Triggers>
+            <interactivity:Interaction.Triggers>
+                <interactivity:EventTrigger EventName="SelectionChanged">
+                    <command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+                </interactivity:EventTrigger>
+            </interactivity:Interaction.Triggers>
             <controls:PivotItem Header="commit">
                 <ScrollViewer Grid.Row="1">
                     <StackPanel Margin="12,0,12,0">

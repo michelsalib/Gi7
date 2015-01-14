@@ -1,10 +1,9 @@
 ﻿using System;
-using Gi7.Client.Model;
 using Gi7.Client.Request.Base;
 
-namespace Gi7.Client.Request
+namespace Gi7.Client.Request.Issue
 {
-    public class IssueRequest : SingleRequest<Issue>
+    public class IssueRequest : SingleRequest<Model.Issue>
     {
         public IssueRequest(string username, string repo, string number)
         {

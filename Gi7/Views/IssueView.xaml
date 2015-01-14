@@ -63,7 +63,15 @@
                 </paginated:CommentListBox>
             </StackPanel>
         </ScrollViewer>
-        <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp"  MaxHeight="210" Margin="0" Grid.Row="2" VerticalAlignment="Bottom" />
+        <TextBox AcceptsReturn="True"
+                 Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                 KeyUp="CommentKeyUp"
+                 MaxHeight="210"
+                 Margin="0"
+                 Grid.Row="2"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Bottom"
+                 InputScope="Text" />
     </Grid>
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar>

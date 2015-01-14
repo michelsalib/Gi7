@@ -40,14 +40,20 @@ namespace Gi7.ViewModel
             EventSelectedCommand = new RelayCommand<Event>(e => OnEventSelected(navigationService, e));
             UserSelectedCommand = new RelayCommand<User>(user => OnUserSelected(navigationService, user));
             PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(OnPanoramaChanged);
+            //ProfileCommand = new RelayCommand(() => IsLoggedIn);
             AboutCommand = new RelayCommand(() => OnAbout(navigationService));
             LogoutCommand = new RelayCommand(githubService.Logout, () => IsLoggedIn);
 
             // init
             if (_githubService.IsAuthenticated)
+            {
                 Login();
+            }
+
             else
+            {
                 Logout();
+            }
 
             // listenning to the github service
             githubService.IsAuthenticatedChanged += (s, e) => OnIsAuthenticatedChanged(e);
@@ -61,6 +67,7 @@ namespace Gi7.ViewModel
 
         public RelayCommand LogoutCommand { get; private set; }
         public RelayCommand AboutCommand { get; private set; }
+        public RelayCommand ProfileCommand { get; private set; }
         public RelayCommand<Event> EventSelectedCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
         public RelayCommand<Repository> RepoSelectedCommand { get; private set; }

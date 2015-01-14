@@ -21,6 +21,7 @@
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar Mode="Minimized">
             <bar:BindableApplicationBar.MenuItems>
+                <bar:BindableApplicationBarMenuItem Text="Profile" IsEnabled="{Binding IsLoggedIn}" Command="{Binding ProfileCommand}"/>
                 <bar:BindableApplicationBarMenuItem Text="About" Command="{Binding AboutCommand}"/>
                 <bar:BindableApplicationBarMenuItem Text="Logout" Command="{Binding LogoutCommand}"/>
             </bar:BindableApplicationBar.MenuItems>

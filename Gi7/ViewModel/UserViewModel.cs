@@ -53,6 +53,7 @@ namespace Gi7.ViewModel
         }
 
         public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand ProfileCommand { get; private set; }
         public RelayCommand FollowCommand { get; private set; }
         public RelayCommand UnFollowCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }

@@ -74,15 +74,15 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0">
                     <TextBlock Text="{Binding User.Followers}" HorizontalAlignment="Center" FontSize="40"/>
-                    <TextBlock Text="followers" HorizontalAlignment="Center" />
+                    <TextBlock Text="Followers" HorizontalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding User.PublicRepos}" HorizontalAlignment="Center" FontSize="40"/>
-                    <TextBlock Text="public repos"  />
+                    <TextBlock Text="Public Repos"  />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding User.Following}" HorizontalAlignment="Center" FontSize="40"/>
-                    <TextBlock Text="following" />
+                    <TextBlock Text="Following" />
                 </StackPanel>
             </Grid>
         </ListBoxItem>
@@ -90,7 +90,7 @@
             <Grid>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Organizations:"  />
-                    <ListBox ItemsSource="{Binding User.Organizations}">
+                    <ListBox ItemsSource="{Binding Organizations}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Vertical" />
@@ -99,8 +99,8 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                    <Image Source="{Binding User.Avatar}"></Image>
-                                    <TextBlock Text="{Binding User.Login}"></TextBlock>
+                                    <Image Source="{Binding Avatar}"></Image>
+                                    <TextBlock Text="{Binding Login}"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

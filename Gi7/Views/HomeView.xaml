@@ -56,7 +56,7 @@
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
                             <command:EventToCommand Command="{Binding RepoSelectedCommand}"
-                                        CommandParameter="{Binding SelectedItem, ElementName=Repos}" />
+                                        CommandParameter="{Binding SelectedItem, ElementName=repos}" />
                         </interactivity:EventTrigger>
                     </interactivity:Interaction.Triggers>
                 </lists:RepositoryListBox>

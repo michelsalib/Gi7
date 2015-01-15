@@ -84,6 +84,7 @@ namespace Gi7.ViewModel
                     RaisePropertyChanged("IsLoggedIn");
                     RaisePropertyChanged("IsLoggedOut");
                     LogoutCommand.RaiseCanExecuteChanged();
+                    ProfileCommand.RaiseCanExecuteChanged();
                 }
             }
         }

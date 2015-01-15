@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
-using System.Threading.Tasks;
 using Gi7.Client.Request;
 using Gi7.Client.Request.Base;
 using Octokit;
@@ -10,22 +9,18 @@ namespace Gi7.Client
 {
     public class GithubService
     {
+        private readonly IsolatedStorageSettings isolatedStorageSettings = IsolatedStorageSettings.ApplicationSettings;
         private bool _isAuthenticated;
-        private String _password;
-        public String Username { get; private set; }
+        private string _password;
 
         private Connection connection;
-        private readonly IsolatedStorageSettings isolatedStorageSettings = IsolatedStorageSettings.ApplicationSettings;
+        private GitHubClient gitHubClient;
 
-        public ApiConnection GitConnection
-        {
-            get { return new ApiConnection(connection);}
-        }
+        public string Username { get; private set; }
 
-        public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
-        public event EventHandler<LoadingEventArgs> Loading;
-        public event EventHandler ConnectionError;
-        public event EventHandler Unauthorized;
+        public ApiConnection GitConnection { get { return new ApiConnection(connection); } }
+
+        public GitHubClient GitHubClient { get { return gitHubClient ?? (gitHubClient = new GitHubClient(connection)); } }
 
         public bool IsAuthenticated
         {
@@ -41,12 +36,21 @@ namespace Gi7.Client
             }
         }
 
+        public event EventHandler<AuthenticatedEventArgs> IsAuthenticatedChanged;
+
+        public event EventHandler<LoadingEventArgs> Loading;
+
+        public event EventHandler ConnectionError;
+
+        public event EventHandler Unauthorized;
+
         /// <summary>
-        /// Init will auto-authenticate if a username/password is in isolated storage
+        ///     Init will auto-authenticate if a username/password is in isolated storage
         /// </summary>
         public void Init()
         {
-            string username, password;
+            string username;
+            string password;
             if (isolatedStorageSettings.TryGetValue("username", out username) &&
                 isolatedStorageSettings.TryGetValue("password", out password))
                 AuthenticateUser(username, password);
@@ -54,13 +58,12 @@ namespace Gi7.Client
                 Username = null;
         }
 
-
         /// <summary>
-        /// Tries to authenticate and save the email/password in isolated storage
+        ///     Tries to authenticate and save the email/password in isolated storage
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="username"></param>
         /// <param name="password"></param>
-        public void AuthenticateUser(String username, String password)
+        public void AuthenticateUser(string username, string password)
         {
             Username = username;
             _password = password;
@@ -83,7 +86,7 @@ namespace Gi7.Client
         }
 
         /// <summary>
-        /// Logout and clear the cache
+        ///     Logout and clear the cache
         /// </summary>
         public void Logout()
         {
@@ -101,7 +104,7 @@ namespace Gi7.Client
             // prepare client
             var client = _createClient();
 
-            bindRequest(request);
+            BindRequest(request);
 
             // execute
             request.Execute(client, callback);
@@ -109,34 +112,17 @@ namespace Gi7.Client
             return request.Result;
         }
 
-        public Task<TResult> Load<TResult>(IRequest<TResult> request)
-        {
-            var taskCompletionSource = new TaskCompletionSource<TResult>();
-            // prepare client
-            var client = _createClient();
-
-            bindRequest(request);
-
-            // execute
-            request.Execute(client, taskCompletionSource.SetResult);
-
-            return taskCompletionSource.Task;
-        }
-
-
         private RestClient _createClient()
         {
             var client = new RestClient("https://api.github.com");
 
             if (Username != null && _password != null)
-            {
                 client.Authenticator = new HttpBasicAuthenticator(Username, _password);
-            }
 
             return client;
         }
 
-        private void bindRequest<TResult>(IRequest<TResult> request)
+        private void BindRequest<TResult>(IRequest<TResult> request)
         {
             request.ConnectionError += (s, e) =>
             {

@@ -22,6 +22,7 @@ namespace Gi7.ViewModel
         public const string TREE_URL = "/Views/TreeView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string BLOB_URL = "/Views/BlobView.xaml?user={0}&repo={1}&sha={2}&path={3}";
         public const string ABOUT_URL = "/Views/AboutView.xaml";
+        public const string PROFILE_URL = "/Views/ProfileView.xaml";
         public const string CREATE_ISSUE_URL = "/Views/CreateIssueView.xaml?user={0}&repo={1}";
 
         public ViewModelLocator()
@@ -62,6 +63,14 @@ namespace Gi7.ViewModel
             get
             {
                 return new HomeViewModel(GithubService, NavigationService);
+            }
+        }
+
+        public Object ProfileViewModel
+        {
+            get
+            {
+                return new ProfileViewModel(GithubService);
             }
         }
 

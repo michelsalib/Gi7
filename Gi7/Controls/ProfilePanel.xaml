@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:client="clr-namespace:Gi7.Client.Model;assembly=Gi7.Client"
              xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              mc:Ignorable="d"
              FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -73,15 +74,15 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0">
                     <TextBlock Text="{Binding User.Followers}" HorizontalAlignment="Center" FontSize="40"/>
-                    <TextBlock Text="followers" HorizontalAlignment="Center" />
+                    <TextBlock Text="Followers" HorizontalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding User.PublicRepos}" HorizontalAlignment="Center" FontSize="40"/>
-                    <TextBlock Text="public repos"  />
+                    <TextBlock Text="Public Repos"  />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding User.Following}" HorizontalAlignment="Center" FontSize="40"/>
-                    <TextBlock Text="following" />
+                    <TextBlock Text="Following" />
                 </StackPanel>
             </Grid>
         </ListBoxItem>
@@ -98,8 +99,8 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Image Source="{Binding Avatar}"></Image>
-                                        <TextBlock Text="{Binding Login}"></TextBlock>
+                                    <Image Source="{Binding Avatar}"></Image>
+                                    <TextBlock Text="{Binding Login}"></TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

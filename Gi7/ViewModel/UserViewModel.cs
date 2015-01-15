@@ -55,6 +55,7 @@ namespace Gi7.ViewModel
         }
 
         public RelayCommand ShareCommand { get; private set; }
+        public RelayCommand ProfileCommand { get; private set; }
         public RelayCommand FollowCommand { get; private set; }
         public RelayCommand UnFollowCommand { get; private set; }
         public RelayCommand<User> UserSelectedCommand { get; private set; }
@@ -228,7 +229,7 @@ namespace Gi7.ViewModel
             ShowAppBar = false;
             switch (header)
             {
-                case "feed":
+                case "news":
                     if (EventsRequest == null)
                         EventsRequest = new UserEventsRequests(Username);
                     break;
@@ -248,7 +249,6 @@ namespace Gi7.ViewModel
                     if (FollowingsRequest == null)
                         FollowingsRequest = new UserFollowingRequest(Username);
                     break;
-                case "profile":
                 case "details":
                     if (User == null)
                     {

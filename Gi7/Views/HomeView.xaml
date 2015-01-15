@@ -22,6 +22,7 @@
         <bar:BindableApplicationBar Mode="Minimized">
             <bar:BindableApplicationBar.MenuItems>
                 <bar:BindableApplicationBarMenuItem Text="About" Command="{Binding AboutCommand}"/>
+                <bar:BindableApplicationBarMenuItem Text="Profile" Visibility="{Binding IsLoggedIn}" Command="{Binding ProfileCommand}"/>
                 <bar:BindableApplicationBarMenuItem Text="Logout" Command="{Binding LogoutCommand}"/>
             </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
@@ -42,37 +43,38 @@
                 Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}" Background="#FF0F0F10">
                 <localControls:LoginPanel />
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="news feed"
+            <controls:PanoramaItem Header="news"
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
                 <localControls:EventsPanel />
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="owned repos" 
+            <controls:PanoramaItem Header="repositories" 
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <lists:RepositoryListBox x:Name="OwnedRepos" 
+                <lists:RepositoryListBox x:Name="repos" 
                              ItemContainerStyle="{StaticResource StrechListBoxItem}"
                              ItemTemplate="{StaticResource RepositoryItemList}"
-                             Request="{Binding OwnedRepositoriesRequest}">
+                             Request="{Binding RepositoriesRequest}">
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
                             <command:EventToCommand Command="{Binding RepoSelectedCommand}"
-                                        CommandParameter="{Binding SelectedItem, ElementName=OwnedRepos}" />
+                                        CommandParameter="{Binding SelectedItem, ElementName=repos}" />
                         </interactivity:EventTrigger>
                     </interactivity:Interaction.Triggers>
                 </lists:RepositoryListBox>
             </controls:PanoramaItem>
-            <controls:PanoramaItem Header="watched repos"
+            <controls:PanoramaItem Header="followers"
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <lists:RepositoryListBox x:Name="WatchedRepos" 
-                             ItemContainerStyle="{StaticResource StrechListBoxItem}"
-                             ItemTemplate="{StaticResource RepositoryItemList}"
-                             Request="{Binding WatchedRepositoriesRequest}">
+                <lists:UserListBox x:Name="FollowerList"
+                                   Request="{Binding FollowersRequest}"
+                                   ItemTemplate="{StaticResource UserTemplate}"
+                                   ItemsPanel="{StaticResource UserTemplateFormat}"
+                                   Margin="12,0,12,0">
                     <interactivity:Interaction.Triggers>
                         <interactivity:EventTrigger EventName="Tap">
-                            <command:EventToCommand Command="{Binding RepoSelectedCommand}"
-                                        CommandParameter="{Binding SelectedItem, ElementName=WatchedRepos}" />
+                            <command:EventToCommand Command="{Binding UserSelectedCommand}"
+                                CommandParameter="{Binding SelectedItem, ElementName=FollowerList}" />
                         </interactivity:EventTrigger>
                     </interactivity:Interaction.Triggers>
-                </lists:RepositoryListBox>
+                </lists:UserListBox>
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="following"
                 Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -88,25 +90,6 @@
                         </interactivity:EventTrigger>
                     </interactivity:Interaction.Triggers>
                 </lists:UserListBox>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="follower"
-                Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <lists:UserListBox x:Name="FollowerList"
-                                   Request="{Binding FollowersRequest}"
-                                   ItemTemplate="{StaticResource UserTemplate}"
-                                   ItemsPanel="{StaticResource UserTemplateFormat}"
-                                   Margin="12,0,12,0">
-                    <interactivity:Interaction.Triggers>
-                        <interactivity:EventTrigger EventName="Tap">
-                            <command:EventToCommand Command="{Binding UserSelectedCommand}"
-                                CommandParameter="{Binding SelectedItem, ElementName=FollowerList}" />
-                        </interactivity:EventTrigger>
-                    </interactivity:Interaction.Triggers>
-                </lists:UserListBox>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="profile"
-                Visibility="{Binding IsLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
-                <localControls:ProfilePanel />
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="search">
                 <StackPanel Orientation="Vertical" Margin="12,0,12,0">

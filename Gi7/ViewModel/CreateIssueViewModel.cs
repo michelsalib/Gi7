@@ -30,7 +30,7 @@ namespace Gi7.ViewModel
 
         private void CreateIssue()
         {
-            IssueFunctions.CreateIssue(_githubService.GitConnection, title, _repo, _user, body);
+            IssueFunctions.CreateIssue(_githubService.GitHubClient, title, _repo, _user, body);
             _navigationService.GoBack();
         }
 

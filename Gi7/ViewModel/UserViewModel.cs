@@ -16,6 +16,7 @@ namespace Gi7.ViewModel
 {
     public class UserViewModel : ViewModelBase
     {
+        private readonly GithubService githubService;
         private UserEventsRequests _eventsRequest;
         private UserFollowingRequest _followingsRequest;
         private bool? _isFollowing;
@@ -29,6 +30,7 @@ namespace Gi7.ViewModel
 
         public UserViewModel(GithubService githubService, INavigationService navigationService, string user)
         {
+            this.githubService = githubService;
             Username = user;
             EventsRequest = new UserEventsRequests(Username);
             ShowAppBar = false;
@@ -43,7 +45,7 @@ namespace Gi7.ViewModel
             UnFollowCommand = new RelayCommand(() => githubService.Load(new FollowUserRequest(Username, FollowUserRequest.Type.UNFOLLOW), r => { IsFollowing = false; }), () => IsFollowing.HasValue && IsFollowing.Value);
             RepoSelectedCommand = new RelayCommand<Repository>(r => OnRepoSelected(navigationService, r));
             UserSelectedCommand = new RelayCommand<User>(u => OnUserSelected(navigationService, user, u));
-            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(args => OnPivotChanged(githubService, args));
+            PivotChangedCommand = new RelayCommand<SelectionChangedEventArgs>(OnPivotChanged);
         }
 
         private static void OnRepoSelected(INavigationService navigationService, Repository r)
@@ -221,9 +223,9 @@ namespace Gi7.ViewModel
                 navigationService.NavigateTo(string.Format(ViewModelLocator.USER_URL, u.Login));
         }
 
-        private void OnPivotChanged(GithubService githubService, SelectionChangedEventArgs args)
+        private void OnPivotChanged(SelectionChangedEventArgs args)
         {
-            var header = ((PivotItem)args.AddedItems[0]).Header as String;
+            var header = ((PivotItem)args.AddedItems[0]).Header as string;
             ShowAppBar = false;
             switch (header)
             {

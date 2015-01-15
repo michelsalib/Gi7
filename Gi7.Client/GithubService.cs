@@ -68,6 +68,11 @@ namespace Gi7.Client
             Username = username;
             _password = password;
 
+            connection = new Connection(new ProductHeaderValue("Gi7"))
+            {
+                Credentials = new Credentials(username, password)
+            };
+
             var request = new UserRequest();
 
             Load(request, r =>
@@ -75,11 +80,6 @@ namespace Gi7.Client
                 // set storage
                 isolatedStorageSettings["username"] = username;
                 isolatedStorageSettings["password"] = password;
-
-                connection = new Connection(new ProductHeaderValue("Gi7"))
-                {
-                    Credentials = new Credentials(username, password)
-                };
 
                 IsAuthenticated = true;
             });

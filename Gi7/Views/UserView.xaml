@@ -4,6 +4,7 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:localControls="clr-namespace:Gi7.Controls"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
@@ -11,8 +12,7 @@
                             xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
                             xmlns:lists="clr-namespace:Gi7.Controls.PaginatedListBox"
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
-                            xmlns:localControls="clr-namespace:Gi7.Controls"
-                            xmlns:Gi7="clr-namespace:Gi7"
+                            xmlns:gi7="clr-namespace:Gi7"
                             mc:Ignorable="d" d:DesignWidth="480"
                             d:DesignHeight="696" FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -28,7 +28,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Gi7:Header></Gi7:Header>
+        <gi7:Header></gi7:Header>
         <!--Pivot Control-->
         <controls:Pivot Grid.Row="1" Title="{Binding Username}">
             <interactivity:Interaction.Triggers>
@@ -36,7 +36,7 @@
                     <command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
                 </interactivity:EventTrigger>
             </interactivity:Interaction.Triggers>
-            <controls:PivotItem Header="news">
+            <controls:PivotItem Header="feed">
                 <localControls:EventsPanel />
             </controls:PivotItem>
             <controls:PivotItem Header="details">

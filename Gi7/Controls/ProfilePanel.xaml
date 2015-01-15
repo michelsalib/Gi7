@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:client="clr-namespace:Gi7.Client.Model;assembly=Gi7.Client"
              xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              mc:Ignorable="d"
              FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -19,38 +20,38 @@
         <ListBoxItem HorizontalAlignment="Center">
             <Border BorderBrush="Gainsboro" Background="White"
                     VerticalAlignment="Center" Width="200" Height="200">
-                <Image Source="{Binding User.AvatarUrl, ConverterParameter=180, Converter={StaticResource GravatarSizeConverter}}" />
+                <Image Source="{Binding AvatarUrl, ConverterParameter=180, Converter={StaticResource GravatarSizeConverter}}" />
             </Border>
         </ListBoxItem>
         <ListBoxItem HorizontalAlignment="Center" Visibility="{Binding User.Name, Converter={StaticResource EmptyStringToVisibilityConverter}}">
-            <TextBlock Text="{Binding User.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Foreground="{StaticResource PhoneAccentBrush}" FontSize="40" />
         </ListBoxItem>
         <ListBoxItem HorizontalAlignment="Center">
-            <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <TextBlock Text="{Binding Login}" HorizontalAlignment="Center" VerticalAlignment="Center"
                         Foreground="{StaticResource PhoneAccentBrush}" />
         </ListBoxItem>
         <ListBoxItem Height="1" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" />
-        <ListBoxItem Visibility="{Binding User.Company, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+        <ListBoxItem Visibility="{Binding Company, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/company.png" Width="16" Margin="10,0" />
-                <TextBlock Text="{Binding User.Company}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Company}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
-        <ListBoxItem Visibility="{Binding User.Location, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+        <ListBoxItem Visibility="{Binding Location, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/location.png" Width="16" Margin="10,0" />
-                <TextBlock Text="{Binding User.Location}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Location}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
-        <ListBoxItem Visibility="{Binding User.Email, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+        <ListBoxItem Visibility="{Binding Email, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/mail.png" Width="16" Margin="5,0" />
                 <HyperlinkButton Margin="0" Content="{Binding User.Email}" NavigateUri="{Binding User.Email}" TargetName="_blank"
                             HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
-        <ListBoxItem Visibility="{Binding User.Blog, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+        <ListBoxItem Visibility="{Binding Blog, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/link.png" Width="16" Margin="5,0" />
                 <HyperlinkButton Margin="0" Content="{Binding User.Blog}" NavigateUri="{Binding User.Blog}" TargetName="_blank"
@@ -60,7 +61,7 @@
         <ListBoxItem>
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Images/time.png" Width="16" Margin="10,0" />
-                <TextBlock Text="{Binding User.Joined, StringFormat=MMM dd\, yyyy}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Joined, StringFormat=MMM dd\, yyyy}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem Height="1" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" />
@@ -72,15 +73,15 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <TextBlock Text="{Binding User.Followers}" HorizontalAlignment="Center" FontSize="40"/>
+                    <TextBlock Text="{Binding Followers}" HorizontalAlignment="Center" FontSize="40"/>
                     <TextBlock Text="followers" HorizontalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding User.PublicRepos}" HorizontalAlignment="Center" FontSize="40"/>
+                    <TextBlock Text="{Binding PublicRepos}" HorizontalAlignment="Center" FontSize="40"/>
                     <TextBlock Text="public repos"  />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="2" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding User.Following}" HorizontalAlignment="Center" FontSize="40"/>
+                    <TextBlock Text="{Binding Following}" HorizontalAlignment="Center" FontSize="40"/>
                     <TextBlock Text="following" />
                 </StackPanel>
             </Grid>
@@ -108,7 +109,7 @@
             </Grid>
         </ListBoxItem>
         <ListBoxItem HorizontalAlignment="Right">
-            <HyperlinkButton Content="See on GitHub" NavigateUri="{Binding User.HtmlUrl}" Grid.Row="11"
+            <HyperlinkButton Content="See on GitHub" NavigateUri="{Binding HtmlUrl}" Grid.Row="11"
                     TargetName="_blank" />
         </ListBoxItem>
     </ListBox>

@@ -237,10 +237,10 @@
         <bar:BindableApplicationBar IsVisible="{Binding ShowAppBar}">
             <bar:BindableApplicationBarButton Text="New issue" IconUri="/Images/appbar.new.rest.png"
                                               Command="{Binding NewIssueCommand}" />
-            <bar:BindableApplicationBarButton Text="Watch" IconUri="/Images/appbar.favs.addto.rest.png"
+            <!--<bar:BindableApplicationBarButton Text="Watch" IconUri="/Images/appbar.favs.addto.rest.png"
                                               Command="{Binding WatchCommand}" />
             <bar:BindableApplicationBarButton Text="Unwatch" IconUri="/Images/appbar.favs.rmfrom.rest.png"
-                                              Command="{Binding UnWatchCommand}" />
+                                              Command="{Binding UnWatchCommand}" />-->
             <bar:BindableApplicationBarButton Text="Pin" IconUri="/Images/appbar.pin.add.png"
                                               Command="{Binding PinCommand}" />
             <bar:BindableApplicationBar.MenuItems>

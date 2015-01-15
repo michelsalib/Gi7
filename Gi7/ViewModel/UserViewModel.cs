@@ -227,7 +227,7 @@ namespace Gi7.ViewModel
             ShowAppBar = false;
             switch (header)
             {
-                case "feed":
+                case "news":
                     if (EventsRequest == null)
                         EventsRequest = new UserEventsRequests(Username);
                     break;
@@ -247,7 +247,6 @@ namespace Gi7.ViewModel
                     if (FollowingsRequest == null)
                         FollowingsRequest = new UserFollowingRequest(Username);
                     break;
-                case "profile":
                 case "details":
                     if (User == null)
                     {

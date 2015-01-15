@@ -12,6 +12,7 @@ using Gi7.Client.Request.Organization;
 using Gi7.Service.Navigation;
 using Gi7.Utils;
 using Microsoft.Phone.Controls;
+using System.Diagnostics;
 
 namespace Gi7.ViewModel
 {
@@ -25,8 +26,7 @@ namespace Gi7.ViewModel
         private User _user;
         private SearchResult searchResult;
         private UserFollowersRequest followersRequest;
-        private RepositoriesRequest ownedRepositoriesRequest;
-        private RepositoriesWatchedRequest watchedRepositoriesRequest;
+        private RepositoriesRequest _repositoriesRequest;
 
         public HomeViewModel(GithubService githubService, INavigationService navigationService)
         {
@@ -40,7 +40,7 @@ namespace Gi7.ViewModel
             EventSelectedCommand = new RelayCommand<Event>(e => OnEventSelected(navigationService, e));
             UserSelectedCommand = new RelayCommand<User>(user => OnUserSelected(navigationService, user));
             PanoramaChangedCommand = new RelayCommand<SelectionChangedEventArgs>(OnPanoramaChanged);
-            //ProfileCommand = new RelayCommand(() => IsLoggedIn);
+            ProfileCommand = new RelayCommand(() => OnProfile(navigationService), () => IsLoggedIn);
             AboutCommand = new RelayCommand(() => OnAbout(navigationService));
             LogoutCommand = new RelayCommand(githubService.Logout, () => IsLoggedIn);
 
@@ -61,8 +61,7 @@ namespace Gi7.ViewModel
             // listenning to the search box
             PropertyChanged += (s, e) => OnPropertyChanged(githubService, e);
 
-            WatchedRepos = new ObservableCollection<Repository>();
-            OwnedRepos = new ObservableCollection<Repository>();
+            Repos = new ObservableCollection<Repository>();
         }
 
         public RelayCommand LogoutCommand { get; private set; }
@@ -120,9 +119,7 @@ namespace Gi7.ViewModel
             }
         }
 
-        public ObservableCollection<Repository> OwnedRepos { get; set; }
-
-        public ObservableCollection<Repository> WatchedRepos { get; set; }
+        public ObservableCollection<Repository> Repos { get; set; }
 
         public UserFollowingRequest FollowingsRequest
         {
@@ -195,6 +192,11 @@ namespace Gi7.ViewModel
             navigationService.NavigateTo(ViewModelLocator.ABOUT_URL);
         }
 
+        private static void OnProfile(INavigationService navigationService)
+        {
+            navigationService.NavigateTo(ViewModelLocator.PROFILE_URL);
+        }
+
         private void OnPanoramaChanged(SelectionChangedEventArgs args)
         {
             LoadPanel((args.AddedItems[0] as PanoramaItem).Header as string);
@@ -228,37 +230,21 @@ namespace Gi7.ViewModel
         {
             switch (header)
             {
-                case "news feed":
+                case "news":
                     if (EventsRequest == null)
                         EventsRequest = new UserReceivedEventsRequest(_githubService.Username);
                     break;
-                case "owned repos":
-                    if (OwnedRepositoriesRequest == null)
-                        OwnedRepositoriesRequest = new RepositoriesRequest();
+                case "repositories":
+                    if (RepositoriesRequest == null)
+                        RepositoriesRequest = new RepositoriesRequest();
                     break;
-                case "watched repos":
-                if (WatchedRepositoriesRequest == null)
-                    WatchedRepositoriesRequest = new RepositoriesWatchedRequest(_githubService.Username);
-                break;
-                case "follower":
+                case "followers":
                     if (FollowersRequest == null)
                         FollowersRequest = new UserFollowersRequest(_githubService.Username);
                     break;
                 case "following":
                     if (FollowingsRequest == null)
                         FollowingsRequest = new UserFollowingRequest(_githubService.Username);
-                    break;
-                case "profile":
-                    if (User == null)
-                        User = _githubService.Load(new UserRequest(_githubService.Username), u =>
-                        {
-                            User = u;
-                            _githubService.Load(new UserOrganizationRequest(_githubService.Username), organizations =>
-                            {
-                                foreach (var organization in organizations)
-                                    Organizations.Add(organization);
-                            });
-                        });
                     break;
             }
         }
@@ -269,42 +255,29 @@ namespace Gi7.ViewModel
         {
             IsLoggedIn = true;
 
-            LoadPanel("news feed");
+            LoadPanel("news");
         }
 
         private void Logout()
         {
             IsLoggedIn = false;
+
             User = null;
             EventsRequest = null;
-            OwnedRepos = null;
-            WatchedRepos = null;
+            Repos = null;
             FollowersRequest = null;
             FollowingsRequest = null;
         }
 
-        public RepositoriesRequest OwnedRepositoriesRequest
+        public RepositoriesRequest RepositoriesRequest
         {
-            get { return ownedRepositoriesRequest; }
+            get { return _repositoriesRequest; }
             set
             {
-                if (ownedRepositoriesRequest != value)
+                if (_repositoriesRequest != value)
                 {
-                    ownedRepositoriesRequest = value;
-                    RaisePropertyChanged("OwnedRepositoriesRequest");
-                }
-            }
-        }
-
-        public RepositoriesWatchedRequest WatchedRepositoriesRequest
-        {
-            get { return watchedRepositoriesRequest; }
-            set
-            {
-                if (watchedRepositoriesRequest != value)
-                {
-                    watchedRepositoriesRequest = value;
-                    RaisePropertyChanged("WatchedRepositoriesRequest");
+                    _repositoriesRequest = value;
+                    RaisePropertyChanged("RepositoriesRequest");
                 }
             }
         }

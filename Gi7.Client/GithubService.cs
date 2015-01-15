@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
-using Gi7.Client.Model;
+using System.Threading.Tasks;
 using Gi7.Client.Request;
 using Gi7.Client.Request.Base;
 using Octokit;
@@ -15,6 +15,7 @@ namespace Gi7.Client
         public String Username { get; private set; }
 
         private Connection connection;
+        private readonly IsolatedStorageSettings isolatedStorageSettings = IsolatedStorageSettings.ApplicationSettings;
 
         public ApiConnection GitConnection
         {
@@ -45,17 +46,12 @@ namespace Gi7.Client
         /// </summary>
         public void Init()
         {
-            String username;
-            String password;
-            if (IsolatedStorageSettings.ApplicationSettings.TryGetValue("username", out username) &&
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out password))
-            {
+            string username, password;
+            if (isolatedStorageSettings.TryGetValue("username", out username) &&
+                isolatedStorageSettings.TryGetValue("password", out password))
                 AuthenticateUser(username, password);
-            }
             else
-            {
                 Username = null;
-            }
         }
 
 
@@ -74,8 +70,8 @@ namespace Gi7.Client
             Load(request, r =>
             {
                 // set storage
-                IsolatedStorageSettings.ApplicationSettings["username"] = username;
-                IsolatedStorageSettings.ApplicationSettings["password"] = password;
+                isolatedStorageSettings["username"] = username;
+                isolatedStorageSettings["password"] = password;
 
                 connection = new Connection(new ProductHeaderValue("Gi7"))
                 {
@@ -94,8 +90,8 @@ namespace Gi7.Client
             Username = null;
             _password = null;
 
-            IsolatedStorageSettings.ApplicationSettings.Remove("username");
-            IsolatedStorageSettings.ApplicationSettings.Remove("password");
+            isolatedStorageSettings.Remove("username");
+            isolatedStorageSettings.Remove("password");
 
             IsAuthenticated = false;
         }
@@ -112,6 +108,21 @@ namespace Gi7.Client
 
             return request.Result;
         }
+
+        public Task<TResult> Load<TResult>(IRequest<TResult> request)
+        {
+            var taskCompletionSource = new TaskCompletionSource<TResult>();
+            // prepare client
+            var client = _createClient();
+
+            bindRequest(request);
+
+            // execute
+            request.Execute(client, taskCompletionSource.SetResult);
+
+            return taskCompletionSource.Task;
+        }
+
 
         private RestClient _createClient()
         {

@@ -43,7 +43,8 @@ namespace Gi7.Client.Model
         {
             set
             {
-                _avatarUrl = string.Format("https://secure.gravatar.com/avatar/{0}", value);
+                if (!string.IsNullOrWhiteSpace(value))
+                    _avatarUrl = string.Format("https://secure.gravatar.com/avatar/{0}", value);
             }
         }
     }

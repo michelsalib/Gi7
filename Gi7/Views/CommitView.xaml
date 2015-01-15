@@ -13,21 +13,29 @@
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
                             xmlns:gi7="clr-namespace:Gi7"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                            FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-                            shell:SystemTray.IsVisible="True" 
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            mc:Ignorable="d"
+                            d:DesignHeight="696"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
                             shell:SystemTray.Opacity="0"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=CommitViewModel, Source={StaticResource ViewModelLocator}}">
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="" />
         </Grid.RowDefinitions>
         <Grid>
             <gi7:Header></gi7:Header>
-            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Center"
+            <TextBlock Text="{Binding RepoName}"
+                       Margin="0,20,10,0"
+                       VerticalAlignment="Center"
                        HorizontalAlignment="Right">
                 <interactivity:Interaction.Triggers>
                     <interactivity:EventTrigger EventName="Tap">
@@ -39,47 +47,73 @@
         <controls:Pivot Grid.Row="1">
             <interactivity:Interaction.Triggers>
                 <interactivity:EventTrigger EventName="SelectionChanged">
-                    <command:EventToCommand Command="{Binding PivotChangedCommand}" PassEventArgsToCommand="True" />
+                    <command:EventToCommand Command="{Binding PivotChangedCommand}"
+                                            PassEventArgsToCommand="True" />
                 </interactivity:EventTrigger>
             </interactivity:Interaction.Triggers>
             <controls:PivotItem Header="commit">
                 <ScrollViewer Grid.Row="1">
                     <StackPanel Margin="12,0,12,0">
                         <Grid Margin="0,0,0,10">
-                            <Image Source="{Binding Commit.Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
-                                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0" />
-                            <TextBlock Text="{Binding Commit.Author.Login}" HorizontalAlignment="Left"
-                                       VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Commit.Commit.Author.Date}" HorizontalAlignment="Right" Margin="0,0,20,0"
-                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                            <TextBlock Text="{Binding CommitText}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                       Margin="80,25,0,0" TextWrapping="Wrap" />
+                            <Image Source="{Binding Commit.Author.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}"
+                                   Width="70"
+                                   Height="70"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Margin="0,5,0,0" />
+                            <TextBlock Text="{Binding Commit.Author.Login}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Margin="80,0,0,0"
+                                       FontWeight="Bold" />
+                            <TextBlock Text="{Binding Commit.Commit.Author.Date}"
+                                       HorizontalAlignment="Right"
+                                       Margin="0,0,20,0"
+                                       VerticalAlignment="Top"
+                                       FontStyle="Italic"
+                                       Foreground="Gray" />
+                            <TextBlock Text="{Binding CommitText}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       Margin="80,25,0,0"
+                                       TextWrapping="Wrap" />
                         </Grid>
-                        <TextBlock Text="{Binding Commit.Commit.Message}" TextWrapping="Wrap" Margin="0,0,0,20" />
-                        <ListBox ItemsSource="{Binding Files}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <TextBlock Text="{Binding Commit.Commit.Message}"
+                                   TextWrapping="Wrap"
+                                   Margin="0,0,0,20" />
+                        <ListBox ItemsSource="{Binding Files}"
+                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <toolkit:ExpanderView>
                                         <toolkit:ExpanderView.Header>
-                                            <TextBlock Text="{Binding File.Filename}" FontWeight="Bold" />
+                                            <TextBlock Text="{Binding File.Filename}"
+                                                       FontWeight="Bold" />
                                         </toolkit:ExpanderView.Header>
                                         <toolkit:ExpanderView.Expander>
                                             <RichTextBox>
                                                 <Paragraph>
                                                     <Run Text="{Binding File.Status}" />
                                                     <Run Text=" with " />
-                                                    <Run Text="{Binding File.Additions}" FontWeight="Bold" Foreground="Green" />
+                                                    <Run Text="{Binding File.Additions}"
+                                                         FontWeight="Bold"
+                                                         Foreground="Green" />
                                                     <Run Text=" addition(s) and " />
-                                                    <Run Text="{Binding File.Deletions}" FontWeight="Bold" Foreground="Red" />
+                                                    <Run Text="{Binding File.Deletions}"
+                                                         FontWeight="Bold"
+                                                         Foreground="Red" />
                                                     <Run Text=" deletion(s)" />
                                                 </Paragraph>
                                             </RichTextBox>
                                         </toolkit:ExpanderView.Expander>
                                         <toolkit:ExpanderView.Items>
-                                            <ListBox ItemsSource="{Binding Lines}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                            <ListBox ItemsSource="{Binding Lines}"
+                                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                                     ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Line}" Foreground="{Binding Color}"/>
+                                                        <TextBlock Text="{Binding Line}"
+                                                                   Foreground="{Binding Color}" />
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
                                             </ListBox>
@@ -94,36 +128,62 @@
             <controls:PivotItem Header="comments">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="443"/>
-                        <RowDefinition Height="Auto" MinHeight="89"/>
+                        <RowDefinition Height="475" />
+                        <RowDefinition Height="Auto"
+                                       MinHeight="57" />
                     </Grid.RowDefinitions>
-                    <paginated:CommentListBox Grid.Row="0" Request="{Binding CommentsRequest}">
+                    <paginated:CommentListBox Grid.Row="0"
+                                              Request="{Binding CommentsRequest}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Width="440">
-                                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}" Width="75" Height="75"
-                                           HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                    <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
+                                    <Image Source="{Binding User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=75}"
+                                           Width="75"
+                                           Height="75"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
+                                    <TextBlock Text="{Binding User.Login}"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Margin="80,0,0,0"
+                                               FontWeight="Bold" />
                                     <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-                                               HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
-                                    <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                                               Margin="80,25,0,0" TextWrapping="Wrap" />
+                                               HorizontalAlignment="Right"
+                                               VerticalAlignment="Top"
+                                               FontStyle="Italic"
+                                               Foreground="Gray" />
+                                    <TextBlock Text="{Binding Body}"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Margin="80,25,0,0"
+                                               TextWrapping="Wrap" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </paginated:CommentListBox>
-                    <TextBox AcceptsReturn="True" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}" KeyUp="CommentKeyUp" Grid.Row="1" MaxHeight="210" VerticalAlignment="Top" />
+                    <TextBox AcceptsReturn="True"
+                             Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                             KeyUp="CommentKeyUp"
+                             Grid.Row="1"
+                             MaxHeight="210"
+                             TextWrapping="Wrap"
+                             InputScope="Text"
+                             VerticalAlignment="Top"
+                             Height="72"
+                             Margin="0" />
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
     <bar:Bindable.ApplicationBar>
         <bar:BindableApplicationBar Mode="{Binding MinimizeAppBar, Converter={StaticResource BoolToModeConverter}}">
-            <bar:BindableApplicationBarButton Visibility="Collapsed" Text="Comment" IconUri="/Images/appbar.mess.png" Command="{Binding CommentCommand}"/>
+            <bar:BindableApplicationBarButton Visibility="Collapsed"
+                                              Text="Comment"
+                                              IconUri="/Images/appbar.mess.png"
+                                              Command="{Binding CommentCommand}" />
             <bar:BindableApplicationBar.MenuItems>
                 <bar:BindableApplicationBarMenuItem Text="Share"
-                                                    Command="{Binding ShareCommand}"/>
+                                                    Command="{Binding ShareCommand}" />
             </bar:BindableApplicationBar.MenuItems>
         </bar:BindableApplicationBar>
     </bar:Bindable.ApplicationBar>

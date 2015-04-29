@@ -34,33 +34,33 @@
         <ListBoxItem Height="1" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" />
         <ListBoxItem Visibility="{Binding User.Company, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily=".\Fonts\github-octicons.ttf#github-octicons" Text="&#xF037;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily="/Gi7;component/Fonts/Fonts.zip#github-octicons" Text="&#xF037;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding User.Company}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem Visibility="{Binding User.Location, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily=".\Fonts\github-octicons.ttf#github-octicons" Text="&#xF060;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily="/Gi7;component/Fonts/Fonts.zip#github-octicons" Text="&#xF060;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding User.Location}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem Visibility="{Binding User.Email, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily=".\Fonts\github-octicons.ttf#github-octicons" Text="&#xF03B;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily="/Gi7;component/Fonts/Fonts.zip#github-octicons" Text="&#xF03B;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
                 <HyperlinkButton Margin="0" Content="{Binding User.Email}" NavigateUri="{Binding User.Email}" TargetName="_blank"
                             HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem Visibility="{Binding User.Blog, Converter={StaticResource EmptyStringToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily=".\Fonts\github-octicons.ttf#github-octicons" Text="&#xF05C;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily="/Gi7;component/Fonts/Fonts.zip#github-octicons" Text="&#xF05C;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
                 <HyperlinkButton Margin="0" Content="{Binding User.Blog}" NavigateUri="{Binding User.Blog}" TargetName="_blank"
                             HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>
         <ListBoxItem>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily=".\Fonts\github-octicons.ttf#github-octicons" Text="&#xF046;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="0" Grid.RowSpan="2" Grid.Row="0" FontFamily="/Gi7;component/Fonts/Fonts.zip#github-octicons" Text="&#xF046;" FontSize="18" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding User.Joined, StringFormat=MMM dd\, yyyy}" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </StackPanel>
         </ListBoxItem>

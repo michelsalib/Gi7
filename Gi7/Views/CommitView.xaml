@@ -72,7 +72,7 @@
                                        Margin="0,0,20,0"
                                        VerticalAlignment="Top"
                                        FontStyle="Italic"
-                                       Foreground="Gray" />
+                                       Foreground="{StaticResource GI7GreyColorBrush}" />
                             <TextBlock Text="{Binding CommitText}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
@@ -152,7 +152,7 @@
                                                HorizontalAlignment="Right"
                                                VerticalAlignment="Top"
                                                FontStyle="Italic"
-                                               Foreground="Gray" />
+                                               Foreground="{StaticResource GI7GreyColorBrush}" />
                                     <TextBlock Text="{Binding Body}"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Top"

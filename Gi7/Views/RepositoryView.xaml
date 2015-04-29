@@ -46,11 +46,11 @@
                                          NavigateUri="{Binding Path=Repository.Homepage}" TargetName="_blank" />
                         <Grid>
                             <TextBlock Text="Watchers" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="Gray" TextAlignment="Right" Margin="0,0,10,0" />
+                            <TextBlock Text="{Binding Repository.Watchers}" FontSize="42" Foreground="{StaticResource GI7GreyColorBrush}" TextAlignment="Right" Margin="0,0,10,0" />
                         </Grid>
                         <Grid>
                             <TextBlock Text="Forks" FontSize="42" />
-                            <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="Gray" TextAlignment="Right" Margin="0,0,10,0" />
+                            <TextBlock Text="{Binding Repository.Forks}" FontSize="42" Foreground="{StaticResource GI7GreyColorBrush}" TextAlignment="Right" Margin="0,0,10,0" />
                         </Grid>
                         <Grid>
                             <TextBlock Text="Issues" FontSize="42" />
@@ -121,12 +121,12 @@
                                         <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=User.Login}" HorizontalAlignment="Left"
                                             VerticalAlignment="Top" FontWeight="Bold" />
                                         <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=UpdatedAt}" HorizontalAlignment="Left"
-                                            FontStyle="Italic" Foreground="Gray" />
+                                            FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" />
                                         <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Comments}" Width="20" HorizontalAlignment="Left" TextAlignment="Left" />
                                         <TextBlock Grid.Column="1" Grid.Row="2" Text=" comments" TextAlignment="Left" Margin="25,0,0,0" />
                                     </Grid>
                                 </StackPanel>
-                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" Height="60" TextTrimming="WordEllipsis" Foreground="Gray" />
+                                <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" Height="60" TextTrimming="WordEllipsis" Foreground="{StaticResource GI7GreyColorBrush}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -160,7 +160,7 @@
                                                 <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Path=Author.Login}" HorizontalAlignment="Left"
                                                            VerticalAlignment="Top" FontWeight="Bold" />
                                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Path=Commit.Author.Date}" HorizontalAlignment="Left"
-                                                           FontStyle="Italic" Foreground="Gray" />
+                                                           FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" />
                                                 <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Path=Commit.Message, Converter={StaticResource TextTrimConverter}}"
                                                            HorizontalAlignment="Left" TextAlignment="Left" TextWrapping="Wrap" TextOptions.TextHintingMode="Animated"  TextTrimming="WordEllipsis" />
                                                 <interactivity:Interaction.Triggers>
@@ -196,7 +196,7 @@
                                         <TextBlock Text="{Binding Path=User.Login}" HorizontalAlignment="Left"
                                             VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                                         <TextBlock Text="{Binding Path=UpdatedAt}" Margin="0,0,20,0"
-                                            HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" FontSize="18.667" />
+                                            HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="18.667" />
                                         <TextBlock Text="{Binding Path=Body}" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="85"
                                             Margin="80,25,0,0" TextOptions.TextHintingMode="Animated" />
                                     </Grid>

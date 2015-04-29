@@ -57,7 +57,7 @@
                             <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
                                        VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                             <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right"
-                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" Margin="0,0,20,0" />
+                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" Margin="0,0,20,0" />
                             <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,25,0,0"
                                          TextWrapping="Wrap">
                                 <Paragraph>
@@ -96,7 +96,7 @@
                                     <TextBlock
                                         Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
                                         HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic"
-                                        Foreground="Gray" />
+                                        Foreground="{StaticResource GI7GreyColorBrush}" />
                                     <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
                                                Margin="80,25,0,0" TextWrapping="Wrap" />
                                 </Grid>

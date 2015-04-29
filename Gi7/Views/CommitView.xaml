@@ -22,6 +22,7 @@
                             d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True"
                             shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=CommitViewModel, Source={StaticResource ViewModelLocator}}">
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -36,7 +37,8 @@
             <TextBlock Text="{Binding RepoName}"
                        Margin="0,20,10,0"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Right">
+                       HorizontalAlignment="Right"
+                       Foreground="{StaticResource GI7LightColorBrush}">
                 <interactivity:Interaction.Triggers>
                     <interactivity:EventTrigger EventName="Tap">
                         <command:EventToCommand Command="{Binding RepoSelectedCommand}" />
@@ -71,7 +73,7 @@
                                        Margin="0,0,20,0"
                                        VerticalAlignment="Top"
                                        FontStyle="Italic"
-                                       Foreground="Gray" />
+                                       Foreground="{StaticResource GI7GreyColorBrush}" />
                             <TextBlock Text="{Binding CommitText}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
@@ -151,7 +153,7 @@
                                                HorizontalAlignment="Right"
                                                VerticalAlignment="Top"
                                                FontStyle="Italic"
-                                               Foreground="Gray" />
+                                               Foreground="{StaticResource GI7GreyColorBrush}" />
                                     <TextBlock Text="{Binding Body}"
                                                HorizontalAlignment="Left"
                                                VerticalAlignment="Top"

@@ -12,6 +12,7 @@
                             mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480" 
                             shell:SystemTray.IsVisible="True"
                             shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=TreeViewModel, Source={StaticResource ViewModelLocator}}">
 
@@ -23,8 +24,8 @@
         </Grid.RowDefinitions>
         <Grid>
             <gi7:Header Grid.Row="0"></gi7:Header>
-            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,20,20,0"/>
-            <TextBlock x:Name="PageTitle" Text="{Binding Path}" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,40,20,0"/>
+            <TextBlock x:Name="ApplicationTitle" Text="{Binding RepoName}" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,20,20,0" Foreground="{StaticResource GI7LightColorBrush}"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Path}" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,40,20,0" Foreground="{StaticResource GI7LightColorBrush}"/>
         </Grid>
 
         <!--ContentPanel - place additional content here-->

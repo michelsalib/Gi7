@@ -37,7 +37,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -58,7 +58,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -79,7 +79,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -100,7 +100,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -121,7 +121,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -142,7 +142,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -163,7 +163,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -184,7 +184,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -205,7 +205,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -226,7 +226,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -247,7 +247,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -268,7 +268,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -289,7 +289,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -310,7 +310,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -331,7 +331,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />
@@ -352,7 +352,7 @@
                                 <Run Text="{Binding CreatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}" FontStyle="Italic" />
                             </Paragraph>
                             <Paragraph>
-                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="#CCC" FontSize="16" />
+                                <Run Text="{Binding ConverterParameter=description, Converter={StaticResource EventConverter}}" Foreground="{StaticResource GI7GreyColorBrush}" FontSize="16" />
                             </Paragraph>
                         </RichTextBox>
                         <Image Source="{Binding ConverterParameter=image, Converter={StaticResource EventConverter}}" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5,0" />

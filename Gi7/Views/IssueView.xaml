@@ -13,6 +13,7 @@
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=IssueViewModel, Source={StaticResource ViewModelLocator}}">
 
@@ -28,8 +29,8 @@
         <!--TitlePanel contains the name of the application and page title-->
         <Grid>
             <gi7:Header></gi7:Header>
-            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <TextBlock Text="{Binding IssueName}" Margin="0,45,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" MaxWidth="325" TextTrimming="WordEllipsis"/>
+            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"  Foreground="{StaticResource GI7LightColorBrush}"/>
+            <TextBlock Text="{Binding IssueName}" Margin="0,45,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" MaxWidth="325" TextTrimming="WordEllipsis"  Foreground="{StaticResource GI7LightColorBrush}"/>
         </Grid>
 
         <!--ContentPanel - place additional content here-->
@@ -40,7 +41,7 @@
                     <Image Source="{Binding Issue.User.AvatarUrl, Converter={StaticResource GravatarSizeConverter}, ConverterParameter=70}" Width="70" Height="70"
                             HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <TextBlock Text="{Binding Issue.User.Login}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
-                    <TextBlock Text="{Binding Issue.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                    <TextBlock Text="{Binding Issue.CreatedAt}" HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" />
                     <TextBlock Text="{Binding Issue.Body}" TextWrapping="Wrap" Margin="80, 25, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 </Grid>
                 <TextBlock Text="Comments" Margin="0,15,0,10" />
@@ -54,7 +55,7 @@
                                 <TextBlock Text="{Binding User.Login}" HorizontalAlignment="Left"
                         			VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                                 <TextBlock Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
-                        			HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" />
+                        			HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" />
                                 <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
                         			Margin="80,25,0,0" TextWrapping="Wrap" />
                             </Grid>

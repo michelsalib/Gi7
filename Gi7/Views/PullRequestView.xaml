@@ -19,6 +19,7 @@
                             d:DesignHeight="696" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" 
                             shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=PullRequestViewModel, Source={StaticResource ViewModelLocator}}">
 
@@ -31,7 +32,8 @@
         <Grid>
             <gi7:Header></gi7:Header>
             <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Center"
-                       HorizontalAlignment="Right">
+                       HorizontalAlignment="Right"
+                       Foreground="{StaticResource GI7LightColorBrush}">
                 <interactivity:Interaction.Triggers>
                     <interactivity:EventTrigger EventName="Tap">
                         <command:EventToCommand Command="{Binding RepoSelectedCommand}" />
@@ -56,7 +58,7 @@
                             <TextBlock Text="{Binding PullRequest.User.Login}" HorizontalAlignment="Left"
                                        VerticalAlignment="Top" Margin="80,0,0,0" FontWeight="Bold" />
                             <TextBlock Text="{Binding PullRequest.CreatedAt}" HorizontalAlignment="Right"
-                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="Gray" Margin="0,0,20,0" />
+                                       VerticalAlignment="Top" FontStyle="Italic" Foreground="{StaticResource GI7GreyColorBrush}" Margin="0,0,20,0" />
                             <RichTextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,25,0,0"
                                          TextWrapping="Wrap">
                                 <Paragraph>
@@ -95,7 +97,7 @@
                                     <TextBlock
                                         Text="{Binding UpdatedAt, Converter={StaticResource RelativeTimeConverter}, ConverterCulture=en-US}"
                                         HorizontalAlignment="Right" VerticalAlignment="Top" FontStyle="Italic"
-                                        Foreground="Gray" />
+                                        Foreground="{StaticResource GI7GreyColorBrush}" />
                                     <TextBlock Text="{Binding Body}" HorizontalAlignment="Left" VerticalAlignment="Top"
                                                Margin="80,25,0,0" TextWrapping="Wrap" />
                                 </Grid>

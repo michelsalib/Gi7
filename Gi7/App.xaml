@@ -139,6 +139,7 @@
             </DataTemplate>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             <SolidColorBrush x:Key="GI7LightColorBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="GI7GreyColorBrush" Color="#CCCCCC" />
         </ResourceDictionary>
     </Application.Resources>
     <Application.ApplicationLifetimeObjects>

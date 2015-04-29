@@ -15,7 +15,9 @@
                             mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}" SupportedOrientations="Portrait" Orientation="Portrait"
-                            shell:SystemTray.IsVisible="True" shell:SystemTray.Opacity="0"
+                            shell:SystemTray.IsVisible="True"
+                            shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding HomeViewModel, Source={StaticResource ViewModelLocator}}">
     <bar:Bindable.ApplicationBar>

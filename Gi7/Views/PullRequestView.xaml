@@ -19,6 +19,7 @@
                             d:DesignHeight="696" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" 
                             shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=PullRequestViewModel, Source={StaticResource ViewModelLocator}}">
 

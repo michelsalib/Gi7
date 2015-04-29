@@ -13,6 +13,7 @@
                             FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"
                             SupportedOrientations="Portrait" Orientation="Portrait" mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True" shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=IssueViewModel, Source={StaticResource ViewModelLocator}}">
 

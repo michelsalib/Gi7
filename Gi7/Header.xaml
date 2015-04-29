@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
+    Foreground="{StaticResource GI7LightColorBrush}"
     d:DesignHeight="84" d:DesignWidth="480">
     
     <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
@@ -18,7 +18,7 @@
     			</LinearGradientBrush>
     		</Border.Background>
     		<Grid>
-    			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="48" FontWeight="Bold" Text="Gi7" Margin="70,20,0,0" Foreground="{StaticResource GI7LightColorBrush}"/>
+    			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="48" FontWeight="Bold" Text="Gi7" Margin="70,20,0,0"/>
     			<Image Source="/Images/github.png" Width="60" Height="60" HorizontalAlignment="Left" Margin="5,20,0,0"/>
     		</Grid>
     	</Border>

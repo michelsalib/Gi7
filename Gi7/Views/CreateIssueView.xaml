@@ -12,6 +12,7 @@
                             mc:Ignorable="d" 
                             shell:SystemTray.IsVisible="True"
                             shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                             DataContext="{Binding Path=CreateIssueViewModel, Source={StaticResource ViewModelLocator}}" d:DesignHeight="768" d:DesignWidth="480">
 

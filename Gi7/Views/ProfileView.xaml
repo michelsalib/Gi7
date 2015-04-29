@@ -13,6 +13,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
+    shell:SystemTray.ForegroundColor="#FFFFFE"
     DataContext="{Binding ProfileViewModel, Source={StaticResource ViewModelLocator}}">
 
     <!--LayoutRoot is the root grid where all page content is placed-->

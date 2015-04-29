@@ -26,8 +26,8 @@
 
         <Grid>
             <gi7:Header></gi7:Header>
-            <TextBlock Text="{Binding RepoName}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,10,0" />
-            <TextBlock Text="{Binding Path}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,10,0" />
+            <TextBlock Text="{Binding RepoName}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,10,0" Foreground="{StaticResource GI7LightColorBrush}" />
+            <TextBlock Text="{Binding Path}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,40,10,0" Foreground="{StaticResource GI7LightColorBrush}" />
         </Grid>
         <ListBox ItemsSource="{Binding TextFile}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemContainerStyle="{StaticResource StrechListBoxItem}" Grid.Row="1">
             <ListBox.ItemTemplate>

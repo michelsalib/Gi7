@@ -30,7 +30,7 @@
 
         <Gi7:Header VerticalAlignment="Top" Height="84" />
         <TextBlock TextWrapping="Wrap" Text="About" VerticalAlignment="Top" HorizontalAlignment="Right"
-                   Margin="0,20,20,0" FontSize="48" />
+                   Margin="0,20,20,0" FontSize="48"  Foreground="{StaticResource GI7LightColorBrush}" />
         <!--TitlePanel contains the name of the application and page title-->
 
         <!--ContentPanel - place additional content here-->

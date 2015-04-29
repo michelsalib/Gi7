@@ -33,14 +33,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Gi7:Header/>
-        <controls:Panorama x:Name="Panorama" VerticalAlignment="Bottom" Grid.Row="1" Background="#FF0F0F10">
+        <controls:Panorama x:Name="Panorama" VerticalAlignment="Bottom" Grid.Row="1" Background="{StaticResource PhoneBackgroundBrush}">
             <interactivity:Interaction.Triggers>
                 <interactivity:EventTrigger EventName="SelectionChanged">
                     <command:EventToCommand Command="{Binding PanoramaChangedCommand}" PassEventArgsToCommand="True" />
                 </interactivity:EventTrigger>
             </interactivity:Interaction.Triggers>
             <controls:PanoramaItem Header="login"
-                Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}" Background="#FF0F0F10">
+                Visibility="{Binding IsLoggedOut, Converter={StaticResource BoolToVisibilityConverter}}" Background="{StaticResource PhoneBackgroundBrush}">
                 <localControls:LoginPanel />
             </controls:PanoramaItem>
             <controls:PanoramaItem Header="news"

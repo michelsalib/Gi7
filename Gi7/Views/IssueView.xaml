@@ -28,8 +28,8 @@
         <!--TitlePanel contains the name of the application and page title-->
         <Grid>
             <gi7:Header></gi7:Header>
-            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-            <TextBlock Text="{Binding IssueName}" Margin="0,45,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" MaxWidth="325" TextTrimming="WordEllipsis"/>
+            <TextBlock Text="{Binding RepoName}" Margin="0,20,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"  Foreground="{StaticResource GI7LightColorBrush}"/>
+            <TextBlock Text="{Binding IssueName}" Margin="0,45,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" MaxWidth="325" TextTrimming="WordEllipsis"  Foreground="{StaticResource GI7LightColorBrush}"/>
         </Grid>
 
         <!--ContentPanel - place additional content here-->

@@ -58,7 +58,7 @@ This is an unofficial GitHub app designed for Windows Phone, and is still under 
 ![](https://github.com/michelsalib/Gi7/raw/master/Screens/About.png) 
 
 ## Dependencies
-The small dependencies are already packaged into the solution.
+These small dependencies are already packaged into the solution.
 
 - You must have ![Visual Studio 2013](http://www.visualstudio.com/) and the ![Windows Phone 8.1 SDK](https://dev.windows.com/en-us/develop/download-phone-sdk) installed
 - It uses MVVM Light Toolkit for Windows Phone 7.1 (Beta)
